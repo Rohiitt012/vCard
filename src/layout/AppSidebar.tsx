@@ -399,15 +399,25 @@ const AppSidebar: React.FC = () => {
         <div className="mt-auto pt-4 pb-4">
           <Link
             href="/manage-subscription"
-            className={`flex items-center gap-3 w-full rounded-xl px-4 py-2.5 bg-gray-100/90 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700/60 hover:bg-gray-200/90 dark:hover:bg-gray-700/70 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 shadow-sm ${
+            className={`flex items-center w-full gap-3 rounded-xl px-4 py-2 min-h-[2.5rem] sm:min-h-0 font-medium text-theme-sm tracking-tight transition-all duration-200 touch-manipulation ${
               !isExpanded && !isHovered ? "lg:justify-center" : "lg:justify-start"
+            } ${
+              pathname?.startsWith("/manage-subscription")
+                ? "bg-brand-500 text-white shadow-md shadow-brand-500/30 dark:bg-brand-500"
+                : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-white/5 dark:hover:text-gray-200"
             }`}
           >
-            <span className="text-red-500 dark:text-red-400 flex-shrink-0 w-5 h-5 flex items-center justify-center">
+            <span
+              className={`flex-shrink-0 w-5 h-5 flex items-center justify-center ${
+                pathname?.startsWith("/manage-subscription") ? "text-white" : "text-red-500 dark:text-red-400"
+              }`}
+            >
               <DiamondIcon />
             </span>
             {(isExpanded || isHovered || isMobileOpen) && (
-              <span className="text-gray-700 dark:text-gray-300 font-medium text-theme-sm tracking-tight">Manage Subscription</span>
+              <span className={pathname?.startsWith("/manage-subscription") ? "font-semibold text-white" : ""}>
+                Manage Subscription
+              </span>
             )}
           </Link>
         </div>
