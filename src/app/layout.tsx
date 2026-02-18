@@ -4,6 +4,7 @@ import './globals.css';
 import "flatpickr/dist/flatpickr.css";
 import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { UserProvider } from '@/context/UserContext';
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -22,9 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="overflow-x-hidden">
-      <body className={`${outfit.className} dark:bg-gray-900 overflow-x-hidden min-w-0`}>
+      <body className={`${outfit.className} bg-slate-50 dark:bg-gray-900 overflow-x-hidden min-w-0`}>
         <ThemeProvider>
-          <SidebarProvider>{children}</SidebarProvider>
+          <UserProvider>
+            <SidebarProvider>{children}</SidebarProvider>
+          </UserProvider>
         </ThemeProvider>
       </body>
     </html>

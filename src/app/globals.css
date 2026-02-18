@@ -26,12 +26,12 @@
   --text-title-md--line-height: 44px;
   --text-title-sm: 30px;
   --text-title-sm--line-height: 38px;
-  --text-theme-xl: 20px;
-  --text-theme-xl--line-height: 30px;
-  --text-theme-sm: 14px;
-  --text-theme-sm--line-height: 20px;
-  --text-theme-xs: 12px;
-  --text-theme-xs--line-height: 18px;
+  --text-theme-xl: 21px;
+  --text-theme-xl--line-height: 31px;
+  --text-theme-sm: 15px;
+  --text-theme-sm--line-height: 22px;
+  --text-theme-xs: 13px;
+  --text-theme-xs--line-height: 19px;
 
   --color-current: currentColor;
   --color-transparent: transparent;
@@ -158,6 +158,14 @@
   --drop-shadow-4xl:
     0 35px 35px rgba(0, 0, 0, 0.25), 0 45px 65px rgba(0, 0, 0, 0.15);
 
+  /* Premium shadows – softer, more depth */
+  --shadow-premium-sm: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 4px rgba(16, 24, 40, 0.04);
+  --shadow-premium: 0 4px 6px -1px rgba(16, 24, 40, 0.06), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+  --shadow-premium-md: 0 10px 15px -3px rgba(16, 24, 40, 0.06), 0 4px 6px -4px rgba(16, 24, 40, 0.04);
+  --shadow-premium-lg: 0 20px 25px -5px rgba(16, 24, 40, 0.06), 0 8px 10px -6px rgba(16, 24, 40, 0.04);
+  --shadow-premium-xl: 0 25px 50px -12px rgba(16, 24, 40, 0.08);
+  --shadow-premium-inner: inset 0 1px 2px rgba(16, 24, 40, 0.04);
+
   --z-index-1: 1;
   --z-index-9: 9;
   --z-index-99: 99;
@@ -187,8 +195,16 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  html {
+    font-size: 17px;
+  }
   body {
-    @apply relative font-normal font-outfit z-1 bg-gray-50 overflow-x-hidden;
+    @apply relative font-normal font-outfit z-1 overflow-x-hidden antialiased text-gray-800 dark:text-gray-200;
+  }
+  /* Premium typography – slightly tighter letter-spacing for headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -292,21 +308,43 @@
   }
 }
 
-/* Premium design tokens */
+/* Premium design tokens – professional look */
 @utility card-premium {
-  @apply rounded-2xl border border-gray-200/90 dark:border-gray-800 bg-white dark:bg-gray-900/80 shadow-[var(--shadow-theme-lg)] transition-all duration-200;
+  @apply rounded-2xl border border-gray-200/90 dark:border-gray-700/80 bg-white dark:bg-gray-900/90 transition-all duration-200;
+  box-shadow: var(--shadow-premium);
 }
 @utility card-premium-hover {
-  @apply hover:shadow-[0_20px_25px_-5px_rgba(16,24,40,0.08),0_8px_10px_-6px_rgba(16,24,40,0.03)] hover:border-gray-300/80 dark:hover:border-gray-700;
+  @apply hover:border-gray-300/80 dark:hover:border-gray-600;
+  box-shadow: var(--shadow-premium-md);
 }
 @utility page-title {
-  @apply inline-block text-base font-semibold tracking-tight text-gray-900 dark:text-white sm:text-xl md:text-2xl border-b-2 border-violet-500 pb-1.5;
+  @apply inline-block text-base font-semibold tracking-tight text-gray-900 dark:text-white sm:text-xl md:text-2xl pb-1.5;
+  letter-spacing: -0.02em;
+  border-bottom: 2px solid var(--color-brand-500);
 }
 @utility input-premium {
-  @apply rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/50 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-shadow;
+  @apply rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/80 text-gray-900 dark:text-white placeholder-gray-400 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20;
+  box-shadow: var(--shadow-premium-inner);
 }
 @utility btn-primary-premium {
-  @apply rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-brand-500/25 hover:bg-brand-600 hover:shadow-md hover:shadow-brand-500/20 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-all duration-200;
+  @apply rounded-xl px-5 py-2.5 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-all duration-200;
+  background-color: var(--color-brand-500);
+  box-shadow: 0 1px 2px rgba(70, 95, 255, 0.2);
+  &:hover {
+    background-color: var(--color-brand-600);
+    box-shadow: 0 4px 12px rgba(70, 95, 255, 0.25);
+  }
+}
+@utility btn-secondary-premium {
+  @apply rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 transition-all duration-200;
+  box-shadow: var(--shadow-premium-sm);
+  &:hover {
+    @apply bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-500;
+  }
+}
+@utility surface-premium {
+  @apply rounded-2xl border border-gray-200/80 dark:border-gray-700/80 bg-white dark:bg-gray-900/90;
+  box-shadow: var(--shadow-premium);
 }
 
 /* third-party libraries CSS */

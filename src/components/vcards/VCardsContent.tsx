@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const SearchIcon = () => (
   <svg className="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,6 +51,50 @@ const ChartIcon = () => (
   </svg>
 );
 
+const EditIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+  </svg>
+);
+
+const ThreeDotsIcon = () => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <circle cx="12" cy="6" r="1.5" />
+    <circle cx="12" cy="12" r="1.5" />
+    <circle cx="12" cy="18" r="1.5" />
+  </svg>
+);
+
+const QRIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+  </svg>
+);
+
+const DownloadIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+  </svg>
+);
+
+const InquiriesIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+  </svg>
+);
+
+const ToggleIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+  </svg>
+);
+
 type ViewMode = "grid" | "gallery";
 
 const actionIcons = [
@@ -70,16 +115,37 @@ const sampleVCards = [
   },
 ];
 
+const menuItems = [
+  { label: "QR Code", Icon: QRIcon, onClick: () => {} },
+  { label: "Download vCard", Icon: DownloadIcon, onClick: () => {} },
+  { label: "Inquiries", Icon: InquiriesIcon, onClick: () => {} },
+  { label: "Delete", Icon: TrashIcon, onClick: () => {}, danger: true },
+  { label: "Disabled", Icon: ToggleIcon, onClick: () => {} },
+];
+
 export const VCardsContent = () => {
   const [search, setSearch] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const total = sampleVCards.length;
   const start = 1;
   const end = total;
 
+  useEffect(() => {
+    if (!openMenuId) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpenMenuId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [openMenuId]);
+
   return (
     <>
-      <div className="border-b border-gray-200 dark:border-gray-800 pb-4">
+      <div className="border-b border-gray-200/80 dark:border-gray-800 pb-5 mb-1">
         <h1 className="page-title">vCards</h1>
       </div>
 
@@ -94,7 +160,7 @@ export const VCardsContent = () => {
             placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="input-premium w-full pl-10 pr-4 py-2.5 text-sm"
+            className="input-premium w-full pl-10 pr-4 py-2.5 text-sm min-h-[42px]"
           />
         </div>
         <div className="flex items-center gap-1 shrink-0">
@@ -130,16 +196,64 @@ export const VCardsContent = () => {
         {sampleVCards.map((card) => (
           <article
             key={card.id}
-            className="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-theme-md hover:shadow-theme-lg transition-shadow"
+            className={`group card-premium card-premium-hover overflow-hidden ${openMenuId === card.id ? "overflow-visible" : ""}`}
           >
-            <div className="relative aspect-[16/10] w-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+            <div className={`relative aspect-[16/10] w-full bg-gray-200 dark:bg-gray-800 rounded-t-2xl ${openMenuId === card.id ? "overflow-visible" : "overflow-hidden"}`} ref={openMenuId === card.id ? menuRef : undefined}>
               <Image
                 src={card.image}
                 alt={card.title}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               />
+              {/* Hover overlay: edit + three-dot, dropdown three-dot ke bilkul paas */}
+              <div className="absolute inset-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 flex items-start justify-end">
+                <div className="relative flex flex-col items-end">
+                  <div className="flex items-center gap-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 px-2.5 py-1.5 shadow-md">
+                    <Link
+                      href={`/vcards/${card.id}/edit`}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-brand-600 hover:bg-brand-50 dark:text-brand-400 dark:hover:bg-brand-500/20 transition-colors"
+                      aria-label="Edit"
+                    >
+                      <EditIcon />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setOpenMenuId(openMenuId === card.id ? null : card.id);
+                      }}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-brand-600 hover:bg-brand-50 dark:text-brand-400 dark:hover:bg-brand-500/20 transition-colors"
+                      aria-label="More options"
+                    >
+                      <ThreeDotsIcon />
+                    </button>
+                  </div>
+                  {/* Features dropdown: three-dot ke neeche, screenshot jaisa */}
+                  {openMenuId === card.id && (
+                    <div className="absolute right-0 top-full mt-2 z-[100] min-w-[200px] rounded-xl border border-gray-200 bg-white py-2 shadow-xl dark:border-gray-700 dark:bg-gray-800">
+                      {menuItems.map(({ label, Icon, onClick, danger }) => (
+                        <button
+                          key={label}
+                          type="button"
+                          onClick={() => {
+                            onClick();
+                            setOpenMenuId(null);
+                          }}
+                          className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm whitespace-nowrap transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50 ${
+                            danger ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10" : "text-gray-700 dark:text-gray-300"
+                          }`}
+                        >
+                          <span className="flex-shrink-0 flex items-center justify-center w-5 h-5">
+                            <Icon />
+                          </span>
+                          <span>{label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="bg-violet-100/80 dark:bg-violet-900/30 px-4 py-3 sm:px-5 sm:py-4">
               <div className="flex items-start justify-between gap-2 mb-3">

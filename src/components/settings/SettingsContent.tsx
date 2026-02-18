@@ -3,25 +3,33 @@
 import React, { useState } from "react";
 import Switch from "@/components/form/switch/Switch";
 
+const navIconClass = "w-5 h-5 shrink-0";
+
 const GearIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+  <svg className={navIconClass} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009.19 18a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
   </svg>
 );
+
 const CurrencyIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  <svg className={navIconClass} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8M12 18V6" />
   </svg>
 );
+
 const SparkIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+  <svg className={navIconClass} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
   </svg>
 );
-const GlobeIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9a9 9 0 009 9m-9-9a9 9 0 009-9m9 9a9 9 0 019 9" />
+
+const CustomDomainIcon = () => (
+  <svg className={navIconClass} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M2 12h20" />
+    <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
   </svg>
 );
 
@@ -35,7 +43,112 @@ const navItems: { id: SettingsTab; label: string; icon: React.ReactNode }[] = [
   { id: "general", label: "General", icon: <GearIcon /> },
   { id: "payment", label: "Payment Configuration", icon: <CurrencyIcon /> },
   { id: "openai", label: "Open AI", icon: <SparkIcon /> },
-  { id: "custom-domain", label: "Custom Domain", icon: <GlobeIcon /> },
+  { id: "custom-domain", label: "Custom Domain", icon: <CustomDomainIcon /> },
+];
+
+type PaymentMethodId =
+  | "stripe"
+  | "razorpay"
+  | "paystack"
+  | "flutterwave"
+  | "phonepe"
+  | "payfast"
+  | "paypal"
+  | "iyzico"
+  | "manually";
+
+const iconBoxClass =
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg shadow-sm ring-1 ring-black/5";
+
+const paymentMethods: { id: PaymentMethodId; name: string; icon: React.ReactNode }[] = [
+  {
+    id: "stripe",
+    name: "Stripe",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#6772e5]`}>
+        <span className="text-xl font-bold tracking-tight text-white">S</span>
+      </div>
+    ),
+  },
+  {
+    id: "razorpay",
+    name: "Razorpay",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#3395ff]`}>
+        <span className="text-lg font-bold tracking-tight text-white">R</span>
+      </div>
+    ),
+  },
+  {
+    id: "paystack",
+    name: "Paystack",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#00c3f7]`}>
+        <span className="text-xl font-bold tracking-tight text-white">P</span>
+      </div>
+    ),
+  },
+  {
+    id: "flutterwave",
+    name: "Flutterwave",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#f5a623]`}>
+        <span className="text-xl font-bold tracking-tight text-white">F</span>
+      </div>
+    ),
+  },
+  {
+    id: "phonepe",
+    name: "PhonePe",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#5f259f]`}>
+        <span className="text-sm font-bold tracking-tight text-white">Pe</span>
+      </div>
+    ),
+  },
+  {
+    id: "payfast",
+    name: "PayFast",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#00a0d2]`}>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-white">payfast</span>
+      </div>
+    ),
+  },
+  {
+    id: "paypal",
+    name: "Paypal",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#003087]`}>
+        <span className="text-xl font-bold tracking-tight text-white">P</span>
+      </div>
+    ),
+  },
+  {
+    id: "iyzico",
+    name: "Iyzico",
+    icon: (
+      <div className={`${iconBoxClass} bg-[#0066b3]`}>
+        <div className="flex items-center gap-0.5">
+          <span className="text-[11px] font-extrabold italic text-white">i</span>
+          <span className="text-[10px] font-semibold text-white">yzico</span>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "manually",
+    name: "Manually",
+    icon: (
+      <div className={`${iconBoxClass} border-2 border-brand-400 bg-brand-50 dark:border-brand-500 dark:bg-brand-500/15`}>
+        <svg className="h-6 w-6 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8" strokeWidth={1.5} />
+          <circle cx="12" cy="12" r="5" strokeWidth={1.5} />
+          <circle cx="12" cy="12" r="2" strokeWidth={1.5} />
+        </svg>
+      </div>
+    ),
+  },
 ];
 
 export const SettingsContent = () => {
@@ -44,6 +157,35 @@ export const SettingsContent = () => {
   const [newsletterSeconds, setNewsletterSeconds] = useState("5");
   const [paypalEmail, setPaypalEmail] = useState("");
   const [currency, setCurrency] = useState("");
+  const [paymentToggles, setPaymentToggles] = useState<Record<PaymentMethodId, boolean>>({
+    stripe: false,
+    razorpay: false,
+    paystack: false,
+    flutterwave: false,
+    phonepe: false,
+    payfast: false,
+    paypal: false,
+    iyzico: false,
+    manually: false,
+  });
+
+  const handlePaymentToggle = (id: PaymentMethodId, checked: boolean) => {
+    setPaymentToggles((prev) => ({ ...prev, [id]: checked }));
+  };
+
+  const handlePaymentSave = () => {
+    // TODO: persist payment method settings
+  };
+
+  const [openAiEnabled, setOpenAiEnabled] = useState(false);
+  const handleOpenAiSave = () => {
+    // TODO: persist Open AI setting
+  };
+
+  const [customDomain, setCustomDomain] = useState("");
+  const handleApplyCustomDomain = () => {
+    // TODO: submit custom domain for approval
+  };
 
   return (
     <>
@@ -193,23 +335,122 @@ export const SettingsContent = () => {
           )}
 
           {activeTab === "payment" && (
-            <div className="card-premium p-6">
-              <h2 className="text-base font-semibold text-gray-900 dark:text-white">Payment Configuration</h2>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Coming soon.</p>
+            <div className="card-premium p-6 space-y-6">
+              <h2 className="text-base font-semibold text-gray-900 dark:text-white">Payment Method</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {paymentMethods.map((method) => (
+                  <div
+                    key={method.id}
+                    className="flex items-center justify-between gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 shadow-sm"
+                  >
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
+                      {method.icon}
+                      <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                        {method.name}
+                      </span>
+                    </div>
+                    <div className="shrink-0" onClick={(e) => e.stopPropagation()}>
+                      <Switch
+                        label=""
+                        defaultChecked={paymentToggles[method.id]}
+                        onChange={(checked) => handlePaymentToggle(method.id, checked)}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="pt-2">
+                <button type="button" onClick={handlePaymentSave} className="btn-primary-premium">
+                  Save
+                </button>
+              </div>
             </div>
           )}
 
           {activeTab === "openai" && (
-            <div className="card-premium p-6">
+            <div className="card-premium p-6 space-y-6">
               <h2 className="text-base font-semibold text-gray-900 dark:text-white">Open AI</h2>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Coming soon.</p>
+              <hr className="border-gray-200 dark:border-gray-700" />
+              <div>
+                <Switch
+                  label="Open AI"
+                  defaultChecked={openAiEnabled}
+                  onChange={(checked) => setOpenAiEnabled(checked)}
+                />
+              </div>
+              <div className="pt-2">
+                <button type="button" onClick={handleOpenAiSave} className="btn-primary-premium">
+                  Save
+                </button>
+              </div>
             </div>
           )}
 
           {activeTab === "custom-domain" && (
-            <div className="card-premium p-6">
-              <h2 className="text-base font-semibold text-gray-900 dark:text-white">Custom Domain</h2>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Coming soon.</p>
+            <div className="card-premium p-6 space-y-6">
+              <div>
+                <label htmlFor="custom-domain" className={labelClass}>
+                  Custom Domain: <span className="text-red-500">*</span>
+                </label>
+                <div className="mt-1.5 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
+                  <input
+                    id="custom-domain"
+                    type="text"
+                    placeholder="your-domain.com"
+                    value={customDomain}
+                    onChange={(e) => setCustomDomain(e.target.value)}
+                    className={inputClass}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyCustomDomain}
+                    className="btn-primary-premium shrink-0"
+                  >
+                    Apply for Custom Domain
+                  </button>
+                </div>
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  Note: your domain is &apos;https://www.example.com&apos; then please add only &apos;example.com&apos; in above input field.
+                </p>
+              </div>
+
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">How it Works?</h3>
+                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                  <li className="flex gap-2">
+                    <span className="text-gray-400 dark:text-gray-500">•</span>
+                    <span>Once your custom domain is approved, you can use your own URL for your vCards.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gray-400 dark:text-gray-500">•</span>
+                    <span>
+                      URL before custom domain:{" "}
+                      <a
+                        href="https://appurl.com/{alias}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-brand-500 hover:underline"
+                      >
+                        https://appurl.com/&#123;alias&#125;
+                      </a>
+                    </span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gray-400 dark:text-gray-500">•</span>
+                    <span>
+                      URL after custom domain:{" "}
+                      <a
+                        href="https://custom-domain/{alias}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-brand-500 hover:underline"
+                      >
+                        https://custom-domain/&#123;alias&#125;
+                      </a>
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
           )}
         </div>

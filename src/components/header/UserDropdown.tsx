@@ -10,6 +10,7 @@ import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import Button from "../ui/button/Button";
 import { EyeIcon, EyeCloseIcon, CopyIcon } from "@/icons";
+import { useUser } from "@/context/UserContext";
 
 const iconClass = "w-5 h-5 shrink-0 text-gray-500 dark:text-gray-400";
 const itemClass =
@@ -72,9 +73,6 @@ const GearIcon = () => (
   </svg>
 );
 
-const userName = "ROHIT CHAUHAN";
-const userEmail = "rohiitt786@gmail.com";
-
 const LANGUAGES = [
   "Arabic",
   "Chinese",
@@ -89,6 +87,10 @@ const LANGUAGES = [
 ];
 
 export default function UserDropdown() {
+  const { user } = useUser();
+  const userName = user?.name ?? "User";
+  const userEmail = user?.email ?? "";
+
   const [isOpen, setIsOpen] = useState(false);
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");

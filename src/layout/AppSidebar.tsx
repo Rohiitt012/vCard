@@ -320,8 +320,8 @@ const AppSidebar: React.FC = () => {
     <aside
       className={`fixed mt-16 flex flex-col lg:mt-0 top-0 left-0 h-screen transition-all duration-300 ease-in-out z-50
         bg-white dark:bg-gray-900 text-gray-900
-        border-r border-gray-200/90 dark:border-gray-800
-        shadow-[4px_0_32px_-8px_rgba(16,24,40,0.08)] dark:shadow-[4px_0_32px_-8px_rgba(0,0,0,0.35)]
+        border-r border-gray-200/80 dark:border-gray-800/90
+        shadow-[var(--shadow-premium-md)] dark:shadow-[4px_0_24px_-4px_rgba(0,0,0,0.25)]
         px-4 lg:px-5
         ${
           isExpanded || isMobileOpen

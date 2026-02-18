@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useUser } from "@/context/UserContext";
 
 const PlusIcon = () => (
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +70,8 @@ const statCards = [
 ];
 
 export const DashboardCards = () => {
-  const userName = "ROHIT CHAUHAN";
+  const { user } = useUser();
+  const displayName = user?.name ?? "User";
 
   const cardBaseClass = "card-premium card-premium-hover rounded-2xl p-4 sm:p-5 md:p-6 min-h-[140px] sm:min-h-[160px] md:min-h-[168px] flex flex-col";
 
@@ -78,13 +80,13 @@ export const DashboardCards = () => {
       {/* Welcome / Add New Card - same size as others */}
       <div className={`${cardBaseClass} border-2 border-brand-200/90 dark:border-brand-800 bg-gradient-to-br from-slate-50 via-white to-blue-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-brand-950/30 shadow-[var(--shadow-theme-lg)]`}>
         <h3 className="font-bold text-gray-900 dark:text-white text-base md:text-lg tracking-tight">
-          Hey {userName}
+          Hey {displayName}
         </h3>
         <p className="mt-2 text-theme-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-1 line-clamp-3">
           Create your business vCard instantly – no tech skills needed!
         </p>
         <Link
-          href="/vcards/new"
+          href="/vcards"
           className="btn-primary-premium mt-4 inline-flex items-center gap-2 w-fit border-0"
         >
           <PlusIcon />
