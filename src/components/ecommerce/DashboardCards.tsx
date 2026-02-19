@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useUser } from "@/context/UserContext";
+import { useVCards } from "@/context/VCardsContext";
 
 const PlusIcon = () => (
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -10,10 +11,10 @@ const PlusIcon = () => (
   </svg>
 );
 
-const statCards = [
+const getStatCards = (activeVCardsCount: number) => [
   {
     title: "Total Active vCards",
-    value: "1",
+    value: String(activeVCardsCount),
     bgClass: "bg-orange-50 dark:bg-orange-950/30",
     borderClass: "border-orange-200 dark:border-orange-800",
     textClass: "text-orange-600 dark:text-orange-400",
@@ -71,7 +72,10 @@ const statCards = [
 
 export const DashboardCards = () => {
   const { user } = useUser();
+  const { vCards } = useVCards();
   const displayName = user?.name ?? "User";
+  const activeVCardsCount = vCards.filter((c) => c.status).length;
+  const statCards = getStatCards(activeVCardsCount);
 
   const cardBaseClass = "card-premium card-premium-hover rounded-2xl p-4 sm:p-5 md:p-6 min-h-[140px] sm:min-h-[160px] md:min-h-[168px] flex flex-col";
 

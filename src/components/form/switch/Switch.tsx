@@ -34,7 +34,7 @@ const Switch: React.FC<SwitchProps> = ({
             ? "bg-brand-500 "
             : "bg-gray-200 dark:bg-white/10", // Blue version
           knob: isChecked
-            ? "translate-x-full bg-white"
+            ? "translate-x-[1.375rem] bg-white" // thumb andar hi rahe, bahar na nikle (44px - 4px - 16px = 24px)
             : "translate-x-0 bg-white",
         }
       : {
@@ -42,7 +42,7 @@ const Switch: React.FC<SwitchProps> = ({
             ? "bg-gray-800 dark:bg-white/10"
             : "bg-gray-200 dark:bg-white/10", // Gray version
           knob: isChecked
-            ? "translate-x-full bg-white"
+            ? "translate-x-[1.375rem] bg-white"
             : "translate-x-0 bg-white",
         };
 
@@ -53,7 +53,7 @@ const Switch: React.FC<SwitchProps> = ({
       }`}
       onClick={handleToggle} // Toggle when the label itself is clicked
     >
-      <div className="relative">
+      <div className="relative min-h-6 overflow-visible">
         <div
           className={`block transition duration-150 ease-linear h-6 w-11 rounded-full ${
             disabled
@@ -61,8 +61,9 @@ const Switch: React.FC<SwitchProps> = ({
               : switchColors.background
           }`}
         ></div>
+        {/* Thumb track ke andar hi: chota circle, inset se bahar na nikle */}
         <div
-          className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full shadow-theme-sm duration-150 ease-linear transform ${switchColors.knob}`}
+          className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white duration-150 ease-linear transform ${switchColors.knob}`}
         ></div>
       </div>
       {label}

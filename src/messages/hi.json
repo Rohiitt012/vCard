@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "vcards": "vCards",
+    "whatsappStores": "WhatsApp स्टोर",
+    "whatsappProductOrder": "WhatsApp प्रोडक्ट ऑर्डर",
+    "inquiries": "पूछताछ",
+    "appointments": "अपॉइंटमेंट",
+    "productOrders": "प्रोडक्ट ऑर्डर",
+    "virtualBackgrounds": "वर्चुअल बैकग्राउंड",
+    "affiliations": "एफिलिएशन",
+    "storage": "स्टोरेज",
+    "settings": "सेटिंग्स",
+    "manageSubscription": "सब्सक्रिप्शन प्रबंधित करें"
+  },
+  "common": {
+    "search": "खोजें",
+    "show": "दिखाएं",
+    "results": "नतीजे",
+    "successful": "सफल",
+    "vcardTableViewChanged": "vCard टेबल व्यू सफलतापूर्वक बदला गया।",
+    "accountSettings": "अकाउंट सेटिंग्स",
+    "changePassword": "पासवर्ड बदलें",
+    "signOut": "साइन आउट",
+    "support": "सहायता",
+    "notification": "सूचना",
+    "viewAll": "सभी सूचनाएं देखें"
+  },
+  "vcards": {
+    "title": "vCards",
+    "vcardName": "vCARD नाम",
+    "previewUrl": "प्रीव्यू URL",
+    "viewCount": "व्यू काउंट",
+    "status": "स्टेटस",
+    "createdAt": "बनाया गया",
+    "action": "एक्शन"
+  }
+}

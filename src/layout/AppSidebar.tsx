@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
 import { useSidebar } from "../context/SidebarContext";
 import { OpenMyProfileLogo } from "@/components/brand/OpenMyProfileLogo";
 import { ChevronDownIcon, HorizontaLDots } from "../icons/index";
@@ -80,26 +81,26 @@ const DiamondIcon = () => (
   </svg>
 );
 type NavItem = {
-  name: string;
+  nameKey: string;
   icon: React.ReactNode;
   path?: string;
-  iconColor: string; // Tailwind text color when inactive (e.g. text-blue-500)
+  iconColor: string;
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-// Open My Profile style nav items with distinct colors (professional dashboard look)
+// Open My Profile style nav items – names from useLanguage().t("nav.*")
 const navItems: NavItem[] = [
-  { icon: <DashboardIcon />, name: "Dashboard", path: "/", iconColor: "text-blue-500 dark:text-blue-400" },
-  { icon: <VCardIcon />, name: "vCards", path: "/vcards", iconColor: "text-violet-500 dark:text-violet-400" },
-  { icon: <WhatsAppIcon />, name: "WhatsApp Stores", path: "/whatsapp-stores", iconColor: "text-emerald-500 dark:text-emerald-400" },
-  { icon: <OrderListIcon />, name: "WhatsApp Product Order", path: "/whatsapp-product-order", iconColor: "text-amber-500 dark:text-amber-400" },
-  { icon: <InquiriesIcon />, name: "Inquiries", path: "/inquiries", iconColor: "text-rose-500 dark:text-rose-400" },
-  { icon: <AppointmentsIcon />, name: "Appointments", path: "/appointments", iconColor: "text-sky-500 dark:text-sky-400" },
-  { icon: <ShoppingBagIcon />, name: "Product Orders", path: "/product-orders", iconColor: "text-orange-500 dark:text-orange-400" },
-  { icon: <CameraIcon />, name: "Virtual Backgrounds", path: "/virtual-backgrounds", iconColor: "text-indigo-500 dark:text-indigo-400" },
-  { icon: <AffiliationsIcon />, name: "Affiliations", path: "/affiliations", iconColor: "text-teal-500 dark:text-teal-400" },
-  { icon: <StorageIcon />, name: "Storage", path: "/storage", iconColor: "text-cyan-500 dark:text-cyan-400" },
-  { icon: <SettingsIcon />, name: "Settings", path: "/settings", iconColor: "text-slate-500 dark:text-slate-400" },
+  { icon: <DashboardIcon />, nameKey: "dashboard", path: "/", iconColor: "text-blue-500 dark:text-blue-400" },
+  { icon: <VCardIcon />, nameKey: "vcards", path: "/vcards", iconColor: "text-violet-500 dark:text-violet-400" },
+  { icon: <WhatsAppIcon />, nameKey: "whatsappStores", path: "/whatsapp-stores", iconColor: "text-emerald-500 dark:text-emerald-400" },
+  { icon: <OrderListIcon />, nameKey: "whatsappProductOrder", path: "/whatsapp-product-order", iconColor: "text-amber-500 dark:text-amber-400" },
+  { icon: <InquiriesIcon />, nameKey: "inquiries", path: "/inquiries", iconColor: "text-rose-500 dark:text-rose-400" },
+  { icon: <AppointmentsIcon />, nameKey: "appointments", path: "/appointments", iconColor: "text-sky-500 dark:text-sky-400" },
+  { icon: <ShoppingBagIcon />, nameKey: "productOrders", path: "/product-orders", iconColor: "text-orange-500 dark:text-orange-400" },
+  { icon: <CameraIcon />, nameKey: "virtualBackgrounds", path: "/virtual-backgrounds", iconColor: "text-indigo-500 dark:text-indigo-400" },
+  { icon: <AffiliationsIcon />, nameKey: "affiliations", path: "/affiliations", iconColor: "text-teal-500 dark:text-teal-400" },
+  { icon: <StorageIcon />, nameKey: "storage", path: "/storage", iconColor: "text-cyan-500 dark:text-cyan-400" },
+  { icon: <SettingsIcon />, nameKey: "settings", path: "/settings", iconColor: "text-slate-500 dark:text-slate-400" },
 ];
 
 const othersItems: NavItem[] = [];
@@ -111,6 +112,7 @@ const HamburgerIcon = () => (
 );
 
 const AppSidebar: React.FC = () => {
+  const { t } = useLanguage();
   const { isExpanded, isMobileOpen, isHovered, setIsHovered, toggleSidebar, toggleMobileSidebar } = useSidebar();
   const pathname = usePathname();
 
@@ -128,7 +130,7 @@ const AppSidebar: React.FC = () => {
   ) => (
     <ul className="flex flex-col gap-1">
       {navItems.map((nav, index) => (
-        <li key={nav.name}>
+        <li key={nav.nameKey}>
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
@@ -152,7 +154,7 @@ const AppSidebar: React.FC = () => {
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className={`menu-item-text`}>{nav.name}</span>
+                <span className={`menu-item-text`}>{t(`nav.${nav.nameKey}`)}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
                 <ChevronDownIcon
@@ -186,7 +188,7 @@ const AppSidebar: React.FC = () => {
                 </span>
                 {(isExpanded || isHovered || isMobileOpen) && (
                   <span className={isActive(nav.path) ? "font-semibold text-white" : ""}>
-                    {nav.name}
+                    {t(`nav.${nav.nameKey}`)}
                   </span>
                 )}
               </Link>
@@ -416,7 +418,7 @@ const AppSidebar: React.FC = () => {
             </span>
             {(isExpanded || isHovered || isMobileOpen) && (
               <span className={pathname?.startsWith("/manage-subscription") ? "font-semibold text-white" : ""}>
-                Manage Subscription
+                {t("nav.manageSubscription")}
               </span>
             )}
           </Link>

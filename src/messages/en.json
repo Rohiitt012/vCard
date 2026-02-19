@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "vcards": "vCards",
+    "whatsappStores": "WhatsApp Stores",
+    "whatsappProductOrder": "WhatsApp Product Order",
+    "inquiries": "Inquiries",
+    "appointments": "Appointments",
+    "productOrders": "Product Orders",
+    "virtualBackgrounds": "Virtual Backgrounds",
+    "affiliations": "Affiliations",
+    "storage": "Storage",
+    "settings": "Settings",
+    "manageSubscription": "Manage Subscription"
+  },
+  "common": {
+    "search": "Search",
+    "show": "Show",
+    "results": "results",
+    "successful": "Successful",
+    "vcardTableViewChanged": "vCard table view changed successfully.",
+    "accountSettings": "Account Settings",
+    "changePassword": "Change Password",
+    "signOut": "Sign Out",
+    "support": "Support",
+    "notification": "Notification",
+    "viewAll": "View All Notifications"
+  },
+  "vcards": {
+    "title": "vCards",
+    "vcardName": "VCARD NAME",
+    "previewUrl": "PREVIEW URL",
+    "viewCount": "VIEW COUNT",
+    "status": "STATUS",
+    "createdAt": "CREATED AT",
+    "action": "ACTION"
+  }
+}

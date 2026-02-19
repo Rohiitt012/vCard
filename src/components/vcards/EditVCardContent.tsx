@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const HelpIcon = () => (
   <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -457,6 +457,38 @@ function buildTimeOptions(): string[] {
 }
 const TIME_OPTIONS = buildTimeOptions();
 
+/** Light gradients need dark placeholder content so it's visible */
+function isLightTemplate(accent: string): boolean {
+  return /from-(gray|sky|amber|rose|pink|lavender|stone|teal)-[123]00|to-white|via-sky-100|to-orange-200|to-pink-400|to-rose-500|to-pink-500/.test(accent);
+}
+
+/** Get a solid color from template accent for mobile preview (border, button, text) */
+function getAccentPrimaryColor(accent: string): string {
+  if (/emerald|teal|green/.test(accent)) return "#10b981";
+  if (/lime/.test(accent)) return "#84cc16";
+  if (/violet|purple/.test(accent)) return "#7c3aed";
+  if (/amber|orange|yellow/.test(accent)) return "#f59e0b";
+  if (/red|rose/.test(accent)) return "#e11d48";
+  if (/blue|sky|indigo/.test(accent)) return "#3b82f6";
+  if (/slate|gray|neutral|stone|zinc/.test(accent)) return "#64748b";
+  if (/pink|fuchsia/.test(accent)) return "#ec4899";
+  if (/cyan/.test(accent)) return "#06b6d4";
+  return "#B4FF3B";
+}
+
+/** Preview content type per template (screenshot-style: all show filled content like Dental Care / Boutique Shop) */
+function getPreviewType(template: { id: number; name: string }): "flower" | "flower-shop" | "travel" | "travel-dark" | "personal" | "corporate" | "creative" | "generic" {
+  const n = template.name.toLowerCase();
+  if (n.includes("flower garden") || n.includes("wedding planner") || n.includes("salon") || n.includes("boutique shop") || n.includes("floral") || n.includes("dental care")) return "flower";
+  if (n.includes("flower shop") || (n.includes("garden") && !n.includes("flower garden"))) return "flower-shop";
+  if (n.includes("travel explorer") || n.includes("travel agent")) return "travel";
+  if (n.includes("tours") || n.includes("travel agency") || n.includes("horizon pro")) return "travel-dark";
+  if (n.includes("executive") || n.includes("modern minimal") || n.includes("consulting") || n.includes("simple contact") || n.includes("nonprofit") || n.includes("insurance") || n.includes("restaurant") || n.includes("realtor") || n.includes("yoga") || n.includes("freelancer")) return "personal";
+  if (n.includes("corporate") || n.includes("legal") || n.includes("finance pro")) return "corporate";
+  if (n.includes("creative studio") || n.includes("marketing agency") || n.includes("agency bold")) return "creative";
+  return "generic";
+}
+
 const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: string }[] = [
   { id: 1, name: "Executive Pro", description: "Clean, authoritative layout for leaders and executives.", accent: "from-slate-700 to-slate-900" },
   { id: 2, name: "Modern Minimal", description: "Minimalist design with ample white space and clarity.", accent: "from-gray-100 to-white" },
@@ -539,9 +571,13 @@ type EditVCardContentProps = {
 
 export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const showCreatedSuccess = searchParams.get("created") === "1";
 
   const [activeSection, setActiveSection] = useState<string>("basic");
   const [activeTab, setActiveTab] = useState<"basic" | "personal" | "other">("basic");
+  const [coverType, setCoverType] = useState<"Image" | "Video" | "YouTube Link">("Image");
+  const [basicDetailsUpdated, setBasicDetailsUpdated] = useState(false);
   const [socialLinksView, setSocialLinksView] = useState<"social" | "custom">("social");
 
   // simple placeholder states where needed
@@ -559,6 +595,23 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [customLinksShowPerPage, setCustomLinksShowPerPage] = useState(10);
   const [qrDownloadSize, setQrDownloadSize] = useState(200);
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(null);
+  const [dynamicPrimaryColor, setDynamicPrimaryColor] = useState("#B4FF3B");
+  const [dynamicBgSecondary, setDynamicBgSecondary] = useState("#193743");
+  const [dynamicBgColor, setDynamicBgColor] = useState("#0c2833");
+  const [dynamicButtonTextColor, setDynamicButtonTextColor] = useState("#332b2b");
+  const [dynamicLabelColor, setDynamicLabelColor] = useState("#ffffff");
+  const [dynamicDescriptionColor, setDynamicDescriptionColor] = useState("#a6b8c0");
+  const [stickyButtonPosition, setStickyButtonPosition] = useState<"left" | "right">("right");
+  const [selectedButtonStyle, setSelectedButtonStyle] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10>(1);
+  // Sync Dynamic vCard colors from selected vCard template
+  useEffect(() => {
+    if (selectedTemplateId == null) return;
+    const template = VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId);
+    if (!template) return;
+    const primary = getAccentPrimaryColor(template.accent);
+    setDynamicPrimaryColor(primary);
+    setDynamicButtonTextColor(isLightTemplate(template.accent) ? "#332b2b" : "#ffffff");
+  }, [selectedTemplateId]);
   const [showAdvancedPassword, setShowAdvancedPassword] = useState(false);
   const [removeBranding, setRemoveBranding] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
@@ -654,8 +707,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
   return (
     <div className="p-4 sm:p-6 md:p-8">
-      {/* Header */}
-      <div className="mb-6 flex flex-wrap items-center justify-end gap-3">
+      {/* Header: Edit vCard title + Back */}
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="page-title">Edit vCard</h1>
         <button
           type="button"
           onClick={() => router.back()}
@@ -664,6 +718,24 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           <span className="hidden sm:inline">Back</span>
         </button>
       </div>
+
+      {/* Success banners */}
+      {basicDetailsUpdated && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          Basic Details updated successfully.
+        </div>
+      )}
+      {!basicDetailsUpdated && showCreatedSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          vCard created successfully.
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left sidebar */}
@@ -724,7 +796,14 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                 </div>
 
                 {activeTab === "basic" && (
-                  <form className="space-y-5">
+                  <form
+                    className="space-y-5"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      setBasicDetailsUpdated(true);
+                      setActiveTab("personal");
+                    }}
+                  >
                     {/* URL Alias - full width with help + refresh */}
                     <div>
                       <label className={`${labelClass} inline-flex items-center gap-1.5`}>
@@ -809,7 +888,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </button>
                       </div>
 
-                      {/* Right: Occupation, Cover Type, Cover Image, Profile Image */}
+                      {/* Right: Occupation, Cover Type, conditional Cover Image/Video/YouTube, Profile Image */}
                       <div className="space-y-4">
                         <div>
                           <label className={labelClass}>Occupation:</label>
@@ -817,32 +896,71 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </div>
                         <div>
                           <label className={labelClass}>Cover Type:</label>
-                          <select className={inputClass}>
+                          <select className={inputClass} value={coverType} onChange={(e) => setCoverType(e.target.value as "Image" | "Video" | "YouTube Link")}>
                             <option>Image</option>
                             <option>Video</option>
+                            <option>YouTube Link</option>
                           </select>
                         </div>
-                        <div>
-                          <label className={`${labelClass} inline-flex items-center gap-1.5`}>
-                            Cover Image:
-                            <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
-                              <HelpIcon />
-                            </button>
-                          </label>
-                          <div className="relative mt-1.5 flex items-center justify-center h-24 w-full rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 overflow-hidden group">
-                            <div className="absolute inset-0 bg-[linear-gradient(135deg,#1e293b_0%,#334155_50%,#475569_100%)]" />
-                            <button
-                              type="button"
-                              className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
-                              aria-label="Edit cover"
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                              </svg>
-                            </button>
+                        {coverType === "Image" && (
+                          <div>
+                            <label className={`${labelClass} inline-flex items-center gap-1.5`}>
+                              Cover Image:
+                              <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                                <HelpIcon />
+                              </button>
+                            </label>
+                            <div className="relative mt-1.5 flex items-center justify-center h-24 w-full rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 overflow-hidden group">
+                              <div className="absolute inset-0 bg-[linear-gradient(135deg,#1e293b_0%,#334155_50%,#475569_100%)]" />
+                              <button
+                                type="button"
+                                className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
+                                aria-label="Edit cover"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                              </button>
+                            </div>
+                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
                           </div>
-                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
-                        </div>
+                        )}
+                        {coverType === "Video" && (
+                          <div>
+                            <label className={`${labelClass} inline-flex items-center gap-1.5`}>
+                              Cover Video:
+                              <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                                <HelpIcon />
+                              </button>
+                            </label>
+                            <div className="relative mt-1.5 flex items-center justify-center h-40 w-40 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 overflow-hidden group">
+                              <svg className="w-14 h-14 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                              <button
+                                type="button"
+                                className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
+                                aria-label="Edit cover video"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                              </button>
+                            </div>
+                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: mp4.</p>
+                          </div>
+                        )}
+                        {coverType === "YouTube Link" && (
+                          <div>
+                            <label className={`${labelClass} inline-flex items-center gap-1.5`}>
+                              YouTube URL:
+                              <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                                <HelpIcon />
+                              </button>
+                            </label>
+                            <input type="url" className={inputClass} placeholder="https://www.youtube.com/watch?v=..." />
+                          </div>
+                        )}
                         <div>
                           <label className={`${labelClass} inline-flex items-center gap-1.5`}>
                             Profile Image:
@@ -1049,8 +1167,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               }`}
                             >
                               <span
-                                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition-transform ${
-                                  on ? "translate-x-5" : "translate-x-0.5"
+                                className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
+                                  on ? "translate-x-[1.375rem]" : "translate-x-0"
                                 }`}
                               />
                             </button>
@@ -1095,13 +1213,14 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
               </>
             )}
 
-            {/* Templates */}
+            {/* Templates – template grid + mobile view preview in phone frame */}
             {activeSection === "templates" && (
-              <div className="space-y-6">
-                <label className={labelClass}>
-                  Select Template: <span className="text-red-500">*</span>
-                </label>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-h-[70vh] overflow-y-auto pr-1">
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                <div className="flex-1 min-w-0 space-y-4">
+                  <label className={labelClass}>
+                    Select Template: <span className="text-red-500">*</span>
+                  </label>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 max-h-[70vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600">
                   {VCARD_TEMPLATES.map((template) => {
                     const isSelected = selectedTemplateId === template.id;
                     return (
@@ -1109,25 +1228,169 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         key={template.id}
                         type="button"
                         onClick={() => setSelectedTemplateId(template.id)}
-                        className={`relative rounded-xl border-2 p-4 text-left transition-all focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
+                        className={`group relative rounded-2xl border-2 p-0 text-left transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 overflow-hidden shadow-sm hover:shadow-md ${
                           isSelected
-                            ? "border-brand-500 bg-brand-50/50 dark:bg-brand-500/10 shadow-md"
-                            : "border-gray-200 dark:border-gray-700 bg-gradient-to-br from-slate-100 via-white to-slate-50 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 hover:border-brand-400 dark:hover:border-brand-500"
+                            ? "border-brand-500 bg-white dark:bg-gray-800 shadow-md"
+                            : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-brand-400 dark:hover:border-brand-500"
                         }`}
                       >
-                        <div
-                          className={`relative mb-3 overflow-hidden rounded-2xl shadow-md bg-gradient-to-b ${template.accent} aspect-[9/16]`}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
-                          <div className="absolute inset-x-3 bottom-3">
-                            <div className="rounded-lg bg-black/70 px-3 py-1.5">
-                              <p className="text-xs font-semibold text-white truncate">{template.name}</p>
-                            </div>
+                        {/* Preview area: gradient + placeholder content + title bar; on hover content scrolls upward */}
+                        <div className="relative mb-3 overflow-hidden rounded-t-2xl aspect-[9/16] w-full">
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-b ${template.accent} transition-transform duration-500 ease-out group-hover:translate-y-[-12%]`}
+                          />
+                          {/* Template-specific preview content (screenshot-style) */}
+                          {(() => {
+                            const light = isLightTemplate(template.accent);
+                            const bar = light ? "bg-gray-700/80" : "bg-white/70";
+                            const circle = light ? "bg-gray-600/80" : "bg-white/80";
+                            const icon = light ? "bg-gray-600/70" : "bg-white/50";
+                            const text = light ? "text-gray-800/95" : "text-white/95";
+                            const textSec = light ? "text-gray-700/90" : "text-white/80";
+                            const pt = getPreviewType(template);
+                            const base = "absolute inset-0 flex flex-col pt-2 px-2 pointer-events-none overflow-hidden";
+                            if (pt === "flower") {
+                              return (
+                                <div className={base}>
+                                  <div className={`w-8 h-8 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                  <p className={`text-[9px] font-semibold ${text} text-center leading-tight`}>Jenny Wilson</p>
+                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Flower Garden</p>
+                                  <div className="flex justify-center gap-1 mb-1">
+                                    {[1, 2, 3, 4].map((i) => (
+                                      <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
+                                    ))}
+                                  </div>
+                                  <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
+                                  <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
+                                  <p className={`text-[8px] font-medium ${text} text-center mt-1.5 border-t border-white/30 pt-1`}>Gallery</p>
+                                </div>
+                              );
+                            }
+                            if (pt === "flower-shop") {
+                              return (
+                                <div className={base}>
+                                  <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
+                                    <span className={`text-[6px] font-bold ${text} text-center leading-tight`}>SHOP</span>
+                                  </div>
+                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Flower Shop</p>
+                                  <p className={`text-[7px] ${textSec} text-center mb-1`}>Let Your Garden Bloom With Us</p>
+                                  <div className="flex justify-center gap-0.5 mb-1">
+                                    {[1, 2, 3, 4, 5].map((i) => (
+                                      <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                    ))}
+                                  </div>
+                                  <p className={`text-[7px] ${textSec} text-center`}>flowergarden@gmail.com</p>
+                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
+                                </div>
+                              );
+                            }
+                            if (pt === "travel") {
+                              return (
+                                <div className={base}>
+                                  <div className={`h-4 rounded ${bar} flex items-center justify-center mb-1`}>
+                                    <span className={`text-[8px] font-bold ${text}`}>TRAVEL</span>
+                                  </div>
+                                  <div className={`w-9 h-9 rounded-sm ${circle} shrink-0 mx-auto mb-1`} />
+                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Bessie Cooper</p>
+                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Travel Agent</p>
+                                  <div className="flex justify-center gap-0.5 mb-1">
+                                    {[1, 2, 3, 4].map((i) => (
+                                      <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                    ))}
+                                  </div>
+                                  <p className={`text-[7px] ${textSec} text-center`}>michael@gmail.com · +49 95864 12484</p>
+                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
+                                </div>
+                              );
+                            }
+                            if (pt === "travel-dark") {
+                              return (
+                                <div className={base}>
+                                  <div className={`w-8 h-6 rounded ${bar} flex items-center justify-center mx-auto mb-1`} />
+                                  <p className={`text-[9px] font-bold ${text} text-center`}>Desi Miles</p>
+                                  <p className={`text-[8px] ${textSec} text-center`}>Tours & Travel Agency</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5 leading-tight`}>Every Journey Begins With A Single Step</p>
+                                  <div className="flex justify-center gap-0.5 my-1">
+                                    {[1, 2, 3, 4, 5].map((i) => (
+                                      <div key={i} className={`w-3 h-3 rounded-full ${icon}`} />
+                                    ))}
+                                  </div>
+                                  <p className={`text-[7px] ${textSec} text-center`}>advmur@gmail.com · +91888887700</p>
+                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
+                                </div>
+                              );
+                            }
+                            if (pt === "personal") {
+                              return (
+                                <div className={base}>
+                                  <div className={`w-10 h-10 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Name</p>
+                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Title / Profession</p>
+                                  <div className="flex justify-center gap-1 mb-1">
+                                    {[1, 2, 3, 4].map((i) => (
+                                      <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
+                                    ))}
+                                  </div>
+                                  <p className={`text-[7px] ${textSec} text-center`}>email@example.com · +1 234 567 890</p>
+                                  <p className={`text-[7px] ${textSec} text-center`}>Location</p>
+                                </div>
+                              );
+                            }
+                            if (pt === "corporate") {
+                              return (
+                                <div className={base}>
+                                  <div className={`w-10 h-10 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Executive</p>
+                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Leadership · Board</p>
+                                  <div className={`h-1.5 rounded ${bar} w-full max-w-[90%] mx-auto mb-1`} />
+                                  <div className={`h-1.5 rounded ${bar} w-[70%] mx-auto mb-1`} />
+                                  <p className={`text-[7px] ${textSec} text-center`}>contact@company.com</p>
+                                </div>
+                              );
+                            }
+                            if (pt === "creative") {
+                              return (
+                                <div className={base}>
+                                  <p className={`text-[10px] font-bold ${text} text-center uppercase tracking-wider mt-2`}>Creative</p>
+                                  <p className={`text-[8px] ${textSec} text-center mb-2`}>Studio</p>
+                                  <div className={`h-2 rounded ${bar} w-full mb-0.5`} />
+                                  <div className={`h-2 rounded ${bar} w-[85%] mx-auto mb-0.5`} />
+                                  <div className={`h-2 rounded ${bar} w-[60%] mx-auto mb-1`} />
+                                  <div className="flex justify-center gap-1">
+                                    {[1, 2, 3].map((i) => (
+                                      <div key={i} className={`w-6 h-6 rounded ${icon}`} />
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            }
+                            // generic = same filled style as screenshot (Jenny Wilson style so no blank PREVIEW)
+                            return (
+                              <div className={base}>
+                                <div className={`w-8 h-8 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                <p className={`text-[9px] font-semibold ${text} text-center leading-tight`}>Jenny Wilson</p>
+                                <p className={`text-[8px] ${textSec} text-center mb-1`}>{template.name}</p>
+                                <div className="flex justify-center gap-1 mb-1">
+                                  {[1, 2, 3, 4].map((i) => (
+                                    <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
+                                  ))}
+                                </div>
+                                <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
+                                <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
+                                <p className={`text-[8px] font-medium ${text} text-center mt-1.5 border-t border-white/30 pt-1`}>Gallery</p>
+                              </div>
+                            );
+                          })()}
+                          {/* Dark bar at bottom of preview with template name */}
+                          <div className="absolute inset-x-0 bottom-0 h-10 flex items-center bg-gray-900/90 dark:bg-black/80 px-3">
+                            <p className="text-sm font-semibold text-white truncate">{template.name}</p>
                           </div>
                         </div>
-                        <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">{template.description}</p>
+                        <div className="px-4 pb-4 pt-0">
+                          <p className="text-[11px] leading-snug text-gray-500 dark:text-gray-400">{template.description}</p>
+                        </div>
                         {isSelected && (
-                          <span className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white">
+                          <span className="absolute top-3 right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white shadow">
                             <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
@@ -1136,7 +1399,89 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       </button>
                     );
                   })}
+                  </div>
                 </div>
+
+                {/* Mobile view preview – selected template theme in phone frame */}
+                {(() => {
+                  const selectedTemplate = selectedTemplateId != null ? VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId) : null;
+                  const accent = selectedTemplate?.accent ?? "from-lime-400 to-lime-500";
+                  const primaryColor = selectedTemplate ? getAccentPrimaryColor(selectedTemplate.accent) : "#B4FF3B";
+                  const isLight = selectedTemplate ? isLightTemplate(selectedTemplate.accent) : false;
+                  const textOnPrimary = isLight ? "#1f2937" : "#ffffff";
+                  return (
+                    <div className="lg:w-[320px] shrink-0 flex flex-col items-center">
+                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Mobile preview</p>
+                      <div className="relative w-[280px] h-[560px] rounded-[2.25rem] bg-gray-900 shadow-2xl overflow-hidden border-[8px] border-gray-800 flex-shrink-0">
+                        <div className="absolute left-1/2 top-0 -translate-x-1/2 w-24 h-5 rounded-b-2xl bg-black z-20" />
+                        <div className="absolute inset-0 flex flex-col bg-[#0f2630] overflow-hidden">
+                          <div className={`relative h-24 bg-gradient-to-b ${accent} rounded-t-[1.5rem] overflow-hidden`}>
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+                            <button
+                              type="button"
+                              className="absolute top-8 right-3 flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-medium shadow"
+                              style={{ backgroundColor: isLight ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.2)", color: textOnPrimary }}
+                            >
+                              EN
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
+                          </div>
+                          <div className="relative -mt-6 px-4 pb-2">
+                            <div className="absolute inset-0 top-0 h-20 bg-[#142633] rounded-t-2xl" />
+                            <div className="relative flex items-center gap-3 pt-2">
+                              <div
+                                className="h-14 w-14 rounded-full border-2 overflow-hidden bg-gray-600 flex-shrink-0"
+                                style={{ borderColor: primaryColor }}
+                              />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-base font-semibold truncate" style={{ color: primaryColor }}>Pallavi Hegde</p>
+                                <p className="text-xs opacity-90" style={{ color: primaryColor }}>UI / UX Designer</p>
+                              </div>
+                              <button
+                                type="button"
+                                className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+                                style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                          <div className="flex-1 px-4 py-3 overflow-y-auto">
+                            <p className="text-[11px] leading-relaxed text-gray-300">
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                              industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                              scrambled it to make a type specimen book.
+                            </p>
+                            <div className="mt-6 space-y-3">
+                              <button
+                                type="button"
+                                className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                                style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                                </svg>
+                                Add to contact
+                              </button>
+                              <div className="flex gap-2">
+                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">fb</div>
+                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">in</div>
+                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">x</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+                        {selectedTemplate ? `${selectedTemplate.name} on mobile` : "Template on mobile"}
+                      </p>
+                    </div>
+                  );
+                })()}
               </div>
             )}
 
@@ -1161,7 +1506,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <div className="h-6 rounded-md bg-gray-100 flex items-center">
                           <input
                             type="color"
-                            defaultValue="#B4FF3B"
+                            value={dynamicPrimaryColor}
+                            onChange={(e) => setDynamicPrimaryColor(e.target.value)}
                             className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
                           />
                         </div>
@@ -1175,7 +1521,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <div className="h-6 rounded-md bg-gray-100 flex items-center">
                           <input
                             type="color"
-                            defaultValue="#193743"
+                            value={dynamicBgSecondary}
+                            onChange={(e) => setDynamicBgSecondary(e.target.value)}
                             className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
                           />
                         </div>
@@ -1189,7 +1536,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <div className="h-6 rounded-md bg-gray-100 flex items-center">
                           <input
                             type="color"
-                            defaultValue="#0c2833"
+                            value={dynamicBgColor}
+                            onChange={(e) => setDynamicBgColor(e.target.value)}
                             className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
                           />
                         </div>
@@ -1203,7 +1551,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <div className="h-6 rounded-md bg-gray-100 flex items-center">
                           <input
                             type="color"
-                            defaultValue="#332b2b"
+                            value={dynamicButtonTextColor}
+                            onChange={(e) => setDynamicButtonTextColor(e.target.value)}
                             className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
                           />
                         </div>
@@ -1217,7 +1566,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <div className="h-6 rounded-md bg-gray-100 flex items-center">
                           <input
                             type="color"
-                            defaultValue="#ffffff"
+                            value={dynamicLabelColor}
+                            onChange={(e) => setDynamicLabelColor(e.target.value)}
                             className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
                           />
                         </div>
@@ -1231,7 +1581,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <div className="h-6 rounded-md bg-gray-100 flex items-center">
                           <input
                             type="color"
-                            defaultValue="#a6b8c0"
+                            value={dynamicDescriptionColor}
+                            onChange={(e) => setDynamicDescriptionColor(e.target.value)}
                             className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
                           />
                         </div>
@@ -1272,13 +1623,23 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <div className="flex items-center gap-3">
                       <button
                         type="button"
-                        className="min-w-[96px] rounded-md bg-gray-300 px-5 py-2 text-xs font-medium text-gray-900 shadow-sm"
+                        onClick={() => setStickyButtonPosition("left")}
+                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium shadow-sm transition-colors ${
+                          stickyButtonPosition === "left"
+                            ? "bg-gray-800 text-white border-2 border-gray-800"
+                            : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                        }`}
                       >
                         Left
                       </button>
                       <button
                         type="button"
-                        className="min-w-[96px] rounded-md bg-gray-300 px-5 py-2 text-xs font-medium text-gray-900 border-2 border-black"
+                        onClick={() => setStickyButtonPosition("right")}
+                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium transition-colors ${
+                          stickyButtonPosition === "right"
+                            ? "bg-gray-800 text-white border-2 border-black"
+                            : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                        }`}
                       >
                         Right
                       </button>
@@ -1288,75 +1649,29 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <div className="space-y-3">
                     <p className="text-xs font-medium text-gray-700 dark:text-gray-200">Button Styles:</p>
                     <div className="grid grid-cols-2 gap-3">
-                      {/* Row 1 */}
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-md border-2 border-black bg-white px-4 py-2 text-xs font-semibold text-gray-900"
-                      >
-                        Style 1
-                      </button>
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-md bg-gray-300 px-4 py-2 text-xs font-semibold text-gray-800"
-                      >
-                        Style 2
-                      </button>
-
-                      {/* Row 2 */}
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-full bg-gray-300 px-4 py-2 text-xs font-semibold text-gray-800"
-                      >
-                        Style 3
-                      </button>
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-md bg-gray-300 px-4 py-2 text-xs font-semibold text-gray-800"
-                      >
-                        Style 4
-                      </button>
-
-                      {/* Row 3 */}
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-full border-2 border-black bg-white px-4 py-2 text-xs font-semibold text-gray-900"
-                      >
-                        Style 5
-                      </button>
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-md border-2 border-dotted border-black bg-white px-4 py-2 text-xs font-semibold text-gray-900"
-                      >
-                        Style 6
-                      </button>
-
-                      {/* Row 4 */}
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-md border border-black bg-white px-4 py-2 text-xs font-semibold text-gray-900"
-                      >
-                        Style 7
-                      </button>
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-md bg-gray-300 px-4 py-2 text-xs font-semibold text-gray-800"
-                      >
-                        Style 8
-                      </button>
-
-                      {/* Row 5 */}
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-[999px] rounded-bl-[2rem] bg-gray-300 px-4 py-2 text-xs font-semibold text-gray-800"
-                      >
-                        Style 9
-                      </button>
-                      <button
-                        type="button"
-                        className="flex items-center justify-center rounded-md border border-gray-500 bg-white px-4 py-2 text-xs font-semibold text-gray-800"
-                      >
-                        Style 10
-                      </button>
+                      {[
+                        { n: 1, className: "rounded-md border-2 border-black bg-white text-gray-900" },
+                        { n: 2, className: "rounded-md bg-gray-300 text-gray-800" },
+                        { n: 3, className: "rounded-full bg-gray-300 text-gray-800" },
+                        { n: 4, className: "rounded-md bg-gray-300 text-gray-800" },
+                        { n: 5, className: "rounded-full border-2 border-black bg-white text-gray-900" },
+                        { n: 6, className: "rounded-md border-2 border-dotted border-black bg-white text-gray-900" },
+                        { n: 7, className: "rounded-md border border-black bg-white text-gray-900" },
+                        { n: 8, className: "rounded-md bg-gray-300 text-gray-800" },
+                        { n: 9, className: "rounded-[999px] rounded-bl-[2rem] bg-gray-300 text-gray-800" },
+                        { n: 10, className: "rounded-md border border-gray-500 bg-white text-gray-800" },
+                      ].map(({ n, className }) => (
+                        <button
+                          key={n}
+                          type="button"
+                          onClick={() => setSelectedButtonStyle(n as typeof selectedButtonStyle)}
+                          className={`flex items-center justify-center px-4 py-2 text-xs font-semibold transition-all ${className} ${
+                            selectedButtonStyle === n ? "ring-2 ring-brand-500 ring-offset-2" : ""
+                          }`}
+                        >
+                          Style {n}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
@@ -1376,24 +1691,41 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   </div>
                 </div>
 
-                {/* Phone preview */}
+                {/* Phone preview – uses Dynamic vCard colors + sticky button position */}
                 <div className="flex-1 flex justify-center">
                   <div className="relative w-[320px] h-[640px] rounded-[2.5rem] bg-black shadow-2xl overflow-hidden border-[10px] border-black/80">
                     <div className="absolute inset-x-16 top-2 h-5 rounded-full bg-black/60" />
-                    <div className="absolute inset-0 bg-[#142633]" />
-                    <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-r from-lime-300 to-lime-400" />
-                    <div className="absolute top-28 left-0 right-0 rounded-t-[3rem] bg-[#142633]" />
+                    <div className="absolute inset-0" style={{ backgroundColor: dynamicBgColor }} />
+                    <div className="absolute top-0 left-0 right-0 h-40 rounded-b-3xl" style={{ backgroundColor: dynamicPrimaryColor }} />
+                    <div className="absolute top-28 left-0 right-0 rounded-t-[3rem]" style={{ backgroundColor: dynamicBgSecondary }} />
 
-                    <div className="relative h-full w-full px-5 pt-24 pb-6 text-white flex flex-col gap-4">
+                    {/* Sticky button – position left/right based on control */}
+                    <div
+                      className="absolute top-20 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
+                      style={{
+                        backgroundColor: dynamicPrimaryColor,
+                        left: stickyButtonPosition === "left" ? 12 : undefined,
+                        right: stickyButtonPosition === "right" ? 12 : undefined,
+                      }}
+                    >
+                      <svg className="w-5 h-5" style={{ color: dynamicButtonTextColor }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                      </svg>
+                    </div>
+
+                    <div className="relative h-full w-full px-5 pt-24 pb-6 flex flex-col gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="h-16 w-16 rounded-full border-4 border-lime-300 overflow-hidden bg-gray-500" />
+                        <div
+                          className="h-16 w-16 rounded-full border-4 overflow-hidden bg-gray-500"
+                          style={{ borderColor: dynamicPrimaryColor }}
+                        />
                         <div>
-                          <p className="text-base font-semibold">Pallavi Hegde</p>
-                          <p className="text-xs text-lime-200">UI / UX Designer</p>
+                          <p className="text-base font-semibold" style={{ color: dynamicPrimaryColor }}>Pallavi Hegde</p>
+                          <p className="text-xs" style={{ color: dynamicLabelColor }}>UI / UX Designer</p>
                         </div>
                       </div>
 
-                      <p className="text-[11px] leading-relaxed text-gray-200">
+                      <p className="text-[11px] leading-relaxed" style={{ color: dynamicDescriptionColor }}>
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
                         industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
                         scrambled it to make a type specimen book.
@@ -1401,20 +1733,52 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
                       <div className="mt-auto space-y-3">
                         <div className="flex items-center justify-between gap-2">
-                          <button className="inline-flex items-center justify-center rounded-full bg-lime-300 px-4 py-1.5 text-xs font-semibold text-black shadow">
+                          <button
+                            type="button"
+                            className={`inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold shadow ${
+                              selectedButtonStyle === 9
+                                ? "rounded-[999px] rounded-bl-[2rem]"
+                                : selectedButtonStyle === 3 || selectedButtonStyle === 5
+                                  ? "rounded-full"
+                                  : "rounded-md"
+                            }`}
+                            style={
+                              [2, 3, 4, 8, 9].includes(selectedButtonStyle)
+                                ? { backgroundColor: dynamicPrimaryColor, color: dynamicButtonTextColor }
+                                : {
+                                    borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
+                                    borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
+                                    borderColor: dynamicPrimaryColor,
+                                    color: dynamicPrimaryColor,
+                                    backgroundColor: "transparent",
+                                  }
+                            }
+                          >
                             <span className="mr-1.5">Add to contact</span>
                           </button>
                         </div>
                         <div className="flex items-center justify-between gap-3 text-xs">
-                          <div className="flex-1 flex items-center justify-center rounded-full border border-white/50 h-9">
-                            fb
-                          </div>
-                          <div className="flex-1 flex items-center justify-center rounded-full border border-white/50 h-9">
-                            in
-                          </div>
-                          <div className="flex-1 flex items-center justify-center rounded-full border border-white/50 h-9">
-                            x
-                          </div>
+                          {(["fb", "in", "x"] as const).map((label) => (
+                            <div
+                              key={label}
+                              className={`flex-1 flex items-center justify-center h-9 ${
+                                selectedButtonStyle === 9
+                                  ? "rounded-[999px] rounded-bl-[2rem]"
+                                  : selectedButtonStyle === 3 || selectedButtonStyle === 5
+                                    ? "rounded-full"
+                                    : "rounded-md"
+                              }`}
+                              style={{
+                                borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
+                                borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
+                                borderColor: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicPrimaryColor : dynamicLabelColor,
+                                color: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicButtonTextColor : dynamicLabelColor,
+                                backgroundColor: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicPrimaryColor : "transparent",
+                              }}
+                            >
+                              {label}
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -1538,9 +1902,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <div className="flex items-center gap-3 pt-1">
                         <button
                           type="button"
-                          className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors"
+                          className="relative inline-flex h-6 w-11 shrink-0 rounded-full bg-gray-200 transition-colors"
                         >
-                          <span className="inline-block h-5 w-5 translate-x-0.5 rounded-full bg-white shadow" />
+                          <span className="absolute left-1 top-1 inline-block h-4 w-4 translate-x-0 rounded-full bg-white" />
                         </button>
                         <span className="text-sm text-gray-700">Use This Configuration</span>
                       </div>
@@ -1657,8 +2021,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         }`}
                       >
                         <span
-                          className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition ${
-                            displayProductEnquiryButton ? "translate-x-5" : "translate-x-0.5"
+                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
+                            displayProductEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
                           }`}
                         />
                       </button>
@@ -1671,8 +2035,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </button>
                   </div>
                 </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                  <div className="overflow-x-auto overflow-y-visible">
                     <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
                       <thead className="text-xs uppercase text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                         <tr>
@@ -2675,8 +3039,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     }`}
                   >
                     <span
-                      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition-transform ${
-                        removeBranding ? "translate-x-5" : "translate-x-0.5"
+                      className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
+                        removeBranding ? "translate-x-[1.375rem]" : "translate-x-0"
                       }`}
                     />
                   </button>

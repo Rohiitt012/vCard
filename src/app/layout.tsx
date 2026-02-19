@@ -2,9 +2,11 @@ import { Outfit } from 'next/font/google';
 import type { Viewport } from 'next';
 import './globals.css';
 import "flatpickr/dist/flatpickr.css";
+import { LanguageProvider } from '@/context/LanguageContext';
 import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { UserProvider } from '@/context/UserContext';
+import { VCardsProvider } from '@/context/VCardsContext';
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -25,9 +27,13 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className={`${outfit.className} bg-slate-50 dark:bg-gray-900 overflow-x-hidden min-w-0`}>
         <ThemeProvider>
-          <UserProvider>
-            <SidebarProvider>{children}</SidebarProvider>
-          </UserProvider>
+          <LanguageProvider>
+            <UserProvider>
+              <VCardsProvider>
+                <SidebarProvider>{children}</SidebarProvider>
+              </VCardsProvider>
+            </UserProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
