@@ -263,8 +263,13 @@ const AppSidebar: React.FC = () => {
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // const isActive = (path: string) => path === pathname;
-   const isActive = useCallback((path: string) => path === pathname, [pathname]);
+  // vCards: highlight on list (/vcards) or any sub-route (/vcards/...); link goes to list only
+  const isActive = useCallback(
+    (path: string) =>
+      path === pathname ||
+      (path === "/vcards" && pathname?.startsWith("/vcards/")),
+    [pathname]
+  );
 
   useEffect(() => {
     // Check if the current path matches any submenu item

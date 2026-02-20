@@ -103,6 +103,12 @@ const CopyIcon = () => (
   </svg>
 );
 
+const CopyLinkIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+  </svg>
+);
+
 const SortUpIcon = () => (
   <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
@@ -127,6 +133,11 @@ type VCardItem = {
   previewUrl: string;
   viewCount: number;
   status: boolean;
+  qrCodeColor?: string;
+  qrBgColor?: string;
+  selectedTemplateId?: number;
+  templateName?: string;
+  templatePrimaryColor?: string;
 };
 
 // Sample vCard data (1 card as in the design)
@@ -143,7 +154,8 @@ const initialVCards: VCardItem[] = [
 ];
 
 const menuItems: { label: string; Icon: React.ComponentType<{ className?: string }>; onClick?: () => void; href?: string; danger?: boolean }[] = [
-  { label: "QR Code", Icon: QRIcon, onClick: () => {} },
+  { label: "QR Code", Icon: QRIcon },
+  { label: "Copy link", Icon: CopyLinkIcon },
   { label: "Download vCard", Icon: DownloadIcon, onClick: () => {} },
   { label: "Inquiries", Icon: InquiriesIcon, href: "/inquiries" },
   { label: "Delete", Icon: TrashIcon, onClick: () => {}, danger: true },
@@ -162,10 +174,25 @@ export const VCardsContent = () => {
   );
   const [disabledCardIds, setDisabledCardIds] = useState<Record<string, boolean>>({});
   const [deleteConfirmCardId, setDeleteConfirmCardId] = useState<string | null>(null);
+  const [qrModalCard, setQrModalCard] = useState<VCardItem | null>(null);
   const [showPerPage, setShowPerPage] = useState(10);
   const [showViewChangeToast, setShowViewChangeToast] = useState(false);
   const [toastProgress, setToastProgress] = useState(100);
+  const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const copyCardLink = (card: VCardItem) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(card.previewUrl);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      setCopiedCardId(card.id);
+      copyTimeoutRef.current = setTimeout(() => {
+        setCopiedCardId(null);
+        copyTimeoutRef.current = null;
+      }, 2000);
+    }
+  };
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { t } = useLanguage();
@@ -197,6 +224,12 @@ export const VCardsContent = () => {
     setShowViewChangeToast(true);
     setToastProgress(100);
   };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (!openMenuId) return;
@@ -367,17 +400,30 @@ export const VCardsContent = () => {
                 {vCards.map((card) => (
                   <tr key={card.id} className="hover:bg-gray-50/80 dark:hover:bg-gray-700/30 transition-colors">
                     <td className="px-5 py-4 align-middle">
-                      <div className="flex items-center gap-3">
-                        <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600" />
-                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
-                          <Image src={card.image} alt={card.title} fill className="object-cover" sizes="40px" />
+                      <div className="flex flex-col gap-0.5">
+                        <div className="flex items-center gap-3">
+                          <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600" />
+                          <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
+                            <Image src={card.image} alt={card.title} fill className="object-cover" sizes="40px" unoptimized={card.image.startsWith("data:")} />
+                          </div>
+                          <Link
+                            href={`/vcards/${card.id}/edit`}
+                            className="font-medium text-blue-600 hover:underline dark:text-blue-400 capitalize"
+                          >
+                            {card.title}
+                          </Link>
                         </div>
-                        <Link
-                          href={`/vcards/${card.id}/edit`}
-                          className="font-medium text-blue-600 hover:underline dark:text-blue-400 capitalize"
+                        <span
+                          className={`text-xs ml-12 block min-w-0 ${!card.templatePrimaryColor ? "text-gray-500 dark:text-gray-400" : ""}`}
+                          style={card.templatePrimaryColor ? { color: card.templatePrimaryColor } : undefined}
+                          title={card.templateName || undefined}
                         >
-                          {card.title}
-                        </Link>
+                          {card.templateName ? (
+                            <>Template: <span className="font-medium">{card.templateName}</span></>
+                          ) : (
+                            <>Template: —</>
+                          )}
+                        </span>
                       </div>
                     </td>
                     <td className="px-5 py-4 align-middle">
@@ -434,12 +480,20 @@ export const VCardsContent = () => {
                     </td>
                     <td className="px-5 py-4 align-middle">
                       <div className="flex items-center gap-1.5">
-                        <button type="button" className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors" aria-label="Analytics">
+                        <Link
+                          href={`/vcards/${card.id}/analytic`}
+                          className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors"
+                          aria-label="vCard Analytic"
+                        >
                           <ChartIcon />
-                        </button>
-                        <button type="button" className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors" aria-label="Share">
+                        </Link>
+                        <Link
+                          href={`/vcards/${card.id}/email-subscription`}
+                          className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors"
+                          aria-label="vCard Email Subscription"
+                        >
                           <PeopleIcon />
-                        </button>
+                        </Link>
                         <button type="button" className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors" aria-label="Contact">
                           <PhoneIcon />
                         </button>
@@ -488,6 +542,22 @@ export const VCardsContent = () => {
                                     </button>
                                   );
                                 }
+                                if (label === "QR Code") {
+                                  return (
+                                    <button key={label} type="button" onClick={() => { setQrModalCard(card); setOpenMenuId(null); }} className={itemClass}>
+                                      <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
+                                      <span>{label}</span>
+                                    </button>
+                                  );
+                                }
+                                if (label === "Copy link") {
+                                  return (
+                                    <button key={label} type="button" onClick={() => { copyCardLink(card); setOpenMenuId(null); }} className={itemClass}>
+                                      <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
+                                      <span>{label}</span>
+                                    </button>
+                                  );
+                                }
                                 return (
                                   <button key={label} type="button" onClick={() => { onClick?.(); setOpenMenuId(null); }} className={itemClass}>
                                     <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
@@ -529,7 +599,8 @@ export const VCardsContent = () => {
             key={card.id}
             className={`group card-premium card-premium-hover overflow-hidden ${openMenuId === card.id || disabledCardIds[card.id] ? "overflow-visible" : ""}`}
           >
-            <div className={`relative aspect-[16/10] w-full bg-gray-200 dark:bg-gray-800 rounded-t-2xl ${openMenuId === card.id || disabledCardIds[card.id] ? "overflow-visible" : "overflow-hidden"}`} ref={openMenuId === card.id ? menuRef : undefined}>
+            {/* Mobile-preview style: gradient header + dark body (jaisa mobile preview me dikh rha) */}
+            <div className={`relative w-full rounded-t-2xl ${openMenuId === card.id || disabledCardIds[card.id] ? "overflow-visible" : "overflow-hidden"}`} ref={openMenuId === card.id ? menuRef : undefined}>
               {disabledCardIds[card.id] && (
                 <div className="absolute left-0 top-0 z-10 origin-top-left rotate-[-28deg]">
                   <div className="bg-gray-800/95 text-white text-sm font-bold uppercase tracking-wider py-2.5 pl-7 pr-6 shadow-lg whitespace-nowrap rounded-r-sm min-w-[120px] text-center">
@@ -537,20 +608,22 @@ export const VCardsContent = () => {
                   </div>
                 </div>
               )}
-              <Image
-                src={card.image}
-                alt={card.title}
-                fill
-                className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              />
-              {/* Hover overlay: edit + three-dot, dropdown three-dot ke bilkul paas */}
-              <div className="absolute inset-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 flex items-start justify-end">
-                <div className="relative flex flex-col items-end">
-                  <div className="flex items-center gap-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 px-2.5 py-1.5 shadow-md">
+              {/* Gradient header – same as mobile preview */}
+              <div
+                className="relative h-24 w-full rounded-t-2xl"
+                style={{
+                  background: card.templatePrimaryColor
+                    ? `linear-gradient(to bottom, ${card.templatePrimaryColor}, ${card.templatePrimaryColor}dd)`
+                    : "linear-gradient(to bottom, #7c3aed, #6d28d9)",
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent rounded-t-2xl" />
+                {/* Hover overlay: edit + three-dot */}
+                <div className="absolute inset-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-start justify-end">
+                  <div className="flex items-center gap-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 px-2 py-1.5 shadow-md">
                     <Link
                       href={`/vcards/${card.id}/edit`}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg text-brand-600 hover:bg-brand-50 dark:text-brand-400 dark:hover:bg-brand-500/20 transition-colors"
+                      className="flex h-7 w-7 items-center justify-center rounded-lg text-brand-600 hover:bg-brand-50 dark:text-brand-400"
                       aria-label="Edit"
                     >
                       <EditIcon />
@@ -561,12 +634,43 @@ export const VCardsContent = () => {
                         e.preventDefault();
                         setOpenMenuId(openMenuId === card.id ? null : card.id);
                       }}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg text-brand-600 hover:bg-brand-50 dark:text-brand-400 dark:hover:bg-brand-500/20 transition-colors"
+                      className="flex h-7 w-7 items-center justify-center rounded-lg text-brand-600 hover:bg-brand-50 dark:text-brand-400"
                       aria-label="More options"
                     >
                       <ThreeDotsIcon />
                     </button>
                   </div>
+                </div>
+              </div>
+              {/* Dark body – avatar + title + template (mobile preview jaisa) */}
+              <div className="relative -mt-6 px-4 py-4 bg-[#142633] rounded-t-2xl">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="h-14 w-14 rounded-full border-2 overflow-hidden flex-shrink-0 bg-gray-600"
+                    style={{ borderColor: card.templatePrimaryColor || "#8b5cf6" }}
+                  >
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      width={56}
+                      height={56}
+                      className="object-cover w-full h-full"
+                      unoptimized={card.image.startsWith("data:")}
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold truncate capitalize" style={{ color: card.templatePrimaryColor || "#a78bfa" }}>
+                      {card.title}
+                    </p>
+                    <p className="text-xs truncate opacity-90" style={{ color: card.templatePrimaryColor || "#a78bfa" }}>
+                      {card.templateName ? `Template: ${card.templateName}` : "Template: —"}
+                    </p>
+                  </div>
+                  <span className="text-[10px] text-gray-400 shrink-0">{card.date}</span>
+                </div>
+              </div>
+              {/* Spacer for dropdown */}
+              <div className="relative">
                   {/* Features dropdown: three-dot ke neeche, screenshot jaisa */}
                   {openMenuId === card.id && (
                     <div className="absolute right-0 top-full mt-2 z-[100] min-w-[200px] rounded-xl border border-gray-200 bg-white py-2 shadow-xl dark:border-gray-700 dark:bg-gray-800">
@@ -598,6 +702,22 @@ export const VCardsContent = () => {
                             </button>
                           );
                         }
+                        if (label === "QR Code") {
+                          return (
+                            <button key={label} type="button" onClick={() => { setQrModalCard(card); setOpenMenuId(null); }} className={itemClass}>
+                              <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
+                              <span>{label}</span>
+                            </button>
+                          );
+                        }
+                        if (label === "Copy link") {
+                          return (
+                            <button key={label} type="button" onClick={() => { copyCardLink(card); setOpenMenuId(null); }} className={itemClass}>
+                              <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
+                              <span>{label}</span>
+                            </button>
+                          );
+                        }
                         return (
                           <button
                             key={label}
@@ -612,29 +732,44 @@ export const VCardsContent = () => {
                       })}
                     </div>
                   )}
-                </div>
               </div>
             </div>
-            <div className="bg-violet-100/80 dark:bg-violet-900/30 px-4 py-3 sm:px-5 sm:py-4">
-              <div className="flex items-start justify-between gap-2 mb-3">
-                <h3 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base capitalize">
-                  {card.title}
-                </h3>
-                <span className="text-theme-xs text-gray-600 dark:text-gray-400 shrink-0">
-                  {card.date}
-                </span>
-              </div>
+            {/* Action strip – mobile preview jaisa bottom bar */}
+            <div
+              className={`px-4 py-4 rounded-b-2xl flex items-center justify-center gap-2 flex-wrap ${!card.templatePrimaryColor ? "bg-violet-100/80 dark:bg-violet-900/30" : ""}`}
+              style={card.templatePrimaryColor ? { backgroundColor: `${card.templatePrimaryColor}18` } : undefined}
+            >
               <div className={`flex items-center gap-2 flex-wrap ${disabledCardIds[card.id] ? "justify-center" : ""}`}>
-                {(disabledCardIds[card.id] ? [actionIcons[actionIcons.length - 1]] : actionIcons).map(({ Icon, color }, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className={`w-9 h-9 rounded-full flex items-center justify-center ${color} hover:opacity-90 transition-opacity`}
-                    aria-label={disabledCardIds[card.id] ? "Analytics" : `Action ${i + 1}`}
-                  >
-                    <Icon />
-                  </button>
-                ))}
+                {(disabledCardIds[card.id] ? [actionIcons[actionIcons.length - 1]] : actionIcons).map(({ Icon, color }, i) =>
+                  i === 1 && !disabledCardIds[card.id] ? (
+                    <Link
+                      key={i}
+                      href={`/vcards/${card.id}/email-subscription`}
+                      className={`w-9 h-9 rounded-full flex items-center justify-center ${color} hover:opacity-90 transition-opacity`}
+                      aria-label="vCard Email Subscription"
+                    >
+                      <Icon />
+                    </Link>
+                  ) : i === 4 && !disabledCardIds[card.id] ? (
+                    <Link
+                      key={i}
+                      href={`/vcards/${card.id}/analytic`}
+                      className={`w-9 h-9 rounded-full flex items-center justify-center ${color} hover:opacity-90 transition-opacity`}
+                      aria-label="vCard Analytic"
+                    >
+                      <Icon />
+                    </Link>
+                  ) : (
+                    <button
+                      key={i}
+                      type="button"
+                      className={`w-9 h-9 rounded-full flex items-center justify-center ${color} hover:opacity-90 transition-opacity`}
+                      aria-label={disabledCardIds[card.id] ? "Analytics" : `Action ${i + 1}`}
+                    >
+                      <Icon />
+                    </button>
+                  )
+                )}
               </div>
             </div>
           </article>
@@ -678,6 +813,56 @@ export const VCardsContent = () => {
                   className="flex-1 rounded-lg bg-gray-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-600 transition-colors"
                 >
                   No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* QR Code modal – scan to open vCard page */}
+      {qrModalCard !== null && (
+        <div
+          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="qr-modal-title"
+        >
+          <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-600 dark:bg-gray-800">
+            <div className="flex flex-col items-center text-center">
+              <h2 id="qr-modal-title" className="mb-1 text-lg font-bold text-gray-900 dark:text-white">
+                QR Code
+              </h2>
+              <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 capitalize">{qrModalCard.title}</p>
+              <div className="mb-4 flex items-center justify-center rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-600 dark:bg-gray-700/50">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrModalCard.previewUrl)}&color=${(qrModalCard.qrCodeColor ?? "#000000").replace(/^#/, "")}&bgcolor=${(qrModalCard.qrBgColor ?? "#ffffff").replace(/^#/, "")}`}
+                  alt={`QR Code for ${qrModalCard.title}`}
+                  width={220}
+                  height={220}
+                  className="rounded-lg"
+                />
+              </div>
+              <p className="mb-4 text-xs text-gray-500 dark:text-gray-400">
+                Scan to open this vCard page
+              </p>
+              <div className="flex w-full gap-3">
+                <a
+                  href={`https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(qrModalCard.previewUrl)}&color=${(qrModalCard.qrCodeColor ?? "#000000").replace(/^#/, "")}&bgcolor=${(qrModalCard.qrBgColor ?? "#ffffff").replace(/^#/, "")}`}
+                  download="vcard-qr.png"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                >
+                  <DownloadIcon />
+                  Download QR
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setQrModalCard(null)}
+                  className="flex-1 rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                >
+                  Close
                 </button>
               </div>
             </div>

@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useVCards } from "@/context/VCardsContext";
 
 const HelpIcon = () => (
   <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,13 +97,20 @@ const EditNavIcon = ({ id, active }: { id: string; active: boolean }) => {
       );
     case "qr":
       return (
-        <svg className={cn} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z"
-          />
+        <svg className={`w-4 h-4 shrink-0 ${color}`} fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+          <defs>
+            <filter id="edit-vcard-qr-icon-shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0.4" dy="0.4" stdDeviation="0.25" floodOpacity="0.4" />
+            </filter>
+          </defs>
+          <g filter="url(#edit-vcard-qr-icon-shadow)">
+            <rect x="0" y="0" width="6" height="6" rx="1.25" ry="1.25" />
+            <rect x="9" y="0" width="6" height="6" rx="1.25" ry="1.25" />
+            <rect x="0" y="9" width="6" height="6" rx="1.25" ry="1.25" />
+            <rect x="9" y="9" width="6" height="6" rx="1.25" ry="1.25" />
+            <rect x="4.5" y="14" width="6" height="6" rx="1.25" ry="1.25" />
+            <rect x="13.5" y="14" width="6" height="6" rx="1.25" ry="1.25" />
+          </g>
         </svg>
       );
     case "services":
@@ -441,6 +450,18 @@ const editNavItems = [
 ];
 
 const APPOINTMENT_DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"] as const;
+const BUSINESS_HOURS_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const;
+type BusinessHoursDay = (typeof BUSINESS_HOURS_DAYS)[number];
+function getInitialBusinessHours(): Record<BusinessHoursDay, { enabled: boolean; start: string; end: string }> {
+  const dayMap = BUSINESS_HOURS_DAYS.reduce(
+    (acc, day) => {
+      acc[day] = { enabled: false, start: "9:00 AM", end: "6:00 PM" };
+      return acc;
+    },
+    {} as Record<BusinessHoursDay, { enabled: boolean; start: string; end: string }>
+  );
+  return dayMap;
+}
 
 function buildTimeOptions(): string[] {
   const options: string[] = [];
@@ -476,9 +497,20 @@ function getAccentPrimaryColor(accent: string): string {
   return "#B4FF3B";
 }
 
+/** Get background color for Dynamic vCard from template accent (dark or light) */
+function getAccentBgColor(accent: string): string {
+  return isLightTemplate(accent) ? "#f1f5f9" : "#0f172a";
+}
+
+/** Slightly lighter/different shade for secondary background */
+function getAccentBgSecondary(accent: string): string {
+  return isLightTemplate(accent) ? "#e2e8f0" : "#1e293b";
+}
+
 /** Preview content type per template (screenshot-style: all show filled content like Dental Care / Boutique Shop) */
-function getPreviewType(template: { id: number; name: string }): "flower" | "flower-shop" | "travel" | "travel-dark" | "personal" | "corporate" | "creative" | "generic" {
+function getPreviewType(template: { id: number; name: string }): "flower" | "flower-shop" | "flower-snap" | "travel" | "travel-dark" | "personal" | "corporate" | "creative" | "generic" {
   const n = template.name.toLowerCase();
+  if (n.includes("flower snap")) return "flower-snap";
   if (n.includes("flower garden") || n.includes("wedding planner") || n.includes("salon") || n.includes("boutique shop") || n.includes("floral") || n.includes("dental care")) return "flower";
   if (n.includes("flower shop") || (n.includes("garden") && !n.includes("flower garden"))) return "flower-shop";
   if (n.includes("travel explorer") || n.includes("travel agent")) return "travel";
@@ -487,6 +519,43 @@ function getPreviewType(template: { id: number; name: string }): "flower" | "flo
   if (n.includes("corporate") || n.includes("legal") || n.includes("finance pro")) return "corporate";
   if (n.includes("creative studio") || n.includes("marketing agency") || n.includes("agency bold")) return "creative";
   return "generic";
+}
+
+/** Content for mobile preview so it matches the selected template (includes Official Website & more) */
+function getMobilePreviewContent(template: { id: number; name: string }): {
+  name: string;
+  subtitle: string;
+  description: string;
+  ctaLabel: string;
+  extraLine?: string;
+  officialWebsite?: string;
+  address?: string;
+  birthDate?: string;
+  company?: string;
+} {
+  const pt = getPreviewType(template);
+  const tName = template.name;
+  const base = { ctaLabel: "Add to contact" as const };
+  switch (pt) {
+    case "flower-snap":
+      return { ...base, name: "Flower Snap", subtitle: "Creative Flower & Garden.", description: "Best Plant Selling Company. Natural flowers and fresh arrangements. Visit Green Market Mumbai or order online.", ctaLabel: "Gallery", officialWebsite: "www.flowersnap.com", extraLine: "flowersnap@gmail.com · +91 98765 43210", address: "Green Market Mumbai" };
+    case "flower":
+      return { ...base, name: "Jenny Wilson", subtitle: "Flower Garden", description: "Elegant floral theme for boutiques and gardens. Contact for arrangements, events and custom bouquets. We deliver across the city.", officialWebsite: "www.flowergarden.com", extraLine: "jenny@gmail.com · +1234567890", address: "12th March, 1990 · Berlin, Germany" };
+    case "flower-shop":
+      return { ...base, name: "Flower Shop", subtitle: "Let Your Garden Bloom With Us", description: "Fresh blooms and custom arrangements. Visit our garden or order online. Same-day delivery available.", ctaLabel: "Gallery", officialWebsite: "www.bloomgarden.com", extraLine: "flowergarden@gmail.com · +44 20 7946 0958" };
+    case "travel":
+      return { ...base, name: "Bessie Cooper", subtitle: "Travel Agent", description: "Adventure and travel themed. Maps, itineraries and bespoke trips. Book your next journey with us.", ctaLabel: "Contact · Gallery", extraLine: "michael@gmail.com · +49 95864 12484", officialWebsite: "www.travelexplorer.com" };
+    case "travel-dark":
+      return { ...base, name: "Desi Miles", subtitle: "Tours & Travel Agency", description: "Every journey begins with a single step. Explore the world with us. Group tours and private getaways.", ctaLabel: "Contact · Gallery", extraLine: "advmur@gmail.com · +91888887700", officialWebsite: "www.desimiles.com" };
+    case "personal":
+      return { ...base, name: "Alex Morgan", subtitle: "Consultant · Freelancer", description: "Clean, professional profile. Get in touch for projects and collaboration. Available for consulting and workshops.", extraLine: "email@example.com · +1 234 567 890", officialWebsite: "www.alexmorgan.com", address: "New York, USA" };
+    case "corporate":
+      return { ...base, name: "Executive", subtitle: "Leadership · Board", description: "Professional corporate profile. Strategic advisory and board representation. contact@company.com for inquiries.", officialWebsite: "www.company.com", company: "Company Inc.", extraLine: "contact@company.com · +1 800 123 4567" };
+    case "creative":
+      return { ...base, name: "Creative Studio", subtitle: "Bold typography and visuals", description: "We create impactful designs and campaigns for brands worldwide. Branding, UI/UX and motion design.", officialWebsite: "www.creativestudio.com", extraLine: "hello@creativestudio.com" };
+    default:
+      return { ...base, name: "Jenny Wilson", subtitle: tName, description: "Property-focused layout with gallery and listings. Contact for viewings, valuations and investment opportunities.", extraLine: "jenny@gmail.com · +1234567890", address: "12th March, 1990 · Berlin, Germany", officialWebsite: "www.realestateplus.com" };
+  }
 }
 
 const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: string }[] = [
@@ -552,6 +621,12 @@ const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: 
     description: "Dark editorial layout with hero banner, reporter bio, contact rows and QR section.",
     accent: "from-neutral-900 to-slate-800",
   },
+  {
+    id: 53,
+    name: "Flower Snap",
+    description: "Creative Flower & Garden. Best Plant Selling Company – elegant floral and garden business layout.",
+    accent: "from-emerald-500 to-teal-600",
+  },
 ];
 
 function getInitialAppointmentSchedule(): Record<
@@ -572,6 +647,8 @@ type EditVCardContentProps = {
 export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { vCards, setVCards } = useVCards();
+  const currentCard = vcardId ? vCards.find((c) => c.id === vcardId) : undefined;
   const showCreatedSuccess = searchParams.get("created") === "1";
 
   const [activeSection, setActiveSection] = useState<string>("basic");
@@ -603,7 +680,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [dynamicDescriptionColor, setDynamicDescriptionColor] = useState("#a6b8c0");
   const [stickyButtonPosition, setStickyButtonPosition] = useState<"left" | "right">("right");
   const [selectedButtonStyle, setSelectedButtonStyle] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10>(1);
-  // Sync Dynamic vCard colors from selected vCard template
+  // Sync Dynamic vCard colors from selected vCard template (so selected template shows in Dynamic vCard)
   useEffect(() => {
     if (selectedTemplateId == null) return;
     const template = VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId);
@@ -611,7 +688,36 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     const primary = getAccentPrimaryColor(template.accent);
     setDynamicPrimaryColor(primary);
     setDynamicButtonTextColor(isLightTemplate(template.accent) ? "#332b2b" : "#ffffff");
+    setDynamicBgColor(getAccentBgColor(template.accent));
+    setDynamicBgSecondary(getAccentBgSecondary(template.accent));
+    setDynamicLabelColor(isLightTemplate(template.accent) ? "#1e293b" : "#f8fafc");
+    setDynamicDescriptionColor(isLightTemplate(template.accent) ? "#64748b" : "#94a3b8");
   }, [selectedTemplateId]);
+  const [useQrConfiguration, setUseQrConfiguration] = useState(false);
+  const [qrCodeColor, setQrCodeColor] = useState("#000000");
+  const [qrBgColor, setQrBgColor] = useState("#ffffff");
+  const [qrCreateSuccess, setQrCreateSuccess] = useState(false);
+  const [templateSaveSuccess, setTemplateSaveSuccess] = useState(false);
+  const profileImageInputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (currentCard) {
+      setQrCodeColor(currentCard.qrCodeColor ?? "#000000");
+      setQrBgColor(currentCard.qrBgColor ?? "#ffffff");
+      if (currentCard.selectedTemplateId != null) {
+        setSelectedTemplateId(currentCard.selectedTemplateId);
+      }
+    }
+  }, [currentCard?.id, currentCard?.qrCodeColor, currentCard?.qrBgColor, currentCard?.selectedTemplateId]);
+  useEffect(() => {
+    if (!qrCreateSuccess) return;
+    const t = setTimeout(() => setQrCreateSuccess(false), 4000);
+    return () => clearTimeout(t);
+  }, [qrCreateSuccess]);
+  useEffect(() => {
+    if (!templateSaveSuccess) return;
+    const t = setTimeout(() => setTemplateSaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [templateSaveSuccess]);
   const [showAdvancedPassword, setShowAdvancedPassword] = useState(false);
   const [removeBranding, setRemoveBranding] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
@@ -648,6 +754,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     () => [{ id: "svc-0", serviceName: "", amount: "" }]
   );
   const [appointmentSchedule, setAppointmentSchedule] = useState(() => getInitialAppointmentSchedule());
+  const [businessHoursWeekFormat, setBusinessHoursWeekFormat] = useState<"monday-sunday" | "sunday-saturday">("monday-sunday");
+  const [businessHours, setBusinessHours] = useState(() => getInitialBusinessHours());
+  const setBusinessHoursDay = (day: BusinessHoursDay, patch: Partial<{ enabled: boolean; start: string; end: string }>) => {
+    setBusinessHours((prev) => ({ ...prev, [day]: { ...prev[day], ...patch } }));
+  };
 
   const addAppointmentService = () => {
     setAppointmentServices((prev) => [...prev, { id: `svc-${Date.now()}`, serviceName: "", amount: "" }]);
@@ -734,6 +845,14 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           role="alert"
         >
           vCard created successfully.
+        </div>
+      )}
+      {qrCreateSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          Create QR successfully.
         </div>
       )}
 
@@ -968,12 +1087,43 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               <HelpIcon />
                             </button>
                           </label>
+                          <input
+                            ref={profileImageInputRef}
+                            type="file"
+                            accept="image/png,image/jpeg,image/jpg"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (!file || !vcardId || !currentCard) return;
+                              const reader = new FileReader();
+                              reader.onload = () => {
+                                const dataUrl = reader.result as string;
+                                setVCards((prev) =>
+                                  prev.map((c) => (c.id === vcardId ? { ...c, image: dataUrl } : c))
+                                );
+                              };
+                              reader.readAsDataURL(file);
+                              e.target.value = "";
+                            }}
+                          />
                           <div className="relative mt-1.5 flex items-center justify-center h-28 w-28 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 overflow-hidden group">
-                            <svg className="w-14 h-14 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                            </svg>
+                            {currentCard?.image ? (
+                              <Image
+                                src={currentCard.image}
+                                alt="Profile"
+                                fill
+                                className="object-cover"
+                                sizes="112px"
+                                unoptimized={currentCard.image.startsWith("data:")}
+                              />
+                            ) : (
+                              <svg className="w-14 h-14 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                              </svg>
+                            )}
                             <button
                               type="button"
+                              onClick={() => profileImageInputRef.current?.click()}
                               className="absolute top-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
                               aria-label="Edit profile image"
                             >
@@ -982,7 +1132,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               </svg>
                             </button>
                           </div>
-                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg. Ye photo vCards list pe bhi dikhegi.</p>
                         </div>
                       </div>
                     </div>
@@ -1262,7 +1412,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                   </div>
                                   <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
                                   <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
-                                  <p className={`text-[8px] font-medium ${text} text-center mt-1.5 border-t border-white/30 pt-1`}>Gallery</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-1`}>Gallery</p>
                                 </div>
                               );
                             }
@@ -1280,6 +1431,28 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                     ))}
                                   </div>
                                   <p className={`text-[7px] ${textSec} text-center`}>flowergarden@gmail.com</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
+                                </div>
+                              );
+                            }
+                            if (pt === "flower-snap") {
+                              return (
+                                <div className={base}>
+                                  <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
+                                    <span className={`text-[5px] font-bold ${text} text-center leading-tight`}>FS</span>
+                                  </div>
+                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Flower Snap</p>
+                                  <p className={`text-[7px] ${textSec} text-center mb-0.5`}>Creative Flower & Garden.</p>
+                                  <p className={`text-[6px] ${textSec} text-center mb-1`}>Best Plant Selling Company</p>
+                                  <p className={`text-[6px] ${textSec} text-center mb-1`}>Green Market Mumbai</p>
+                                  <div className="flex justify-center gap-0.5 mb-1">
+                                    {[1, 2, 3, 4, 5].map((i) => (
+                                      <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                    ))}
+                                  </div>
+                                  <p className={`text-[7px] ${textSec} text-center`}>flowersnap@gmail.com</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
                                   <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
                                 </div>
                               );
@@ -1299,6 +1472,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                     ))}
                                   </div>
                                   <p className={`text-[7px] ${textSec} text-center`}>michael@gmail.com · +49 95864 12484</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
                                   <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
                                 </div>
                               );
@@ -1316,6 +1490,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                     ))}
                                   </div>
                                   <p className={`text-[7px] ${textSec} text-center`}>advmur@gmail.com · +91888887700</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
                                   <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
                                 </div>
                               );
@@ -1333,6 +1508,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                   </div>
                                   <p className={`text-[7px] ${textSec} text-center`}>email@example.com · +1 234 567 890</p>
                                   <p className={`text-[7px] ${textSec} text-center`}>Location</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5 border-t border-white/20 pt-0.5`}>Official Website</p>
                                 </div>
                               );
                             }
@@ -1345,6 +1521,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                   <div className={`h-1.5 rounded ${bar} w-full max-w-[90%] mx-auto mb-1`} />
                                   <div className={`h-1.5 rounded ${bar} w-[70%] mx-auto mb-1`} />
                                   <p className={`text-[7px] ${textSec} text-center`}>contact@company.com</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5 border-t border-white/20 pt-0.5`}>Official Website</p>
                                 </div>
                               );
                             }
@@ -1377,7 +1554,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                 </div>
                                 <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
                                 <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
-                                <p className={`text-[8px] font-medium ${text} text-center mt-1.5 border-t border-white/30 pt-1`}>Gallery</p>
+                                <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-1`}>Gallery</p>
                               </div>
                             );
                           })()}
@@ -1400,6 +1578,44 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     );
                   })}
                   </div>
+                  {/* Save, Discard – left side */}
+                  <div className="mt-6 w-full max-w-md space-y-4">
+                    {templateSaveSuccess && (
+                      <p className="text-sm font-medium text-green-600 dark:text-green-400 rounded-lg bg-green-50 dark:bg-green-900/20 px-3 py-2">
+                        Template saved. It will show on the vCards list.
+                      </p>
+                    )}
+                    <div className="flex gap-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!vcardId || !currentCard || selectedTemplateId == null) return;
+                          const template = VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId);
+                          const primaryColor = template ? getAccentPrimaryColor(template.accent) : undefined;
+                          setVCards((prev) =>
+                            prev.map((c) =>
+                              c.id === vcardId
+                                ? { ...c, selectedTemplateId, templateName: template?.name, templatePrimaryColor: primaryColor }
+                                : c
+                            )
+                          );
+                          setTemplateSaveSuccess(true);
+                          router.push("/vcards");
+                        }}
+                        disabled={selectedTemplateId == null}
+                        className="flex-1 inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => selectedTemplateId != null && setSelectedTemplateId(currentCard?.selectedTemplateId ?? null)}
+                        className="flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Mobile view preview – selected template theme in phone frame */}
@@ -1409,6 +1625,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   const primaryColor = selectedTemplate ? getAccentPrimaryColor(selectedTemplate.accent) : "#B4FF3B";
                   const isLight = selectedTemplate ? isLightTemplate(selectedTemplate.accent) : false;
                   const textOnPrimary = isLight ? "#1f2937" : "#ffffff";
+                  const previewContent = selectedTemplate ? getMobilePreviewContent(selectedTemplate) : { name: "Your Name", subtitle: "Title / Profession", description: "Add your description and contact details. Choose a template to see its content here.", ctaLabel: "Add to contact" };
                   return (
                     <div className="lg:w-[320px] shrink-0 flex flex-col items-center">
                       <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Mobile preview</p>
@@ -1436,8 +1653,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                 style={{ borderColor: primaryColor }}
                               />
                               <div className="flex-1 min-w-0">
-                                <p className="text-base font-semibold truncate" style={{ color: primaryColor }}>Pallavi Hegde</p>
-                                <p className="text-xs opacity-90" style={{ color: primaryColor }}>UI / UX Designer</p>
+                                <p className="text-base font-semibold truncate" style={{ color: primaryColor }}>{previewContent.name}</p>
+                                <p className="text-xs opacity-90 truncate" style={{ color: primaryColor }}>{previewContent.subtitle}</p>
                               </div>
                               <button
                                 type="button"
@@ -1452,10 +1669,22 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           </div>
                           <div className="flex-1 px-4 py-3 overflow-y-auto">
                             <p className="text-[11px] leading-relaxed text-gray-300">
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                              industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                              scrambled it to make a type specimen book.
+                              {previewContent.description}
                             </p>
+                            {previewContent.extraLine && (
+                              <p className="text-[10px] text-gray-400 mt-2">{previewContent.extraLine}</p>
+                            )}
+                            {previewContent.officialWebsite && (
+                              <p className="text-[10px] text-gray-400 mt-1.5 flex items-center gap-1">
+                                <span className="text-gray-500">Official Website:</span>
+                                <span className="text-brand-400 underline">{previewContent.officialWebsite}</span>
+                              </p>
+                            )}
+                            {(previewContent.address || previewContent.company) && (
+                              <p className="text-[10px] text-gray-400 mt-1">
+                                {[previewContent.company, previewContent.address].filter(Boolean).join(" · ")}
+                              </p>
+                            )}
                             <div className="mt-6 space-y-3">
                               <button
                                 type="button"
@@ -1465,7 +1694,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                                 </svg>
-                                Add to contact
+                                {previewContent.ctaLabel}
                               </button>
                               <div className="flex gap-2">
                                 <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">fb</div>
@@ -1495,6 +1724,15 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                       Choose your brand colors and button style for the dynamic vCard layout.
                     </p>
+                    {selectedTemplateId != null && (() => {
+                      const t = VCARD_TEMPLATES.find((x) => x.id === selectedTemplateId);
+                      return t ? (
+                        <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand-500/10 px-3 py-1.5 text-sm font-medium text-brand-700 dark:text-brand-300">
+                          <span className="inline-block h-2 w-2 rounded-full bg-brand-500" />
+                          Using template: {t.name}
+                        </p>
+                      ) : null;
+                    })()}
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1675,21 +1913,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-2">
-                    <button
-                      type="button"
-                      className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
-                    >
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-200"
-                    >
-                      Discard
-                    </button>
                   </div>
-                </div>
 
                 {/* Phone preview – uses Dynamic vCard colors + sticky button position */}
                 <div className="flex-1 flex justify-center">
@@ -1787,15 +2011,19 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
               </div>
             )}
 
-            {/* Hours - simplified */}
+            {/* Business Hours – screenshot: Week Format, toggle per day, Closed button with moon icon */}
             {activeSection === "hours" && (
               <form className="space-y-6 max-w-xl">
                 <div>
                   <label className={labelClass}>Week Format Type:</label>
                   <div className="relative max-w-xs">
-                    <select className={`${inputClass} pr-10`}>
-                      <option>Monday To Sunday</option>
-                      <option>Sunday To Saturday</option>
+                    <select
+                      value={businessHoursWeekFormat}
+                      onChange={(e) => setBusinessHoursWeekFormat(e.target.value as "monday-sunday" | "sunday-saturday")}
+                      className={`${inputClass} pr-10`}
+                    >
+                      <option value="monday-sunday">Monday To Sunday</option>
+                      <option value="sunday-saturday">Sunday To Saturday</option>
                     </select>
                     <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1805,36 +2033,48 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
-                    <div
-                      key={day}
-                      className="flex flex-wrap items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm"
-                    >
-                      <div className="flex items-center gap-2 min-w-[120px]">
-                        <input
-                          type="checkbox"
-                          defaultChecked
-                          className="h-4 w-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500"
-                        />
-                        <span className="text-sm font-medium text-gray-800 dark:text-gray-100">{day}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <select className={`${inputClass} h-9 py-1 pr-8 w-28`}>
-                          <option>09:00 AM</option>
-                        </select>
-                        <span className="text-xs text-gray-500">to</span>
-                        <select className={`${inputClass} h-9 py-1 pr-8 w-28`}>
-                          <option>06:00 PM</option>
-                        </select>
-                      </div>
-                      <button
-                        type="button"
-                        className="ml-auto text-xs font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  {(businessHoursWeekFormat === "sunday-saturday"
+                    ? ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+                    : [...BUSINESS_HOURS_DAYS]
+                  ).map((day) => {
+                    const d = day as BusinessHoursDay;
+                    const { enabled } = businessHours[d] ?? { enabled: false, start: "9:00 AM", end: "6:00 PM" };
+                    return (
+                      <div
+                        key={day}
+                        className="flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800/50 px-4 py-3"
                       >
-                        Closed
-                      </button>
-                    </div>
-                  ))}
+                        <button
+                          type="button"
+                          role="switch"
+                          aria-checked={enabled}
+                          onClick={() => setBusinessHoursDay(d, { enabled: !enabled })}
+                          className={`relative h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
+                            enabled ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                          }`}
+                        >
+                          <span
+                            className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                              enabled ? "translate-x-5" : "translate-x-0"
+                            }`}
+                          />
+                        </button>
+                        <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide min-w-[100px]">
+                          {day}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setBusinessHoursDay(d, { enabled: false })}
+                          className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                        >
+                          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                          </svg>
+                          Closed
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="flex justify-end gap-3 pt-2">
                   <button
@@ -1857,26 +2097,40 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
             {activeSection === "qr" && (
               <div className="flex justify-center items-center min-h-[320px]">
                 <div className="max-w-md w-full">
-                  <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-lg">
-                    <form className="space-y-5">
+                  <div className="rounded-3xl border border-gray-200 bg-white dark:bg-gray-800/50 p-6 shadow-lg">
+                    <form
+                      className="space-y-5"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        if (!useQrConfiguration || !vcardId || !currentCard) return;
+                        setVCards((prev) =>
+                          prev.map((c) =>
+                            c.id === vcardId ? { ...c, qrCodeColor, qrBgColor } : c
+                          )
+                        );
+                        setQrCreateSuccess(true);
+                      }}
+                    >
                       <div className="space-y-4">
                         <div>
                           <label className={labelClass}>QR-Code Color:</label>
-                          <div className="w-full h-11 rounded-lg border border-gray-300 bg-white overflow-hidden">
+                          <div className="w-full h-9 rounded-lg border border-gray-300 bg-white dark:bg-gray-800 overflow-hidden">
                             <input
                               type="color"
-                              defaultValue="#000000"
-                              className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[7px]"
+                              value={qrCodeColor}
+                              onChange={(e) => setQrCodeColor(e.target.value)}
+                              className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[5px]"
                             />
                           </div>
                         </div>
                         <div>
                           <label className={labelClass}>Background Color:</label>
-                          <div className="w-full h-11 rounded-lg border border-gray-300 bg-white overflow-hidden">
+                          <div className="w-full h-9 rounded-lg border border-gray-300 bg-white dark:bg-gray-800 overflow-hidden">
                             <input
                               type="color"
-                              defaultValue="#000000"
-                              className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[7px]"
+                              value={qrBgColor}
+                              onChange={(e) => setQrBgColor(e.target.value)}
+                              className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[5px]"
                             />
                           </div>
                         </div>
@@ -1902,23 +2156,33 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <div className="flex items-center gap-3 pt-1">
                         <button
                           type="button"
-                          className="relative inline-flex h-6 w-11 shrink-0 rounded-full bg-gray-200 transition-colors"
+                          role="switch"
+                          aria-checked={useQrConfiguration}
+                          onClick={() => setUseQrConfiguration((prev) => !prev)}
+                          className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
+                            useQrConfiguration ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                          }`}
                         >
-                          <span className="absolute left-1 top-1 inline-block h-4 w-4 translate-x-0 rounded-full bg-white" />
+                          <span
+                            className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                              useQrConfiguration ? "translate-x-5" : "translate-x-0"
+                            }`}
+                          />
                         </button>
-                        <span className="text-sm text-gray-700">Use This Configuration</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">Use This Configuration</span>
                       </div>
 
                       <div className="flex gap-3 pt-2">
                         <button
-                          type="button"
-                          className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
+                          type="submit"
+                          disabled={!useQrConfiguration}
+                          className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-brand-500"
                         >
                           Save
                         </button>
                         <button
                           type="button"
-                          className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-200"
+                          className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                         >
                           Discard
                         </button>
