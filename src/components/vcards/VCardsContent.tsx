@@ -125,12 +125,20 @@ const actionIcons = [
   { Icon: ChartIcon, color: "bg-sky-400 text-white" },
 ];
 
+type VCardBlog = {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+};
+
 type VCardItem = {
   id: string;
   title: string;
   date: string;
   image: string;
   previewUrl: string;
+  slug?: string;
   viewCount: number;
   status: boolean;
   qrCodeColor?: string;
@@ -138,6 +146,9 @@ type VCardItem = {
   selectedTemplateId?: number;
   templateName?: string;
   templatePrimaryColor?: string;
+  termsHtml?: string;
+  privacyHtml?: string;
+  blogs?: VCardBlog[];
 };
 
 // Sample vCard data (1 card as in the design)
@@ -147,7 +158,8 @@ const initialVCards: VCardItem[] = [
     title: "website builder",
     date: "16 Feb 2026",
     image: "/images/user/owner.jpg",
-    previewUrl: "https://openmyprofile.com/fbfgfg",
+    previewUrl: "/fbfgfg",
+    slug: "fbfgfg",
     viewCount: 0,
     status: true,
   },
@@ -428,22 +440,30 @@ export const VCardsContent = () => {
                     </td>
                     <td className="px-5 py-4 align-middle">
                       <div className="flex items-center gap-2">
-                        <a
-                          href={card.previewUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline dark:text-blue-400 text-xs sm:text-sm truncate max-w-[200px]"
-                        >
-                          {card.previewUrl}
-                        </a>
-                        <button
-                          type="button"
-                          onClick={() => navigator.clipboard?.writeText(card.previewUrl)}
-                          className="flex-shrink-0 rounded p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-600"
-                          aria-label="Copy URL"
-                        >
-                          <CopyIcon />
-                        </button>
+                        {(() => {
+                          const slug = (card.slug ?? card.previewUrl.replace(/^https?:\/\/[^/]+/, "").replace(/^\//, "")) || "vcard";
+                          const localPath = `/${slug}`;
+                          return (
+                            <>
+                              <a
+                                href={localPath}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:underline dark:text-blue-400 text-xs sm:text-sm truncate max-w-[200px]"
+                              >
+                                {slug}
+                              </a>
+                              <button
+                                type="button"
+                                onClick={() => navigator.clipboard?.writeText(`${window.location.origin}${localPath}`)}
+                                className="flex-shrink-0 rounded p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-600"
+                                aria-label="Copy URL"
+                              >
+                                <CopyIcon />
+                              </button>
+                            </>
+                          );
+                        })()}
                       </div>
                     </td>
                     <td className="px-5 py-4 align-middle">
@@ -591,13 +611,13 @@ export const VCardsContent = () => {
         </div>
       )}
 
-      {/* vCard gallery (cards) when gallery icon is selected */}
+      {/* vCard gallery (cards) when gallery icon is selected – max 3 per row, larger cards */}
       {viewMode === "gallery" && vCards.length > 0 && (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         {vCards.map((card) => (
           <article
             key={card.id}
-            className={`group card-premium card-premium-hover overflow-hidden ${openMenuId === card.id || disabledCardIds[card.id] ? "overflow-visible" : ""}`}
+            className={`group card-premium card-premium-hover overflow-hidden min-w-0 ${openMenuId === card.id || disabledCardIds[card.id] ? "overflow-visible" : ""}`}
           >
             {/* Mobile-preview style: gradient header + dark body (jaisa mobile preview me dikh rha) */}
             <div className={`relative w-full rounded-t-2xl ${openMenuId === card.id || disabledCardIds[card.id] ? "overflow-visible" : "overflow-hidden"}`} ref={openMenuId === card.id ? menuRef : undefined}>
@@ -610,7 +630,7 @@ export const VCardsContent = () => {
               )}
               {/* Gradient header – same as mobile preview */}
               <div
-                className="relative h-24 w-full rounded-t-2xl"
+                className="relative h-32 w-full rounded-t-2xl"
                 style={{
                   background: card.templatePrimaryColor
                     ? `linear-gradient(to bottom, ${card.templatePrimaryColor}, ${card.templatePrimaryColor}dd)`
@@ -642,31 +662,31 @@ export const VCardsContent = () => {
                   </div>
                 </div>
               </div>
-              {/* Dark body – avatar + title + template (mobile preview jaisa) */}
-              <div className="relative -mt-6 px-4 py-4 bg-[#142633] rounded-t-2xl">
+              {/* Dark body – avatar + title + template (mobile preview jaisa, larger) */}
+              <div className="relative -mt-6 px-5 py-5 bg-[#142633] rounded-t-2xl">
                 <div className="flex items-center gap-3">
                   <div
-                    className="h-14 w-14 rounded-full border-2 overflow-hidden flex-shrink-0 bg-gray-600"
+                    className="h-16 w-16 rounded-full border-2 overflow-hidden flex-shrink-0 bg-gray-600"
                     style={{ borderColor: card.templatePrimaryColor || "#8b5cf6" }}
                   >
                     <Image
                       src={card.image}
                       alt={card.title}
-                      width={56}
-                      height={56}
+                      width={64}
+                      height={64}
                       className="object-cover w-full h-full"
                       unoptimized={card.image.startsWith("data:")}
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold truncate capitalize" style={{ color: card.templatePrimaryColor || "#a78bfa" }}>
+                    <p className="text-base font-semibold truncate capitalize" style={{ color: card.templatePrimaryColor || "#a78bfa" }}>
                       {card.title}
                     </p>
-                    <p className="text-xs truncate opacity-90" style={{ color: card.templatePrimaryColor || "#a78bfa" }}>
+                    <p className="text-sm truncate opacity-90" style={{ color: card.templatePrimaryColor || "#a78bfa" }}>
                       {card.templateName ? `Template: ${card.templateName}` : "Template: —"}
                     </p>
                   </div>
-                  <span className="text-[10px] text-gray-400 shrink-0">{card.date}</span>
+                  <span className="text-xs text-gray-400 shrink-0">{card.date}</span>
                 </div>
               </div>
               {/* Spacer for dropdown */}
@@ -688,60 +708,137 @@ export const VCardsContent = () => {
                         }
                         if (label === "Disabled") {
                           return (
-                            <button key={label} type="button" onClick={() => { setDisabledCardIds((p) => ({ ...p, [card.id]: !p[card.id] })); setOpenMenuId(null); }} className={itemClass}>
+                            <div
+                              key={label}
+                              role="button"
+                              tabIndex={0}
+                              onClick={() => { setDisabledCardIds((p) => ({ ...p, [card.id]: !p[card.id] })); setOpenMenuId(null); }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  setDisabledCardIds((p) => ({ ...p, [card.id]: !p[card.id] }));
+                                  setOpenMenuId(null);
+                                }
+                              }}
+                              className={itemClass}
+                            >
                               <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
                               <span>{label}</span>
-                            </button>
+                            </div>
                           );
                         }
                         if (label === "Delete") {
                           return (
-                            <button key={label} type="button" onClick={() => { setDeleteConfirmCardId(card.id); setOpenMenuId(null); }} className={itemClass}>
+                            <div
+                              key={label}
+                              role="button"
+                              tabIndex={0}
+                              onClick={() => { setDeleteConfirmCardId(card.id); setOpenMenuId(null); }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  setDeleteConfirmCardId(card.id);
+                                  setOpenMenuId(null);
+                                }
+                              }}
+                              className={itemClass}
+                            >
                               <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
                               <span>{label}</span>
-                            </button>
+                            </div>
                           );
                         }
                         if (label === "QR Code") {
                           return (
-                            <button key={label} type="button" onClick={() => { setQrModalCard(card); setOpenMenuId(null); }} className={itemClass}>
+                            <div
+                              key={label}
+                              role="button"
+                              tabIndex={0}
+                              onClick={() => { setQrModalCard(card); setOpenMenuId(null); }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  setQrModalCard(card);
+                                  setOpenMenuId(null);
+                                }
+                              }}
+                              className={itemClass}
+                            >
                               <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
                               <span>{label}</span>
-                            </button>
+                            </div>
                           );
                         }
                         if (label === "Copy link") {
                           return (
-                            <button key={label} type="button" onClick={() => { copyCardLink(card); setOpenMenuId(null); }} className={itemClass}>
+                            <div
+                              key={label}
+                              role="button"
+                              tabIndex={0}
+                              onClick={() => { copyCardLink(card); setOpenMenuId(null); }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  copyCardLink(card);
+                                  setOpenMenuId(null);
+                                }
+                              }}
+                              className={itemClass}
+                            >
                               <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
                               <span>{label}</span>
-                            </button>
+                            </div>
                           );
                         }
                         return (
-                          <button
+                          <div
                             key={label}
-                            type="button"
+                            role="button"
+                            tabIndex={0}
                             onClick={() => { onClick?.(); setOpenMenuId(null); }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                onClick?.();
+                                setOpenMenuId(null);
+                              }
+                            }}
                             className={itemClass}
                           >
                             <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
                             <span>{label}</span>
-                          </button>
+                          </div>
                         );
                       })}
                     </div>
                   )}
               </div>
             </div>
-            {/* Action strip – mobile preview jaisa bottom bar */}
+            {/* Action strip – mobile preview jaisa bottom bar (taller) */}
             <div
-              className={`px-4 py-4 rounded-b-2xl flex items-center justify-center gap-2 flex-wrap ${!card.templatePrimaryColor ? "bg-violet-100/80 dark:bg-violet-900/30" : ""}`}
+              className={`px-5 py-5 rounded-b-2xl flex items-center justify-center gap-2 flex-wrap ${!card.templatePrimaryColor ? "bg-violet-100/80 dark:bg-violet-900/30" : ""}`}
               style={card.templatePrimaryColor ? { backgroundColor: `${card.templatePrimaryColor}18` } : undefined}
             >
               <div className={`flex items-center gap-2 flex-wrap ${disabledCardIds[card.id] ? "justify-center" : ""}`}>
                 {(disabledCardIds[card.id] ? [actionIcons[actionIcons.length - 1]] : actionIcons).map(({ Icon, color }, i) =>
-                  i === 1 && !disabledCardIds[card.id] ? (
+                  i === 0 && !disabledCardIds[card.id] ? (
+                    (() => {
+                      const slug = (card.slug ?? card.previewUrl.replace(/^https?:\/\/[^/]+/, "").replace(/^\//, "")) || "vcard";
+                      const localPath = `/${slug}`;
+                      return (
+                        <a
+                          key={i}
+                          href={localPath}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`w-9 h-9 rounded-full flex items-center justify-center ${color} hover:opacity-90 transition-opacity`}
+                          aria-label="View vCard (public template)"
+                        >
+                          <Icon />
+                        </a>
+                      );
+                    })()
+                  ) : i === 1 && !disabledCardIds[card.id] ? (
                     <Link
                       key={i}
                       href={`/vcards/${card.id}/email-subscription`}

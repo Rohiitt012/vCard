@@ -28,14 +28,26 @@ function formatCardDate() {
 
 export function NewVCardContent() {
   const router = useRouter();
-  const { setVCards } = useVCards();
+  const { vCards, setVCards } = useVCards();
   const [coverType, setCoverType] = useState<CoverType>("Image");
+  const [aliasError, setAliasError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const urlAlias = (formData.get("urlAlias") as string)?.trim() || "my-vcard";
+    const rawAlias = (formData.get("urlAlias") as string)?.trim() || "my-vcard";
+    const urlAlias = rawAlias.toLowerCase();
+    const exists = vCards.some((card) => {
+      const existingSlug =
+        card.slug ?? card.previewUrl.replace(/^https?:\/\/[^/]+/, "").replace(/^\//, "").toLowerCase();
+      return existingSlug === urlAlias;
+    });
+    if (exists) {
+      setAliasError("This URL Alias already exists. Please choose another.");
+      return;
+    }
+    setAliasError(null);
     const title = (formData.get("vCardName") as string)?.trim() || "New vCard";
     const newId = `vcard-${Date.now()}`;
     const newCard = {
@@ -43,7 +55,8 @@ export function NewVCardContent() {
       title,
       date: formatCardDate(),
       image: "/images/user/owner.jpg",
-      previewUrl: `https://openmyprofile.com/${urlAlias}`,
+      previewUrl: `/${urlAlias}`,
+      slug: urlAlias,
       viewCount: 0,
       status: true,
     };
@@ -79,7 +92,7 @@ export function NewVCardContent() {
               <input
                 type="text"
                 name="urlAlias"
-                className={inputClass}
+                className={`${inputClass} ${aliasError ? "border-red-500 focus:ring-red-500" : ""}`}
                 placeholder="my-vCard-page-url"
               />
               <button
@@ -92,6 +105,7 @@ export function NewVCardContent() {
                 </svg>
               </button>
             </div>
+            {aliasError && <p className="mt-1 text-xs text-red-500">{aliasError}</p>}
           </div>
 
           {/* Row 2: vCard Name + Occupation (two columns) */}

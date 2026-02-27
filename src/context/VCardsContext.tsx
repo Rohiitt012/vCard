@@ -4,12 +4,22 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 
 const VCARDS_STORAGE_KEY = "vcards-list";
 
+export type VCardBlog = {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+};
+
 export type VCardItem = {
   id: string;
   title: string;
   date: string;
   image: string;
+  /** Public URL path for this vCard, e.g. "/my-alias" */
   previewUrl: string;
+  /** Optional slug/alias without leading slash, e.g. "my-alias" */
+  slug?: string;
   viewCount: number;
   status: boolean;
   /** QR code foreground (modules) color - hex e.g. #000000 */
@@ -22,6 +32,12 @@ export type VCardItem = {
   templateName?: string;
   /** Primary color (hex) of saved template – used for card strip on vCards list */
   templatePrimaryColor?: string;
+  /** Blogs shown on template & blogs table */
+  blogs?: VCardBlog[];
+  /** Rich text HTML for Terms & Conditions shown on public vCard */
+  termsHtml?: string;
+  /** Rich text HTML for Privacy Policy shown on public vCard */
+  privacyHtml?: string;
 };
 
 function getCreationDate() {
@@ -34,7 +50,8 @@ const defaultVCards: VCardItem[] = [
     title: "website builder",
     date: getCreationDate(),
     image: "/images/user/owner.jpg",
-    previewUrl: "https://openmyprofile.com/fbfgfg",
+    previewUrl: "/fbfgfg",
+    slug: "fbfgfg",
     viewCount: 0,
     status: true,
   },

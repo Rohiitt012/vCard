@@ -659,17 +659,56 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
   // simple placeholder states where needed
   const [servicesSearch, setServicesSearch] = useState("");
+  const [displayServiceEnquiryButton, setDisplayServiceEnquiryButton] = useState(true);
+  const [displayImagesWithSlider, setDisplayImagesWithSlider] = useState(false);
+  const [showServicesSuccessToast, setShowServicesSuccessToast] = useState(false);
+  const [servicesSuccessMessage, setServicesSuccessMessage] = useState("");
+  const [servicesToastProgress, setServicesToastProgress] = useState(100);
+  const servicesToastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const servicesProgressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [showNewServiceModal, setShowNewServiceModal] = useState(false);
+  const [newServiceName, setNewServiceName] = useState("");
+  const [newServiceUrl, setNewServiceUrl] = useState("");
+  const [newServiceDescription, setNewServiceDescription] = useState("");
+  const [newServiceIconPreview, setNewServiceIconPreview] = useState<string | null>(null);
+  const newServiceIconInputRef = useRef<HTMLInputElement>(null);
   const [productsSearch, setProductsSearch] = useState("");
+  const [showNewProductModal, setShowNewProductModal] = useState(false);
+  const [newProductName, setNewProductName] = useState("");
+  const [newProductCurrency, setNewProductCurrency] = useState("");
+  const [newProductPrice, setNewProductPrice] = useState("");
+  const [newProductSort, setNewProductSort] = useState("");
+  const [newProductUrl, setNewProductUrl] = useState("");
+  const [newProductDescription, setNewProductDescription] = useState("");
+  const [newProductIconPreview, setNewProductIconPreview] = useState<string | null>(null);
+  const newProductIconInputRef = useRef<HTMLInputElement>(null);
   const [displayProductEnquiryButton, setDisplayProductEnquiryButton] = useState(false);
   const [productsShowPerPage, setProductsShowPerPage] = useState(10);
   const [instaSearch, setInstaSearch] = useState("");
+  const [showAddEmbedTagModal, setShowAddEmbedTagModal] = useState(false);
+  const [showEmbedGuideModal, setShowEmbedGuideModal] = useState(false);
+  const [embedGuideType, setEmbedGuideType] = useState<"instagram" | "linkedin">("instagram");
+  const [addEmbedTagType, setAddEmbedTagType] = useState("");
+  const [addEmbedTagValue, setAddEmbedTagValue] = useState("");
   const [linkedinSearch, setLinkedinSearch] = useState("");
   const [galleriesSearch, setGalleriesSearch] = useState("");
+  const [showNewGalleryModal, setShowNewGalleryModal] = useState(false);
+  const [newGalleryType, setNewGalleryType] = useState("");
+  const [newGalleryImagePreview, setNewGalleryImagePreview] = useState<string | null>(null);
+  const newGalleryImageInputRef = useRef<HTMLInputElement>(null);
   const [blogsSearch, setBlogsSearch] = useState("");
+  const [showNewBlogModal, setShowNewBlogModal] = useState(false);
+  const [newBlogTitle, setNewBlogTitle] = useState("");
+  const [newBlogDescription, setNewBlogDescription] = useState("");
+  const [newBlogIconPreview, setNewBlogIconPreview] = useState<string | null>(null);
+  const newBlogIconInputRef = useRef<HTMLInputElement>(null);
+  const [blogFormErrors, setBlogFormErrors] = useState<{ title?: string; description?: string; icon?: string }>({});
   const [testimonialsSearch, setTestimonialsSearch] = useState("");
   const [iframesSearch, setIframesSearch] = useState("");
   const [customLinksSearch, setCustomLinksSearch] = useState("");
   const [customLinksShowPerPage, setCustomLinksShowPerPage] = useState(10);
+  const [termsContent, setTermsContent] = useState("");
+  const [privacyContent, setPrivacyContent] = useState("");
   const [qrDownloadSize, setQrDownloadSize] = useState(200);
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(null);
   const [dynamicPrimaryColor, setDynamicPrimaryColor] = useState("#B4FF3B");
@@ -680,6 +719,74 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [dynamicDescriptionColor, setDynamicDescriptionColor] = useState("#a6b8c0");
   const [stickyButtonPosition, setStickyButtonPosition] = useState<"left" | "right">("right");
   const [selectedButtonStyle, setSelectedButtonStyle] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10>(1);
+  const termsEditorRef = useRef<HTMLDivElement | null>(null);
+  const privacyEditorRef = useRef<HTMLDivElement | null>(null);
+
+  const handleRichTextCommand = (command: "bold" | "italic" | "underline") => {
+    if (typeof window === "undefined") return;
+    document.execCommand(command, false);
+  };
+
+  const handleRichTextInput = (target: "terms" | "privacy") => {
+    const ref = target === "terms" ? termsEditorRef : privacyEditorRef;
+    const el = ref.current;
+    if (!el) return;
+    const html = el.innerHTML;
+    if (target === "terms") {
+      setTermsContent(html);
+    } else {
+      setPrivacyContent(html);
+    }
+  };
+
+  const handleTermsSave = () => {
+    if (!vcardId || !currentCard) return;
+    setVCards((prev) =>
+      prev.map((c) => (c.id === vcardId ? { ...c, termsHtml: termsContent } : c))
+    );
+    setTermsSaveSuccess(true);
+  };
+
+  const handlePrivacySave = () => {
+    if (!vcardId || !currentCard) return;
+    setVCards((prev) =>
+      prev.map((c) => (c.id === vcardId ? { ...c, privacyHtml: privacyContent } : c))
+    );
+    setPrivacySaveSuccess(true);
+  };
+
+  const handleNewBlogSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const errors: { title?: string; description?: string; icon?: string } = {};
+    if (!newBlogTitle.trim()) errors.title = "Title is required.";
+    if (!newBlogDescription.trim()) errors.description = "Description is required.";
+    if (!newBlogIconPreview) errors.icon = "Blog icon is required.";
+    setBlogFormErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+    if (!vcardId || !currentCard) return;
+
+    const newBlog = {
+      id: `blog-${Date.now()}`,
+      title: newBlogTitle.trim(),
+      description: newBlogDescription.trim(),
+      icon: newBlogIconPreview!,
+    };
+
+    setVCards((prev) =>
+      prev.map((c) =>
+        c.id === vcardId ? { ...c, blogs: [...(c.blogs ?? []), newBlog] } : c
+      )
+    );
+
+    setServicesSuccessMessage("vCard blog created successfully.");
+    setShowServicesSuccessToast(true);
+
+    setShowNewBlogModal(false);
+    setNewBlogTitle("");
+    setNewBlogDescription("");
+    setNewBlogIconPreview(null);
+    setBlogFormErrors({});
+  };
   // Sync Dynamic vCard colors from selected vCard template (so selected template shows in Dynamic vCard)
   useEffect(() => {
     if (selectedTemplateId == null) return;
@@ -698,7 +805,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [qrBgColor, setQrBgColor] = useState("#ffffff");
   const [qrCreateSuccess, setQrCreateSuccess] = useState(false);
   const [templateSaveSuccess, setTemplateSaveSuccess] = useState(false);
+  const [termsSaveSuccess, setTermsSaveSuccess] = useState(false);
+  const [privacySaveSuccess, setPrivacySaveSuccess] = useState(false);
   const profileImageInputRef = useRef<HTMLInputElement>(null);
+  const [basicAlias, setBasicAlias] = useState("");
+  const [basicAliasError, setBasicAliasError] = useState<string | null>(null);
   useEffect(() => {
     if (currentCard) {
       setQrCodeColor(currentCard.qrCodeColor ?? "#000000");
@@ -706,8 +817,28 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
       if (currentCard.selectedTemplateId != null) {
         setSelectedTemplateId(currentCard.selectedTemplateId);
       }
+      const aliasFromSlug = currentCard.slug;
+      const aliasFromPreview = currentCard.previewUrl
+        .replace(/^https?:\/\/[^/]+/, "")
+        .replace(/^\/+/, "");
+      setBasicAlias((aliasFromSlug || aliasFromPreview || "").toLowerCase());
+      setTermsContent(currentCard.termsHtml ?? "");
+      setPrivacyContent(currentCard.privacyHtml ?? "");
+      if (termsEditorRef.current) {
+        termsEditorRef.current.innerHTML = currentCard.termsHtml ?? "";
+      }
+      if (privacyEditorRef.current) {
+        privacyEditorRef.current.innerHTML = currentCard.privacyHtml ?? "";
+      }
     }
-  }, [currentCard?.id, currentCard?.qrCodeColor, currentCard?.qrBgColor, currentCard?.selectedTemplateId]);
+  }, [
+    currentCard?.id,
+    currentCard?.qrCodeColor,
+    currentCard?.qrBgColor,
+    currentCard?.selectedTemplateId,
+    currentCard?.termsHtml,
+    currentCard?.privacyHtml,
+  ]);
   useEffect(() => {
     if (!qrCreateSuccess) return;
     const t = setTimeout(() => setQrCreateSuccess(false), 4000);
@@ -718,7 +849,37 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     const t = setTimeout(() => setTemplateSaveSuccess(false), 3000);
     return () => clearTimeout(t);
   }, [templateSaveSuccess]);
+  useEffect(() => {
+    if (!termsSaveSuccess) return;
+    const t = setTimeout(() => setTermsSaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [termsSaveSuccess]);
+  useEffect(() => {
+    if (!privacySaveSuccess) return;
+    const t = setTimeout(() => setPrivacySaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [privacySaveSuccess]);
+  const SERVICES_TOAST_DURATION_MS = 2000; // green line 2 sec
+  useEffect(() => {
+    if (!showServicesSuccessToast) return;
+    setServicesToastProgress(100);
+    const startTime = Date.now();
+    servicesProgressIntervalRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, 100 - (elapsed / SERVICES_TOAST_DURATION_MS) * 100);
+      setServicesToastProgress(remaining);
+    }, 50);
+    servicesToastTimerRef.current = setTimeout(() => {
+      setShowServicesSuccessToast(false);
+      if (servicesProgressIntervalRef.current) clearInterval(servicesProgressIntervalRef.current);
+    }, SERVICES_TOAST_DURATION_MS + 500);
+    return () => {
+      if (servicesToastTimerRef.current) clearTimeout(servicesToastTimerRef.current);
+      if (servicesProgressIntervalRef.current) clearInterval(servicesProgressIntervalRef.current);
+    };
+  }, [showServicesSuccessToast]);
   const [showAdvancedPassword, setShowAdvancedPassword] = useState(false);
+  const [advancedPassword, setAdvancedPassword] = useState("");
   const [removeBranding, setRemoveBranding] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
   const [manageSectionSections, setManageSectionSections] = useState({
@@ -855,6 +1016,70 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           Create QR successfully.
         </div>
       )}
+      {termsSaveSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          Terms &amp; Conditions updated successfully.
+        </div>
+      )}
+      {privacySaveSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          Privacy Policy updated successfully.
+        </div>
+      )}
+
+      {/* Global success toast (services, blogs, etc.) */}
+      {showServicesSuccessToast && (
+        <div
+          className="fixed top-4 right-4 z-[100000] w-full max-w-md"
+          role="alert"
+          aria-live="polite"
+        >
+          <div className="rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800 overflow-hidden">
+            <div className="flex items-start gap-3 px-5 pt-5 pb-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div className="min-w-0 flex-1 pr-8">
+                <p className="text-sm font-bold text-gray-900 dark:text-white">Successful</p>
+                <p className="mt-1 text-sm font-normal text-gray-600 dark:text-gray-400">{servicesSuccessMessage}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowServicesSuccessToast(false)}
+                className="absolute right-3 top-3 rounded p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                aria-label="Close"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="h-1.5 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+              <div
+                className="h-full rounded-b bg-green-500 transition-[width] duration-75 ease-linear"
+                style={{ width: `${servicesToastProgress}%` }}
+              />
+            </div>
+            <div className="px-5 pb-5 pt-3 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowServicesSuccessToast(false)}
+                className="rounded-lg bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-800/50"
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left sidebar */}
@@ -919,6 +1144,33 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     className="space-y-5"
                     onSubmit={(e) => {
                       e.preventDefault();
+                      if (!vcardId || !currentCard) return;
+                      const rawAlias = basicAlias.trim() || "my-vcard";
+                      const alias = rawAlias.toLowerCase();
+                      const aliasExists = vCards.some((card) => {
+                        if (card.id === vcardId) return false;
+                        const slug = (card.slug ??
+                          card.previewUrl.replace(/^https?:\/\/[^/]+/, "").replace(/^\/+/, "")).toLowerCase();
+                        return slug === alias;
+                      });
+                      if (aliasExists) {
+                        setBasicAliasError("This URL Alias already exists. Please choose another.");
+                        return;
+                      }
+                      setBasicAliasError(null);
+
+                      setVCards((prev) =>
+                        prev.map((card) =>
+                          card.id === vcardId
+                            ? {
+                                ...card,
+                                slug: alias,
+                                previewUrl: `/${alias}`,
+                              }
+                            : card
+                        )
+                      );
+
                       setBasicDetailsUpdated(true);
                       setActiveTab("personal");
                     }}
@@ -934,8 +1186,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <div className="flex gap-2">
                         <input
                           type="text"
-                          className={inputClass}
-                          defaultValue="fbfgfg"
+                          className={`${inputClass} ${basicAliasError ? "border-red-500 focus:ring-red-500" : ""}`}
+                          defaultValue={basicAlias}
+                          onChange={(e) => setBasicAlias(e.target.value)}
                           placeholder="alias"
                         />
                         <button
@@ -948,6 +1201,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           </svg>
                         </button>
                       </div>
+                      {basicAliasError && (
+                        <p className="mt-1 text-xs text-red-500">{basicAliasError}</p>
+                      )}
                     </div>
 
                     {/* vCard Name */}
@@ -2211,13 +2467,207 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       className={`${inputClass} pl-10`}
                     />
                   </div>
-                  <button
-                    type="button"
-                    className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                  >
-                    Add Service
-                  </button>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                        Display Service Enquiry Button
+                      </span>
+                      <button
+                        type="button"
+                        role="switch"
+                        aria-checked={displayServiceEnquiryButton}
+                        onClick={() => {
+                          setDisplayServiceEnquiryButton((prev) => !prev);
+                          setServicesSuccessMessage("Service Section Enquiry Button updated successfully.");
+                          setShowServicesSuccessToast(true);
+                        }}
+                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                          displayServiceEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
+                        }`}
+                      >
+                        <span
+                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
+                            displayServiceEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
+                          }`}
+                        />
+                      </button>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                        Display Images with Slider
+                      </span>
+                      <button
+                        type="button"
+                        role="switch"
+                        aria-checked={displayImagesWithSlider}
+                        onClick={() => {
+                          setDisplayImagesWithSlider((prev) => !prev);
+                          setServicesSuccessMessage("Display Images with Slider updated successfully.");
+                          setShowServicesSuccessToast(true);
+                        }}
+                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                          displayImagesWithSlider ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
+                        }`}
+                      >
+                        <span
+                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
+                            displayImagesWithSlider ? "translate-x-[1.375rem]" : "translate-x-0"
+                          }`}
+                        />
+                      </button>
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setShowNewServiceModal(true)}
+                      className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                    >
+                      Add Service
+                    </button>
+                  </div>
                 </div>
+                {/* New Service modal */}
+                {showNewServiceModal && (
+                  <div
+                    className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="new-service-title"
+                  >
+                    <div className="relative w-full max-w-lg min-h-[520px] rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
+                        <h2 id="new-service-title" className="text-lg font-semibold text-gray-900 dark:text-white">
+                          New Service
+                        </h2>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowNewServiceModal(false);
+                            setNewServiceName("");
+                            setNewServiceUrl("");
+                            setNewServiceDescription("");
+                            setNewServiceIconPreview(null);
+                          }}
+                          className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                          aria-label="Close"
+                        >
+                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <form
+                        className="p-6 pb-8 space-y-5"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          setShowNewServiceModal(false);
+                          setNewServiceName("");
+                          setNewServiceUrl("");
+                          setNewServiceDescription("");
+                          setNewServiceIconPreview(null);
+                        }}
+                      >
+                        <div>
+                          <label className={`${labelClass}`}>Name: <span className="text-red-500">*</span></label>
+                          <input
+                            type="text"
+                            value={newServiceName}
+                            onChange={(e) => setNewServiceName(e.target.value)}
+                            placeholder="Enter Service Name"
+                            className={`${inputClass} mt-1`}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Service URL:</label>
+                          <input
+                            type="text"
+                            value={newServiceUrl}
+                            onChange={(e) => setNewServiceUrl(e.target.value)}
+                            placeholder="Service URL"
+                            className={`${inputClass} mt-1`}
+                          />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Description: <span className="text-red-500">*</span></label>
+                          <textarea
+                            value={newServiceDescription}
+                            onChange={(e) => setNewServiceDescription(e.target.value)}
+                            placeholder="Enter Short Description"
+                            rows={6}
+                            className={`${inputClass} mt-1 resize-none min-h-[120px]`}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Service Icon: <span className="text-red-500">*</span></label>
+                          <input
+                            ref={newServiceIconInputRef}
+                            type="file"
+                            accept=".png,.jpg,.jpeg"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              const reader = new FileReader();
+                              reader.onload = () => setNewServiceIconPreview(reader.result as string);
+                              reader.readAsDataURL(file);
+                            }}
+                          />
+                          <div className="relative mt-2 inline-block">
+                            <button
+                              type="button"
+                              onClick={() => newServiceIconInputRef.current?.click()}
+                              className="relative flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 w-32 h-32 overflow-hidden"
+                            >
+                              {newServiceIconPreview ? (
+                                <Image src={newServiceIconPreview} alt="Service icon" fill className="object-cover" unoptimized sizes="128px" />
+                              ) : (
+                                <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
+                                  <svg className="w-10 h-10 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
+                                  </svg>
+                                  <span className="text-xs">Icon</span>
+                                </div>
+                              )}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => newServiceIconInputRef.current?.click()}
+                              className="absolute -top-1 -right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                              aria-label="Edit icon"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
+                            </button>
+                          </div>
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
+                        </div>
+                        <div className="flex items-center justify-end gap-3 pt-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setShowNewServiceModal(false);
+                              setNewServiceName("");
+                              setNewServiceUrl("");
+                              setNewServiceDescription("");
+                              setNewServiceIconPreview(null);
+                            }}
+                            className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                          >
+                            Discard
+                          </button>
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
                 <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
@@ -2293,12 +2743,203 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </label>
                     <button
                       type="button"
+                      onClick={() => setShowNewProductModal(true)}
                       className="inline-flex items-center justify-center rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1d4ed8] shrink-0"
                     >
                       Add Product
                     </button>
                   </div>
                 </div>
+                {/* New Product modal */}
+                {showNewProductModal && (
+                  <div
+                    className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="new-product-title"
+                  >
+                    <div className="relative w-full max-w-2xl min-h-[640px] rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800 max-h-[90vh] overflow-y-auto">
+                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-8 py-5 sticky top-0 bg-white dark:bg-gray-800 z-10">
+                        <h2 id="new-product-title" className="text-xl font-semibold text-gray-900 dark:text-white">
+                          New Product
+                        </h2>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowNewProductModal(false);
+                            setNewProductName("");
+                            setNewProductCurrency("");
+                            setNewProductPrice("");
+                            setNewProductSort("");
+                            setNewProductUrl("");
+                            setNewProductDescription("");
+                            setNewProductIconPreview(null);
+                          }}
+                          className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                          aria-label="Close"
+                        >
+                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <form
+                        className="p-8 pb-10 space-y-6"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          setShowNewProductModal(false);
+                          setNewProductName("");
+                          setNewProductCurrency("");
+                          setNewProductPrice("");
+                          setNewProductSort("");
+                          setNewProductUrl("");
+                          setNewProductDescription("");
+                          setNewProductIconPreview(null);
+                        }}
+                      >
+                        <div>
+                          <label className={labelClass}>Name: <span className="text-red-500">*</span></label>
+                          <input
+                            type="text"
+                            value={newProductName}
+                            onChange={(e) => setNewProductName(e.target.value)}
+                            placeholder="Enter Product Name"
+                            className={`${inputClass} mt-1`}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Currency:</label>
+                          <select
+                            value={newProductCurrency}
+                            onChange={(e) => setNewProductCurrency(e.target.value)}
+                            className={`${inputClass} mt-1`}
+                          >
+                            <option value="">Select Currency</option>
+                            <option value="USD">USD</option>
+                            <option value="INR">INR</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                          </select>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className={labelClass}>Price:</label>
+                            <input
+                              type="text"
+                              value={newProductPrice}
+                              onChange={(e) => setNewProductPrice(e.target.value)}
+                              placeholder="Enter Price"
+                              className={`${inputClass} mt-1`}
+                            />
+                          </div>
+                          <div>
+                            <label className={labelClass}>Sort:</label>
+                            <input
+                              type="text"
+                              value={newProductSort}
+                              onChange={(e) => setNewProductSort(e.target.value)}
+                              placeholder="Sort"
+                              className={`${inputClass} mt-1`}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className={labelClass}>Product URL:</label>
+                          <input
+                            type="text"
+                            value={newProductUrl}
+                            onChange={(e) => setNewProductUrl(e.target.value)}
+                            placeholder="Enter Product URL"
+                            className={`${inputClass} mt-1`}
+                          />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Description:</label>
+                          <textarea
+                            value={newProductDescription}
+                            onChange={(e) => setNewProductDescription(e.target.value)}
+                            placeholder="Enter Short Description"
+                            rows={6}
+                            className={`${inputClass} mt-1 resize-none min-h-[120px]`}
+                          />
+                        </div>
+                        <div>
+                          <label className={`${labelClass} inline-flex items-center gap-1`}>
+                            Product Icon: <span className="text-red-500">*</span>
+                            <span className="text-gray-400 cursor-help" title="Upload product icon">?</span>
+                          </label>
+                          <input
+                            ref={newProductIconInputRef}
+                            type="file"
+                            accept=".png,.jpg,.jpeg"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              const reader = new FileReader();
+                              reader.onload = () => setNewProductIconPreview(reader.result as string);
+                              reader.readAsDataURL(file);
+                            }}
+                          />
+                          <div className="relative mt-2 inline-block">
+                            <button
+                              type="button"
+                              onClick={() => newProductIconInputRef.current?.click()}
+                              className="relative flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 w-40 h-40 overflow-hidden"
+                            >
+                              {newProductIconPreview ? (
+                                <Image src={newProductIconPreview} alt="Product icon" fill className="object-cover" unoptimized sizes="160px" />
+                              ) : (
+                                <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
+                                  <svg className="w-10 h-10 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
+                                  </svg>
+                                  <span className="text-xs">Icon</span>
+                                </div>
+                              )}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => newProductIconInputRef.current?.click()}
+                              className="absolute -top-1 -right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                              aria-label="Edit icon"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
+                            </button>
+                          </div>
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
+                        </div>
+                        <div className="flex items-center justify-end gap-3 pt-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setShowNewProductModal(false);
+                              setNewProductName("");
+                              setNewProductCurrency("");
+                              setNewProductPrice("");
+                              setNewProductSort("");
+                              setNewProductUrl("");
+                              setNewProductDescription("");
+                              setNewProductIconPreview(null);
+                            }}
+                            className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                          >
+                            Discard
+                          </button>
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
                 <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                   <div className="overflow-x-auto overflow-y-visible">
                     <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
@@ -2375,12 +3016,14 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <div className="flex flex-wrap items-center gap-3">
                     <button
                       type="button"
+                      onClick={() => { setEmbedGuideType("instagram"); setShowEmbedGuideModal(true); }}
                       className="inline-flex items-center justify-center rounded-lg bg-amber-400 hover:bg-amber-500 px-4 py-2.5 text-sm font-semibold text-gray-900 shrink-0"
                     >
                       How It works?
                     </button>
                     <button
                       type="button"
+                      onClick={() => setShowAddEmbedTagModal(true)}
                       className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
                     >
                       Add Embed-Tag
@@ -2441,12 +3084,14 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <div className="flex flex-wrap items-center gap-3">
                     <button
                       type="button"
+                      onClick={() => { setEmbedGuideType("linkedin"); setShowEmbedGuideModal(true); }}
                       className="inline-flex items-center justify-center rounded-lg bg-orange-400 hover:bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shrink-0"
                     >
                       How It works?
                     </button>
                     <button
                       type="button"
+                      onClick={() => setShowAddEmbedTagModal(true)}
                       className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
                     >
                       Add Embed-Tag
@@ -2506,6 +3151,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   </div>
                   <button
                     type="button"
+                    onClick={() => setShowNewGalleryModal(true)}
                     className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
                   >
                     Add Gallery
@@ -2565,6 +3211,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <button
                     type="button"
                     className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                    onClick={() => setShowNewBlogModal(true)}
                   >
                     Add Blog
                   </button>
@@ -2580,26 +3227,217 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const allBlogs = currentCard?.blogs ?? [];
+                          const filtered = blogsSearch.trim()
+                            ? allBlogs.filter((b) =>
+                                b.title.toLowerCase().includes(blogsSearch.toLowerCase())
+                              )
+                            : allBlogs;
+                          if (!filtered.length) {
+                            return (
+                              <tr>
+                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return filtered.map((blog) => (
+                            <tr key={blog.id} className="border-t border-gray-100 dark:border-gray-800">
+                              <td className="px-4 py-3">
+                                <div className="h-12 w-12 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={blog.icon} alt={blog.title} className="h-full w-full object-cover" />
+                                </div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <p className="font-medium text-gray-900 dark:text-gray-100">{blog.title}</p>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-3 text-lg">
+                                  <button type="button" className="text-blue-500 hover:text-blue-600" aria-label="View blog">
+                                    👁
+                                  </button>
+                                  <button type="button" className="text-blue-500 hover:text-blue-600" aria-label="Edit blog">
+                                    ✏️
+                                  </button>
+                                  <button type="button" className="text-red-500 hover:text-red-600" aria-label="Delete blog">
+                                    🗑
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
+                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`} defaultValue={10}>
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Showing {(currentCard?.blogs ?? []).length} results
+                      </span>
                     </div>
                   </div>
                 </div>
+
+                {showNewBlogModal && (
+                  <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                    <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">New Blog</h2>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowNewBlogModal(false);
+                            setBlogFormErrors({});
+                          }}
+                          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                          aria-label="Close"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <form onSubmit={handleNewBlogSubmit} className="px-6 py-5 space-y-5">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            Title: <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={newBlogTitle}
+                            onChange={(e) => setNewBlogTitle(e.target.value)}
+                            placeholder="Enter Blog Name"
+                            className={`${inputClass} ${blogFormErrors.title ? "border-red-500 focus:ring-red-500" : ""}`}
+                          />
+                          {blogFormErrors.title && (
+                            <p className="mt-1 text-xs text-red-500">{blogFormErrors.title}</p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            Description: <span className="text-red-500">*</span>
+                          </label>
+                          <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                            <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
+                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Bold">
+                                <span className="font-bold text-sm">B</span>
+                              </button>
+                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic" title="Italic">
+                                <span className="text-sm">I</span>
+                              </button>
+                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline" title="Underline">
+                                <span className="text-sm">U</span>
+                              </button>
+                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 line-through" title="Strikethrough">
+                                <span className="text-sm">S</span>
+                              </button>
+                            </div>
+                            <textarea
+                              className={`w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400 ${
+                                blogFormErrors.description ? "ring-1 ring-red-500" : ""
+                              }`}
+                              placeholder="Description"
+                              value={newBlogDescription}
+                              onChange={(e) => setNewBlogDescription(e.target.value)}
+                            />
+                          </div>
+                          {blogFormErrors.description && (
+                            <p className="mt-1 text-xs text-red-500">{blogFormErrors.description}</p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            Blog Icon: <span className="text-red-500">*</span>
+                          </label>
+                          <div className="flex flex-col items-start gap-2">
+                            <div className="relative inline-flex rounded-2xl border border-gray-200 bg-gray-50 p-1 shadow-sm">
+                              <div className="h-24 w-24 rounded-xl overflow-hidden bg-white">
+                                {newBlogIconPreview ? (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img src={newBlogIconPreview} alt="Blog icon preview" className="h-full w-full object-cover" />
+                                ) : (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    src="/images/placeholder/blog-icon.png"
+                                    alt="Default blog icon"
+                                    className="h-full w-full object-cover"
+                                  />
+                                )}
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => newBlogIconInputRef.current?.click()}
+                                className="absolute right-2 top-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-500 shadow hover:bg-gray-50"
+                                aria-label="Change blog icon"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                  />
+                                </svg>
+                              </button>
+                              <input
+                                ref={newBlogIconInputRef}
+                                type="file"
+                                accept="image/png,image/jpeg,image/jpg"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    setNewBlogIconPreview(reader.result as string);
+                                  };
+                                  reader.readAsDataURL(file);
+                                }}
+                              />
+                            </div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              Allowed file types: png, jpg, jpeg.
+                            </p>
+                          </div>
+                          {blogFormErrors.icon && (
+                            <p className="mt-1 text-xs text-red-500">{blogFormErrors.icon}</p>
+                          )}
+                        </div>
+
+                        <div className="flex justify-end gap-2 pt-2 pb-1">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setShowNewBlogModal(false);
+                              setBlogFormErrors({});
+                            }}
+                            className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                          >
+                            Discard
+                          </button>
+                          <button
+                            type="submit"
+                            className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -3019,34 +3857,47 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <option>Heading 2</option>
                       <option>Paragraph</option>
                     </select>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500" aria-label="Increase">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                      </svg>
-                    </button>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500" aria-label="Decrease">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
                     <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Bold">
+                    <button
+                      type="button"
+                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+                      title="Bold"
+                      onClick={() => handleRichTextCommand("bold")}
+                    >
                       <span className="font-bold text-sm">B</span>
                     </button>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic" title="Italic">
+                    <button
+                      type="button"
+                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic"
+                      title="Italic"
+                      onClick={() => handleRichTextCommand("italic")}
+                    >
                       <span className="text-sm">I</span>
                     </button>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline" title="Underline">
+                    <button
+                      type="button"
+                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline"
+                      title="Underline"
+                      onClick={() => handleRichTextCommand("underline")}
+                    >
                       <span className="text-sm">U</span>
                     </button>
                   </div>
-                  <textarea
-                    className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none placeholder-gray-400"
-                    placeholder="Terms & Conditions"
+                  <div
+                    ref={termsEditorRef}
+                    className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none outline-none"
+                    contentEditable
+                    aria-label="Terms & Conditions"
+                    onInput={() => handleRichTextInput("terms")}
+                    suppressContentEditableWarning
                   />
                 </div>
                 <div className="flex justify-start gap-2.5 pt-2">
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    className="btn-primary-premium inline-flex items-center justify-center"
+                    onClick={handleTermsSave}
+                  >
                     Save
                   </button>
                   <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
@@ -3070,36 +3921,49 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <option>Heading 2</option>
                       <option>Paragraph</option>
                     </select>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500" aria-label="Increase">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                      </svg>
-                    </button>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-500" aria-label="Decrease">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
                     <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Bold">
+                    <button
+                      type="button"
+                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+                      title="Bold"
+                      onClick={() => handleRichTextCommand("bold")}
+                    >
                       <span className="font-bold text-sm">B</span>
                     </button>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic" title="Italic">
+                    <button
+                      type="button"
+                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic"
+                      title="Italic"
+                      onClick={() => handleRichTextCommand("italic")}
+                    >
                       <span className="text-sm">I</span>
                     </button>
-                    <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline" title="Underline">
+                    <button
+                      type="button"
+                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline"
+                      title="Underline"
+                      onClick={() => handleRichTextCommand("underline")}
+                    >
                       <span className="text-sm">U</span>
                     </button>
                   </div>
-                  <textarea
-                    className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none placeholder-gray-400"
-                    placeholder="Privacy Policy"
+                  <div
+                    ref={privacyEditorRef}
+                    className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none outline-none"
+                    contentEditable
+                    aria-label="Privacy Policy"
+                    onInput={() => handleRichTextInput("privacy")}
+                    suppressContentEditableWarning
                   />
                 </div>
                 <div className="flex justify-start gap-2.5 pt-2">
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center">
-                    Save
-                  </button>
+                <button
+                  type="button"
+                  className="btn-primary-premium inline-flex items-center justify-center"
+                  onClick={handlePrivacySave}
+                >
+                  Save
+                </button>
                   <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
                     Discard
                   </button>
@@ -3252,6 +4116,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       type={showAdvancedPassword ? "text" : "password"}
                       className={`${inputClass} pr-12`}
                       placeholder="Password"
+                      value={advancedPassword}
+                      onChange={(e) => setAdvancedPassword(e.target.value)}
+                      autoComplete="off"
                     />
                     <button
                       type="button"
@@ -3444,6 +4311,281 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           </div>
         </div>
       </div>
+
+      {/* Guide modal – opens on "How It works?" (InstaEmbed = Instagram guide, LinkedinEmbed = LinkedIn guide) */}
+      {showEmbedGuideModal && (
+        <div
+          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="embed-guide-title"
+        >
+          <div className="relative w-full max-w-lg rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
+              <h2 id="embed-guide-title" className="text-lg font-semibold text-gray-900 dark:text-white">
+                {embedGuideType === "linkedin" ? "Guide: Add Linkedin Embed Tag" : "Guide : Add Instagram Embed Tag"}
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowEmbedGuideModal(false)}
+                className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                aria-label="Close"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="px-6 py-6 space-y-4">
+              {embedGuideType === "linkedin" ? (
+                <>
+                  <ol className="list-decimal list-inside space-y-4 text-sm text-gray-700 dark:text-gray-300">
+                    <li className="pl-1">
+                      Open Linkedin Post in the desktop version &amp; copy embed tag of that Post.
+                    </li>
+                    <li className="pl-1">
+                      Add Embed tag into the vCard&apos;s Linkedin Embed section.
+                    </li>
+                    <li className="pl-1">
+                      Now that post will be displayed in vCard.
+                    </li>
+                  </ol>
+                  <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950/30">
+                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
+                      <span className="mt-0.5 shrink-0 text-red-500" aria-hidden>
+                        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </span>
+                      <span>
+                        <span className="font-semibold">Note:</span> Only original Linkedin posts (containing &quot;ugcPost&quot; in the embed code) are accepted. Shared posts (containing &quot;share&quot;) are not supported.
+                      </span>
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <ol className="list-decimal list-inside space-y-4 text-sm text-gray-700 dark:text-gray-300">
+                  <li className="pl-1">
+                    Open Instagram Post / Reel in the desktop version &amp; copy embed tag of that Post / Reel.
+                  </li>
+                  <li className="pl-1">
+                    Add Embed tag into the vCard&apos;s Instagram Embed section.
+                  </li>
+                  <li className="pl-1">
+                    Now that post will be displayed in vCard.
+                  </li>
+                </ol>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* New Gallery modal – opens from Add Gallery button */}
+      {showNewGalleryModal && (
+        <div
+          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="new-gallery-title"
+        >
+          <div className="relative w-full max-w-lg rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
+              <h2 id="new-gallery-title" className="text-lg font-semibold text-gray-900 dark:text-white">
+                New Gallery
+              </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNewGalleryModal(false);
+                  setNewGalleryType("");
+                  setNewGalleryImagePreview(null);
+                }}
+                className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                aria-label="Close"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <form
+              className="p-6 pb-8 space-y-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setShowNewGalleryModal(false);
+                setNewGalleryType("");
+                setNewGalleryImagePreview(null);
+              }}
+            >
+              <div>
+                <label className={labelClass}>Type: <span className="text-red-500">*</span></label>
+                <select
+                  value={newGalleryType}
+                  onChange={(e) => setNewGalleryType(e.target.value)}
+                  className={`${inputClass} mt-1`}
+                  required
+                >
+                  <option value="">Select Type</option>
+                  <option value="image">Image</option>
+                  <option value="video">Video</option>
+                </select>
+              </div>
+              <div>
+                <label className={labelClass}>Galleries: <span className="text-red-500">*</span></label>
+                <input
+                  ref={newGalleryImageInputRef}
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = () => setNewGalleryImagePreview(reader.result as string);
+                    reader.readAsDataURL(file);
+                  }}
+                />
+                <div className="relative mt-2 inline-block">
+                  <button
+                    type="button"
+                    onClick={() => newGalleryImageInputRef.current?.click()}
+                    className="relative flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 w-32 h-32 overflow-hidden"
+                  >
+                    {newGalleryImagePreview ? (
+                      <Image src={newGalleryImagePreview} alt="Gallery" fill className="object-cover" unoptimized sizes="128px" />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
+                        <svg className="w-10 h-10 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
+                        </svg>
+                        <span className="text-xs">Upload</span>
+                      </div>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => newGalleryImageInputRef.current?.click()}
+                    className="absolute -top-1 -right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                    aria-label="Edit"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                  </button>
+                </div>
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
+              </div>
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowNewGalleryModal(false);
+                    setNewGalleryType("");
+                    setNewGalleryImagePreview(null);
+                  }}
+                  className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                >
+                  Discard
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Add Embed-Tag modal – opens from Add Embed-Tag button */}
+      {showAddEmbedTagModal && (
+        <div
+          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="add-embed-tag-title"
+        >
+          <div className="relative w-full max-w-lg rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
+              <h2 id="add-embed-tag-title" className="text-lg font-semibold text-gray-900 dark:text-white">
+                Add Embed-Tag
+              </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAddEmbedTagModal(false);
+                  setAddEmbedTagType("");
+                  setAddEmbedTagValue("");
+                }}
+                className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                aria-label="Close"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <form
+              className="p-6 pb-8 space-y-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setShowAddEmbedTagModal(false);
+                setAddEmbedTagType("");
+                setAddEmbedTagValue("");
+              }}
+            >
+              <div>
+                <label className={labelClass}>Type: <span className="text-red-500">*</span></label>
+                <select
+                  value={addEmbedTagType}
+                  onChange={(e) => setAddEmbedTagType(e.target.value)}
+                  className={`${inputClass} mt-1`}
+                  required
+                >
+                  <option value="">Select Type</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="video">Video</option>
+                  <option value="post">Post</option>
+                </select>
+              </div>
+              <div>
+                <label className={labelClass}>Embed-Tag: <span className="text-red-500">*</span></label>
+                <textarea
+                  value={addEmbedTagValue}
+                  onChange={(e) => setAddEmbedTagValue(e.target.value)}
+                  placeholder="Enter Short Description"
+                  rows={4}
+                  className={`${inputClass} mt-1 resize-none min-h-[100px]`}
+                  required
+                />
+              </div>
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAddEmbedTagModal(false);
+                    setAddEmbedTagType("");
+                    setAddEmbedTagValue("");
+                  }}
+                  className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                >
+                  Discard
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
