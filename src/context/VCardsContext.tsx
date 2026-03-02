@@ -1,104 +1,179 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
+import {
+  getEditToken,
+  setEditToken,
+  removeEditToken,
+  apiListVCards,
+  apiCreateVCard,
+  apiUpdateVCard,
+  apiDeleteVCard,
+} from "@/lib/vcards-api";
+import type { VCardItem } from "./VCardsContextTypes";
 
-const VCARDS_STORAGE_KEY = "vcards-list";
-
-export type VCardBlog = {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-};
-
-export type VCardItem = {
-  id: string;
-  title: string;
-  date: string;
-  image: string;
-  /** Public URL path for this vCard, e.g. "/my-alias" */
-  previewUrl: string;
-  /** Optional slug/alias without leading slash, e.g. "my-alias" */
-  slug?: string;
-  viewCount: number;
-  status: boolean;
-  /** QR code foreground (modules) color - hex e.g. #000000 */
-  qrCodeColor?: string;
-  /** QR code background color - hex e.g. #ffffff */
-  qrBgColor?: string;
-  /** Selected vCard template id (from VCARD_TEMPLATES) – saved when user saves in Edit */
-  selectedTemplateId?: number;
-  /** Selected template display name – shown on vCards list */
-  templateName?: string;
-  /** Primary color (hex) of saved template – used for card strip on vCards list */
-  templatePrimaryColor?: string;
-  /** Blogs shown on template & blogs table */
-  blogs?: VCardBlog[];
-  /** Rich text HTML for Terms & Conditions shown on public vCard */
-  termsHtml?: string;
-  /** Rich text HTML for Privacy Policy shown on public vCard */
-  privacyHtml?: string;
-};
-
-function getCreationDate() {
-  return new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-}
-
-const defaultVCards: VCardItem[] = [
-  {
-    id: "1",
-    title: "website builder",
-    date: getCreationDate(),
-    image: "/images/user/owner.jpg",
-    previewUrl: "/fbfgfg",
-    slug: "fbfgfg",
-    viewCount: 0,
-    status: true,
-  },
-];
+const LOCAL_VCARDS_KEY = "vcards-local-storage";
 
 function loadVCardsFromStorage(): VCardItem[] {
-  if (typeof window === "undefined") return defaultVCards;
+  if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(VCARDS_STORAGE_KEY);
-    if (!raw) return defaultVCards;
-    const parsed = JSON.parse(raw) as VCardItem[];
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultVCards;
+    const raw = localStorage.getItem(LOCAL_VCARDS_KEY);
+    if (!raw) return [];
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list : [];
   } catch {
-    return defaultVCards;
+    return [];
   }
 }
+
+function saveVCardsToStorage(cards: VCardItem[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(LOCAL_VCARDS_KEY, JSON.stringify(cards));
+  } catch (_) {}
+}
+
+function createLocalVCard(payload: { slug: string; title: string; [k: string]: unknown }): VCardItem {
+  const id = "local-" + Date.now() + "-" + Math.random().toString(36).slice(2, 9);
+  const slug = (payload.slug || payload.title || "vcard").toString().replace(/\s+/g, "-").toLowerCase();
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+  return {
+    id,
+    title: (payload.title as string) || "Untitled",
+    date: new Date().toISOString().slice(0, 10),
+    image: (payload.image as string) || "",
+    previewUrl: `${baseUrl}/${slug}`,
+    slug,
+    viewCount: 0,
+    status: true,
+    ...(payload as Partial<VCardItem>),
+  };
+}
+
+export type {
+  VCardBlog,
+  VCardSocialLink,
+  VCardBusinessHours,
+  VCardInquiry,
+  VCardItem,
+} from "./VCardsContextTypes";
 
 type VCardsContextType = {
   vCards: VCardItem[];
   setVCards: (cards: VCardItem[] | ((prev: VCardItem[]) => VCardItem[])) => void;
+  createVCard: (payload: { slug: string; title: string; [k: string]: unknown }) => Promise<VCardItem>;
+  isLoading: boolean;
+  error: string | null;
 };
 
 const VCardsContext = createContext<VCardsContextType | undefined>(undefined);
 
 export function VCardsProvider({ children }: { children: React.ReactNode }) {
-  const [vCards, setVCardsState] = useState<VCardItem[]>(defaultVCards);
-  const [hydrated, setHydrated] = useState(false);
+  const [vCards, setVCardsState] = useState<VCardItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const useLocalOnlyRef = useRef(false);
 
   useEffect(() => {
-    setVCardsState(loadVCardsFromStorage());
-    setHydrated(true);
+    let cancelled = false;
+    apiListVCards()
+      .then((list) => {
+        if (cancelled) return;
+        useLocalOnlyRef.current = false;
+        setVCardsState((list as VCardItem[]) || []);
+        setError(null);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          useLocalOnlyRef.current = true;
+          const local = loadVCardsFromStorage();
+          setVCardsState(local);
+          setError(null);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  useEffect(() => {
+    if (useLocalOnlyRef.current && vCards) {
+      saveVCardsToStorage(vCards);
+    }
+  }, [vCards]);
 
   const setVCards = useCallback((arg: VCardItem[] | ((prev: VCardItem[]) => VCardItem[])) => {
     setVCardsState((prev) => {
       const next = typeof arg === "function" ? arg(prev) : arg;
-      if (typeof window !== "undefined") {
-        try {
-          localStorage.setItem(VCARDS_STORAGE_KEY, JSON.stringify(next));
-        } catch (_) {}
+      if (!useLocalOnlyRef.current) {
+        for (const c of prev) {
+          if (!next.find((n) => n.id === c.id)) {
+            const token = getEditToken(c.id);
+            if (token) {
+              apiDeleteVCard(c.id, token).catch(() => {});
+              removeEditToken(c.id);
+            }
+          }
+        }
+        for (const card of next) {
+          const p = prev.find((x) => x.id === card.id);
+          if (p && JSON.stringify(p) !== JSON.stringify(card)) {
+            const token = getEditToken(card.id);
+            if (token) {
+              const payload = { ...card };
+              apiUpdateVCard(card.id, payload, token)
+                .then((updated) => {
+                  setVCardsState((prev2) => prev2.map((x) => (x.id === card.id ? (updated as VCardItem) : x)));
+                })
+                .catch(() => {});
+            }
+          }
+        }
       }
       return next;
     });
   }, []);
 
+  const createVCard = useCallback(
+    async (payload: { slug: string; title: string; [k: string]: unknown }): Promise<VCardItem> => {
+      if (useLocalOnlyRef.current) {
+        const card = createLocalVCard(payload);
+        setEditToken(card.id, "local");
+        setVCardsState((prev) => {
+          const next = [...prev, card];
+          saveVCardsToStorage(next);
+          return next;
+        });
+        return card;
+      }
+      try {
+        const created = await apiCreateVCard(payload);
+        const card = created as VCardItem;
+        if (created.editToken) {
+          setEditToken(created.id, created.editToken as string);
+        }
+        setVCardsState((prev) => [...prev, card]);
+        return card;
+      } catch {
+        useLocalOnlyRef.current = true;
+        const card = createLocalVCard(payload);
+        setEditToken(card.id, "local");
+        setVCardsState((prev) => {
+          const next = [...prev, card];
+          saveVCardsToStorage(next);
+          return next;
+        });
+        return card;
+      }
+    },
+    []
+  );
+
   return (
-    <VCardsContext.Provider value={{ vCards, setVCards }}>
+    <VCardsContext.Provider value={{ vCards, setVCards, createVCard, isLoading, error }}>
       {children}
     </VCardsContext.Provider>
   );
@@ -111,5 +186,3 @@ export function useVCards() {
   }
   return context;
 }
-
-export const initialVCards = defaultVCards;

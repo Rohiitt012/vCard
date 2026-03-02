@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useVCards } from "@/context/VCardsContext";
+import { apiCheckSlug } from "@/lib/vcards-api";
 
 const HelpIcon = () => (
   <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -26,46 +27,96 @@ function formatCardDate() {
   return new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
 
+function normalizeSlug(s: string): string {
+  return s.trim().toLowerCase().replace(/[^a-z0-9-_]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "") || "my-vcard";
+}
+
 export function NewVCardContent() {
   const router = useRouter();
-  const { vCards, setVCards } = useVCards();
+  const { createVCard } = useVCards();
   const [coverType, setCoverType] = useState<CoverType>("Image");
+  const [urlAliasInput, setUrlAliasInput] = useState("");
   const [aliasError, setAliasError] = useState<string | null>(null);
+  const [slugChecking, setSlugChecking] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [showHelpTooltip, setShowHelpTooltip] = useState(false);
+  const [createSuccessToast, setCreateSuccessToast] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const slugCheckTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const previewSlug = normalizeSlug(urlAliasInput) || "my-vcard";
+  const previewUrl = mounted && typeof window !== "undefined" ? `${window.location.origin}/${previewSlug}` : "";
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const checkSlugAvailable = useCallback(async (slug: string) => {
+    if (!slug || slug === "my-vcard") return;
+    setSlugChecking(true);
+    setAliasError(null);
+    try {
+      const { available } = await apiCheckSlug(slug);
+      if (!available) setAliasError("This URL alias is already taken. Choose another.");
+    } catch {
+      setAliasError(null);
+    } finally {
+      setSlugChecking(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => () => {
+    if (slugCheckTimeoutRef.current) clearTimeout(slugCheckTimeoutRef.current);
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const rawAlias = (formData.get("urlAlias") as string)?.trim() || "my-vcard";
-    const urlAlias = rawAlias.toLowerCase();
-    const exists = vCards.some((card) => {
-      const existingSlug =
-        card.slug ?? card.previewUrl.replace(/^https?:\/\/[^/]+/, "").replace(/^\//, "").toLowerCase();
-      return existingSlug === urlAlias;
-    });
-    if (exists) {
-      setAliasError("This URL Alias already exists. Please choose another.");
+    const urlAlias = normalizeSlug(rawAlias) || "my-vcard";
+    setAliasError(null);
+    try {
+      const { available } = await apiCheckSlug(urlAlias);
+      if (!available) {
+        setAliasError("This URL alias is already taken. Choose another.");
+        return;
+      }
+    } catch {
+      setAliasError("Could not verify URL. Try again.");
       return;
     }
-    setAliasError(null);
-    const title = (formData.get("vCardName") as string)?.trim() || "New vCard";
-    const newId = `vcard-${Date.now()}`;
-    const newCard = {
-      id: newId,
-      title,
-      date: formatCardDate(),
-      image: "/images/user/owner.jpg",
-      previewUrl: `/${urlAlias}`,
-      slug: urlAlias,
-      viewCount: 0,
-      status: true,
-    };
-    setVCards((prev) => [...prev, newCard]);
-    router.push(`/vcards/${newId}/edit?created=1`);
+    setSubmitting(true);
+    try {
+      const title = (formData.get("vCardName") as string)?.trim() || "New vCard";
+      const description = (formData.get("description") as string)?.trim() || "";
+      const occupation = (formData.get("occupation") as string)?.trim() || "";
+      const newCard = await createVCard({
+        slug: urlAlias,
+        title,
+        date: formatCardDate(),
+        image: "/images/user/owner.jpg",
+        previewUrl: `/${urlAlias}`,
+        viewCount: 0,
+        status: true,
+        description: description || undefined,
+        occupation: occupation || undefined,
+      });
+      setCreateSuccessToast(true);
+      setTimeout(() => router.push(`/vcards/${newCard.id}/edit?created=1`), 1000);
+    } catch (err) {
+      setAliasError(err instanceof Error ? err.message : "Failed to create vCard");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="p-4 sm:p-6 md:p-8">
+      {createSuccessToast && (
+        <div className="fixed bottom-6 right-6 z-[100001] rounded-lg bg-green-600 text-white px-4 py-3 text-sm font-medium shadow-lg transition-opacity duration-200" role="status">
+          vCard created! Opening editor…
+        </div>
+      )}
       {/* Header: New vCard title + Back */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="page-title">New vCard</h1>
@@ -81,19 +132,43 @@ export function NewVCardContent() {
       <div className="rounded-xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <form className="space-y-5" onSubmit={handleSubmit}>
           {/* Row 1: URL Alias full width */}
-          <div>
+          <div className="relative">
             <label className={`${labelClass} inline-flex items-center gap-1.5`}>
               URL Alias <span className="text-red-500">*</span>
-              <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+              <button
+                type="button"
+                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                aria-label="Help"
+                onClick={() => setShowHelpTooltip((v) => !v)}
+                onBlur={() => setTimeout(() => setShowHelpTooltip(false), 150)}
+              >
                 <HelpIcon />
               </button>
             </label>
+            {showHelpTooltip && (
+              <div className="absolute left-0 top-full z-10 mt-1 max-w-xs rounded-lg bg-gray-900 px-3 py-2 text-xs text-white shadow-lg">
+                Only letters, numbers, and hyphens. This will be your public link.
+              </div>
+            )}
             <div className="flex gap-2">
               <input
                 type="text"
                 name="urlAlias"
+                value={urlAliasInput}
                 className={`${inputClass} ${aliasError ? "border-red-500 focus:ring-red-500" : ""}`}
                 placeholder="my-vCard-page-url"
+                onChange={(e) => {
+                  setUrlAliasInput(e.target.value);
+                  setAliasError(null);
+                  const slug = normalizeSlug(e.target.value);
+                  if (slugCheckTimeoutRef.current) clearTimeout(slugCheckTimeoutRef.current);
+                  if (!slug || slug === "my-vcard") return;
+                  slugCheckTimeoutRef.current = setTimeout(() => checkSlugAvailable(slug), 400);
+                }}
+                onBlur={(e) => {
+                  const slug = normalizeSlug(e.target.value);
+                  if (slug && slug !== "my-vcard") checkSlugAvailable(slug);
+                }}
               />
               <button
                 type="button"
@@ -105,7 +180,11 @@ export function NewVCardContent() {
                 </svg>
               </button>
             </div>
+            {(slugChecking && !aliasError) && <p className="mt-1 text-xs text-gray-500">Checking availability…</p>}
             {aliasError && <p className="mt-1 text-xs text-red-500">{aliasError}</p>}
+            <p className="mt-1.5 text-xs text-gray-500 truncate" title={previewUrl}>
+              Preview: {previewUrl || "—"}
+            </p>
           </div>
 
           {/* Row 2: vCard Name + Occupation (two columns) */}
@@ -117,8 +196,8 @@ export function NewVCardContent() {
               <input type="text" name="vCardName" className={inputClass} placeholder="Enter vCard Name" />
             </div>
             <div>
-              <label className={labelClass}>Occupation:</label>
-              <input type="text" className={inputClass} placeholder="Enter Occupation" />
+              <label className={labelClass}>Occupation</label>
+              <input type="text" name="occupation" className={inputClass} placeholder="Enter Occupation" />
             </div>
           </div>
 
@@ -160,6 +239,7 @@ export function NewVCardContent() {
                   </button>
                 </div>
                 <textarea
+                  name="description"
                   className="w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400"
                   placeholder="Enter Description of Your VCard"
                 />
@@ -282,8 +362,8 @@ export function NewVCardContent() {
 
           {/* Buttons: Save & Next (blue, left), Discard (right) - screenshot order */}
           <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <button type="submit" className="btn-primary-premium inline-flex items-center justify-center">
-              Save &amp; Next
+            <button type="submit" disabled={submitting} className="btn-primary-premium inline-flex items-center justify-center disabled:opacity-50">
+              {submitting ? "Creating…" : "Save & Next"}
             </button>
             <Link
               href="/vcards"

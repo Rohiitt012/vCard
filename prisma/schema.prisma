@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model VCard {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  editToken String
+  data      Json      // VCardItem fields (except id, viewCount, inquiries)
+  viewCount Int       @default(0)
+  deletedAt DateTime? // soft delete; null = active
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  inquiries      Inquiry[]
+  subscriptions  EmailSubscription[]
+}
+
+model Inquiry {
+  id       String   @id @default(cuid())
+  vcardId  String
+  vcard    VCard    @relation(fields: [vcardId], references: [id], onDelete: Cascade)
+  name     String
+  email    String
+  phone    String?
+  message  String
+  createdAt DateTime @default(now())
+
+  @@index([vcardId])
+}
+
+model EmailSubscription {
+  id       String   @id @default(cuid())
+  vcardId  String
+  vcard    VCard    @relation(fields: [vcardId], references: [id], onDelete: Cascade)
+  email    String
+  createdAt DateTime @default(now())
+
+  @@unique([vcardId, email])
+  @@index([vcardId])
+}

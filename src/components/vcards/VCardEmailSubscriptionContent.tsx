@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { getEditToken, apiListSubscriptions } from "@/lib/vcards-api";
 
 const SearchIcon = () => (
   <svg className="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,8 +29,26 @@ type VCardEmailSubscriptionContentProps = {
 export function VCardEmailSubscriptionContent({ vcardId }: VCardEmailSubscriptionContentProps) {
   const [search, setSearch] = useState("");
   const [showPerPage, setShowPerPage] = useState(10);
-  const subscriptions: { email: string; createdAt: string }[] = [];
-  const total = subscriptions.length;
+  const [subscriptions, setSubscriptions] = useState<{ email: string; createdAt: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = getEditToken(vcardId);
+    if (!token) {
+      setLoading(false);
+      setError("You can only view subscriptions for vCards you created on this device.");
+      return;
+    }
+    apiListSubscriptions(vcardId, token)
+      .then(setSubscriptions)
+      .catch((e) => setError(e instanceof Error ? e.message : "Failed to load"))
+      .finally(() => setLoading(false));
+  }, [vcardId]);
+
+  const filtered = subscriptions.filter((s) => s.email.toLowerCase().includes(search.toLowerCase()));
+  const total = filtered.length;
+  const displayed = filtered.slice(0, showPerPage);
 
   return (
     <>
@@ -81,17 +100,29 @@ export function VCardEmailSubscriptionContent({ vcardId }: VCardEmailSubscriptio
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 bg-white dark:divide-gray-700 dark:bg-gray-800">
-              {total > 0 ? (
-                subscriptions.map((row, index) => (
-                  <tr key={index} className="hover:bg-gray-50/80 dark:hover:bg-gray-700/30 transition-colors">
+              {loading ? (
+                <tr>
+                  <td colSpan={2} className="px-5 py-16 text-center text-sm text-gray-500 dark:text-gray-400">
+                    Loading…
+                  </td>
+                </tr>
+              ) : error ? (
+                <tr>
+                  <td colSpan={2} className="px-5 py-16 text-center text-sm text-red-600 dark:text-red-400">
+                    {error}
+                  </td>
+                </tr>
+              ) : displayed.length > 0 ? (
+                displayed.map((row, index) => (
+                  <tr key={`${row.email}-${row.createdAt}-${index}`} className="hover:bg-gray-50/80 dark:hover:bg-gray-700/30 transition-colors">
                     <td className="px-5 py-4 text-gray-900 dark:text-gray-200">{row.email}</td>
-                    <td className="px-5 py-4 text-gray-600 dark:text-gray-400">{row.createdAt}</td>
+                    <td className="px-5 py-4 text-gray-600 dark:text-gray-400">{new Date(row.createdAt).toLocaleString()}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
                   <td colSpan={2} className="px-5 py-16 text-center text-sm text-gray-500 dark:text-gray-400">
-                    No Data Available
+                    No subscriptions yet. Add a subscribe form on your public vCard page to collect emails.
                   </td>
                 </tr>
               )}
@@ -111,7 +142,7 @@ export function VCardEmailSubscriptionContent({ vcardId }: VCardEmailSubscriptio
             <option value={50}>50</option>
           </select>
           <span className="text-sm text-gray-500 dark:text-gray-400">
-            Showing {total} results
+            Showing {displayed.length} of {total} results
           </span>
         </div>
       </div>

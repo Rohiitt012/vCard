@@ -805,3 +805,14 @@ span.flatpickr-weekday,
   opacity: 0.8;
   cursor: grabbing; /* Changes the cursor to indicate dragging */
 }
+
+/* Print: hide non-essential UI on vCard public page for a clean print */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  /* Simplify layout when printing vCard content */
+  body {
+    background: #fff !important;
+  }
+}

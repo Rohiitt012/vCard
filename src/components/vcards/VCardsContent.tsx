@@ -3,8 +3,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { useVCards } from "@/context/VCardsContext";
+import { getEditToken, apiRestoreVCard, apiDeleteVCard } from "@/lib/vcards-api";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { VCardsErrorBoundary } from "./VCardsErrorBoundary";
 
 const SearchIcon = () => (
   <svg className="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,6 +101,11 @@ const ToggleIcon = () => (
   </svg>
 );
 
+const DuplicateIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h2v2m4 0h2a2 2 0 012 2v2m0 4v2a2 2 0 01-2 2h-2v-2m0-4V6" />
+  </svg>
+);
 const CopyIcon = () => (
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h2m0 8h2a2 2 0 002 2v2m0-8V6a2 2 0 012-2h2m0 8h2a2 2 0 002 2v2m0-8v2a2 2 0 012 2v2" />
@@ -151,23 +160,10 @@ type VCardItem = {
   blogs?: VCardBlog[];
 };
 
-// Sample vCard data (1 card as in the design)
-const initialVCards: VCardItem[] = [
-  {
-    id: "1",
-    title: "website builder",
-    date: "16 Feb 2026",
-    image: "/images/user/owner.jpg",
-    previewUrl: "/fbfgfg",
-    slug: "fbfgfg",
-    viewCount: 0,
-    status: true,
-  },
-];
-
 const menuItems: { label: string; Icon: React.ComponentType<{ className?: string }>; onClick?: () => void; href?: string; danger?: boolean }[] = [
   { label: "QR Code", Icon: QRIcon },
   { label: "Copy link", Icon: CopyLinkIcon },
+  { label: "Duplicate", Icon: DuplicateIcon },
   { label: "Download vCard", Icon: DownloadIcon, onClick: () => {} },
   { label: "Inquiries", Icon: InquiriesIcon, href: "/inquiries" },
   { label: "Delete", Icon: TrashIcon, onClick: () => {}, danger: true },
@@ -177,30 +173,115 @@ const menuItems: { label: string; Icon: React.ComponentType<{ className?: string
 const TOAST_DURATION_MS = 4000;
 
 export const VCardsContent = () => {
-  const { vCards, setVCards } = useVCards();
+  const router = useRouter();
+  const { vCards, setVCards, createVCard, isLoading, error } = useVCards();
+  const [duplicatingId, setDuplicatingId] = useState<string | null>(null);
+  const [duplicateSuccessToast, setDuplicateSuccessToast] = useState(false);
   const [search, setSearch] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
-  const [cardStatus, setCardStatus] = useState<Record<string, boolean>>(
-    Object.fromEntries(initialVCards.map((c) => [c.id, c.status]))
-  );
+  const [cardStatus, setCardStatus] = useState<Record<string, boolean>>({});
   const [disabledCardIds, setDisabledCardIds] = useState<Record<string, boolean>>({});
+
+  // Sync card status from API vCards when they load
+  useEffect(() => {
+    if (vCards.length === 0) return;
+    setCardStatus((prev) => {
+      const next = { ...prev };
+      vCards.forEach((c) => {
+        if (!(c.id in next)) next[c.id] = c.status ?? true;
+      });
+      return next;
+    });
+  }, [vCards]);
   const [deleteConfirmCardId, setDeleteConfirmCardId] = useState<string | null>(null);
   const [qrModalCard, setQrModalCard] = useState<VCardItem | null>(null);
   const [showPerPage, setShowPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState<"name" | "viewCount" | "date">("date");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [statusFilter, setStatusFilter] = useState<"all" | "active" | "disabled">("all");
   const [showViewChangeToast, setShowViewChangeToast] = useState(false);
   const [toastProgress, setToastProgress] = useState(100);
   const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
+  const [showCopyToast, setShowCopyToast] = useState(false);
+  const [lastDeletedCard, setLastDeletedCard] = useState<{ card: VCardItem; token: string } | null>(null);
+  const undoDeleteTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const UNDO_DURATION_MS = 10000;
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState(false);
+  const [showOnboardingTip, setShowOnboardingTip] = useState(true);
+  const bulkDeleteModalRef = useRef<HTMLDivElement>(null);
+  const deleteConfirmModalRef = useRef<HTMLDivElement>(null);
+  const qrModalRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(bulkDeleteModalRef, showBulkDeleteConfirm, () => setShowBulkDeleteConfirm(false));
+  useFocusTrap(deleteConfirmModalRef, deleteConfirmCardId !== null, () => handleDeleteConfirm(false));
+  useFocusTrap(qrModalRef, qrModalCard !== null, () => setQrModalCard(null));
+
+  const filteredCards = React.useMemo(() => {
+    let list = vCards.filter((card) => {
+      const matchSearch =
+        !search ||
+        (card.title ?? "").toLowerCase().includes(search.toLowerCase()) ||
+        (card.slug ?? card.previewUrl ?? "").toLowerCase().includes(search.toLowerCase());
+      const isDisabled = disabledCardIds[card.id];
+      const matchStatus =
+        statusFilter === "all" || (statusFilter === "active" && !isDisabled) || (statusFilter === "disabled" && isDisabled);
+      return matchSearch && matchStatus;
+    });
+    const dir = sortDir === "asc" ? 1 : -1;
+    list = [...list].sort((a, b) => {
+      if (sortBy === "name") return dir * (a.title ?? "").localeCompare(b.title ?? "");
+      if (sortBy === "viewCount") return dir * ((a.viewCount ?? 0) - (b.viewCount ?? 0));
+      return dir * (a.date ?? "").localeCompare(b.date ?? "");
+    });
+    return list;
+  }, [vCards, search, statusFilter, sortBy, sortDir, disabledCardIds]);
+
+  const totalFiltered = filteredCards.length;
+  const totalPages = Math.max(1, Math.ceil(totalFiltered / showPerPage));
+  const pageIndex = Math.min(currentPage, totalPages);
+  const paginatedCards = React.useMemo(
+    () => filteredCards.slice((pageIndex - 1) * showPerPage, pageIndex * showPerPage),
+    [filteredCards, pageIndex, showPerPage]
+  );
+  const paginatedStart = totalFiltered === 0 ? 0 : (pageIndex - 1) * showPerPage + 1;
+  const paginatedEnd = Math.min(pageIndex * showPerPage, totalFiltered);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter, showPerPage]);
+
+  const getPublicUrl = (card: VCardItem) =>
+    card.previewUrl.startsWith("http") ? card.previewUrl : (typeof window !== "undefined" ? window.location.origin : "") + (card.previewUrl.startsWith("/") ? card.previewUrl : `/${card.previewUrl}`);
+
+  const handleDuplicate = (card: VCardItem) => {
+    setOpenMenuId(null);
+    const baseSlug = (card.slug || card.previewUrl?.replace(/^https?:\/\/[^/]+/, "").replace(/^\//, "") || "vcard").replace(/^-copy(-\d+)?$/, "");
+    const newSlug = `${baseSlug}-copy`;
+    const { id: _id, viewCount: _vc, inquiries: _inq, previewUrl: _pu, editToken: _et, ...rest } = card;
+    const payload = { ...rest, slug: newSlug, title: card.title, date: card.date };
+    setDuplicatingId(card.id);
+    createVCard(payload)
+      .then((newCard) => {
+        setDuplicateSuccessToast(true);
+        setTimeout(() => router.push(`/vcards/${newCard.id}/edit?duplicated=1`), 1200);
+      })
+      .catch(() => setDuplicatingId(null));
+  };
 
   const copyCardLink = (card: VCardItem) => {
     if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(card.previewUrl);
+      navigator.clipboard.writeText(getPublicUrl(card));
       if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
       setCopiedCardId(card.id);
+      setShowCopyToast(true);
       copyTimeoutRef.current = setTimeout(() => {
         setCopiedCardId(null);
+        setShowCopyToast(false);
         copyTimeoutRef.current = null;
       }, 2000);
     }
@@ -208,13 +289,18 @@ export const VCardsContent = () => {
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const progressIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { t } = useLanguage();
-  const total = vCards.length;
-  const start = total > 0 ? 1 : 0;
-  const end = total;
+
+  const handleSort = (column: "name" | "viewCount" | "date") => {
+    if (sortBy === column) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    else setSortBy(column);
+    setCurrentPage(1);
+  };
 
   const handleDeleteConfirm = (confirmed: boolean) => {
     if (!deleteConfirmCardId) return;
     if (confirmed) {
+      const card = vCards.find((c) => c.id === deleteConfirmCardId);
+      const token = getEditToken(deleteConfirmCardId);
       setVCards((prev) => prev.filter((c) => c.id !== deleteConfirmCardId));
       setCardStatus((prev) => {
         const next = { ...prev };
@@ -226,8 +312,29 @@ export const VCardsContent = () => {
         delete next[deleteConfirmCardId];
         return next;
       });
+      if (card && token) {
+        setLastDeletedCard({ card, token });
+        if (undoDeleteTimeoutRef.current) clearTimeout(undoDeleteTimeoutRef.current);
+        undoDeleteTimeoutRef.current = setTimeout(() => {
+          setLastDeletedCard(null);
+          undoDeleteTimeoutRef.current = null;
+        }, UNDO_DURATION_MS);
+      }
     }
     setDeleteConfirmCardId(null);
+  };
+
+  const handleUndoDelete = () => {
+    if (!lastDeletedCard) return;
+    const { card, token } = lastDeletedCard;
+    if (undoDeleteTimeoutRef.current) {
+      clearTimeout(undoDeleteTimeoutRef.current);
+      undoDeleteTimeoutRef.current = null;
+    }
+    setLastDeletedCard(null);
+    apiRestoreVCard(card.id, token)
+      .then(() => setVCards((prev) => [...prev, { ...card }]))
+      .catch(() => {});
   };
 
   const handleViewModeChange = (mode: ViewMode) => {
@@ -255,6 +362,67 @@ export const VCardsContent = () => {
   }, [openMenuId]);
 
   useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (showBulkDeleteConfirm) setShowBulkDeleteConfirm(false);
+      if (deleteConfirmCardId !== null) setDeleteConfirmCardId(null);
+      if (qrModalCard !== null) setQrModalCard(null);
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [showBulkDeleteConfirm, deleteConfirmCardId, qrModalCard]);
+
+  useEffect(() => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+      const target = e.target as HTMLElement;
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) return;
+      e.preventDefault();
+      searchInputRef.current?.focus();
+    };
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
+  }, []);
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size >= paginatedCards.length) setSelectedIds(new Set());
+    else setSelectedIds(new Set(paginatedCards.map((c) => c.id)));
+  };
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+  const handleBulkDisable = () => {
+    selectedIds.forEach((id) => setDisabledCardIds((p) => ({ ...p, [id]: true })));
+    setSelectedIds(new Set());
+  };
+  const handleBulkDeleteConfirm = (confirmed: boolean) => {
+    if (!confirmed) {
+      setShowBulkDeleteConfirm(false);
+      return;
+    }
+    const toDelete = [...selectedIds];
+    toDelete.forEach((id) => {
+      const token = getEditToken(id);
+      if (token) apiDeleteVCard(id, token).catch(() => {});
+    });
+    setVCards((prev) => prev.filter((c) => !selectedIds.has(c.id)));
+    setSelectedIds(new Set());
+    setShowBulkDeleteConfirm(false);
+  };
+  const highlightSearch = (text: string) => {
+    if (!search.trim()) return text;
+    const parts = text.split(new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"));
+    return parts.map((part, i) =>
+      part.toLowerCase() === search.toLowerCase() ? <mark key={i} className="bg-amber-200 dark:bg-amber-800 rounded px-0.5">{part}</mark> : part
+    );
+  };
+
+  useEffect(() => {
     if (!showViewChangeToast) return;
     const startTime = Date.now();
     progressIntervalRef.current = setInterval(() => {
@@ -272,28 +440,27 @@ export const VCardsContent = () => {
     };
   }, [showViewChangeToast]);
 
-  return (
-    <>
-      <div className="border-b border-gray-200/80 dark:border-gray-800 pb-5 mb-1">
-        <h1 className="page-title">{t("vcards.title")}</h1>
-      </div>
-
-      {/* Toolbar: Search + View toggles – professional look */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div className="relative w-full sm:max-w-md">
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-            <SearchIcon />
-          </span>
-          <input
-            type="search"
-            placeholder={t("common.search")}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-500"
-          />
-        </div>
-        {/* View toggle + success toast (toast appears just above the buttons, near click) */}
-        <div className="relative shrink-0">
+  const loadedBlockContent = (() => {
+    if (isLoading || error) return null;
+    return (
+      <div>
+        <div className="flex flex-col gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="relative w-full sm:max-w-md">
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+              <SearchIcon />
+            </span>
+            <input
+              ref={searchInputRef}
+              type="search"
+              placeholder={t("common.search")}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 bg-white border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-500"
+              aria-label="Search vCards (press / to focus)"
+            />
+          </div>
+          <div className="relative shrink-0">
           {/* Success toast – jaha click kiya (view buttons) uske pass, thoda upar */}
           {showViewChangeToast && (
             <div
@@ -369,52 +536,137 @@ export const VCardsContent = () => {
             </Link>
           </div>
         </div>
+        {/* Bulk actions */}
+        {selectedIds.size > 0 && (
+          <div className="flex flex-wrap items-center gap-3 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-800 dark:bg-blue-950/40">
+            <span className="text-sm font-medium text-blue-800 dark:text-blue-200">{selectedIds.size} selected</span>
+            <button type="button" onClick={handleBulkDisable} className="rounded-lg bg-white border border-blue-300 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900/50 dark:text-blue-200">
+              Disable selected
+            </button>
+            <button type="button" onClick={() => setShowBulkDeleteConfirm(true)} className="rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700">
+              Delete selected
+            </button>
+            <button type="button" onClick={() => setSelectedIds(new Set())} className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-300">
+              Clear selection
+            </button>
+          </div>
+        )}
+        {/* Status filter */}
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Status:</span>
+          <div className="flex rounded-lg border border-gray-200 bg-white overflow-hidden dark:border-gray-600 dark:bg-gray-800">
+            {(["all", "active", "disabled"] as const).map((f) => (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setStatusFilter(f)}
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  statusFilter === f
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700"
+                }`}
+              >
+                {f === "all" ? "All" : f === "active" ? "Active" : "Disabled"}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Empty state – when no vCards */}
-      {vCards.length === 0 && (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-16 px-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-          <p className="text-base font-medium text-gray-600 dark:text-gray-400">vCard not available</p>
+      {/* No results from filter */}
+      {vCards.length > 0 && totalFiltered === 0 && (
+        <div className="rounded-xl border border-gray-200 bg-white py-12 px-6 text-center dark:border-gray-700 dark:bg-gray-800">
+          <p className="text-gray-600 dark:text-gray-400">No vCards match your search or filter.</p>
+          <button
+            type="button"
+            onClick={() => { setSearch(""); setStatusFilter("all"); setCurrentPage(1); }}
+            className="mt-3 text-sm font-medium text-blue-600 hover:underline"
+          >
+            Clear filters
+          </button>
         </div>
       )}
 
-      {/* Table view – professional look (light grey header, white rows, blue accents) */}
+      {/* Onboarding tip when empty */}
+      {vCards.length === 0 && showOnboardingTip && (
+        <div className="mb-6 flex items-center justify-between gap-4 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-800 dark:bg-blue-950/40">
+          <p className="text-sm text-blue-800 dark:text-blue-200">Get started in 3 steps: Create → Customize → Share your link.</p>
+          <button type="button" onClick={() => setShowOnboardingTip(false)} className="shrink-0 rounded p-1 text-blue-600 hover:bg-blue-100 dark:text-blue-300 dark:hover:bg-blue-900/50" aria-label="Dismiss">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+      )}
+      {/* Empty state with CTA */}
+      {vCards.length === 0 && (
+        <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white py-16 px-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <p className="text-base font-medium text-gray-600 dark:text-gray-400">No vCards yet</p>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">Create your first vCard to get started.</p>
+          <Link
+            href="/vcards/new"
+            className="mt-5 inline-flex items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 transition-colors"
+          >
+            Create your first vCard
+          </Link>
+        </div>
+      )}
+
+      {/* Table view (desktop) + Mobile card list */}
       {viewMode === "grid" && vCards.length > 0 && (
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <>
+        {/* Desktop table */}
+        <div className="hidden md:block rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <div className="overflow-x-auto overflow-y-visible">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-gray-200 bg-gray-100 dark:border-gray-600 dark:bg-gray-700/50">
                   <th className="px-5 py-3.5">
                     <div className="flex items-center gap-2">
-                      <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600" />
-                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">VCARD NAME</span>
-                      <SortUpIcon />
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600"
+                        checked={paginatedCards.length > 0 && selectedIds.size >= paginatedCards.length}
+                        onChange={toggleSelectAll}
+                        aria-label="Select all on page"
+                      />
+                      <button type="button" onClick={() => handleSort("name")} className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        VCARD NAME
+                        {sortBy === "name" && (sortDir === "asc" ? <SortUpIcon /> : <span className="rotate-180 inline-block"><SortUpIcon /></span>)}
+                      </button>
                     </div>
                   </th>
                   <th className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">PREVIEW URL</th>
                   <th className="px-5 py-3.5">
-                    <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">VIEW COUNT</span>
+                    <button type="button" onClick={() => handleSort("viewCount")} className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                      VIEW COUNT
+                      {sortBy === "viewCount" && (sortDir === "asc" ? <SortUpIcon /> : <span className="rotate-180 inline-block"><SortUpIcon /></span>)}
+                    </button>
                   </th>
                   <th className="px-5 py-3.5">
-                    <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">
-                      STATUS
-                      <SortUpIcon />
-                    </span>
+                    <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">STATUS</span>
                   </th>
                   <th className="px-5 py-3.5">
-                    <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">CREATED AT</span>
+                    <button type="button" onClick={() => handleSort("date")} className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                      CREATED AT
+                      {sortBy === "date" && (sortDir === "asc" ? <SortUpIcon /> : <span className="rotate-180 inline-block"><SortUpIcon /></span>)}
+                    </button>
                   </th>
                   <th className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">ACTION</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 bg-white dark:divide-gray-700 dark:bg-gray-800">
-                {vCards.map((card) => (
+                {paginatedCards.map((card) => (
                   <tr key={card.id} className="hover:bg-gray-50/80 dark:hover:bg-gray-700/30 transition-colors">
                     <td className="px-5 py-4 align-middle">
                       <div className="flex flex-col gap-0.5">
                         <div className="flex items-center gap-3">
-                          <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600" />
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600"
+                            checked={selectedIds.has(card.id)}
+                            onChange={() => toggleSelect(card.id)}
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label={`Select ${card.title}`}
+                          />
                           <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
                             <Image src={card.image} alt={card.title} fill className="object-cover" sizes="40px" unoptimized={card.image.startsWith("data:")} />
                           </div>
@@ -422,7 +674,7 @@ export const VCardsContent = () => {
                             href={`/vcards/${card.id}/edit`}
                             className="font-medium text-blue-600 hover:underline dark:text-blue-400 capitalize"
                           >
-                            {card.title}
+                            {highlightSearch(card.title ?? "")}
                           </Link>
                         </div>
                         <span
@@ -578,6 +830,14 @@ export const VCardsContent = () => {
                                     </button>
                                   );
                                 }
+                                if (label === "Duplicate") {
+                                  return (
+                                    <button key={label} type="button" onClick={() => handleDuplicate(card)} className={itemClass} disabled={duplicatingId === card.id}>
+                                      <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
+                                      <span>{duplicatingId === card.id ? "Duplicating…" : label}</span>
+                                    </button>
+                                  );
+                                }
                                 return (
                                   <button key={label} type="button" onClick={() => { onClick?.(); setOpenMenuId(null); }} className={itemClass}>
                                     <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
@@ -595,26 +855,93 @@ export const VCardsContent = () => {
               </tbody>
             </table>
           </div>
-          <div className="flex flex-wrap items-center gap-3 border-t border-gray-200 bg-gray-50 px-5 py-3 dark:border-gray-700 dark:bg-gray-800/50">
-            <span className="text-sm text-gray-500 dark:text-gray-400">{t("common.show")}</span>
-            <select
-              value={showPerPage}
-              onChange={(e) => setShowPerPage(Number(e.target.value))}
-              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
-            >
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-            </select>
-            <span className="text-sm text-gray-500 dark:text-gray-400">Showing {total} {t("common.results")}</span>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 bg-gray-50 px-5 py-3 dark:border-gray-700 dark:bg-gray-800/50">
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-gray-500 dark:text-gray-400">{t("common.show")}</span>
+              <select
+                value={showPerPage}
+                onChange={(e) => { setShowPerPage(Number(e.target.value)); setCurrentPage(1); }}
+                className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+              </select>
+              <span className="text-sm text-gray-500 dark:text-gray-400">Showing {paginatedStart}–{paginatedEnd} of {totalFiltered}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={pageIndex <= 1}
+                className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Previous
+              </button>
+              <span className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400">
+                Page {pageIndex} of {totalPages}
+              </span>
+              <button
+                type="button"
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={pageIndex >= totalPages}
+                className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Mobile: card list when grid view */}
+        <div className="md:hidden space-y-3">
+          {paginatedCards.map((card) => (
+            <div
+              key={card.id}
+              className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 transition-shadow hover:shadow-md"
+            >
+              <div className="flex items-center gap-3">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-600">
+                  <Image src={card.image} alt={card.title} fill className="object-cover" sizes="48px" unoptimized={card.image.startsWith("data:")} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium text-gray-900 dark:text-white truncate">{card.title}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">/{card.slug ?? card.previewUrl?.replace(/^\/+/, "")} · {card.viewCount ?? 0} views</p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href={`/vcards/${card.id}/edit`}
+                    className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white hover:bg-blue-700 transition-colors"
+                  >
+                    Edit
+                  </Link>
+                  <a
+                    href={getPublicUrl(card)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+                  >
+                    View
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+            <span className="text-sm text-gray-500 dark:text-gray-400">Showing {paginatedStart}–{paginatedEnd} of {totalFiltered}</span>
+            <div className="flex items-center gap-2">
+              <button type="button" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={pageIndex <= 1} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200">Previous</button>
+              <button type="button" onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={pageIndex >= totalPages} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200">Next</button>
+            </div>
+          </div>
+        </div>
+        </>
       )}
 
       {/* vCard gallery (cards) when gallery icon is selected – max 3 per row, larger cards */}
       {viewMode === "gallery" && vCards.length > 0 && (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-        {vCards.map((card) => (
+        {paginatedCards.map((card) => (
           <article
             key={card.id}
             className={`group card-premium card-premium-hover overflow-hidden min-w-0 ${openMenuId === card.id || disabledCardIds[card.id] ? "overflow-visible" : ""}`}
@@ -790,6 +1117,27 @@ export const VCardsContent = () => {
                             </div>
                           );
                         }
+                        if (label === "Duplicate") {
+                          return (
+                            <div
+                              key={label}
+                              role="button"
+                              tabIndex={0}
+                              onClick={() => handleDuplicate(card)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  handleDuplicate(card);
+                                }
+                              }}
+                              className={itemClass}
+                              aria-disabled={duplicatingId === card.id}
+                            >
+                              <span className="flex-shrink-0 flex items-center justify-center w-5 h-5"><Icon /></span>
+                              <span>{duplicatingId === card.id ? "Duplicating…" : label}</span>
+                            </div>
+                          );
+                        }
                         return (
                           <div
                             key={label}
@@ -875,15 +1223,77 @@ export const VCardsContent = () => {
       )}
 
       {viewMode === "gallery" && vCards.length > 0 && (
-      <p className="mt-6 text-theme-sm text-gray-600 dark:text-gray-400">
-        Showing {start} - {end} Of {total}
-      </p>
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Showing {paginatedStart}–{paginatedEnd} of {totalFiltered}
+        </p>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={pageIndex <= 1}
+            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 transition-colors"
+          >
+            Previous
+          </button>
+          <span className="text-sm text-gray-600 dark:text-gray-400">Page {pageIndex} of {totalPages}</span>
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={pageIndex >= totalPages}
+            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 transition-colors"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      )}
+
+      {/* Copy link toast */}
+      {showCopyToast && (
+        <div className="fixed bottom-6 right-6 z-[100001] rounded-lg bg-gray-900 text-white px-4 py-3 text-sm font-medium shadow-lg transition-opacity duration-200" role="status" aria-live="polite">
+          Link copied!
+        </div>
+      )}
+      {duplicateSuccessToast && (
+        <div className="fixed bottom-6 right-6 z-[100001] rounded-lg bg-green-600 text-white px-4 py-3 text-sm font-medium shadow-lg transition-opacity duration-200" role="status" aria-live="polite">
+          vCard duplicated. Opening editor…
+        </div>
+      )}
+      {lastDeletedCard && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100001] flex items-center gap-3 rounded-lg bg-gray-900 text-white px-4 py-3 text-sm shadow-lg" role="status" aria-live="polite">
+          <span>vCard deleted.</span>
+          <button type="button" onClick={handleUndoDelete} className="font-medium text-blue-300 hover:text-white underline">
+            Undo
+          </button>
+        </div>
+      )}
+
+      {/* Bulk delete confirmation modal */}
+      {showBulkDeleteConfirm && (
+        <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/50 backdrop-blur-md p-4" role="dialog" aria-modal="true" aria-labelledby="bulk-delete-modal-title">
+          <div ref={bulkDeleteModalRef} className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-600 dark:bg-gray-800">
+            <h2 id="bulk-delete-modal-title" className="mb-2 text-xl font-bold text-gray-900 dark:text-white">Delete {selectedIds.size} vCards?</h2>
+            <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">This cannot be undone. You can restore from the list within 10 seconds after deleting.</p>
+            <div className="flex w-full gap-3">
+              <button type="button" onClick={() => handleBulkDeleteConfirm(true)} className="flex-1 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-red-700">
+                Yes, delete all
+              </button>
+              <button type="button" onClick={() => handleBulkDeleteConfirm(false)} className="flex-1 rounded-lg bg-gray-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-600">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Delete confirmation modal */}
-      {deleteConfirmCardId !== null && (
+      {deleteConfirmCardId !== null && (() => {
+        const cardToDelete = vCards.find((c) => c.id === deleteConfirmCardId);
+        const title = cardToDelete?.title || "this vCard";
+        return (
         <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/50 backdrop-blur-md p-4" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
-          <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-600 dark:bg-gray-800">
+          <div ref={deleteConfirmModalRef} className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-600 dark:bg-gray-800 transition-opacity duration-200">
             <div className="flex flex-col items-center text-center">
               <div className="mb-4 flex h-16 w-16 items-center justify-center text-red-500">
                 <svg className="h-14 w-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -891,10 +1301,10 @@ export const VCardsContent = () => {
                 </svg>
               </div>
               <h2 id="delete-modal-title" className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Delete !
+                Delete vCard?
               </h2>
               <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
-                Are you sure want to delete this &quot;VCard&quot; ?
+                Are you sure you want to delete &quot;{title}&quot;? This cannot be undone.
               </p>
               <div className="flex w-full gap-3">
                 <button
@@ -902,20 +1312,21 @@ export const VCardsContent = () => {
                   onClick={() => handleDeleteConfirm(true)}
                   className="flex-1 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-red-700 transition-colors"
                 >
-                  Yes
+                  Yes, delete
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDeleteConfirm(false)}
                   className="flex-1 rounded-lg bg-gray-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-gray-600 transition-colors"
                 >
-                  No
+                  Cancel
                 </button>
               </div>
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* QR Code modal – scan to open vCard page */}
       {qrModalCard !== null && (
@@ -925,7 +1336,7 @@ export const VCardsContent = () => {
           aria-modal="true"
           aria-labelledby="qr-modal-title"
         >
-          <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-600 dark:bg-gray-800">
+          <div ref={qrModalRef} className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-600 dark:bg-gray-800">
             <div className="flex flex-col items-center text-center">
               <h2 id="qr-modal-title" className="mb-1 text-lg font-bold text-gray-900 dark:text-white">
                 QR Code
@@ -933,7 +1344,7 @@ export const VCardsContent = () => {
               <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 capitalize">{qrModalCard.title}</p>
               <div className="mb-4 flex items-center justify-center rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-600 dark:bg-gray-700/50">
                 <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrModalCard.previewUrl)}&color=${(qrModalCard.qrCodeColor ?? "#000000").replace(/^#/, "")}&bgcolor=${(qrModalCard.qrBgColor ?? "#ffffff").replace(/^#/, "")}`}
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(getPublicUrl(qrModalCard))}&color=${(qrModalCard.qrCodeColor ?? "#000000").replace(/^#/, "")}&bgcolor=${(qrModalCard.qrBgColor ?? "#ffffff").replace(/^#/, "")}`}
                   alt={`QR Code for ${qrModalCard.title}`}
                   width={220}
                   height={220}
@@ -943,21 +1354,43 @@ export const VCardsContent = () => {
               <p className="mb-4 text-xs text-gray-500 dark:text-gray-400">
                 Scan to open this vCard page
               </p>
-              <div className="flex w-full gap-3">
-                <a
-                  href={`https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(qrModalCard.previewUrl)}&color=${(qrModalCard.qrCodeColor ?? "#000000").replace(/^#/, "")}&bgcolor=${(qrModalCard.qrBgColor ?? "#ffffff").replace(/^#/, "")}`}
-                  download="vcard-qr.png"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
-                >
-                  <DownloadIcon />
-                  Download QR
-                </a>
+              <div className="flex w-full flex-col gap-2">
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+                        navigator.clipboard.writeText(getPublicUrl(qrModalCard));
+                        setShowCopyToast(true);
+                        setCopiedCardId(qrModalCard.id);
+                        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+                        copyTimeoutRef.current = setTimeout(() => {
+                          setShowCopyToast(false);
+                          setCopiedCardId(null);
+                          copyTimeoutRef.current = null;
+                        }, 2000);
+                      }
+                    }}
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    <CopyLinkIcon />
+                    Copy link
+                  </button>
+                  <a
+                    href={`https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(getPublicUrl(qrModalCard))}&color=${(qrModalCard.qrCodeColor ?? "#000000").replace(/^#/, "")}&bgcolor=${(qrModalCard.qrBgColor ?? "#ffffff").replace(/^#/, "")}`}
+                    download="vcard-qr.png"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                  >
+                    <DownloadIcon />
+                    Download QR
+                  </a>
+                </div>
                 <button
                   type="button"
                   onClick={() => setQrModalCard(null)}
-                  className="flex-1 rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors"
                 >
                   Close
                 </button>
@@ -966,6 +1399,45 @@ export const VCardsContent = () => {
           </div>
         </div>
       )}
-    </>
+      </div>
+      </div>
+    );
+  })();
+
+  return (
+    <VCardsErrorBoundary>
+      <div>
+      {/* Header */}
+      <div className="border-b border-gray-200/80 dark:border-gray-800 pb-5 mb-1">
+        <h1 className="page-title">{t("vcards.title")}</h1>
+      </div>
+
+      {/* Loading / Error – outside conditional so they always show when applicable */}
+      {isLoading && (
+        <div className="rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 overflow-hidden">
+          <div className="p-6 space-y-4">
+            <div className="h-10 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="flex gap-4">
+              <div className="h-10 flex-1 max-w-md bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+              <div className="h-10 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            </div>
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+              <div className="h-12 bg-gray-100 dark:bg-gray-700/50 rounded animate-pulse mb-3" />
+              <div className="h-12 bg-gray-100 dark:bg-gray-700/50 rounded animate-pulse mb-3" />
+              <div className="h-12 bg-gray-100 dark:bg-gray-700/50 rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      )}
+      {!isLoading && error && (
+        <div className="flex flex-col items-center justify-center rounded-xl border border-amber-200 bg-amber-50 py-16 px-6 shadow-sm dark:border-amber-800 dark:bg-amber-950/30">
+          <p className="text-base font-medium text-amber-800 dark:text-amber-200">{error}</p>
+          <p className="mt-2 text-sm text-amber-700 dark:text-amber-300">Ensure DATABASE_URL is set in .env and run: npx prisma migrate dev</p>
+        </div>
+      )}
+
+      {loadedBlockContent}
+      </div>
+    </VCardsErrorBoundary>
   );
 };
