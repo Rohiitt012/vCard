@@ -4618,11 +4618,66 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const allGalls = currentCard?.galleries ?? [];
+                          const filtered = (galleriesSearch ?? "").trim()
+                            ? allGalls.filter((g) =>
+                                g.type.toLowerCase().includes(galleriesSearch.toLowerCase())
+                              )
+                            : allGalls;
+
+                          if (!filtered.length) {
+                            return (
+                              <tr>
+                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+
+                          return filtered.map((g) => (
+                            <tr key={g.id} className="border-t border-gray-100 dark:border-gray-800">
+                              <td className="px-4 py-3">
+                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                  g.type === "image" ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"
+                                } capitalize`}>
+                                  {g.type}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="h-10 w-10 rounded border border-gray-200 dark:border-gray-700 overflow-hidden bg-gray-50">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={g.imageUrl} alt="Gallery" className="h-full w-full object-cover" />
+                                </div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <button
+                                  type="button"
+                                  className="text-red-500 hover:text-red-600 text-lg"
+                                  aria-label="Delete gallery item"
+                                  onClick={() => {
+                                    if (!vcardId) return;
+                                    // eslint-disable-next-line no-alert
+                                    if (!confirm("Delete this gallery item?")) return;
+                                    setVCards((prev) =>
+                                      prev.map((c) =>
+                                        c.id === vcardId
+                                          ? {
+                                              ...c,
+                                              galleries: (c.galleries ?? []).filter((x) => x.id !== g.id),
+                                            }
+                                          : c
+                                      )
+                                    );
+                                  }}
+                                >
+                                  🗑
+                                </button>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
@@ -6286,6 +6341,27 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
               className="p-6 pb-8 space-y-5"
               onSubmit={(e) => {
                 e.preventDefault();
+                if (!vcardId || !newGalleryType || !newGalleryImagePreview) return;
+
+                const newGalleryItem = {
+                  id: `gallery-${Date.now()}`,
+                  type: newGalleryType,
+                  imageUrl: newGalleryImagePreview,
+                };
+
+                setVCards((prev) =>
+                  prev.map((c) =>
+                    c.id === vcardId
+                      ? {
+                          ...c,
+                          galleries: [...(c.galleries ?? []), newGalleryItem],
+                        }
+                      : c,
+                  ),
+                );
+
+                setServicesSuccessMessage("Gallery item added successfully.");
+                setShowServicesSuccessToast(true);
                 setShowNewGalleryModal(false);
                 setNewGalleryType("");
                 setNewGalleryImagePreview(null);

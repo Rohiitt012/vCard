@@ -21,6 +21,12 @@ export type VCardSocialLink = {
   url: string;
 };
 
+export type VCardGallery = {
+  id: string;
+  type: string;
+  imageUrl: string;
+};
+
 export type VCardBusinessHours = {
   [day: string]: { enabled: boolean; start: string; end: string };
 };
@@ -62,6 +68,7 @@ export type VCardItem = {
   blogs?: VCardBlog[];
   products?: VCardProduct[];
   services?: VCardService[];
+  galleries?: VCardGallery[];
   termsHtml?: string;
   privacyHtml?: string;
   email?: string;

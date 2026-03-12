@@ -166,6 +166,7 @@ const SocialCircleIcon = ({ platform }: { platform: string }) => {
 export function PlaseryExecutiveVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
   const [showTerms, setShowTerms] = React.useState(false);
   const [showPrivacy, setShowPrivacy] = React.useState(false);
+  const [lightboxImage, setLightboxImage] = React.useState<string | null>(null);
   const primaryColor = card.templatePrimaryColor || DEFAULT_PRIMARY_COLOR;
 
   const name = card.title || "Plasery";
@@ -212,6 +213,10 @@ export function PlaseryExecutiveVCardTemplate({ card, slug, baseUrl, onDownloadV
           quote: "Nonumy et labore et tempor diam tempor erat. Sed duo clita tempor justo.",
         },
       ];
+
+  const galleries = (card as any).galleries && Array.isArray((card as any).galleries) && (card as any).galleries.length > 0
+    ? (card as any).galleries
+    : null;
 
   const socialLinks = (card as any).socialLinks && Array.isArray((card as any).socialLinks) && (card as any).socialLinks.length > 0
     ? (card as any).socialLinks
@@ -741,6 +746,76 @@ export function PlaseryExecutiveVCardTemplate({ card, slug, baseUrl, onDownloadV
           </section>
         )}
 
+        {/* Galleries Section */}
+        {galleries && (
+          <section id="galleries" className="bg-white px-4 sm:px-8 py-10 border-t border-slate-100">
+            <div className="max-w-xl mx-auto">
+              <div className="text-center mb-8">
+                <p className="text-[11px] tracking-[0.22em] uppercase font-semibold mb-1" style={{ color: primaryColor }}>
+                  Our Gallery
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
+                  Precision & Artistic Vision
+                </h2>
+              </div>
+              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3">
+                {galleries.map((g: any) => (
+                  <div
+                    key={g.id}
+                    className="group relative aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 cursor-pointer"
+                    onClick={() => setLightboxImage(g.imageUrl)}
+                  >
+                    <Image
+                      src={g.imageUrl}
+                      alt="Gallery"
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      unoptimized
+                    />
+                    <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Lightbox Modal */}
+        {lightboxImage && (
+          <div
+            className="fixed inset-0 z-[200000] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm"
+            onClick={() => setLightboxImage(null)}
+          >
+            <div className="relative max-w-4xl w-full h-full flex items-center justify-center">
+              <button
+                type="button"
+                className="absolute top-4 right-4 z-[200001] bg-white/10 hover:bg-white/20 p-2 rounded-full text-white transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxImage(null);
+                }}
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="relative w-full h-[80vh]" onClick={(e) => e.stopPropagation()}>
+                <Image
+                  src={lightboxImage}
+                  alt="Gallery Preview"
+                  fill
+                  className="object-contain"
+                  unoptimized
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Testimonials */}
         <section className="bg-slate-50 px-4 sm:px-8 py-10 border-t border-slate-100">
           <div className="max-w-xl mx-auto">
@@ -925,6 +1000,16 @@ export function PlaseryExecutiveVCardTemplate({ card, slug, baseUrl, onDownloadV
                 </button>
                 <button type="button" className="text-left hover:text-white">
                   Our Services
+                </button>
+                <button
+                  type="button"
+                  className="text-left hover:text-white"
+                  onClick={() => {
+                    const el = document.getElementById("galleries");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  Our Gallery
                 </button>
                 <button
                   type="button"
