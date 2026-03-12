@@ -510,6 +510,8 @@ function getAccentBgSecondary(accent: string): string {
 /** Preview content type per template (screenshot-style: all show filled content like Dental Care / Boutique Shop) */
 function getPreviewType(template: { id: number; name: string }): "flower" | "flower-shop" | "flower-snap" | "travel" | "travel-dark" | "personal" | "corporate" | "creative" | "generic" {
   const n = template.name.toLowerCase();
+  // Executive Pro ko Flower-style preview ke sath dikhane ke liye
+  if (n.includes("executive pro")) return "flower";
   if (n.includes("flower snap")) return "flower-snap";
   if (n.includes("flower garden") || n.includes("wedding planner") || n.includes("salon") || n.includes("boutique shop") || n.includes("floral") || n.includes("dental care")) return "flower";
   if (n.includes("flower shop") || (n.includes("garden") && !n.includes("flower garden"))) return "flower-shop";
@@ -559,73 +561,77 @@ function getMobilePreviewContent(template: { id: number; name: string }): {
 }
 
 const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: string }[] = [
-  { id: 1, name: "Executive Pro", description: "Clean, authoritative layout for leaders and executives.", accent: "from-slate-700 to-slate-900" },
-  { id: 2, name: "Modern Minimal", description: "Minimalist design with ample white space and clarity.", accent: "from-gray-100 to-white" },
-  { id: 3, name: "Creative Studio", description: "Bold typography and visuals for creatives.", accent: "from-violet-600 to-purple-800" },
-  { id: 4, name: "Real Estate Plus", description: "Property-focused layout with gallery and listings.", accent: "from-amber-600 to-orange-700" },
-  { id: 5, name: "Travel Explorer", description: "Adventure and travel themed with maps and itineraries.", accent: "from-sky-600 to-blue-800" },
-  { id: 6, name: "Flower Garden", description: "Elegant floral theme for boutiques and gardens.", accent: "from-emerald-500 to-teal-600" },
-  { id: 7, name: "Corporate Blue", description: "Professional corporate style with trust cues.", accent: "from-blue-700 to-indigo-800" },
-  { id: 8, name: "Photographer Pro", description: "Portfolio-first layout for photographers.", accent: "from-neutral-800 to-black" },
-  { id: 9, name: "Medical Practice", description: "Trust and clarity for healthcare professionals.", accent: "from-cyan-600 to-blue-700" },
-  { id: 10, name: "Legal Counsel", description: "Formal and authoritative for law firms.", accent: "from-slate-800 to-slate-950" },
-  { id: 11, name: "Café & Bistro", description: "Warm and inviting for food & beverage.", accent: "from-amber-700 to-amber-900" },
-  { id: 12, name: "Fitness Coach", description: "Energetic and action-oriented design.", accent: "from-rose-600 to-red-700" },
-  { id: 13, name: "Tech Innovator", description: "Sleek and tech-forward for startups.", accent: "from-indigo-600 to-violet-700" },
-  { id: 14, name: "Wedding Planner", description: "Romantic and detailed for events.", accent: "from-pink-500 to-rose-600" },
-  { id: 15, name: "Consulting Pro", description: "Strategic and refined for consultants.", accent: "from-slate-600 to-slate-800" },
-  { id: 16, name: "Urban Nest", description: "Real estate with modern, urban twist.", accent: "from-emerald-700 to-teal-800" },
-  { id: 17, name: "Fashion Forward", description: "Style-focused layout for fashion brands.", accent: "from-fuchsia-600 to-pink-700" },
-  { id: 18, name: "Architect Studio", description: "Structure and visual balance for architects.", accent: "from-stone-600 to-neutral-800" },
-  { id: 19, name: "Chef's Table", description: "Culinary and premium restaurant style.", accent: "from-orange-600 to-red-600" },
-  { id: 20, name: "Startup Hub", description: "Dynamic and youthful for startups.", accent: "from-blue-500 to-cyan-600" },
-  { id: 21, name: "Wellness Guide", description: "Calm and holistic wellness theme.", accent: "from-teal-500 to-emerald-600" },
-  { id: 22, name: "Event Manager", description: "Dates and details prominently displayed.", accent: "from-violet-500 to-purple-600" },
-  { id: 23, name: "Art Gallery", description: "Spacious and artistic presentation.", accent: "from-neutral-700 to-stone-900" },
-  { id: 24, name: "Finance Pro", description: "Numbers and trust for financial services.", accent: "from-green-700 to-emerald-800" },
-  { id: 25, name: "Education Plus", description: "Clear and informative for educators.", accent: "from-blue-600 to-sky-700" },
-  { id: 26, name: "Salon & Spa", description: "Relaxing and luxurious beauty theme.", accent: "from-rose-400 to-pink-500" },
-  { id: 27, name: "Auto Dealer", description: "Showcase vehicles and contact options.", accent: "from-slate-600 to-gray-800" },
-  { id: 28, name: "Construction Pro", description: "Strong and reliable for construction.", accent: "from-amber-800 to-yellow-900" },
-  { id: 29, name: "Music Studio", description: "Rhythm and brand for musicians.", accent: "from-indigo-800 to-purple-900" },
-  { id: 30, name: "Pet Care", description: "Friendly and approachable for pet services.", accent: "from-lime-500 to-green-600" },
-  { id: 31, name: "Interior Design", description: "Aesthetic and visual for designers.", accent: "from-amber-100 to-orange-200" },
-  { id: 32, name: "Marketing Agency", description: "Bold and creative for agencies.", accent: "from-red-600 to-orange-600" },
-  { id: 33, name: "Nonprofit", description: "Mission and impact focused layout.", accent: "from-green-600 to-teal-700" },
-  { id: 34, name: "Restaurant Pro", description: "Menu and ambiance focused.", accent: "from-red-800 to-rose-900" },
-  { id: 35, name: "Yoga & Mind", description: "Serene and balanced wellness.", accent: "from-lavender-500 to-violet-600" },
-  { id: 36, name: "Dental Care", description: "Clean and reassuring for dental.", accent: "from-sky-400 to-blue-500" },
-  { id: 37, name: "Insurance Pro", description: "Trust and coverage emphasis.", accent: "from-blue-800 to-indigo-900" },
-  { id: 38, name: "Realtor Elite", description: "Listings and contact for realtors.", accent: "from-amber-500 to-orange-600" },
-  { id: 39, name: "Freelancer One", description: "Portfolio and skills showcase.", accent: "from-slate-500 to-gray-700" },
-  { id: 40, name: "Boutique Shop", description: "Product and style for retail.", accent: "from-pink-400 to-rose-500" },
-  { id: 41, name: "Consultant Plus", description: "Expertise and clarity for consultants.", accent: "from-indigo-700 to-blue-800" },
-  { id: 42, name: "Developer Code", description: "Tech and projects for developers.", accent: "from-zinc-800 to-neutral-900" },
-  { id: 43, name: "Coach Life", description: "Goals and motivation for coaches.", accent: "from-cyan-500 to-teal-600" },
-  { id: 44, name: "Designer Grid", description: "Visual and structured for designers.", accent: "from-gray-600 to-slate-700" },
-  { id: 45, name: "Writer's Block", description: "Typography and content focused.", accent: "from-stone-500 to-neutral-600" },
-  { id: 46, name: "Tutor Learn", description: "Clear and educational for tutors.", accent: "from-blue-500 to-indigo-600" },
-  { id: 47, name: "Photographer Wed", description: "Wedding and portrait focus.", accent: "from-rose-300 to-pink-400" },
-  { id: 48, name: "Agency Bold", description: "Creative agency with strong identity.", accent: "from-orange-500 to-red-600" },
-  { id: 49, name: "Classic Business", description: "Timeless professional layout.", accent: "from-slate-500 to-slate-700" },
-  { id: 50, name: "Horizon Pro", description: "Modern wide layout with impact.", accent: "from-brand-500 to-indigo-600" },
   {
-    id: 51,
-    name: "Simple Contact",
-    description: "Clean layout with sky header, profile, social links, contact block and Our Services section.",
-    accent: "from-sky-200 via-sky-100 to-white",
+    id: 11,
+    name: "Cafe vCard",
+    description: "Warm, inviting contact card for cafes and bistros.",
+    accent: "from-amber-700 to-amber-900",
   },
   {
-    id: 52,
-    name: "Reporter Profile",
-    description: "Dark editorial layout with hero banner, reporter bio, contact rows and QR section.",
-    accent: "from-neutral-900 to-slate-800",
+    id: 7,
+    name: "Corporate vCard",
+    description: "Professional vCard for businesses, agencies and teams.",
+    accent: "from-blue-700 to-indigo-800",
   },
   {
-    id: 53,
-    name: "Flower Snap",
-    description: "Creative Flower & Garden. Best Plant Selling Company – elegant floral and garden business layout.",
+    id: 3,
+    name: "Creative vCard",
+    description: "Bold portfolio vCard for designers, studios and creators.",
+    accent: "from-violet-600 to-purple-800",
+  },
+  {
+    id: 1,
+    name: "Executive vCard",
+    description: "Clean leadership vCard for founders, CXOs and managers.",
+    accent: "from-slate-700 to-slate-900",
+  },
+  {
+    id: 12,
+    name: "Fitness vCard",
+    description: "Energetic vCard for fitness trainers, gyms and coaches.",
+    accent: "from-rose-600 to-red-700",
+  },
+  {
+    id: 6,
+    name: "Floral vCard",
+    description: "Elegant vCard for florists, decorators and boutiques.",
     accent: "from-emerald-500 to-teal-600",
+  },
+  {
+    id: 10,
+    name: "Legal vCard",
+    description: "Formal vCard for lawyers, firms and legal consultants.",
+    accent: "from-slate-800 to-slate-950",
+  },
+  {
+    id: 9,
+    name: "Medical vCard",
+    description: "Trust-focused vCard for clinics, doctors and healthcare.",
+    accent: "from-cyan-600 to-blue-700",
+  },
+  {
+    id: 2,
+    name: "Minimal vCard",
+    description: "Simple, minimal vCard suitable for any profession.",
+    accent: "from-gray-100 to-white",
+  },
+  {
+    id: 8,
+    name: "Photo vCard",
+    description: "Image-first vCard for photographers and visual artists.",
+    accent: "from-neutral-800 to-black",
+  },
+  {
+    id: 4,
+    name: "Property vCard",
+    description: "Listing-friendly vCard for real estate and rentals.",
+    accent: "from-amber-600 to-orange-700",
+  },
+  {
+    id: 5,
+    name: "Travel vCard",
+    description: "Travel themed vCard for agents, guides and tours.",
+    accent: "from-sky-600 to-blue-800",
   },
 ];
 
@@ -656,6 +662,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [coverType, setCoverType] = useState<"Image" | "Video" | "YouTube Link">("Image");
   const [basicDetailsUpdated, setBasicDetailsUpdated] = useState(false);
   const [socialLinksView, setSocialLinksView] = useState<"social" | "custom">("social");
+  const [socialLinksForm, setSocialLinksForm] = useState<Record<string, string>>({});
 
   // simple placeholder states where needed
   const [servicesSearch, setServicesSearch] = useState("");
@@ -672,6 +679,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [newServiceDescription, setNewServiceDescription] = useState("");
   const [newServiceIconPreview, setNewServiceIconPreview] = useState<string | null>(null);
   const newServiceIconInputRef = useRef<HTMLInputElement>(null);
+  const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
+  const [previewService, setPreviewService] = useState<{
+    name: string;
+    description: string;
+    url?: string;
+    icon: string;
+  } | null>(null);
   const [productsSearch, setProductsSearch] = useState("");
   const [showNewProductModal, setShowNewProductModal] = useState(false);
   const [newProductName, setNewProductName] = useState("");
@@ -683,6 +697,15 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [newProductIconPreview, setNewProductIconPreview] = useState<string | null>(null);
   const newProductIconInputRef = useRef<HTMLInputElement>(null);
   const [displayProductEnquiryButton, setDisplayProductEnquiryButton] = useState(false);
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
+  const [previewProduct, setPreviewProduct] = useState<{
+    name: string;
+    description?: string;
+    price?: string;
+    currency?: string;
+    url?: string;
+    icon: string;
+  } | null>(null);
   const [productsShowPerPage, setProductsShowPerPage] = useState(10);
   const [instaSearch, setInstaSearch] = useState("");
   const [showAddEmbedTagModal, setShowAddEmbedTagModal] = useState(false);
@@ -698,12 +721,27 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const newGalleryImageInputRef = useRef<HTMLInputElement>(null);
   const [blogsSearch, setBlogsSearch] = useState("");
   const [showNewBlogModal, setShowNewBlogModal] = useState(false);
+  const [editingBlogId, setEditingBlogId] = useState<string | null>(null);
+  const [previewBlog, setPreviewBlog] = useState<{ title: string; description: string; icon: string } | null>(null);
   const [newBlogTitle, setNewBlogTitle] = useState("");
   const [newBlogDescription, setNewBlogDescription] = useState("");
   const [newBlogIconPreview, setNewBlogIconPreview] = useState<string | null>(null);
   const newBlogIconInputRef = useRef<HTMLInputElement>(null);
   const [blogFormErrors, setBlogFormErrors] = useState<{ title?: string; description?: string; icon?: string }>({});
   const [testimonialsSearch, setTestimonialsSearch] = useState("");
+  const [showNewTestimonialModal, setShowNewTestimonialModal] = useState(false);
+  const [editingTestimonialId, setEditingTestimonialId] = useState<string | null>(null);
+  const [newTestimonialName, setNewTestimonialName] = useState("");
+  const [newTestimonialRole, setNewTestimonialRole] = useState("");
+  const [newTestimonialQuote, setNewTestimonialQuote] = useState("");
+  const [newTestimonialImagePreview, setNewTestimonialImagePreview] = useState<string | null>(null);
+  const newTestimonialImageInputRef = useRef<HTMLInputElement>(null);
+  const [testimonialFormErrors, setTestimonialFormErrors] = useState<{
+    name?: string;
+    role?: string;
+    quote?: string;
+    image?: string;
+  }>({});
   const [iframesSearch, setIframesSearch] = useState("");
   const [customLinksSearch, setCustomLinksSearch] = useState("");
   const [customLinksShowPerPage, setCustomLinksShowPerPage] = useState(10);
@@ -765,27 +803,123 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     if (Object.keys(errors).length > 0) return;
     if (!vcardId || !currentCard) return;
 
-    const newBlog = {
-      id: `blog-${Date.now()}`,
-      title: newBlogTitle.trim(),
-      description: newBlogDescription.trim(),
-      icon: newBlogIconPreview!,
-    };
+    if (editingBlogId) {
+      // Update existing blog
+      setVCards((prev) =>
+        prev.map((c) =>
+          c.id === vcardId
+            ? {
+                ...c,
+                blogs: (c.blogs ?? []).map((b) =>
+                  b.id === editingBlogId
+                    ? {
+                        ...b,
+                        title: newBlogTitle.trim(),
+                        description: newBlogDescription.trim(),
+                        icon: newBlogIconPreview!,
+                      }
+                    : b
+                ),
+              }
+            : c
+        )
+      );
+      setServicesSuccessMessage("vCard blog updated successfully.");
+    } else {
+      // Create new blog
+      const newBlog = {
+        id: `blog-${Date.now()}`,
+        title: newBlogTitle.trim(),
+        description: newBlogDescription.trim(),
+        icon: newBlogIconPreview!,
+      };
 
-    setVCards((prev) =>
-      prev.map((c) =>
-        c.id === vcardId ? { ...c, blogs: [...(c.blogs ?? []), newBlog] } : c
-      )
-    );
+      setVCards((prev) =>
+        prev.map((c) =>
+          c.id === vcardId ? { ...c, blogs: [...(c.blogs ?? []), newBlog] } : c
+        )
+      );
+      setServicesSuccessMessage("vCard blog created successfully.");
+    }
 
-    setServicesSuccessMessage("vCard blog created successfully.");
     setShowServicesSuccessToast(true);
 
     setShowNewBlogModal(false);
+    setEditingBlogId(null);
     setNewBlogTitle("");
     setNewBlogDescription("");
     setNewBlogIconPreview(null);
     setBlogFormErrors({});
+  };
+
+  const handleNewTestimonialSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const errors: {
+      name?: string;
+      role?: string;
+      quote?: string;
+      image?: string;
+    } = {};
+    if (!newTestimonialName.trim()) errors.name = "Name is required.";
+    if (!newTestimonialQuote.trim()) errors.quote = "Description is required.";
+    if (!newTestimonialImagePreview) errors.image = "Image is required.";
+    setTestimonialFormErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+    if (!vcardId || !currentCard) return;
+
+    if (editingTestimonialId) {
+      setVCards((prev) =>
+        prev.map((c) =>
+          c.id === vcardId
+            ? {
+                ...c,
+                testimonials: (c as any).testimonials
+                  ? (c as any).testimonials.map((t: any) =>
+                      t.id === editingTestimonialId
+                        ? {
+                            ...t,
+                            name: newTestimonialName.trim(),
+                            role: newTestimonialRole.trim() || "Client",
+                            quote: newTestimonialQuote.trim(),
+                            image: newTestimonialImagePreview!,
+                          }
+                        : t
+                    )
+                  : [],
+              }
+            : c
+        )
+      );
+      setServicesSuccessMessage("Testimonial updated successfully.");
+    } else {
+      const newTestimonial = {
+        id: `testimonial-${Date.now()}`,
+        name: newTestimonialName.trim(),
+        role: newTestimonialRole.trim() || "Client",
+        quote: newTestimonialQuote.trim(),
+        image: newTestimonialImagePreview!,
+      };
+      setVCards((prev) =>
+        prev.map((c) =>
+          c.id === vcardId
+            ? {
+                ...c,
+                testimonials: [...(((c as any).testimonials as any[]) ?? []), newTestimonial],
+              }
+            : c
+        )
+      );
+      setServicesSuccessMessage("Testimonial created successfully.");
+    }
+
+    setShowServicesSuccessToast(true);
+    setShowNewTestimonialModal(false);
+    setEditingTestimonialId(null);
+    setNewTestimonialName("");
+    setNewTestimonialRole("");
+    setNewTestimonialQuote("");
+    setNewTestimonialImagePreview(null);
+    setTestimonialFormErrors({});
   };
   // Sync Dynamic vCard colors from selected vCard template (so selected template shows in Dynamic vCard)
   useEffect(() => {
@@ -807,6 +941,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [templateSaveSuccess, setTemplateSaveSuccess] = useState(false);
   const [termsSaveSuccess, setTermsSaveSuccess] = useState(false);
   const [privacySaveSuccess, setPrivacySaveSuccess] = useState(false);
+  const [seoSaveSuccess, setSeoSaveSuccess] = useState(false);
+  const [fontFamily, setFontFamily] = useState<"default" | "outfit" | "inter" | "poppins" | "roboto">("default");
+  const [fontSizePx, setFontSizePx] = useState(16);
   const profileImageInputRef = useRef<HTMLInputElement>(null);
   const [basicAlias, setBasicAlias] = useState("");
   const [basicAliasError, setBasicAliasError] = useState<string | null>(null);
@@ -824,12 +961,22 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
       setBasicAlias((aliasFromSlug || aliasFromPreview || "").toLowerCase());
       setTermsContent(currentCard.termsHtml ?? "");
       setPrivacyContent(currentCard.privacyHtml ?? "");
+      setDisplayProductEnquiryButton(currentCard.displayProductEnquiryButton ?? false);
       if (termsEditorRef.current) {
         termsEditorRef.current.innerHTML = currentCard.termsHtml ?? "";
       }
       if (privacyEditorRef.current) {
         privacyEditorRef.current.innerHTML = currentCard.privacyHtml ?? "";
       }
+
+      // initialise social links form from current card
+      const existingSocial = (currentCard.socialLinks ?? []) as { platform: string; url: string }[];
+      const nextSocial: Record<string, string> = {};
+      SOCIAL_LINKS.forEach((item) => {
+        const match = existingSocial.find((l) => l.platform === item.id);
+        nextSocial[item.id] = match?.url ?? "";
+      });
+      setSocialLinksForm(nextSocial);
     }
   }, [
     currentCard?.id,
@@ -859,6 +1006,16 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     const t = setTimeout(() => setPrivacySaveSuccess(false), 3000);
     return () => clearTimeout(t);
   }, [privacySaveSuccess]);
+  useEffect(() => {
+    if (!seoSaveSuccess) return;
+    const t = setTimeout(() => setSeoSaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [seoSaveSuccess]);
+  useEffect(() => {
+    if (!currentCard) return;
+    if (currentCard.fontFamily) setFontFamily(currentCard.fontFamily);
+    if (currentCard.fontSizePx) setFontSizePx(currentCard.fontSizePx);
+  }, [currentCard?.id, currentCard?.fontFamily, currentCard?.fontSizePx]);
   const SERVICES_TOAST_DURATION_MS = 2000; // green line 2 sec
   useEffect(() => {
     if (!showServicesSuccessToast) return;
@@ -977,18 +1134,40 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     setOtherToggles((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const handlePreviewClick = () => {
+    const pathOrUrl = currentCard?.previewUrl || (basicAlias ? `/${basicAlias}` : "");
+    if (!pathOrUrl || typeof window === "undefined") return;
+
+    const absoluteUrl = pathOrUrl.startsWith("http")
+      ? pathOrUrl
+      : `${window.location.origin}${
+          pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`
+        }`;
+
+    window.open(absoluteUrl, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className="p-4 sm:p-6 md:p-8">
-      {/* Header: Edit vCard title + Back */}
+      {/* Header: Edit vCard title + Back / Preview */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="page-title">Edit vCard</h1>
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="btn-primary-premium inline-flex items-center gap-2"
-        >
-          <span className="hidden sm:inline">Back</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handlePreviewClick}
+            className="btn-primary-premium inline-flex items-center gap-2"
+          >
+            <span className="hidden sm:inline">Preview</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="btn-primary-premium inline-flex items-center gap-2"
+          >
+            <span className="hidden sm:inline">Back</span>
+          </button>
+        </div>
       </div>
 
       {/* Success banners */}
@@ -1030,6 +1209,14 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           role="alert"
         >
           Privacy Policy updated successfully.
+        </div>
+      )}
+      {seoSaveSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-500 px-4 py-3 text-sm font-medium text-white dark:border-green-700 dark:bg-green-600"
+          role="alert"
+        >
+          SEO updated successfully.
         </div>
       )}
 
@@ -1656,20 +1843,85 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                             const pt = getPreviewType(template);
                             const base = "absolute inset-0 flex flex-col pt-2 px-2 pointer-events-none overflow-hidden";
                             if (pt === "flower") {
+                              // Jenny Wilson / Flower Garden style preview (with contact + mini gallery) for flower-type templates (including Executive Pro)
                               return (
                                 <div className={base}>
-                                  <div className={`w-8 h-8 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
-                                  <p className={`text-[9px] font-semibold ${text} text-center leading-tight`}>Jenny Wilson</p>
-                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Flower Garden</p>
-                                  <div className="flex justify-center gap-1 mb-1">
-                                    {[1, 2, 3, 4].map((i) => (
-                                      <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
-                                    ))}
+                                  <div className="h-full flex items-start justify-center">
+                                    <div className="mt-1 mx-auto w-full max-w-[120px] rounded-2xl bg-white/95 shadow-sm overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-2">
+                                      {/* Top hero image */}
+                                      <div
+                                        className="h-14 w-full bg-cover bg-center"
+                                        style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
+                                      />
+                                      {/* Bottom white content */}
+                                      <div className="px-2 pb-2 pt-1">
+                                        <div className="flex items-end gap-1 -mt-5">
+                                          <div className="w-8 h-8 rounded-lg bg-gray-200 border-[2px] border-white shadow-sm shrink-0" />
+                                          <div className="flex-1 min-w-0">
+                                            <p className="text-[8px] font-semibold text-emerald-800 leading-none truncate">
+                                              Jenny Wilson
+                                            </p>
+                                            <p className="text-[7px] text-emerald-600 leading-none mt-0.5 truncate">
+                                              Flower Garden
+                                            </p>
+                                          </div>
+                                        </div>
+
+                                        {/* Social icons row */}
+                                        <div className="mt-2 flex justify-center gap-1.5">
+                                          {[1, 2, 3, 4, 5].map((i) => (
+                                            <div
+                                              // eslint-disable-next-line react/no-array-index-key
+                                              key={i}
+                                              className="w-4 h-4 rounded-full bg-emerald-50 border border-emerald-100"
+                                            />
+                                          ))}
+                                        </div>
+
+                                        {/* Description line */}
+                                        <p className="mt-2 text-[6px] leading-tight text-slate-600 text-center line-clamp-2">
+                                          Lorem ipsum is simply dummy text of the printing and typesetting industry.
+                                        </p>
+
+                                        {/* Compact contact row */}
+                                        <div className="mt-2 grid grid-cols-2 gap-1 text-[6px] text-slate-700">
+                                          <div className="flex items-center gap-0.5">
+                                            <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
+                                              ✉
+                                            </div>
+                                            <p className="truncate">jenny@gmail.com</p>
+                                          </div>
+                                          <div className="flex items-center gap-0.5">
+                                            <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
+                                              ☎
+                                            </div>
+                                            <p className="truncate">+1 234567890</p>
+                                          </div>
+                                        </div>
+
+                                        {/* Mini gallery strip */}
+                                        <div className="mt-2">
+                                          <p className="text-[6px] font-semibold text-emerald-800 text-center">Gallery</p>
+                                          <div className="mt-1 grid grid-cols-3 gap-0.5">
+                                            {[1, 2, 3].map((i) => (
+                                              // eslint-disable-next-line react/no-array-index-key
+                                              <div
+                                                key={i}
+                                                className="aspect-[4/5] rounded-md overflow-hidden bg-emerald-50"
+                                              >
+                                                <div
+                                                  className="w-full h-full bg-cover bg-center"
+                                                  style={{
+                                                    backgroundImage: `url('/images/product/product-0${i}.png')`,
+                                                  }}
+                                                />
+                                              </div>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
-                                  <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-1`}>Gallery</p>
                                 </div>
                               );
                             }
@@ -1753,18 +2005,64 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                             }
                             if (pt === "personal") {
                               return (
-                                <div className={base}>
-                                  <div className={`w-10 h-10 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
-                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Name</p>
-                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Title / Profession</p>
-                                  <div className="flex justify-center gap-1 mb-1">
-                                    {[1, 2, 3, 4].map((i) => (
-                                      <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
-                                    ))}
+                                <div className="absolute inset-0 flex flex-col pointer-events-none overflow-hidden">
+                                  {/* Cover Area */}
+                                  <div className="h-[28%] w-full bg-white/10 relative">
+                                    <div className={`absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-[2px] border-white/30 ${circle} shadow-lg flex items-center justify-center backdrop-blur-sm`}>
+                                      <svg className={`w-6 h-6 ${text} opacity-80`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                      </svg>
+                                    </div>
                                   </div>
-                                  <p className={`text-[7px] ${textSec} text-center`}>email@example.com · +1 234 567 890</p>
-                                  <p className={`text-[7px] ${textSec} text-center`}>Location</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5 border-t border-white/20 pt-0.5`}>Official Website</p>
+                                  {/* Content Area */}
+                                  <div className="flex-1 flex flex-col items-center pt-7 px-3">
+                                    <p className={`text-[11px] font-extrabold tracking-wide ${text} text-center mb-0.5 drop-shadow-sm`}>John Doe</p>
+                                    <p className={`text-[7px] font-medium tracking-widest uppercase ${textSec} text-center mb-3 opacity-90`}>Executive Director</p>
+                                    
+                                    <div className="w-full flex justify-center gap-2 mb-4">
+                                      {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className={`w-5 h-5 rounded-full ${icon} shadow-sm backdrop-blur-md flex items-center justify-center`}>
+                                          <div className="w-2.5 h-2.5 rounded-[3px] bg-white/50" />
+                                        </div>
+                                      ))}
+                                    </div>
+                                    
+                                    <div className="w-full space-y-1.5 px-1.5">
+                                      <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                        <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                          <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                        </div>
+                                        <div className="flex-1">
+                                          <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Email</p>
+                                          <p className={`text-[6px] font-medium ${text}`}>john.doe@example.com</p>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                        <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                          <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                        </div>
+                                        <div className="flex-1">
+                                          <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Phone</p>
+                                          <p className={`text-[6px] font-medium ${text}`}>+1 234 567 8900</p>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                        <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                          <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                        </div>
+                                        <div className="flex-1">
+                                          <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Location</p>
+                                          <p className={`text-[6px] font-medium ${text}`}>New York, NY</p>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="mt-auto mb-[2.5rem] w-full px-2">
+                                      <div className={`w-full py-1.5 rounded-full ${icon} backdrop-blur-md shadow-md flex items-center justify-center border border-white/10`}>
+                                        <p className={`text-[7.5px] font-bold uppercase tracking-widest ${text}`}>Save Contact</p>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               );
                             }
@@ -1876,89 +2174,722 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
                 {/* Mobile view preview – selected template theme in phone frame */}
                 {(() => {
-                  const selectedTemplate = selectedTemplateId != null ? VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId) : null;
+                  const selectedTemplate =
+                    selectedTemplateId != null ? VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId) : null;
                   const accent = selectedTemplate?.accent ?? "from-lime-400 to-lime-500";
                   const primaryColor = selectedTemplate ? getAccentPrimaryColor(selectedTemplate.accent) : "#B4FF3B";
                   const isLight = selectedTemplate ? isLightTemplate(selectedTemplate.accent) : false;
                   const textOnPrimary = isLight ? "#1f2937" : "#ffffff";
-                  const previewContent = selectedTemplate ? getMobilePreviewContent(selectedTemplate) : { name: "Your Name", subtitle: "Title / Profession", description: "Add your description and contact details. Choose a template to see its content here.", ctaLabel: "Add to contact" };
+                  const previewContent = selectedTemplate
+                    ? getMobilePreviewContent(selectedTemplate)
+                    : {
+                        name: "Your Name",
+                        subtitle: "Title / Profession",
+                        description:
+                          "Add your description and contact details. Choose a template to see its content here.",
+                        ctaLabel: "Add to contact",
+                      };
+                  const previewType = selectedTemplate ? getPreviewType(selectedTemplate) : "generic";
+
                   return (
                     <div className="lg:w-[320px] shrink-0 flex flex-col items-center">
                       <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Mobile preview</p>
-                      <div className="relative w-[280px] h-[560px] rounded-[2.25rem] bg-gray-900 shadow-2xl overflow-hidden border-[8px] border-gray-800 flex-shrink-0">
+                      <div className="relative w-[320px] h-[640px] rounded-[2.25rem] bg-gray-900 shadow-2xl overflow-hidden border-[8px] border-gray-800 flex-shrink-0">
                         <div className="absolute left-1/2 top-0 -translate-x-1/2 w-24 h-5 rounded-b-2xl bg-black z-20" />
-                        <div className="absolute inset-0 flex flex-col bg-[#0f2630] overflow-hidden">
-                          <div className={`relative h-24 bg-gradient-to-b ${accent} rounded-t-[1.5rem] overflow-hidden`}>
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
-                            <button
-                              type="button"
-                              className="absolute top-8 right-3 flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-medium shadow"
-                              style={{ backgroundColor: isLight ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.2)", color: textOnPrimary }}
-                            >
-                              EN
-                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                              </svg>
-                            </button>
-                          </div>
-                          <div className="relative -mt-6 px-4 pb-2">
-                            <div className="absolute inset-0 top-0 h-20 bg-[#142633] rounded-t-2xl" />
-                            <div className="relative flex items-center gap-3 pt-2">
-                              <div
-                                className="h-14 w-14 rounded-full border-2 overflow-hidden bg-gray-600 flex-shrink-0"
-                                style={{ borderColor: primaryColor }}
-                              />
-                              <div className="flex-1 min-w-0">
-                                <p className="text-base font-semibold truncate" style={{ color: primaryColor }}>{previewContent.name}</p>
-                                <p className="text-xs opacity-90 truncate" style={{ color: primaryColor }}>{previewContent.subtitle}</p>
+                        <div className="absolute inset-0 flex flex-col overflow-hidden">
+                          {previewType === "flower" ? (
+                            // Jenny Wilson / Flower Garden style full template preview inside phone
+                            <div className="flex-1 bg-[#f6faf7] flex items-center justify-center px-4 py-6">
+                              <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-emerald-100 relative">
+                                <div className="absolute inset-0 pointer-events-none">
+                                  <div className="absolute -left-4 top-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
+                                  <div className="absolute -right-4 bottom-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
+                                </div>
+                                <div className="max-h-[520px] overflow-y-auto">
+                                  <section className="relative">
+                                    <div
+                                      className="h-24 w-full bg-cover bg-center bg-no-repeat"
+                                      style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
+                                    />
+                                    <div className="px-4 pb-4 pt-3 bg-white relative">
+                                      <div className="-mt-10 flex items-end gap-2">
+                                        <div className="relative w-12 h-12 rounded-xl border-2 border-white shadow-md overflow-hidden flex-shrink-0 bg-emerald-100" />
+                                        <div className="flex-1 min-w-0">
+                                          <p className="text-sm font-semibold text-emerald-900 leading-tight truncate">
+                                            Jenny Wilson
+                                          </p>
+                                          <p className="text-[11px] font-medium text-emerald-700 mt-0.5 truncate">
+                                            Flower Garden
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="mt-3 flex justify-center gap-3">
+                                        {[1, 2, 3, 4, 5].map((i) => (
+                                          // eslint-disable-next-line react/no-array-index-key
+                                          <div
+                                            key={i}
+                                            className="h-7 w-7 rounded-full bg-emerald-50 text-emerald-600 text-[11px] flex items-center justify-center shadow-sm"
+                                          >
+                                            ●
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <p className="mt-3 text-[10px] text-slate-600 text-center leading-snug">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                        has been the industry&apos;s standard dummy text ever since the 1500s.
+                                      </p>
+
+                                      {/* Contact row (email, phone, birth date, location) */}
+                                      <div className="mt-4 grid grid-cols-2 gap-2 text-[9px] text-slate-700">
+                                        <div className="flex items-center gap-1.5">
+                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                            ✉
+                                          </div>
+                                          <div className="min-w-0">
+                                            <p className="text-[8px] text-slate-500">Email</p>
+                                            <p className="truncate">jenny@gmail.com</p>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                            ☎
+                                          </div>
+                                          <div className="min-w-0">
+                                            <p className="text-[8px] text-slate-500">Phone</p>
+                                            <p className="truncate">+1 234567890</p>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                            🎂
+                                          </div>
+                                          <div className="min-w-0">
+                                            <p className="text-[8px] text-slate-500">Birth Date</p>
+                                            <p className="truncate">12th March, 1990</p>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                            📍
+                                          </div>
+                                          <div className="min-w-0">
+                                            <p className="text-[8px] text-slate-500">Location</p>
+                                            <p className="truncate">Berlin, Germany</p>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      {/* Gallery section */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Gallery
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 grid grid-cols-3 gap-2">
+                                          {[1, 2, 3].map((i) => (
+                                            // eslint-disable-next-line react/no-array-index-key
+                                            <div
+                                              key={i}
+                                              className="aspect-[4/5] rounded-xl overflow-hidden bg-emerald-50"
+                                            >
+                                              <div
+                                                className="w-full h-full bg-cover bg-center"
+                                                style={{
+                                                  backgroundImage: `url('/images/product/product-0${i}.png')`,
+                                                }}
+                                              />
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+
+                                      {/* Our Service – Dynamic from card data */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Our Service
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
+                                          <div className="mt-3 space-y-2">
+                                            {(((currentCard as any)?.services as any[]) ?? []).slice(0, 2).map((svc, idx) => (
+                                              <div key={svc.id || idx} className="rounded-2xl border border-emerald-100 bg-white shadow-sm overflow-hidden flex">
+                                                <div className="w-16 h-16 bg-emerald-50 shrink-0 overflow-hidden flex items-center justify-center">
+                                                  {svc.icon ? (
+                                                    <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                                  ) : (
+                                                    <span className="text-emerald-300 font-bold text-lg">{idx + 1}</span>
+                                                  )}
+                                                </div>
+                                                <div className="px-2 py-1.5 flex-1 min-w-0">
+                                                  <p className="text-[9px] font-semibold text-slate-900 truncate">{svc.name}</p>
+                                                  <p className="mt-0.5 text-[8px] text-slate-600 leading-snug line-clamp-2">
+                                                    {svc.description}
+                                                  </p>
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        ) : (
+                                          <div className="mt-3 py-4 text-center rounded-2xl border border-dashed border-emerald-100">
+                                            <p className="text-emerald-300 text-[8px]">No services added yet.</p>
+                                          </div>
+                                        )}
+                                      </div>
+
+                                      {/* Make an Appointment – compact preview */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Make an Appointment
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 space-y-2">
+                                          <div>
+                                            <p className="text-[8px] text-slate-600 mb-0.5">Date :</p>
+                                            <div className="h-7 rounded-full border border-emerald-200 bg-white flex items-center justify-between px-2 text-[8px] text-slate-500">
+                                              <span>Pick a date</span>
+                                              <span>📅</span>
+                                            </div>
+                                          </div>
+                                          <div>
+                                            <p className="text-[8px] text-slate-600 mb-0.5">Hour:</p>
+                                            <div className="flex gap-1 overflow-x-auto pb-0.5">
+                                              {["8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00"].map((label, idx) => (
+                                                <button
+                                                  key={`${label}-${idx}`}
+                                                  type="button"
+                                                  className="px-2 py-1 rounded-full bg-white/60 border border-emerald-100 text-[8px] text-slate-600 whitespace-nowrap"
+                                                >
+                                                  {label}
+                                                </button>
+                                              ))}
+                                            </div>
+                                          </div>
+                                          <button
+                                            type="button"
+                                            className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.5 shadow-md"
+                                          >
+                                            Make An Appointment
+                                          </button>
+                                        </div>
+                                      </div>
+
+                                      {/* Product – compact two-column layout */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Product
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 grid grid-cols-2 gap-2">
+                                          {[1, 2].map((i) => (
+                                            // eslint-disable-next-line react/no-array-index-key
+                                            <div key={i} className="rounded-2xl bg-white border border-emerald-100 overflow-hidden">
+                                              <div
+                                                className="h-16 w-full bg-cover bg-center"
+                                                style={{
+                                                  backgroundImage: `url('/images/product/product-0${i}.png')`,
+                                                }}
+                                              />
+                                              <div className="px-3 py-2">
+                                                <div className="flex items-center justify-between text-[9px] text-slate-900 font-semibold">
+                                                  <span>Flower Name</span>
+                                                  <span>$25.00</span>
+                                                </div>
+                                                <p className="mt-0.5 text-[8px] text-slate-600">Lorem Ipsum dummy text</p>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+
+                                      {/* Testimonials section */}
+                                      {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
+                                        <div className="mt-4 pt-3 border-t border-emerald-50">
+                                          <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                            <span className="flex-1 h-px bg-emerald-100" />
+                                            Testimonials
+                                            <span className="flex-1 h-px bg-emerald-100" />
+                                          </h3>
+                                          <div className="mt-3 space-y-3">
+                                            {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
+                                              <div key={t.id || idx} className="rounded-2xl bg-white border border-emerald-100 px-3 py-3 flex gap-2">
+                                                <div className="w-10 h-10 rounded-full bg-emerald-50 overflow-hidden flex-shrink-0">
+                                                  {t.image ? (
+                                                    // eslint-disable-next-line @next/next/no-img-element
+                                                    <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
+                                                  ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-xs font-bold text-emerald-600 bg-emerald-100">
+                                                      {(t.name || "C")[0].toUpperCase()}
+                                                    </div>
+                                                  )}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                  <p className="text-[8px] text-slate-600 leading-snug line-clamp-3">
+                                                    &quot;{t.quote}&quot;
+                                                  </p>
+                                                  <p className="mt-1 text-[9px] font-semibold text-slate-900">{t.name}</p>
+                                                  <p className="text-[8px] text-emerald-600">- {t.role}</p>
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      )}
+
+                                      {/* Blog – compact layout */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Blog
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 grid grid-cols-[1.1fr,1fr] gap-2 items-center">
+                                          <div>
+                                            <p className="text-[9px] font-semibold text-slate-900 mb-0.5">Lorem Ipsum</p>
+                                            <p className="text-[8px] text-slate-600 leading-snug">
+                                              Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has
+                                              been the industry&apos;s standard.
+                                            </p>
+                                            <div className="mt-2 flex gap-1.5">
+                                              <button
+                                                type="button"
+                                                className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
+                                              >
+                                                ←
+                                              </button>
+                                              <button
+                                                type="button"
+                                                className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
+                                              >
+                                                →
+                                              </button>
+                                            </div>
+                                          </div>
+                                          <div className="relative">
+                                            <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg border border-emerald-200" />
+                                            <div className="relative rounded-lg overflow-hidden border border-emerald-200">
+                                              <div
+                                                className="h-20 w-full bg-cover bg-center"
+                                                style={{ backgroundImage: "url('/images/product/product-03.png')" }}
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      {/* Business Hours – compact grid */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Business Hours
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 grid grid-cols-2 gap-y-1.5 text-[8px] text-slate-700">
+                                          <p>Sunday : 08:10 - 20:00</p>
+                                          <p>Monday : 08:10 - 20:00</p>
+                                          <p>Tuesday : 08:10 - 20:00</p>
+                                          <p>Wednesday : 08:10 - 10:00</p>
+                                          <p>Thursday : 08:10 - 20:00</p>
+                                          <p>Friday : 08:10 - 20:00</p>
+                                          <p className="col-span-2 text-center">Saturday : Closed</p>
+                                        </div>
+                                      </div>
+
+                                      {/* QR Code – compact preview */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          QR Code
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 flex flex-col items-center gap-3">
+                                          <div className="relative w-20 h-20 rounded-lg bg-white border border-emerald-100 flex items-center justify-center shadow-sm">
+                                            <div className="w-16 h-16 bg-[radial-gradient(circle,_#000_40%,_transparent_41%)] [background-size:8px_8px]" />
+                                          </div>
+                                          <button
+                                            type="button"
+                                            className="px-4 py-1.5 rounded-full bg-emerald-700 text-white text-[9px] font-semibold shadow-md"
+                                          >
+                                            Download My QR Code
+                                          </button>
+                                        </div>
+                                      </div>
+
+                                      {/* Contact Us – compact form preview */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Contact Us
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 space-y-1.5">
+                                          <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                            Full Name
+                                          </div>
+                                          <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                            Email Address
+                                          </div>
+                                          <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                            Phone Number
+                                          </div>
+                                          <div className="h-10 rounded-2xl bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-start px-3 py-1.5">
+                                            Your Message
+                                          </div>
+                                          <button
+                                            type="button"
+                                            className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
+                                          >
+                                            Send Message
+                                          </button>
+                                        </div>
+                                      </div>
+
+                                      {/* Create Your vCard – link preview */}
+                                      <div className="mt-4 pt-3 border-t border-emerald-50 mb-3">
+                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                          Create Your vCard
+                                          <span className="flex-1 h-px bg-emerald-100" />
+                                        </h3>
+                                        <div className="mt-3 rounded-2xl overflow-hidden border border-emerald-100 bg-emerald-50/60">
+                                          <div className="px-3 py-3 bg-[url('/images/cards/card-02.png')] bg-cover bg-center">
+                                            <div className="rounded-full bg-white/95 border border-slate-200 px-3 py-1.5 flex items-center justify-between text-[8px] text-slate-700">
+                                              <span className="truncate mr-2">
+                                                https://vcards.infyom.com/marlonbrasil
+                                              </span>
+                                              <span className="shrink-0 text-[9px]">↗</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <button
+                                          type="button"
+                                          className="mt-3 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
+                                        >
+                                          Add to Contact
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
                               </div>
-                              <button
-                                type="button"
-                                className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
-                                style={{ backgroundColor: primaryColor, color: textOnPrimary }}
-                              >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                </svg>
-                              </button>
                             </div>
-                          </div>
-                          <div className="flex-1 px-4 py-3 overflow-y-auto">
-                            <p className="text-[11px] leading-relaxed text-gray-300">
-                              {previewContent.description}
-                            </p>
-                            {previewContent.extraLine && (
-                              <p className="text-[10px] text-gray-400 mt-2">{previewContent.extraLine}</p>
-                            )}
-                            {previewContent.officialWebsite && (
-                              <p className="text-[10px] text-gray-400 mt-1.5 flex items-center gap-1">
-                                <span className="text-gray-500">Official Website:</span>
-                                <span className="text-brand-400 underline">{previewContent.officialWebsite}</span>
-                              </p>
-                            )}
-                            {(previewContent.address || previewContent.company) && (
-                              <p className="text-[10px] text-gray-400 mt-1">
-                                {[previewContent.company, previewContent.address].filter(Boolean).join(" · ")}
-                              </p>
-                            )}
-                            <div className="mt-6 space-y-3">
-                              <button
-                                type="button"
-                                className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold"
-                                style={{ backgroundColor: primaryColor, color: textOnPrimary }}
-                              >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                                </svg>
-                                {previewContent.ctaLabel}
+                          ) : previewType === "travel-dark" ? (
+                            /* Digital business card template style (screenshot) – not website style */
+                            <div className="flex-1 overflow-y-auto flex flex-col bg-[#1A1A2E] text-left min-h-0 relative" data-single-page-template>
+                              {/* Floating grid icon – top right */}
+                              <button type="button" className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-[#38bdf8]/90 flex items-center justify-center shadow-lg">
+                                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
                               </button>
-                              <div className="flex gap-2">
-                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">fb</div>
-                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">in</div>
-                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">x</div>
+                              {/* Top banner – name, title, CTA (template header) */}
+                              <header className="bg-black pt-4 pb-8 px-4 relative">
+                                <div className="flex justify-end mb-2">
+                                  <button type="button" className="text-white/80 text-[9px] flex items-center gap-0.5 border border-white/30 rounded-full px-2 py-1">EN <span>▼</span></button>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center text-white font-bold text-xs shrink-0">
+                                    {(previewContent.name || "N").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase() || "N"}
+                                  </div>
+                                  <div>
+                                    <h1 className="text-white text-sm font-bold leading-tight truncate">{previewContent.name || "Your Name"}</h1>
+                                    <p className="text-white text-[9px] truncate">{previewContent.subtitle || "Title"}</p>
+                                  </div>
+                                </div>
+                                <p className="text-white/90 text-[9px] mt-2 line-clamp-2">{previewContent.description}</p>
+                                {previewContent.extraLine && <p className="text-white/70 text-[8px] mt-0.5 truncate">{previewContent.extraLine}</p>}
+                                <button type="button" className="mt-3 w-full rounded-lg border border-white text-white text-[9px] font-medium py-2">Let&apos;s Build Your Brand Online – DM To Connect</button>
+                              </header>
+                              {/* Profile picture – centered, overlapping */}
+                              <div className="flex justify-center -mt-6 relative z-10 px-4">
+                                <div className="w-16 h-16 rounded-full border-4 border-[#1A1A2E] bg-slate-600 overflow-hidden shrink-0" />
+                              </div>
+                              {/* Name + role + company */}
+                              <div className="text-center pt-2 px-4">
+                                <p className="text-white text-sm font-bold inline-flex items-center gap-1">{previewContent.name} <span className="text-[#38bdf8]">✓</span></p>
+                                <p className="text-white/90 text-[10px] mt-0.5">{previewContent.subtitle}</p>
+                                <p className="text-white/80 text-[9px]">Founder & CEO · Aayzen Digital</p>
+                              </div>
+                              {/* Description */}
+                              <div className="px-4 pt-3 text-center">
+                                <p className="text-white/90 text-[9px] leading-snug">Helping businesses grow their online presence through <strong className="text-white">digital marketing, social media marketing,</strong> and brand-focused growth strategies.</p>
+                                <p className="text-white/90 text-[9px] leading-snug mt-1.5">Also building smart <strong className="text-white">digital business card solutions</strong> to help professionals showcase and share their identity online.</p>
+                              </div>
+                              {/* Add to contact – primary CTA */}
+                              <div className="px-4 pt-4">
+                                <button type="button" className="w-full rounded-xl bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white text-[10px] font-semibold py-2.5 flex items-center justify-center gap-2 shadow-lg">
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                                  Add to contact
+                                </button>
+                              </div>
+                              {/* Title banner – OpenMyProfile style */}
+                              <div className="mt-4 mx-4 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#2563eb] py-2 px-3 text-center">
+                                <p className="text-white text-[10px] font-bold">OpenMyProfile – Digital Business Card</p>
+                              </div>
+                              {/* Contact grid – 2x2 with icons in light blue circles */}
+                              <div className="px-4 pt-4 grid grid-cols-2 gap-2">
+                                <div className="flex items-start gap-2">
+                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">✉</div>
+                                  <div className="min-w-0">
+                                    <p className="text-white/60 text-[8px]">Email</p>
+                                    <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[0]?.trim() || previewContent.officialWebsite || "email@example.com"}</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📱</div>
+                                  <div className="min-w-0">
+                                    <p className="text-white/60 text-[8px]">Mobile Number</p>
+                                    <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[1]?.trim() || "+91 9977216140"}</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">🎂</div>
+                                  <div className="min-w-0">
+                                    <p className="text-white/60 text-[8px]">Date of Birth</p>
+                                    <p className="text-white text-[9px]">18/09/1996</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📍</div>
+                                  <div className="min-w-0">
+                                    <p className="text-white/60 text-[8px]">Address</p>
+                                    <p className="text-white text-[9px] truncate">Madhya Pradesh, India</p>
+                                  </div>
+                                </div>
+                              </div>
+                              {/* QR Code section – white card, QR + profile */}
+                              <div className="px-4 pt-4">
+                                <p className="text-white text-xs font-bold mb-2 flex items-center justify-between">
+                                  QR Code
+                                  <span className="w-7 h-7 rounded-full bg-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
+                                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
+                                  </span>
+                                </p>
+                                <div className="bg-white rounded-2xl p-3 flex items-center gap-3">
+                                  <div className="w-14 h-14 rounded-lg bg-black flex-shrink-0 [background-size:6px_6px]" style={{ backgroundImage: "radial-gradient(circle, #000 40%, transparent 41%)" }} />
+                                  <div className="w-12 h-12 rounded-full bg-slate-300 flex-shrink-0" />
+                                </div>
+                              </div>
+                               {/* Our Services – Dynamic from card data */}
+                              <div className="px-4 pt-4">
+                                <p className="text-white text-xs font-bold mb-3 text-center">Our Services</p>
+                                <div className="grid grid-cols-2 gap-2">
+                                  {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
+                                    (((currentCard as any)?.services as any[]) ?? []).slice(0, 4).map((svc, idx) => (
+                                      <div key={svc.id || idx} className="rounded-xl border border-[#38bdf8]/30 bg-white/5 p-2">
+                                        <div className="w-full h-10 rounded-lg bg-white/10 mb-1.5 flex items-center justify-center overflow-hidden">
+                                          {svc.icon ? (
+                                            <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                          ) : (
+                                            <span className="text-[#38bdf8] text-xs font-bold">{idx + 1}</span>
+                                          )}
+                                        </div>
+                                        <p className="text-white text-[10px] font-bold line-clamp-1">{svc.name}</p>
+                                        <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">{svc.description}</p>
+                                      </div>
+                                    ))
+                                  ) : (
+                                    <div className="col-span-2 text-center py-4 rounded-xl border border-dashed border-white/20">
+                                       <p className="text-white/40 text-[9px]">No services added yet.</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              {/* Gallery – 2 images + carousel dots */}
+                              <div className="px-4 pt-4">
+                                <p className="text-white text-xs font-bold mb-2 text-center">Gallery</p>
+                                <div className="flex gap-2">
+                                  <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
+                                  <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
+                                </div>
+                                <div className="flex items-center justify-center gap-2 mt-2">
+                                  <span className="text-white/50 text-xs">◀</span>
+                                  <span className="flex gap-1"><span className="w-1.5 h-1.5 rounded-full bg-white/40" /><span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" /><span className="w-1.5 h-1.5 rounded-full bg-white/40" /></span>
+                                  <span className="text-white/50 text-xs">▶</span>
+                                </div>
+                              </div>
+                              {/* Products – one product card */}
+                              <div className="px-4 pt-4 pb-4">
+                                <p className="text-white text-xs font-bold mb-2 text-center">Products</p>
+                                <div className="rounded-2xl border border-[#38bdf8]/40 bg-gradient-to-b from-[#38bdf8]/20 to-transparent overflow-hidden">
+                                  <div className="h-16 bg-white/10 flex items-center justify-center text-[#38bdf8] text-2xl">📱</div>
+                                  <div className="p-2">
+                                    <p className="text-white text-[10px] font-bold">Digital Business Card</p>
+                                    <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">A smart digital business card to share your details, services, and links instantly.</p>
+                                    <p className="text-white font-bold text-[10px] mt-1">₹2,999.00</p>
+                                  </div>
+                                </div>
+                                <p className="text-center text-[#38bdf8] text-[9px] underline mt-2">View More Products</p>
+                              </div>
+                              {/* Social icons row */}
+                              <div className="flex items-center justify-center gap-4 py-3 px-4 border-t border-white/10">
+                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">🌐</span>
+                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">X</span>
+                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">f</span>
+                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">📷</span>
+                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">▶</span>
                               </div>
                             </div>
-                          </div>
+                          ) : (
+                            <div className="flex-1 flex flex-col bg-[#0f2630]">
+                              <div className={`relative h-24 bg-gradient-to-b ${accent} rounded-t-[1.5rem] overflow-hidden`}>
+                                <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+                                <button
+                                  type="button"
+                                  className="absolute top-8 right-3 flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-medium shadow"
+                                  style={{
+                                    backgroundColor: isLight ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.2)",
+                                    color: textOnPrimary,
+                                  }}
+                                >
+                                  EN
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                  </svg>
+                                </button>
+                              </div>
+                              <div className="relative -mt-6 px-4 pb-2">
+                                <div className="absolute inset-0 top-0 h-20 bg-[#142633] rounded-t-2xl" />
+                                <div className="relative flex items-center gap-3 pt-2">
+                                  <div
+                                    className="h-14 w-14 rounded-full border-2 overflow-hidden bg-gray-600 flex-shrink-0"
+                                    style={{ borderColor: primaryColor }}
+                                  />
+                                  <div className="flex-1 min-w-0">
+                                    <p
+                                      className="text-base font-semibold truncate"
+                                      style={{ color: primaryColor }}
+                                    >
+                                      {previewContent.name}
+                                    </p>
+                                    <p
+                                      className="text-xs opacity-90 truncate"
+                                      style={{ color: primaryColor }}
+                                    >
+                                      {previewContent.subtitle}
+                                    </p>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+                                    style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                                      />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                              <div className="flex-1 px-4 py-3 overflow-y-auto">
+                                <p className="text-[11px] leading-relaxed text-gray-300">
+                                  {previewContent.description}
+                                </p>
+                                {previewContent.extraLine && (
+                                  <p className="text-[10px] text-gray-400 mt-2">{previewContent.extraLine}</p>
+                                )}
+                                {previewContent.officialWebsite && (
+                                  <p className="text-[10px] text-gray-400 mt-1.5 flex items-center gap-1">
+                                    <span className="text-gray-500">Official Website:</span>
+                                    <span className="text-brand-400 underline">{previewContent.officialWebsite}</span>
+                                  </p>
+                                )}
+                                {(previewContent.address || previewContent.company) && (
+                                  <p className="text-[10px] text-gray-400 mt-1">
+                                    {[previewContent.company, previewContent.address].filter(Boolean).join(" · ")}
+                                  </p>
+                                )}
+                                <div className="mt-6 space-y-3">
+                                  <button
+                                    type="button"
+                                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                                    style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                                      />
+                                    </svg>
+                                    {previewContent.ctaLabel}
+                                  </button>
+                                  <div className="flex gap-2">
+                                    <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                      fb
+                                    </div>
+                                    <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                      in
+                                    </div>
+                                    <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                      x
+                                    </div>
+                                  </div>
+                                </div>
+                                {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
+                                  <div className="mt-8 pt-4 border-t border-white/10">
+                                    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
+                                      Testimonials
+                                    </p>
+                                    <div className="space-y-3">
+                                      {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
+                                        <div key={t.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3">
+                                          <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-8 h-8 rounded-full bg-white/10 overflow-hidden shrink-0">
+                                              {t.image ? (
+                                                <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
+                                              ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-white/40">
+                                                  {(t.name || "C")[0].toUpperCase()}
+                                                </div>
+                                              )}
+                                            </div>
+                                            <div className="min-w-0">
+                                              <p className="text-[10px] font-semibold text-white truncate">{t.name}</p>
+                                              <p className="text-[8px] text-white/40 truncate">{t.role}</p>
+                                            </div>
+                                          </div>
+                                          <p className="text-[9px] text-white/70 leading-relaxed line-clamp-3 italic">
+                                            &quot;{t.quote}&quot;
+                                          </p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                                {(((currentCard as any)?.services as any[]) ?? []).length > 0 && (
+                                  <div className="mt-8 pt-4 border-t border-white/10">
+                                    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
+                                      Services
+                                    </p>
+                                    <div className="grid grid-cols-1 gap-3">
+                                      {(((currentCard as any)?.services as any[]) ?? []).slice(0, 3).map((svc, idx) => (
+                                        <div key={svc.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3 flex items-start gap-3">
+                                          <div className="w-10 h-10 rounded-lg bg-white/10 overflow-hidden shrink-0 flex items-center justify-center text-white/60 text-xs">
+                                             {svc.icon ? (
+                                               <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                             ) : (
+                                               <span>{idx + 1}</span>
+                                             )}
+                                          </div>
+                                          <div className="min-w-0">
+                                            <p className="text-[10px] font-semibold text-white truncate">{svc.name}</p>
+                                            <p className="text-[8px] text-white/60 leading-normal line-clamp-2">{svc.description}</p>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
@@ -2452,6 +3383,37 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
             {/* Services / Products / Insta / LinkedIn / Galleries / Blogs / Testimonials / Iframes */}
             {activeSection === "services" && (
               <div className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass}>Service Section Label (Small Title)</label>
+                    <input
+                      type="text"
+                      className={inputClass}
+                      value={currentCard?.serviceTitleSmall || "Our Services"}
+                      placeholder="e.g. Our Services"
+                      onChange={(e) => {
+                        if (!vcardId) return;
+                        const val = e.target.value;
+                        setVCards((prev) => prev.map((c) => (c.id === vcardId ? { ...c, serviceTitleSmall: val } : c)));
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label className={labelClass}>Service Section Title (Main Title)</label>
+                    <input
+                      type="text"
+                      className={inputClass}
+                      value={currentCard?.serviceTitle || "Explore Our Services"}
+                      placeholder="e.g. Explore Our Professional Treatments"
+                      onChange={(e) => {
+                        if (!vcardId) return;
+                        const val = e.target.value;
+                        setVCards((prev) => prev.map((c) => (c.id === vcardId ? { ...c, serviceTitle: val } : c)));
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="relative flex-1 max-w-sm">
                     <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -2478,6 +3440,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         aria-checked={displayServiceEnquiryButton}
                         onClick={() => {
                           setDisplayServiceEnquiryButton((prev) => !prev);
+                          if (vcardId) {
+                            setVCards((prev) =>
+                              prev.map((c) =>
+                                c.id === vcardId ? { ...c, displayServiceEnquiryButton: !displayServiceEnquiryButton } : c
+                              )
+                            );
+                          }
                           setServicesSuccessMessage("Service Section Enquiry Button updated successfully.");
                           setShowServicesSuccessToast(true);
                         }}
@@ -2502,6 +3471,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         aria-checked={displayImagesWithSlider}
                         onClick={() => {
                           setDisplayImagesWithSlider((prev) => !prev);
+                          // Here you could also update the vcard data if there's a property for this
                           setServicesSuccessMessage("Display Images with Slider updated successfully.");
                           setShowServicesSuccessToast(true);
                         }}
@@ -2559,11 +3529,59 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         className="p-6 pb-8 space-y-5"
                         onSubmit={(e) => {
                           e.preventDefault();
+                          if (!vcardId || !newServiceName.trim() || !newServiceDescription.trim() || !newServiceIconPreview) return;
+
+                          if (editingServiceId) {
+                            // update existing service
+                            setVCards((prev) =>
+                              prev.map((c) =>
+                                c.id === vcardId
+                                  ? {
+                                      ...c,
+                                      services: ((c as any).services ?? []).map((s: any) =>
+                                        s.id === editingServiceId
+                                          ? {
+                                              ...s,
+                                              name: newServiceName.trim(),
+                                              url: newServiceUrl.trim() || undefined,
+                                              description: newServiceDescription.trim(),
+                                              icon: newServiceIconPreview,
+                                            }
+                                          : s,
+                                      ),
+                                    }
+                                  : c,
+                              ),
+                            );
+                            setServicesSuccessMessage("vCard service updated successfully.");
+                          } else {
+                            // create new service
+                            const newService = {
+                              id: `service-${Date.now()}`,
+                              name: newServiceName.trim(),
+                              url: newServiceUrl.trim() || undefined,
+                              description: newServiceDescription.trim(),
+                              icon: newServiceIconPreview,
+                            };
+                            setVCards((prev) =>
+                              prev.map((c) =>
+                                c.id === vcardId
+                                  ? {
+                                      ...c,
+                                      services: [...((c as any).services ?? []), newService],
+                                    }
+                                  : c,
+                              ),
+                            );
+                            setServicesSuccessMessage("vCard service created successfully.");
+                          }
+                          setShowServicesSuccessToast(true);
                           setShowNewServiceModal(false);
                           setNewServiceName("");
                           setNewServiceUrl("");
                           setNewServiceDescription("");
                           setNewServiceIconPreview(null);
+                          setEditingServiceId(null);
                         }}
                       >
                         <div>
@@ -2680,11 +3698,111 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={4} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const all = ((currentCard as any)?.services ?? []) as {
+                            id?: string;
+                            name: string;
+                            url?: string;
+                            description: string;
+                            icon: string;
+                          }[];
+                          const filtered = servicesSearch.trim()
+                            ? all.filter((s) =>
+                                s.name.toLowerCase().includes(servicesSearch.toLowerCase()),
+                              )
+                            : all;
+                          if (!filtered.length) {
+                            return (
+                              <tr>
+                                <td
+                                  colSpan={4}
+                                  className="px-4 py-12 text-center text-gray-500 dark:text-gray-400"
+                                >
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return filtered.map((s) => (
+                            <tr
+                              key={s.id || s.name}
+                              className="border-t border-gray-100 dark:border-gray-800 hover:bg-gray-50/60 dark:hover:bg-gray-800/60"
+                            >
+                              <td className="px-4 py-3">
+                                <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={s.icon} alt={s.name} className="w-full h-full object-cover" />
+                                </div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <p className="font-medium text-gray-900 dark:text-gray-100">{s.name}</p>
+                              </td>
+                              <td className="px-4 py-3 max-w-xs">
+                                <p className="truncate text-gray-600 dark:text-gray-300 text-xs">
+                                  {s.url || "-"}
+                                </p>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-3 text-lg">
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="View service"
+                                    onClick={() =>
+                                      setPreviewService({
+                                        name: s.name,
+                                        description: s.description,
+                                        url: s.url,
+                                        icon: s.icon,
+                                      })
+                                    }
+                                  >
+                                    👁
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="Edit service"
+                                    onClick={() => {
+                                      setEditingServiceId(s.id ?? "");
+                                      setNewServiceName(s.name);
+                                      setNewServiceUrl(s.url || "");
+                                      setNewServiceDescription(s.description);
+                                      setNewServiceIconPreview(s.icon);
+                                      setShowNewServiceModal(true);
+                                    }}
+                                  >
+                                    ✏️
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="text-red-500 hover:text-red-600"
+                                    aria-label="Delete service"
+                                    onClick={() => {
+                                      if (!vcardId) return;
+                                      // eslint-disable-next-line no-alert
+                                      if (!confirm("Delete this service?")) return;
+                                      setVCards((prev) =>
+                                        prev.map((c) =>
+                                          c.id === vcardId
+                                            ? {
+                                                ...c,
+                                                services: ((c as any).services ?? []).filter(
+                                                  (x: any) => x.id !== s.id,
+                                                ),
+                                              }
+                                            : c,
+                                        ),
+                                      );
+                                    }}
+                                  >
+                                    🗑
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
@@ -2696,7 +3814,141 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Showing{" "}
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          {(((currentCard as any)?.services ?? []) as any[]).length}
+                        </span>{" "}
+                        results
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {previewService && (
+              <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                  <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      Service preview
+                    </h2>
+                    <button
+                      type="button"
+                      onClick={() => setPreviewService(null)}
+                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                      aria-label="Close preview"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="px-6 py-5 space-y-4">
+                    <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                      {previewService.icon ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={previewService.icon}
+                          alt={previewService.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-sm text-gray-400">
+                          No image set for this service.
+                        </span>
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                        {previewService.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                        {previewService.description}
+                      </p>
+                      {previewService.url && (
+                        <a
+                          href={previewService.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700"
+                        >
+                          Open service link
+                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {previewProduct && (
+              <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                  <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      Product preview
+                    </h2>
+                    <button
+                      type="button"
+                      onClick={() => setPreviewProduct(null)}
+                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                      aria-label="Close preview"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="px-6 py-5 space-y-4">
+                    <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                      {previewProduct.icon ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={previewProduct.icon}
+                          alt={previewProduct.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-sm text-gray-400">
+                          No image set for this product.
+                        </span>
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between gap-3">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                          {previewProduct.name}
+                        </h3>
+                        {previewProduct.price && (
+                          <span className="text-sm font-semibold text-amber-600">
+                            {previewProduct.currency ? `${previewProduct.currency} ` : ""}
+                            {previewProduct.price}
+                          </span>
+                        )}
+                      </div>
+                      {previewProduct.description && (
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                          {previewProduct.description}
+                        </p>
+                      )}
+                      {previewProduct.url && (
+                        <a
+                          href={previewProduct.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700"
+                        >
+                          Open product link
+                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
+                          </svg>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -2725,15 +3977,29 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
                         Display Product Enquiry Button
                       </span>
-                      <button
-                        type="button"
-                        role="switch"
-                        aria-checked={displayProductEnquiryButton}
-                        onClick={() => setDisplayProductEnquiryButton((prev) => !prev)}
-                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                          displayProductEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
-                        }`}
-                      >
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={displayProductEnquiryButton}
+                      onClick={() => {
+                        if (!vcardId) {
+                          setDisplayProductEnquiryButton((prev) => !prev);
+                          return;
+                        }
+                        setDisplayProductEnquiryButton((prev) => {
+                          const next = !prev;
+                          setVCards((cards) =>
+                            cards.map((c) =>
+                              c.id === vcardId ? { ...c, displayProductEnquiryButton: next } : c,
+                            ),
+                          );
+                          return next;
+                        });
+                      }}
+                      className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                        displayProductEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
+                      }`}
+                    >
                         <span
                           className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
                             displayProductEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
@@ -2787,6 +4053,59 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         className="p-8 pb-10 space-y-6"
                         onSubmit={(e) => {
                           e.preventDefault();
+                          if (!vcardId || !newProductName.trim() || !newProductIconPreview) return;
+
+                          if (editingProductId) {
+                            // Update existing product
+                            setVCards((prev) =>
+                              prev.map((c) =>
+                                c.id === vcardId
+                                  ? {
+                                      ...c,
+                                      products: (c.products ?? []).map((p) =>
+                                        p.id === editingProductId
+                                          ? {
+                                              ...p,
+                                              name: newProductName.trim(),
+                                              currency: newProductCurrency || undefined,
+                                              price: newProductPrice || undefined,
+                                              sort: newProductSort || undefined,
+                                              url: newProductUrl || undefined,
+                                              description: newProductDescription || undefined,
+                                              icon: newProductIconPreview,
+                                            }
+                                          : p,
+                                      ),
+                                    }
+                                  : c,
+                              ),
+                            );
+                            setServicesSuccessMessage("Product updated successfully.");
+                          } else {
+                            // Create new product
+                            const newProduct = {
+                              id: `product-${Date.now()}`,
+                              name: newProductName.trim(),
+                              currency: newProductCurrency || undefined,
+                              price: newProductPrice || undefined,
+                              sort: newProductSort || undefined,
+                              url: newProductUrl || undefined,
+                              description: newProductDescription || undefined,
+                              icon: newProductIconPreview,
+                            };
+                            setVCards((prev) =>
+                              prev.map((c) =>
+                                c.id === vcardId
+                                  ? {
+                                      ...c,
+                                      products: [...(c.products ?? []), newProduct],
+                                    }
+                                  : c,
+                              ),
+                            );
+                            setServicesSuccessMessage("Product added successfully.");
+                          }
+                          setShowServicesSuccessToast(true);
                           setShowNewProductModal(false);
                           setNewProductName("");
                           setNewProductCurrency("");
@@ -2795,6 +4114,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           setNewProductUrl("");
                           setNewProductDescription("");
                           setNewProductIconPreview(null);
+                          setEditingProductId(null);
                         }}
                       >
                         <div>
@@ -2967,11 +4287,131 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={5} className="px-4 py-12 text-center text-gray-600 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const all = (currentCard?.products ?? []) as {
+                            id: string;
+                            name: string;
+                            currency?: string;
+                            price?: string;
+                            url?: string;
+                            icon: string;
+                          }[];
+                          const filtered = productsSearch.trim()
+                            ? all.filter((p) =>
+                                p.name.toLowerCase().includes(productsSearch.toLowerCase()),
+                              )
+                            : all;
+                          const rows = filtered.slice(0, productsShowPerPage);
+                          if (!rows.length) {
+                            return (
+                              <tr>
+                                <td
+                                  colSpan={5}
+                                  className="px-4 py-12 text-center text-gray-600 dark:text-gray-400"
+                                >
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return rows.map((p) => (
+                            <tr
+                              key={p.id}
+                              className="border-t border-gray-100 dark:border-gray-800 hover:bg-gray-50/60 dark:hover:bg-gray-800/60"
+                            >
+                              <td className="px-4 py-3">
+                                <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img
+                                    src={p.icon}
+                                    alt={p.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <p className="font-medium text-gray-900 dark:text-gray-100">
+                                  {p.name}
+                                </p>
+                              </td>
+                              <td className="px-4 py-3 max-w-xs">
+                                <p className="truncate text-gray-600 dark:text-gray-300 text-xs">
+                                  {p.url || "-"}
+                                </p>
+                              </td>
+                              <td className="px-4 py-3">
+                                <p className="text-gray-900 dark:text-gray-100 text-sm">
+                                  {p.price
+                                    ? `${p.currency ? p.currency + " " : ""}${p.price}`
+                                    : "-"}
+                                </p>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-3 text-lg">
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="View product"
+                                    onClick={() =>
+                                      setPreviewProduct({
+                                        name: p.name,
+                                        description: p.description,
+                                        price: p.price,
+                                        currency: p.currency,
+                                        url: p.url,
+                                        icon: p.icon,
+                                      })
+                                    }
+                                  >
+                                    👁
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="Edit product"
+                                    onClick={() => {
+                                      setEditingProductId(p.id);
+                                      setNewProductName(p.name);
+                                      setNewProductCurrency(p.currency || "");
+                                      setNewProductPrice(p.price || "");
+                                      setNewProductSort(p.sort || "");
+                                      setNewProductUrl(p.url || "");
+                                      setNewProductDescription(p.description || "");
+                                      setNewProductIconPreview(p.icon);
+                                      setShowNewProductModal(true);
+                                    }}
+                                  >
+                                    ✏️
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="text-red-500 hover:text-red-600"
+                                    aria-label="Delete product"
+                                    onClick={() => {
+                                      if (!vcardId) return;
+                                      // eslint-disable-next-line no-alert
+                                      if (!confirm("Delete this product?")) return;
+                                      setVCards((prev) =>
+                                        prev.map((c) =>
+                                          c.id === vcardId
+                                            ? {
+                                                ...c,
+                                                products: (c.products ?? []).filter(
+                                                  (x) => x.id !== p.id,
+                                                ),
+                                              }
+                                            : c,
+                                        ),
+                                      );
+                                    }}
+                                  >
+                                    🗑
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
@@ -2988,7 +4428,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <option value={50}>50</option>
                       </select>
                       <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing <span className="font-semibold text-gray-900 dark:text-gray-100">0</span> results
+                        Showing{" "}
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          {(currentCard?.products ?? []).length}
+                        </span>{" "}
+                        results
                       </span>
                     </div>
                   </div>
@@ -3057,7 +4501,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Showing{" "}
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          {(((currentCard as any)?.services ?? []) as any[]).length}
+                        </span>{" "}
+                        results
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -3256,13 +4706,54 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               </td>
                               <td className="px-4 py-3">
                                 <div className="flex items-center gap-3 text-lg">
-                                  <button type="button" className="text-blue-500 hover:text-blue-600" aria-label="View blog">
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="View blog"
+                                    onClick={() => {
+                                      setPreviewBlog({
+                                        title: blog.title,
+                                        description: blog.description,
+                                        icon: blog.icon,
+                                      });
+                                    }}
+                                  >
                                     👁
                                   </button>
-                                  <button type="button" className="text-blue-500 hover:text-blue-600" aria-label="Edit blog">
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="Edit blog"
+                                    onClick={() => {
+                                      setEditingBlogId(blog.id);
+                                      setNewBlogTitle(blog.title);
+                                      setNewBlogDescription(blog.description);
+                                      setNewBlogIconPreview(blog.icon);
+                                      setShowNewBlogModal(true);
+                                    }}
+                                  >
                                     ✏️
                                   </button>
-                                  <button type="button" className="text-red-500 hover:text-red-600" aria-label="Delete blog">
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="Delete blog"
+                                    onClick={() => {
+                                      if (!vcardId) return;
+                                      // eslint-disable-next-line no-alert
+                                      if (!confirm("Delete this blog?")) return;
+                                      setVCards((prev) =>
+                                        prev.map((c) =>
+                                          c.id === vcardId
+                                            ? {
+                                                ...c,
+                                                blogs: (c.blogs ?? []).filter((b) => b.id !== blog.id),
+                                              }
+                                            : c
+                                        )
+                                      );
+                                    }}
+                                  >
                                     🗑
                                   </button>
                                 </div>
@@ -3287,6 +4778,48 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </div>
                   </div>
                 </div>
+
+              {previewBlog && (
+                <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                  <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                    <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                      <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Blog preview</h2>
+                      <button
+                        type="button"
+                        onClick={() => setPreviewBlog(null)}
+                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                        aria-label="Close preview"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="px-6 py-5 space-y-4">
+                      <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                        {previewBlog.icon ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={previewBlog.icon}
+                            alt={previewBlog.title}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-sm text-gray-400">No image set for this blog.</span>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                          {previewBlog.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                          {previewBlog.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
                 {showNewBlogModal && (
                   <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
@@ -3461,6 +4994,15 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <button
                     type="button"
                     className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                    onClick={() => {
+                      setEditingTestimonialId(null);
+                      setNewTestimonialName("");
+                      setNewTestimonialRole("");
+                      setNewTestimonialQuote("");
+                      setNewTestimonialImagePreview(null);
+                      setTestimonialFormErrors({});
+                      setShowNewTestimonialModal(true);
+                    }}
                   >
                     Add Testimonial
                   </button>
@@ -3476,11 +5018,95 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const all = ((currentCard as any)?.testimonials as any[]) ?? [];
+                          const filtered = testimonialsSearch.trim()
+                            ? all.filter((t) =>
+                                (t.name || "").toLowerCase().includes(testimonialsSearch.toLowerCase())
+                              )
+                            : all;
+                          if (!filtered.length) {
+                            return (
+                              <tr>
+                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return filtered.map((t) => (
+                            <tr key={t.id} className="border-t border-gray-100 dark:border-gray-800">
+                              <td className="px-4 py-3">
+                                <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img
+                                    src={t.image}
+                                    alt={t.name}
+                                    className="h-full w-full object-cover"
+                                  />
+                                </div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <p className="font-medium text-gray-900 dark:text-gray-100">{t.name}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">{t.role}</p>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-3 text-lg">
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="View testimonial"
+                                    onClick={() => {
+                                      alert(`${t.name} – ${t.role}\n\n${t.quote}`);
+                                    }}
+                                  >
+                                    👁
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="text-blue-500 hover:text-blue-600"
+                                    aria-label="Edit testimonial"
+                                    onClick={() => {
+                                      setEditingTestimonialId(t.id);
+                                      setNewTestimonialName(t.name);
+                                      setNewTestimonialRole(t.role);
+                                      setNewTestimonialQuote(t.quote);
+                                      setNewTestimonialImagePreview(t.image);
+                                      setTestimonialFormErrors({});
+                                      setShowNewTestimonialModal(true);
+                                    }}
+                                  >
+                                    ✏️
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="text-red-500 hover:text-red-600"
+                                    aria-label="Delete testimonial"
+                                    onClick={() => {
+                                      if (!vcardId) return;
+                                      // eslint-disable-next-line no-alert
+                                      if (!confirm("Delete this testimonial?")) return;
+                                      setVCards((prev) =>
+                                        prev.map((c) =>
+                                          c.id === vcardId
+                                            ? {
+                                                ...c,
+                                                testimonials: (((c as any).testimonials as any[]) ?? []).filter(
+                                                  (x) => x.id !== t.id
+                                                ),
+                                              }
+                                            : c
+                                        )
+                                      );
+                                    }}
+                                  >
+                                    🗑
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
@@ -3492,10 +5118,139 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Showing {(((currentCard as any)?.testimonials as any[]) ?? []).length} results
+                      </span>
                     </div>
                   </div>
                 </div>
+
+                {showNewTestimonialModal && (
+                  <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                    <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                          {editingTestimonialId ? "Edit Testimonial" : "New Testimonial"}
+                        </h2>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowNewTestimonialModal(false);
+                            setEditingTestimonialId(null);
+                            setTestimonialFormErrors({});
+                          }}
+                          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                          aria-label="Close"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                      <form onSubmit={handleNewTestimonialSubmit} className="px-6 py-5 space-y-5">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            Name: <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={newTestimonialName}
+                            onChange={(e) => setNewTestimonialName(e.target.value)}
+                            placeholder="Enter Testimonial Name"
+                            className={`${inputClass} ${
+                              testimonialFormErrors.name ? "border-red-500 focus:ring-red-500" : ""
+                            }`}
+                          />
+                          {testimonialFormErrors.name && (
+                            <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.name}</p>
+                          )}
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            Description: <span className="text-red-500">*</span>
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={newTestimonialQuote}
+                            onChange={(e) => setNewTestimonialQuote(e.target.value)}
+                            placeholder="Enter Short Description"
+                            className={`${inputClass} ${
+                              testimonialFormErrors.quote ? "border-red-500 focus:ring-red-500" : ""
+                            }`}
+                          />
+                          {testimonialFormErrors.quote && (
+                            <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.quote}</p>
+                          )}
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            Image: <span className="text-red-500">*</span>
+                          </label>
+                          <div className="flex items-center gap-4">
+                            <div className="h-16 w-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+                              {newTestimonialImagePreview ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={newTestimonialImagePreview}
+                                  alt={newTestimonialName || "Preview"}
+                                  className="h-full w-full object-cover"
+                                />
+                              ) : (
+                                <span className="text-xs text-gray-400">No image</span>
+                              )}
+                            </div>
+                            <div>
+                              <input
+                                ref={newTestimonialImageInputRef}
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    setNewTestimonialImagePreview(reader.result as string);
+                                  };
+                                  reader.readAsDataURL(file);
+                                }}
+                              />
+                              <button
+                                type="button"
+                                className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                                onClick={() => newTestimonialImageInputRef.current?.click()}
+                              >
+                                Upload Image
+                              </button>
+                              {testimonialFormErrors.image && (
+                                <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.image}</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-end gap-3 pt-2">
+                          <button
+                            type="button"
+                            className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                            onClick={() => {
+                              setShowNewTestimonialModal(false);
+                              setEditingTestimonialId(null);
+                              setTestimonialFormErrors({});
+                            }}
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="submit"
+                            className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
+                          >
+                            {editingTestimonialId ? "Update" : "Save"}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -3757,7 +5512,18 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     {SOCIAL_LINKS.slice(0, 6).map((item) => (
                       <div key={item.id} className="flex items-center gap-3">
                         <SocialIcon id={item.id} />
-                        <input type="text" placeholder={item.label} className={`${inputClass} flex-1`} />
+                        <input
+                          type="text"
+                          placeholder={item.label}
+                          className={`${inputClass} flex-1`}
+                          value={socialLinksForm[item.id] ?? ""}
+                          onChange={(e) =>
+                            setSocialLinksForm((prev) => ({
+                              ...prev,
+                              [item.id]: e.target.value,
+                            }))
+                          }
+                        />
                       </div>
                     ))}
                   </div>
@@ -3765,17 +5531,62 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     {SOCIAL_LINKS.slice(6).map((item) => (
                       <div key={item.id} className="flex items-center gap-3">
                         <SocialIcon id={item.id} />
-                        <input type="text" placeholder={item.label} className={`${inputClass} flex-1`} />
+                        <input
+                          type="text"
+                          placeholder={item.label}
+                          className={`${inputClass} flex-1`}
+                          value={socialLinksForm[item.id] ?? ""}
+                          onChange={(e) =>
+                            setSocialLinksForm((prev) => ({
+                              ...prev,
+                              [item.id]: e.target.value,
+                            }))
+                          }
+                        />
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className="flex justify-start gap-3 pt-4">
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    className="btn-primary-premium inline-flex items-center justify-center"
+                    onClick={() => {
+                      if (!vcardId) return;
+                      setVCards((prev) =>
+                        prev.map((c) =>
+                          c.id === vcardId
+                            ? {
+                                ...c,
+                                socialLinks: SOCIAL_LINKS.map((item) => ({
+                                  platform: item.id,
+                                  url: (socialLinksForm[item.id] ?? "").trim(),
+                                })).filter((link) => link.url !== ""),
+                              }
+                            : c,
+                        ),
+                      );
+                      setServicesSuccessMessage("Social links saved successfully.");
+                      setShowServicesSuccessToast(true);
+                    }}
+                  >
                     Save
                   </button>
-                  <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    className="btn-secondary-premium inline-flex items-center justify-center"
+                    onClick={() => {
+                      if (!currentCard) return;
+                      const existingSocial = (currentCard.socialLinks ?? []) as { platform: string; url: string }[];
+                      const nextSocial: Record<string, string> = {};
+                      SOCIAL_LINKS.forEach((item) => {
+                        const match = existingSocial.find((l) => l.platform === item.id);
+                        nextSocial[item.id] = match?.url ?? "";
+                      });
+                      setSocialLinksForm(nextSocial);
+                    }}
+                  >
                     Discard
                   </button>
                 </div>
@@ -4177,10 +5988,30 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   </button>
                 </div>
                 <div className="flex justify-start gap-2.5 pt-2">
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!vcardId || !currentCard) return;
+                      setVCards((prev) =>
+                        prev.map((card) =>
+                          card.id === vcardId
+                            ? {
+                                ...card,
+                                // yahan baad me actual SEO fields bind kar sakte hain
+                              }
+                            : card
+                        )
+                      );
+                      setSeoSaveSuccess(true);
+                    }}
+                    className="btn-primary-premium inline-flex items-center justify-center"
+                  >
                     Save
                   </button>
-                  <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    className="btn-secondary-premium inline-flex items-center justify-center"
+                  >
                     Discard
                   </button>
                 </div>
@@ -4195,7 +6026,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <label className={`${labelClass} font-semibold text-gray-800 dark:text-gray-200`}>
                       Font Family:
                     </label>
-                    <select className={inputClass} defaultValue="default">
+                    <select
+                      className={inputClass}
+                      value={fontFamily}
+                      onChange={(e) =>
+                        setFontFamily(e.target.value as "default" | "outfit" | "inter" | "poppins" | "roboto")
+                      }
+                    >
                       <option value="default">Default</option>
                       <option value="outfit">Outfit</option>
                       <option value="inter">Inter</option>
@@ -4207,18 +6044,47 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <label className={`${labelClass} font-semibold text-gray-800 dark:text-gray-200`}>
                       Font Size:
                     </label>
-                    <input
-                      type="text"
-                      className={inputClass}
-                      placeholder="Font size in px"
-                    />
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="range"
+                        min={1}
+                        max={40}
+                        value={fontSizePx}
+                        onChange={(e) => setFontSizePx(Number(e.target.value))}
+                        className="flex-1 accent-brand-500"
+                      />
+                      <span className="text-sm font-medium text-gray-800 dark:text-gray-200 w-10 text-right">
+                        {fontSizePx}px
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="flex justify-start gap-2.5 pt-2">
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!vcardId || !currentCard) return;
+                      setVCards((prev) =>
+                        prev.map((card) =>
+                          card.id === vcardId
+                            ? {
+                                ...card,
+                                fontFamily,
+                                fontSizePx,
+                              }
+                            : card
+                        )
+                      );
+                      setSeoSaveSuccess(true);
+                    }}
+                    className="btn-primary-premium inline-flex items-center justify-center"
+                  >
                     Save
                   </button>
-                  <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    className="btn-secondary-premium inline-flex items-center justify-center"
+                  >
                     Discard
                   </button>
                 </div>
@@ -4272,10 +6138,17 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   />
                 </div>
                 <div className="flex justify-start gap-2.5 pt-2">
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setSeoSaveSuccess(true)}
+                    className="btn-primary-premium inline-flex items-center justify-center"
+                  >
                     Save
                   </button>
-                  <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
+                  <button
+                    type="button"
+                    className="btn-secondary-premium inline-flex items-center justify-center"
+                  >
                     Discard
                   </button>
                 </div>

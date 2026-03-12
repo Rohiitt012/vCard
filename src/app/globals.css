@@ -78,6 +78,46 @@
   --color-gray-950: #0c111d;
   --color-gray-dark: #1a2231;
 
+  /* Borox template – colors from personal-portfolio-tailwind-css-template-borox (CSS + Tailwind) */
+  --color-borox-primary: #7963e0;
+  --color-borox-primary-rgb: 121, 99, 224;
+  --color-borox-bg: #f6f8ff;
+  --color-borox-text: #17181c;
+  --color-borox-text-muted: #777777;
+  --color-borox-text-muted-light: #999999;
+  --color-borox-footer: #070415;
+  --color-borox-border: #dbdada;
+  --color-borox-border-light: #eeeeee;
+  --color-borox-header-fixed: rgba(255, 255, 255, 0.95);
+  --color-borox-dark: #1d1a29;
+  /* Borox fonts (from layout: Quicksand + Montserrat) */
+  --font-borox-heading: var(--font-borox-quicksand), "Quicksand", sans-serif;
+  --font-borox-body: var(--font-borox-montserrat), "Montserrat", sans-serif;
+
+  /* Geeky template – Medical vCard (from geeky-nextjs theme.json) */
+  --color-geeky-primary: #2ba283;
+  --color-geeky-body: #ffffff;
+  --color-geeky-border: #e1e1e1;
+  --color-geeky-theme-light: #f2f2f2;
+  --color-geeky-theme-dark: #1a202c;
+  --color-geeky-text: #555555;
+  --color-geeky-text-dark: #222222;
+  --color-geeky-text-light: #999999;
+
+  /* LaslesVPN – Minimal vCard (sari Tailwind theme) */
+  --color-lvpn-black-500: #4F5665;
+  --color-lvpn-black-600: #0B132A;
+  --color-lvpn-orange-100: #FFECEC;
+  --color-lvpn-orange-500: #F53855;
+  --color-lvpn-green-500: #2FAB73;
+  --color-lvpn-white-300: #F8F8F8;
+  --color-lvpn-white-500: #ffffff;
+  --color-lvpn-gray-100: #EEEFF2;
+  --color-lvpn-gray-400: #AFB5C0;
+  --color-lvpn-gray-500: #DDDDDD;
+  --shadow-lvpn-orange: 0px 20px 20px -15px rgba(245,56,56,0.81);
+  --shadow-lvpn-orange-md: 0px 20px 40px -15px rgba(245,56,56,0.81);
+
   --color-orange-25: #fffaf5;
   --color-orange-50: #fff6ed;
   --color-orange-100: #ffead5;
@@ -173,6 +213,34 @@
   --z-index-9999: 9999;
   --z-index-99999: 99999;
   --z-index-999999: 999999;
+
+  /* ========== Dennis Tailwind CSS Portfolio Template – full theme (nothing removed) ========== */
+  --font-poppins: var(--font-poppins-next, "Poppins", sans-serif);
+  --breakpoint-xs: 540px;
+  --breakpoint-lg_992: 992px;
+  --color-primary: #00a63e;
+  --color-primary-50: #33ff7e;
+  --color-primary-100: #1fff71;
+  --color-primary-200: #0aff64;
+  --color-primary-300: #00f55a;
+  --color-primary-400: #00e052;
+  --color-primary-500: #00cc4b;
+  --color-primary-dark: #008f34;
+  --color-red: #d72a1d;
+  --text-base: 15px;
+  --text-base--line-height: 24px;
+  --shadow-xs: 0 2px 4px 0 rgb(60 72 88 / 0.15);
+  --shadow-sm: 0 0 3px rgb(60 72 88 / 0.15);
+  --shadow-md: 0 5px 13px rgb(60 72 88 / 0.20);
+  --shadow-lg: 0 10px 25px -3px rgb(60 72 88 / 0.15);
+  --shadow-xl: 0 20px 25px -5px rgb(60 72 88 / 0.1), 0 8px 10px -6px rgb(60 72 88 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(60 72 88 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(60 72 88 / 0.05);
+  --shadow-testi: 2px 2px 2px -1px rgb(60 72 88 / 0.15);
+  --z-1: 1;
+  --z-2: 2;
+  --z-3: 3;
+  --z-999: 999;
 }
 
 /*
@@ -719,6 +787,17 @@ span.flatpickr-weekday,
   @apply !h-auto !w-auto;
 }
 
+/* Public vCard typography scaling – use dashboard "Font Size" slider */
+.public-vcard-root .vcard-dynamic-text {
+  font-size: var(--vcard-font-size, inherit);
+}
+
+.public-vcard-root .vcard-dynamic-text *,
+.public-vcard-root .vcard-dynamic-text *::before,
+.public-vcard-root .vcard-dynamic-text *::after {
+  font-size: inherit !important;
+}
+
 .carouselTwo .swiper-button-next:after,
 .carouselTwo .swiper-button-prev:after,
 .carouselFour .swiper-button-next:after,
@@ -815,4 +894,824 @@ span.flatpickr-weekday,
   body {
     background: #fff !important;
   }
+}
+
+/* ==========================================================================
+   Dennis – Tailwind CSS Personal Portfolio Template (full Tailwind preserved)
+   ========================================================================== */
+
+/* ---------- General ---------- */
+.dennis-html {
+  scroll-behavior: smooth;
+}
+.dennis-body {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  @apply text-slate-900 dark:text-white bg-white dark:bg-slate-900;
+}
+.dennis-container {
+  @apply w-full mx-auto px-4;
+}
+.dennis-container h1,
+.dennis-container h2,
+.dennis-container h3,
+.dennis-container h4,
+.dennis-container h5,
+.dennis-container h6,
+.dennis-container .h1,
+.dennis-container .h2,
+.dennis-container .h3,
+.dennis-container .h4,
+.dennis-container .h5,
+.dennis-container .h6 {
+  font-family: var(--font-poppins), sans-serif;
+}
+.dennis-container p {
+  @apply leading-relaxed;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  @apply h-10 px-6 inline-flex items-center justify-center font-medium tracking-wide border align-middle transition duration-500 ease-in-out text-base text-center;
+}
+.btn.btn-lg {
+  @apply h-12 px-6 text-lg;
+}
+.btn.btn-sm {
+  @apply h-8 px-4 text-sm;
+}
+.btn.btn-icon {
+  @apply p-0 size-10 inline-flex items-center text-center justify-center text-base;
+}
+.btn.btn-icon.btn-lg {
+  @apply size-12;
+}
+.btn.btn-icon.btn-sm {
+  @apply size-8;
+}
+.btn.btn-link {
+  @apply relative p-0 border-none after:content-[''] after:absolute after:h-px after:w-0 after:right-0 after:bottom-0 after:left-0 after:transition-all after:duration-500;
+}
+.btn.btn-link:hover {
+  @apply after:w-full after:right-auto;
+}
+
+/* ---------- Navbar / Topnav ---------- */
+.navbar {
+  @apply fixed top-0 start-0 end-0 z-[999] bg-transparent py-3 transition-all duration-500 font-medium;
+  font-family: var(--font-poppins), sans-serif;
+}
+.navbar .navigation {
+  @apply w-full m-0;
+}
+.navbar .navigation .navbar-nav {
+  @apply mt-4 flex flex-row overflow-y-scroll h-24;
+}
+.navbar .navigation .navbar-nav .nav-link {
+  @apply block p-3 text-slate-900 hover:text-amber-500 dark:text-white/60 dark:hover:text-white;
+}
+.navbar .navigation .navbar-nav .active .nav-link {
+  @apply text-amber-500 dark:text-white;
+}
+.navbar .navbar-brand {
+  @apply me-10 p-0;
+}
+.navbar .navbar-brand .l-dark,
+.navbar .navbar-brand .logo-dark-mode {
+  @apply hidden;
+}
+.navbar .navbar-brand .l-light,
+.navbar .navbar-brand .logo-light-mode {
+  @apply inline-block;
+}
+@media (max-width: 991.98px) {
+  .navbar .navbar-brand .l-dark {
+    @apply !inline-block;
+  }
+  .navbar .navbar-brand .l-light {
+    @apply !hidden;
+  }
+}
+.navbar .menu-social .login-btn-primary {
+  @apply hidden;
+}
+.navbar .menu-social .login-btn-light {
+  @apply inline-block;
+}
+@media (max-width: 991.98px) {
+  .navbar .menu-social .login-btn-primary {
+    @apply !inline-block;
+  }
+  .navbar .menu-social .login-btn-light {
+    @apply !hidden;
+  }
+}
+.navbar.is-sticky {
+  @apply bg-white dark:bg-slate-900 shadow-sm dark:shadow-slate-800;
+}
+.navbar.is-sticky .navbar-brand .l-dark {
+  @apply inline-block;
+}
+.navbar.is-sticky .navbar-brand .l-light {
+  @apply hidden;
+}
+.navbar.is-sticky .menu-social .login-btn-primary {
+  @apply inline-block;
+}
+.navbar.is-sticky .menu-social .login-btn-light {
+  @apply hidden;
+}
+@media (min-width: 992px) {
+  .navbar {
+    @apply py-3;
+  }
+  .navbar .navigation {
+    @apply flex w-auto;
+  }
+  .navbar .navigation .navbar-nav {
+    @apply h-auto mt-0 overflow-visible;
+  }
+  .navbar .navigation .navbar-nav .nav-link {
+    @apply border-0 hover:bg-transparent;
+  }
+  .navbar .navigation .navbar-nav.nav-light .nav-link {
+    @apply block p-3 text-white/60 hover:text-white;
+  }
+  .navbar .navigation .navbar-nav.nav-light .active .nav-link {
+    @apply text-white;
+  }
+  .navbar .nav-icons .collapse-btn {
+    @apply hidden;
+  }
+  .navbar.is-sticky {
+    @apply py-3;
+  }
+  .navbar.is-sticky .navigation .navbar-nav .active .nav-link {
+    @apply text-amber-500;
+  }
+  .navbar.is-sticky .navigation .navbar-nav.nav-light .nav-link {
+    @apply text-slate-900 hover:text-amber-500 dark:text-white/60 dark:hover:text-white;
+  }
+  .navbar.is-sticky .navigation .navbar-nav.nav-light .active .nav-link {
+    @apply text-amber-500 dark:text-white;
+  }
+}
+@media (max-width: 991px) {
+  .navbar {
+    @apply bg-white dark:bg-slate-900 !shadow-sm dark:shadow-slate-800;
+  }
+  .navbar .navigation .navbar-nav {
+    @apply block h-[21.25rem];
+  }
+  .navbar .navigation .navbar-nav .nav-link {
+    @apply text-slate-900 dark:text-white;
+  }
+  .navbar .navigation .navbar-nav .active .nav-link {
+    @apply text-amber-500;
+  }
+  .navbar .navigation .navbar-nav .menu-social {
+    @apply !mb-5;
+  }
+}
+
+/* ---------- Footer ---------- */
+.footer .foot-subscribe input::placeholder {
+  @apply text-gray-200;
+}
+
+/* ---------- Helper (container, Tobii, shapes, back-to-top, switcher, preloader, testi, RTL, video, personal hero) ---------- */
+.dennis-helper-container,
+.contacinr-fluid {
+  @apply relative;
+}
+.tobii > button.tobii__close svg,
+.tobii > button.tobii__prev svg,
+.tobii > button.tobii__next svg {
+  @apply h-9 w-auto;
+}
+.tobii__counter {
+  @apply text-base;
+}
+.tobii-zoom {
+  @apply block;
+}
+.tobii-zoom__icon {
+  @apply hidden;
+}
+#grid {
+  @apply p-0;
+}
+.shape {
+  @apply absolute right-0 -bottom-px left-0;
+}
+.shape > svg {
+  @apply w-full h-auto;
+  transform: scale(2);
+  transform-origin: top center;
+}
+.back-to-top {
+  @apply hidden;
+}
+.label .ball {
+  transition: transform 0.2s linear;
+  @apply translate-x-0;
+}
+.checkbox:checked + .label .ball {
+  @apply translate-x-6;
+}
+#preloader {
+  background-image: linear-gradient(45deg, #ffffff, #ffffff);
+  z-index: 99999;
+  @apply fixed inset-0;
+}
+#preloader #status {
+  @apply absolute left-0 right-0 top-1/2 -translate-y-1/2;
+}
+#preloader #status .spinner {
+  @apply size-10 relative my-[100px] mx-auto;
+}
+#preloader #status .spinner .double-bounce1,
+#preloader #status .spinner .double-bounce2 {
+  @apply w-full h-full rounded-full bg-amber-500/60 absolute top-0 left-0;
+  animation: dennis-sk-bounce 2s infinite ease-in-out;
+}
+#preloader #status .spinner .double-bounce2 {
+  animation-delay: -1s;
+}
+@keyframes dennis-sk-bounce {
+  0%, 100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+.customer-testi {
+  @apply cursor-e-resize;
+}
+.customer-testi .content::before {
+  transform-origin: 0 0;
+  @apply before:content-[''] before:absolute before:left-1/2 before:-bottom-[4px] before:box-border before:border-8 before:rotate-[45deg] before:border-t-transparent before:border-e-white dark:before:border-e-slate-900 before:border-b-white dark:before:border-b-slate-900 before:border-s-transparent;
+  box-shadow: var(--shadow-testi);
+}
+.dark .customer-testi .content::before {
+  --tw-shadow: 0 0 #0000;
+}
+html[dir="rtl"] .tns-inner,
+html[dir="rtl"] .tns-nav,
+html[dir="rtl"] .slider,
+html[dir="rtl"] .slider2,
+html[dir="rtl"] .swiper-slider-hero {
+  direction: ltr !important;
+}
+html[dir="rtl"] .tns-visually-hidden {
+  left: 0 !important;
+  visibility: hidden;
+}
+@media (max-width: 640px) {
+  [data-type] iframe,
+  [data-type] video {
+    width: 500px;
+    height: 300px;
+  }
+}
+@media (max-width: 425px) {
+  [data-type] iframe,
+  [data-type] video {
+    width: 360px;
+    height: 260px;
+  }
+}
+@media (max-width: 375px) {
+  [data-type] iframe,
+  [data-type] video {
+    width: 100%;
+    height: auto;
+  }
+}
+.personal-wrapper {
+  @apply before:content-[''] before:absolute before:bottom-40 before:start-[45rem] before:w-[90rem] before:h-[35rem] ltr:before:rotate-[115deg] rtl:before:rotate-[65deg] before:bg-amber-500;
+  @apply after:content-[''] after:absolute after:bottom-96 after:start-[30rem] after:w-[75rem] after:h-40 ltr:after:rotate-[115deg] rtl:after:rotate-[65deg] after:bg-amber-500/10 after:-z-[1];
+}
+@media (min-width: 1024px) and (max-width: 1140px) {
+  .personal-wrapper {
+    @apply before:start-40 before:w-[75rem] before:h-[30rem] after:start-0 after:bottom-80 after:w-[75rem] after:h-60;
+  }
+}
+@media (max-width: 768px) {
+  .personal-wrapper {
+    @apply before:start-40 after:start-0;
+  }
+}
+@media (max-width: 767px) {
+  .personal-wrapper {
+    @apply before:start-0 after:-start-40;
+  }
+}
+
+/* ---------- Contact (validation, messages) ---------- */
+.error {
+  @apply my-2 mx-0 hidden text-red-600;
+}
+#ajaxsuccess {
+  @apply text-base w-full hidden clear-both my-2 mx-0;
+}
+.error_message,
+#success_page {
+  @apply p-2.5 mb-5 text-center rounded-md;
+}
+.error_message {
+  @apply bg-red-600/5 text-red-600;
+}
+.contact-loader {
+  @apply hidden;
+}
+#success_page {
+  @apply bg-emerald-600/5 text-emerald-600;
+}
+
+/* ========== Borox template – CSS + Tailwind (colors & fonts from Borox) ========== */
+/* Borox CSS variables – use in both CSS and Tailwind (var(--color-borox-*)) */
+.borox-template {
+  --borox-primary: var(--color-borox-primary);
+  --borox-bg: var(--color-borox-bg);
+  --borox-text: var(--color-borox-text);
+  --borox-text-muted: var(--color-borox-text-muted);
+  --borox-footer: var(--color-borox-footer);
+  --borox-border: var(--color-borox-border);
+  font-family: var(--font-borox-body);
+  font-weight: 400;
+  color: var(--borox-text);
+}
+.borox-template h1 {
+  font-family: var(--font-borox-heading);
+  font-weight: 700;
+  letter-spacing: 0.01rem;
+  line-height: 1.2;
+  color: var(--borox-text);
+}
+.borox-template h2,
+.borox-template h3,
+.borox-template h4,
+.borox-template h5,
+.borox-template h6 {
+  font-family: var(--font-borox-heading);
+  font-weight: 400;
+  letter-spacing: 0.01rem;
+  line-height: 1.2;
+  color: var(--borox-text);
+}
+/* Borox utility classes – colors & typography (CSS) */
+.borox-template .borox-text-primary { color: var(--borox-primary); }
+.borox-template .borox-bg { background-color: var(--borox-bg); }
+.borox-template .borox-bg-footer { background-color: var(--borox-footer); }
+.borox-template .borox-text-muted { color: var(--borox-text-muted); }
+.borox-template .borox-border-primary { border-color: var(--borox-primary); }
+.borox-template .borox-font-heading { font-family: var(--font-borox-heading); }
+.borox-template .borox-font-body { font-family: var(--font-borox-body); }
+
+/* Borox container – same breakpoints as original (px-6 = 1.5rem) */
+.borox-template .bx-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+@media (min-width: 540px) {
+  .borox-template .bx-container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 640px) {
+  .borox-template .bx-container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 720px) {
+  .borox-template .bx-container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 960px) {
+  .borox-template .bx-container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1140px) {
+  .borox-template .bx-container {
+    max-width: 1140px;
+  }
+}
+@media (min-width: 1320px) {
+  .borox-template .bx-container {
+    max-width: 1320px;
+  }
+}
+
+/* Borox header – nav active link */
+.borox-template #top-menu li.active a,
+.borox-template #top-menu li a.active {
+  color: var(--borox-primary);
+}
+.borox-template .bx-static {
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  z-index: 30;
+  padding: 10px 0;
+}
+.borox-template .bx-fixed {
+  transition: all 0.3s ease-in-out;
+  position: fixed;
+  background-color: var(--color-borox-header-fixed);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.12);
+  z-index: 30;
+}
+.borox-template .section-hero {
+  position: relative;
+}
+.borox-template .section-experience {
+  position: relative;
+}
+.borox-template .banner span {
+  display: block;
+}
+.borox-template .section-Portfolio,
+.borox-template .section-news,
+.borox-template .section-contact {
+  position: relative;
+}
+.borox-template .m-b-minus-24px {
+  margin-bottom: -24px;
+}
+
+/* Borox loader animation (shadowRolling) */
+@keyframes borox-shadowRolling {
+  0% { box-shadow: 0 0 rgba(121, 99, 224, 0), 0 0 rgba(121, 99, 224, 0), 0 0 rgba(121, 99, 224, 0), 0 0 rgba(121, 99, 224, 0); }
+  12% { box-shadow: 100px 0 #7963e0, 0 0 rgba(121, 99, 224, 0), 0 0 rgba(121, 99, 224, 0), 0 0 rgba(121, 99, 224, 0); }
+  25% { box-shadow: 110px 0 #7963e0, 100px 0 #7963e0, 0 0 rgba(121, 99, 224, 0), 0 0 rgba(121, 99, 224, 0); }
+  36% { box-shadow: 120px 0 #7963e0, 110px 0 #7963e0, 100px 0 #7963e0, 0 0 rgba(121, 99, 224, 0); }
+  50% { box-shadow: 130px 0 #7963e0, 120px 0 #7963e0, 110px 0 #7963e0, 100px 0 #7963e0; }
+  62% { box-shadow: 200px 0 rgba(121, 99, 224, 0), 130px 0 #7963e0, 120px 0 #7963e0, 110px 0 #7963e0; }
+  75% { box-shadow: 200px 0 rgba(121, 99, 224, 0), 200px 0 rgba(121, 99, 224, 0), 130px 0 #7963e0, 120px 0 #7963e0; }
+  87% { box-shadow: 200px 0 rgba(121, 99, 224, 0), 200px 0 rgba(121, 99, 224, 0), 200px 0 rgba(121, 99, 224, 0), 130px 0 #7963e0; }
+  100% { box-shadow: 200px 0 rgba(121, 99, 224, 0), 200px 0 rgba(121, 99, 224, 0), 200px 0 rgba(121, 99, 224, 0), 200px 0 rgba(121, 99, 224, 0); }
+}
+.borox-template #bx-overlay {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0; right: 0; left: 0; bottom: 0;
+  background: #fff;
+  z-index: 99;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.borox-template #bx-overlay.borox-loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.borox-template #bx-overlay .loader {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  color: var(--borox-primary);
+  left: -100px;
+  animation: borox-shadowRolling 2s linear infinite;
+}
+
+/* Borox portfolio – hover show bottom, hide top */
+.borox-template .portfolio-img .bottom-contain {
+  display: none;
+}
+.borox-template .portfolio-img:hover .bottom-contain {
+  display: block;
+}
+.borox-template .portfolio-img:hover .top-contain {
+  display: none;
+}
+.borox-template .portfolio-tabs ul .active {
+  color: var(--borox-primary) !important;
+}
+.borox-template .text-dark-800 {
+  color: var(--borox-text);
+}
+
+/* Borox scroll-to-top button */
+.borox-template #scrollup {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s ease, opacity 0.2s ease;
+}
+.borox-template #scrollup.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Borox exact colors (text-dark-800 from original = dark heading) */
+.borox-template .text-dark-800 {
+  color: #17181c;
+}
+
+/* ========== Geeky Next.js – Medical vCard template (same to same: colors, fonts, layout) ========== */
+.geeky-medical-template {
+  font-family: var(--font-geeky-primary), "Raleway", sans-serif;
+  font-weight: 400;
+  line-height: 1.625;
+  color: var(--color-geeky-text);
+  background-color: var(--color-geeky-body);
+}
+.geeky-medical-template h1,
+.geeky-medical-template h2,
+.geeky-medical-template h3,
+.geeky-medical-template h4,
+.geeky-medical-template h5,
+.geeky-medical-template h6 {
+  font-family: var(--font-geeky-secondary), "Merriweather Sans", sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-geeky-text-dark);
+}
+.geeky-medical-template .header {
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--color-geeky-border);
+  background-color: var(--color-geeky-body);
+  padding-top: 33px;
+  padding-bottom: 33px;
+}
+.geeky-medical-template .navbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.geeky-medical-template .navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-geeky-text-dark);
+}
+.geeky-medical-template .nav-link {
+  border-radius: 30px;
+  padding: 0.5rem 1.5rem;
+  font-family: var(--font-geeky-secondary), "Merriweather Sans", sans-serif;
+  font-size: 13.5px;
+  text-transform: capitalize;
+  color: var(--color-geeky-text-dark);
+  transition: background-color 0.2s, color 0.2s;
+}
+.geeky-medical-template .nav-link:hover,
+.geeky-medical-template .nav-link.active {
+  background-color: var(--color-geeky-primary);
+  color: #fff;
+}
+.geeky-medical-template .btn-primary {
+  background-color: var(--color-geeky-primary);
+  color: #fff;
+  border: 0;
+  border-radius: 50px;
+  padding: 0.625rem 2rem;
+  height: 3rem;
+  font-family: var(--font-geeky-secondary), "Merriweather Sans", sans-serif;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+.geeky-medical-template .btn-primary:hover {
+  opacity: 0.9;
+}
+.geeky-medical-template .section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.geeky-medical-template .container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1320px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.geeky-medical-template .banner-title h1 {
+  font-weight: 700;
+  line-height: 1;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+}
+.geeky-medical-template .banner-title strong {
+  color: var(--color-geeky-primary);
+}
+.geeky-medical-template .section-title {
+  margin-bottom: 3rem;
+  text-decoration: underline;
+  text-decoration-color: var(--color-geeky-primary);
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.5em;
+}
+.geeky-medical-template .search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background-color: var(--color-geeky-primary);
+  color: #fff;
+  cursor: pointer;
+}
+.geeky-medical-template .socials a {
+  color: var(--color-geeky-text-dark);
+}
+.geeky-medical-template .socials a:hover {
+  color: var(--color-geeky-primary);
+}
+
+/* ========== LaslesVPN – Minimal vCard (sari Tailwind: nav animation, list check) ========== */
+.lasles-minimal-template {
+  font-family: var(--font-lasles-rubik), "Rubik", sans-serif;
+}
+.lasles-minimal-template .animation-hover:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  left: 50%;
+  position: absolute;
+  bottom: 0;
+  background-color: var(--color-lvpn-orange-500);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+.lasles-minimal-template .animation-active:after,
+.lasles-minimal-template .animation-hover:hover:after {
+  left: 0;
+  width: 100%;
+}
+.lasles-minimal-template li.custom-list {
+  position: relative;
+  list-style: none;
+  padding-left: 1.5rem;
+}
+.lasles-minimal-template li.custom-list:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-lvpn-green-500);
+  font-weight: bold;
+}
+.lasles-minimal-template li.circle-check:before {
+  content: "✓";
+  position: absolute;
+  left: -0.5rem;
+  color: var(--color-lvpn-green-500);
+  font-weight: bold;
+}
+
+/* ========== Dennis Tailwind Personal Portfolio – Floral vCard template (full styles from Dennis) ========== */
+.dennis-floral-template {
+  font-family: var(--font-poppins-next, "Poppins", ui-sans-serif, system-ui, sans-serif);
+}
+.dennis-floral-template .container {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 1rem;
+}
+@media (width >= 540px) {
+  .dennis-floral-template .container {
+    max-width: 540px;
+  }
+}
+@media (width >= 640px) {
+  .dennis-floral-template .container {
+    max-width: 640px;
+  }
+}
+@media (width >= 720px) {
+  .dennis-floral-template .container {
+    max-width: 720px;
+  }
+}
+@media (width >= 960px) {
+  .dennis-floral-template .container {
+    max-width: 960px;
+  }
+}
+@media (width >= 992px) {
+  .dennis-floral-template .container {
+    max-width: 992px;
+  }
+}
+@media (width >= 1140px) {
+  .dennis-floral-template .container {
+    max-width: 1140px;
+  }
+}
+.dennis-floral-template .btn {
+  display: inline-flex;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  padding-inline: 1.5rem;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.dennis-floral-template .btn.btn-sm {
+  height: 2rem;
+  padding-inline: 1rem;
+  font-size: 0.875rem;
+}
+.dennis-floral-template .btn.btn-icon {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.dennis-floral-template .btn.btn-icon.btn-sm {
+  width: 2rem;
+  height: 2rem;
+}
+.dennis-floral-template .navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding-block: 0.75rem;
+  font-family: var(--font-poppins-next, "Poppins", sans-serif);
+  font-weight: 500;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+.dennis-floral-template .navbar.is-sticky {
+  background-color: #fff;
+  box-shadow: 0 0 3px rgb(60 72 88 / 0.15);
+}
+.dennis-floral-template .navbar-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.25rem;
+}
+.dennis-floral-template .nav-item {
+  display: inline-block;
+}
+.dennis-floral-template .nav-link {
+  display: block;
+  padding: 0.75rem;
+  color: #0f172a;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.dennis-floral-template .nav-link:hover {
+  color: #f59e0b;
+}
+.dennis-floral-template .nav-link.active {
+  color: #f59e0b;
+}
+.dennis-floral-template .navbar-brand {
+  margin-inline-end: 2.5rem;
+}
+.dennis-floral-template .personal-wrapper {
+  position: relative;
+}
+.dennis-floral-template .menu-social {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dennis-floral-template .menu-social li {
+  display: inline;
+}
+.dennis-floral-template h1,
+.dennis-floral-template h2,
+.dennis-floral-template h3,
+.dennis-floral-template h4,
+.dennis-floral-template h5,
+.dennis-floral-template h6 {
+  font-family: var(--font-poppins-next, "Poppins", sans-serif);
+}
+.dennis-floral-template p {
+  line-height: 1.625;
+}
+.dennis-floral-template .content .title::after {
+  transition: width 0.5s ease-in-out;
+}
+.dennis-floral-template .customer-testi .content::before {
+  transition: transform 0.3s;
+}
+.dennis-floral-template .back-to-top {
+  transition: opacity 0.2s, visibility 0.2s;
 }

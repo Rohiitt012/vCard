@@ -800,49 +800,141 @@ export const VCardsContent = () => {
                                 }
                                 if (label === "Disabled") {
                                   return (
-                                    <button key={label} type="button" onClick={() => { setDisabledCardIds((p) => ({ ...p, [card.id]: !p[card.id] })); setOpenMenuId(null); }} className={itemClass}>
+                                    <div
+                                      key={label}
+                                      role="button"
+                                      tabIndex={0}
+                                      onClick={() => {
+                                        setDisabledCardIds((p) => ({ ...p, [card.id]: !p[card.id] }));
+                                        setOpenMenuId(null);
+                                      }}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter" || e.key === " ") {
+                                          e.preventDefault();
+                                          setDisabledCardIds((p) => ({ ...p, [card.id]: !p[card.id] }));
+                                          setOpenMenuId(null);
+                                        }
+                                      }}
+                                      className={itemClass}
+                                    >
                                       <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
                                       <span>{label}</span>
-                                    </button>
+                                    </div>
                                   );
                                 }
                                 if (label === "Delete") {
                                   return (
-                                    <button key={label} type="button" onClick={() => { setDeleteConfirmCardId(card.id); setOpenMenuId(null); }} className={itemClass}>
+                                    <div
+                                      key={label}
+                                      role="button"
+                                      tabIndex={0}
+                                      onClick={() => {
+                                        setDeleteConfirmCardId(card.id);
+                                        setOpenMenuId(null);
+                                      }}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter" || e.key === " ") {
+                                          e.preventDefault();
+                                          setDeleteConfirmCardId(card.id);
+                                          setOpenMenuId(null);
+                                        }
+                                      }}
+                                      className={itemClass}
+                                    >
                                       <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
                                       <span>{label}</span>
-                                    </button>
+                                    </div>
                                   );
                                 }
                                 if (label === "QR Code") {
                                   return (
-                                    <button key={label} type="button" onClick={() => { setQrModalCard(card); setOpenMenuId(null); }} className={itemClass}>
+                                    <div
+                                      key={label}
+                                      role="button"
+                                      tabIndex={0}
+                                      onClick={() => {
+                                        setQrModalCard(card);
+                                        setOpenMenuId(null);
+                                      }}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter" || e.key === " ") {
+                                          e.preventDefault();
+                                          setQrModalCard(card);
+                                          setOpenMenuId(null);
+                                        }
+                                      }}
+                                      className={itemClass}
+                                    >
                                       <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
                                       <span>{label}</span>
-                                    </button>
+                                    </div>
                                   );
                                 }
                                 if (label === "Copy link") {
                                   return (
-                                    <button key={label} type="button" onClick={() => { copyCardLink(card); setOpenMenuId(null); }} className={itemClass}>
+                                    <div
+                                      key={label}
+                                      role="button"
+                                      tabIndex={0}
+                                      onClick={() => {
+                                        copyCardLink(card);
+                                        setOpenMenuId(null);
+                                      }}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter" || e.key === " ") {
+                                          e.preventDefault();
+                                          copyCardLink(card);
+                                          setOpenMenuId(null);
+                                        }
+                                      }}
+                                      className={itemClass}
+                                    >
                                       <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
                                       <span>{label}</span>
-                                    </button>
+                                    </div>
                                   );
                                 }
                                 if (label === "Duplicate") {
                                   return (
-                                    <button key={label} type="button" onClick={() => handleDuplicate(card)} className={itemClass} disabled={duplicatingId === card.id}>
+                                    <div
+                                      key={label}
+                                      role="button"
+                                      tabIndex={0}
+                                      onClick={() => handleDuplicate(card)}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter" || e.key === " ") {
+                                          e.preventDefault();
+                                          handleDuplicate(card);
+                                        }
+                                      }}
+                                      className={itemClass}
+                                    >
                                       <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
                                       <span>{duplicatingId === card.id ? "Duplicating…" : label}</span>
-                                    </button>
+                                    </div>
                                   );
                                 }
                                 return (
-                                  <button key={label} type="button" onClick={() => { onClick?.(); setOpenMenuId(null); }} className={itemClass}>
+                                  <div
+                                    key={label}
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={() => {
+                                      onClick?.();
+                                      setOpenMenuId(null);
+                                    }}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter" || e.key === " ") {
+                                        e.preventDefault();
+                                        onClick?.();
+                                        setOpenMenuId(null);
+                                      }
+                                    }}
+                                    className={itemClass}
+                                  >
                                     <span className="flex h-5 w-5 shrink-0 items-center justify-center"><Icon /></span>
                                     <span>{label}</span>
-                                  </button>
+                                  </div>
                                 );
                               })}
                             </div>
