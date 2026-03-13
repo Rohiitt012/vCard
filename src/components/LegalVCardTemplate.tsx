@@ -1,7 +1,8 @@
 "use client";
-
+import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import Image from "next/image";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
 
 type Props = {
   card: VCardItem;
@@ -114,6 +115,14 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
               <h1 className="text-dark-800 borox-font-heading 2xl:text-[60px] xl:text-[55px] lg:text-[50px] md:text-[45px] text-[40px] font-bold">
                 {name}
               </h1>
+        
+          {card.socialLinks && card.socialLinks.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
+              {card.socialLinks.map((link, idx) => (
+                <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
+              ))}
+            </div>
+          )}
               <h2 className="py-4 text-dark-800 text-[20px] font-bold">I&apos;m {role}</h2>
               <p className="pt-2 borox-text-muted text-borox-text-muted text-base">{description}</p>
               <button
@@ -413,7 +422,9 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
             <a href="#contact" className="hover:text-white">Contact</a>
             <a href={`${baseUrl}/${slug}`} className="hover:text-white">View Profile</a>
           </div>
-        </div>
+        
+      <VCardDynamicSections card={card} />
+</div>
       </footer>
 
       {/* Scroll Top – Borox primary color */}

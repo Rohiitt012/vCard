@@ -1,7 +1,7 @@
 "use client";
-
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import Image from "next/image";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
 import { SocialCircleIcon } from "./SocialCircleIcon";
 
 type Props = {
@@ -95,7 +95,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                     className="flex text-white"
                     title={link.platform}
                   >
-                    <SocialCircleIcon platform={link.platform} />
+                    <SocialCircleIcon platform={link.platform} url={link.url} size={40} />
                   </a>
                 </li>
               ))}
@@ -534,7 +534,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                         className="flex"
                         title={link.platform}
                       >
-                        <SocialCircleIcon platform={link.platform} />
+                        <SocialCircleIcon platform={link.platform} url={link.url} size={40} />
                       </a>
                     </li>
                   ))}
@@ -542,7 +542,9 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
               )}
             </div>
           </div>
-        </div>
+        
+      <VCardDynamicSections card={card} />
+</div>
       </footer>
 
       {/* Back to top – Dennis .back-to-top */}

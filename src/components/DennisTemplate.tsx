@@ -1,5 +1,5 @@
 "use client";
-
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -900,6 +900,8 @@ export function DennisTemplate({ card, slug, baseUrl = "", onDownloadVCard }: Pr
       >
         <ArrowRight className="size-5 rotate-[-90deg]" />
       </a>
+      
+        <VCardDynamicSections card={card} exclude={['testimonials']} />
       </div>
     </div>
   );

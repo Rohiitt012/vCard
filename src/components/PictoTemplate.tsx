@@ -1,5 +1,6 @@
 "use client";
-
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import React from "react";
 import Image from "next/image";
 import { Mail, MapPin, Phone, ArrowRight, Download, FileText } from "lucide-react";
@@ -212,7 +213,9 @@ export function PictoTemplate({
   const blogs =
     card?.blogs && card.blogs.length > 0 ? card.blogs : DEFAULT_BLOGS;
   const testimonials =
-    (card as any)?.testimonials && (card as any).testimonials.length > 0
+    (card.testimonials && card.testimonials.length > 0)
+      ? card.testimonials
+      : (card as any)?.testimonials && (card as any).testimonials.length > 0
       ? (card as any).testimonials
       : DEFAULT_TESTIMONIALS;
   const portfolio =
@@ -338,15 +341,7 @@ export function PictoTemplate({
                   {card.socialLinks
                     .filter((l) => l.url?.trim())
                     .map((link) => (
-                      <a
-                        key={link.platform}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-9 h-9 rounded-full bg-[#f0f1f3] flex items-center justify-center text-[#132238] hover:bg-[#9929fb] hover:text-white text-xs font-semibold transition-colors"
-                      >
-                        {link.platform.charAt(0).toUpperCase()}
-                      </a>
+                      <SocialCircleIcon key={link.platform} platform={link.platform} url={link.url} size={40} />
                     ))}
                 </div>
               )}
@@ -733,20 +728,14 @@ export function PictoTemplate({
                   {card.socialLinks
                     .filter((l) => l.url?.trim())
                     .map((link) => (
-                      <a
-                        key={link.platform}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-9 h-9 rounded-full bg-[#f0f1f3] flex items-center justify-center text-[#132238] hover:bg-[#9929fb] hover:text-white text-xs font-semibold"
-                      >
-                        {link.platform.charAt(0).toUpperCase()}
-                      </a>
+                      <SocialCircleIcon key={link.platform} platform={link.platform} url={link.url} size={40} />
                     ))}
                 </div>
               )}
           </div>
         </section>
+      
+        <VCardDynamicSections card={card} exclude={['testimonials']} />
       </div>
     </div>
   );

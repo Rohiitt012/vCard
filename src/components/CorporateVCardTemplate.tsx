@@ -1,7 +1,8 @@
 "use client";
-
+import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import Image from "next/image";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 
 type Props = {
   card: VCardItem;
@@ -226,6 +227,14 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
                   /{slug}
                 </div>
               </div>
+            
+          {card.socialLinks && card.socialLinks.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
+              {card.socialLinks.map((link, idx) => (
+                <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
+              ))}
+            </div>
+          )}
             </div>
           </div>
         </section>
@@ -452,6 +461,7 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
             </div>
           </div>
         </section>
+      <VCardDynamicSections card={card} />
       </div>
     </div>
   );

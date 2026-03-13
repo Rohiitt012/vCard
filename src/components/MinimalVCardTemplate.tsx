@@ -1,7 +1,7 @@
 "use client";
-
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import Image from "next/image";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
 import { SocialCircleIcon } from "./SocialCircleIcon";
 
 type Props = {
@@ -56,7 +56,9 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
           { id: "3", name: "Premium", price: "Biz", features: ["Everything in Standard", "Priority support", "Branding"] },
         ];
 
-  const testimonials = (card.blogs && card.blogs.length > 0)
+  const testimonials = (card.testimonials && card.testimonials.length > 0)
+    ? card.testimonials.map(t => ({ name: t.name, city: "City", country: "Country", rating: "5.0", testimoni: t.quote || t.description || t.testimoni || t.text }))
+    : (card.blogs && card.blogs.length > 0)
     ? card.blogs.slice(0, 4).map((b) => ({ name: name.split(" ")[0] || "Client", city: "City", country: "Country", rating: "4.5", testimoni: b.description || b.title }))
     : [
         { name: "Client A", city: "City", country: "Country", rating: "4.5", testimoni: "Very professional and easy to get in touch. Highly recommend." },
@@ -119,6 +121,7 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
             <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-lvpn-black-600 leading-normal">
               Want anything to be easy with <strong>{name}</strong>.
             </h1>
+            
             <p className="text-lvpn-black-500 mt-4 mb-6">{description}</p>
             <button
               type="button"
@@ -136,6 +139,13 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
             ) : (
               <div className="w-full max-w-sm h-64 sm:h-80 rounded-2xl bg-lvpn-gray-100 flex items-center justify-center text-6xl font-bold text-lvpn-gray-400">
                 {name.charAt(0).toUpperCase()}
+              </div>
+            )}
+            {card.socialLinks && card.socialLinks.length > 0 && (
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
+                {card.socialLinks.map((link, idx) => (
+                  <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
+                ))}
               </div>
             )}
           </div>
@@ -384,7 +394,9 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
             </ul>
           </div>
         </div>
-      </div>
+      
+      <VCardDynamicSections card={card} exclude={['testimonials']} />
+</div>
     </div>
   );
 }

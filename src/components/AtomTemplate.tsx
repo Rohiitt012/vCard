@@ -1,6 +1,7 @@
- "use client";
-
-import Image from "next/image";
+"use client";
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+ import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import type { VCardItem } from "@/context/VCardsContext";
 
@@ -162,6 +163,8 @@ export function AtomTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
             </button>
           </div>
         )}
+      
+        <VCardDynamicSections card={card} />
       </div>
     </div>
   );

@@ -128,7 +128,7 @@ export function VCardsProvider({ children }: { children: React.ReactNode }) {
                 .then((updated) => {
                   setVCardsState((prev2) => prev2.map((x) => (x.id === card.id ? (updated as VCardItem) : x)));
                 })
-                .catch(() => {});
+                .catch((err) => { console.error('[VCardsContext] API update failed:', err); });
             }
           }
         }

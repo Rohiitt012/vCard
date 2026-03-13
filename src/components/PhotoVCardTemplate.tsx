@@ -1,7 +1,8 @@
 "use client";
-
+import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import Image from "next/image";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import {
   Smartphone,
   MessageCircle,
@@ -94,6 +95,13 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
                   {name}
                 </span>
               </h1>
+            {card.socialLinks && card.socialLinks.length > 0 && (
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
+                {card.socialLinks.map((link, idx) => (
+                  <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
+                ))}
+              </div>
+            )}
               <p className="text-lg text-gray-600 mb-4 font-sans">
                 {role}. {bio}
               </p>
@@ -210,34 +218,14 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
                 </a>
               )}
             </div>
-            <div className="px-6 pb-6 mt-auto">
-              <p className="text-xs font-normal text-gray-500 mb-2">Social</p>
-              <div className="flex space-x-3">
-                {social.map((s) => {
-                  const label = s.platform.toLowerCase();
-                  const Icon =
-                    label.includes("facebook")
-                      ? Facebook
-                      : label.includes("twitter") || label.includes("x")
-                      ? Twitter
-                      : label.includes("instagram")
-                      ? Instagram
-                      : null;
-                  return (
-                    <a
-                      key={s.platform}
-                      href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-                      aria-label={s.platform}
-                    >
-                      {Icon ? <Icon className="w-4 h-4" /> : s.platform.slice(0, 2).toUpperCase()}
-                    </a>
-                  );
-                })}
+            
+            {card.socialLinks && card.socialLinks.length > 0 && (
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
+                {card.socialLinks.map((link, idx) => (
+                  <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
+                ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
@@ -397,7 +385,7 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
               <div className="space-y-3">
                 {blogItems.map((b) => (
                   <div
-                    key={b.id}
+                    key={t.id || idx}
                     className="rounded-lg border border-gray-200 bg-white px-4 py-3 flex items-start gap-3"
                   >
                     <div className="mt-1 text-amber-500">
@@ -405,8 +393,8 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900">{b.title}</p>
-                      {b.description && (
-                        <p className="text-xs text-gray-600 mt-1">{b.description}</p>
+                      {t.quote || t.description || t.text || t.testimoni && (
+                        <p className="text-xs text-gray-600 mt-1">{t.quote || t.description || t.text || t.testimoni}</p>
                       )}
                     </div>
                   </div>
@@ -467,9 +455,9 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {blogItems.map((b, idx) => (
+            {(card.testimonials && card.testimonials.length > 0 ? card.testimonials : blogItems).map((t: any, idx: number) => (
               <div
-                key={b.id}
+                key={t.id || idx}
                 className="bg-white border border-gray-200 rounded-xl shadow-md p-5 flex flex-col justify-between"
               >
                 <div className="flex items-center justify-between mb-3">
@@ -479,7 +467,7 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
                         ? card.blogs[idx]?.title
                         : `Client ${idx + 1}`}
                     </p>
-                    <p className="text-xs text-gray-500">Long-term investor</p>
+                      <p className="text-xs text-gray-500">{t.role || "Long-term investor"}</p>
                   </div>
                   <div className="flex items-center gap-1 text-amber-400">
                     <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
@@ -489,7 +477,7 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 font-sans">
-                  {b.description ||
+                  {t.quote || t.description || t.text || t.testimoni ||
                     "Working together has helped us stay invested through volatility and remain focused on the bigger picture."}
                 </p>
               </div>
@@ -534,6 +522,7 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
         </p>
         <p>{baseUrl.replace(/^https?:\/\//, "")}/{slug}</p>
       </footer>
+      <VCardDynamicSections card={card} />
     </div>
   );
 }

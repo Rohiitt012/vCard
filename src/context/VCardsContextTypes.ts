@@ -48,6 +48,14 @@ export type VCardService = {
   url?: string;
 };
 
+export type VCardTestimonial = {
+  id: string;
+  name: string;
+  quote: string;
+  image: string;
+  role?: string;
+};
+
 export type VCardItem = {
   id: string;
   title: string;
@@ -69,6 +77,7 @@ export type VCardItem = {
   products?: VCardProduct[];
   services?: VCardService[];
   galleries?: VCardGallery[];
+  testimonials?: VCardTestimonial[];
   termsHtml?: string;
   privacyHtml?: string;
   email?: string;

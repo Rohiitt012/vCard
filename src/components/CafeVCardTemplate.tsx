@@ -1,8 +1,9 @@
 "use client";
-
 import Image from "next/image";
 import { Mail, Phone, MapPin, Globe2 } from "lucide-react";
-import type { VCardItem } from "@/context/VCardsContext";
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import type { VCardItem } from "@/context/VCardsContextTypes";
 
 type Props = {
   card: VCardItem;
@@ -109,6 +110,15 @@ export function CafeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Prop
               </div>
             </div>
 
+            
+          {card.socialLinks && card.socialLinks.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
+              {card.socialLinks.map((link, idx) => (
+                <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
+              ))}
+            </div>
+          )}
+
             <p className="text-xs text-slate-200/90 leading-relaxed">
               {description}
             </p>
@@ -187,22 +197,33 @@ export function CafeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Prop
 
         {/* 7. Short testimonials */}
         {testimonials && testimonials.length > 0 && (
-          <section className="px-6 pb-5 bg-white border-t border-slate-100">
-            <h2 className="mb-3 text-xs font-semibold text-slate-800">
-              What learners say
+          <section className="px-6 py-8 bg-[#f9fafb]">
+            <h2 className="text-xl font-bold text-slate-900 mb-5">
+              What they say
             </h2>
-            <div className="space-y-3">
-              {testimonials.slice(0, 3).map((t: any, idx: number) => (
+            <div className="flex overflow-x-auto gap-4 pb-4 snap-x">
+              {testimonials.map((t: any, idx: number) => (
                 <div
-                  key={t.id ?? idx}
-                  className="rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-[10px] text-slate-700"
+                  key={idx}
+                  className="shrink-0 w-[280px] snap-center rounded-[20px] bg-white p-5 border border-slate-100 shadow-sm"
                 >
-                  <p className="italic text-slate-600">
-                    “{t.quote || t.description || t.title || ""}”
+                  <p className="text-[15px] leading-relaxed italic text-slate-800 mb-4 line-clamp-3">
+                    "{t.quote || t.description || t.testimoni || "Great experience."}"
                   </p>
-                  <p className="mt-1 text-[10px] font-semibold text-slate-900">
-                    {t.name || t.title || "Learner"}
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                      {t.image ? (
+                        <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center font-bold text-slate-400">
+                          {t.name ? t.name.charAt(0) : "C"}
+                        </div>
+                      )}
+                    </div>
+                    <p className="font-semibold text-sm text-slate-900">
+                      {t.name || "Client"}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -309,6 +330,9 @@ export function CafeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Prop
             </div>
           )}
         </section>
+
+            <VCardDynamicSections card={card} exclude={['testimonials']} />
+
       </div>
     </div>
   );

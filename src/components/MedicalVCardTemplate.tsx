@@ -1,7 +1,7 @@
 "use client";
-
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import Image from "next/image";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
 import { SocialCircleIcon } from "./SocialCircleIcon";
 
 type Props = {
@@ -40,11 +40,13 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
     { date: "2002 – 2006", title: "Pre-Medical", sub: "Honors", desc: "Foundation in sciences." },
   ];
 
-  const testimonials = [
-    { quote: "Professional, caring, and always on time. Highly recommend.", author: "Patient A" },
-    { quote: "Best healthcare experience. The team is wonderful.", author: "Patient B" },
-    { quote: "Clear advice and follow-up. Very satisfied.", author: "Patient C" },
-  ];
+  const testimonials = (card.testimonials && card.testimonials.length > 0)
+    ? card.testimonials.map(t => ({ quote: t.quote || "", author: t.name || "Client", image: (t as any).image }))
+    : [
+        { quote: "Professional, caring, and always on time. Highly recommend.", author: "Patient A" },
+        { quote: "Best healthcare experience. The team is wonderful.", author: "Patient B" },
+        { quote: "Clear advice and follow-up. Very satisfied.", author: "Patient C" },
+      ];
 
   const faqItems = [
     { q: "How do I book an appointment?", a: "Call us, use the contact form, or download our vCard to save our details." },
@@ -470,6 +472,8 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
           <p>
             {baseUrl.replace(/^https?:\/\//, "")}/{slug}
           </p>
+
+      <VCardDynamicSections card={card} exclude={['testimonials']} />
         </div>
       </footer>
     </div>

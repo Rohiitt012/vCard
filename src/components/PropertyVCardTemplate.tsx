@@ -1,7 +1,7 @@
 "use client";
-
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import Image from "next/image";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
 import { SocialCircleIcon } from "./SocialCircleIcon";
 
 type Props = {
@@ -145,6 +145,13 @@ export function PropertyVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
                 <h1 className="font-sans text-3xl md:text-4xl font-semibold text-[#072344] dark:text-white">
                   Hi, I’m {name}.
                 </h1>
+            {card.socialLinks && card.socialLinks.length > 0 && (
+              <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
+                {card.socialLinks.map((link, idx) => (
+                  <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
+                ))}
+              </div>
+            )}
                 <p className="mt-2 font-sans text-base md:text-lg font-light text-[#072344] dark:text-white">
                   {role}
                 </p>
@@ -330,7 +337,9 @@ export function PropertyVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
               </a>
             ))}
           </div>
-        </div>
+        
+      <VCardDynamicSections card={card} />
+</div>
       </footer>
     </div>
   );

@@ -7,7 +7,8 @@ import { useVCards } from "@/context/VCardsContext";
 import { downloadVCard } from "@/lib/vcard";
 import { generateQrDataUrl, downloadQrPng } from "@/lib/qr";
 import { apiIncrementView, apiSubmitInquiry, apiSubscribe } from "@/lib/vcards-api";
-import type { VCardItem } from "@/context/VCardsContext";
+import type { VCardItem } from "@/context/VCardsContextTypes";
+import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { CafeVCardTemplate } from "@/components/CafeVCardTemplate";
 import { CorporateVCardTemplate } from "@/components/CorporateVCardTemplate";
 import { PlaseryExecutiveVCardTemplate } from "@/components/PlaseryExecutiveVCardTemplate";
@@ -1668,6 +1669,7 @@ export default function PublicVCardPage() {
             )}
           </div>
         </div>
+        <VCardDynamicSections card={card} />
       </div>
     </div>
   );
