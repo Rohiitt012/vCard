@@ -151,7 +151,7 @@ export function VCardsProvider({ children }: { children: React.ReactNode }) {
       }
       try {
         const created = await apiCreateVCard(payload);
-        const card = created as VCardItem;
+        const card = created as unknown as VCardItem;
         if (created.editToken) {
           setEditToken(created.id, created.editToken as string);
         }

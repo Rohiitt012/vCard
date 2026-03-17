@@ -262,7 +262,7 @@ export const VCardsContent = () => {
     setOpenMenuId(null);
     const baseSlug = (card.slug || card.previewUrl?.replace(/^https?:\/\/[^/]+/, "").replace(/^\//, "") || "vcard").replace(/^-copy(-\d+)?$/, "");
     const newSlug = `${baseSlug}-copy`;
-    const { id: _id, viewCount: _vc, inquiries: _inq, previewUrl: _pu, editToken: _et, ...rest } = card;
+    const { id: _id, viewCount: _vc, previewUrl: _pu, editToken: _et, ...rest } = card as any;
     const payload = { ...rest, slug: newSlug, title: card.title, date: card.date };
     setDuplicatingId(card.id);
     createVCard(payload)

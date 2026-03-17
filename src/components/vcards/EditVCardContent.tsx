@@ -4418,7 +4418,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                     onClick={() =>
                                       setPreviewProduct({
                                         name: p.name,
-                                        description: p.description,
+                                        description: (p as any).description,
                                         price: p.price,
                                         currency: p.currency,
                                         url: p.url,
@@ -4437,9 +4437,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                       setNewProductName(p.name);
                                       setNewProductCurrency(p.currency || "");
                                       setNewProductPrice(p.price || "");
-                                      setNewProductSort(p.sort || "");
+                                      setNewProductSort((p as any).sort || "");
                                       setNewProductUrl(p.url || "");
-                                      setNewProductDescription(p.description || "");
+                                      setNewProductDescription((p as any).description || "");
                                       setNewProductIconPreview(p.icon);
                                       setShowNewProductModal(true);
                                     }}

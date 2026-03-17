@@ -137,7 +137,7 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
 
               <div className="flex-1 py-6 pr-4">
                 <h2 className="text-[22px] font-extrabold text-[#0B1F3A] leading-tight">
-                  {card.companyName || name}
+                  {(card as any).companyName || name}
                 </h2>
                 <p className="mt-1 text-[12px] text-slate-500 font-semibold">
                   {card.description || "Your Vision, Our Roadmap."}
@@ -438,7 +438,7 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
           <div className="grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, idx) => {
               const project =
-                (card.projects && card.projects[idx]) || undefined;
+                ((card as any).projects && (card as any).projects[idx]) || undefined;
 
               const title = project?.title || `Project ${idx + 1}`;
               const subtitle =
@@ -788,7 +788,7 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={card.galleries[0].imageUrl}
-                    alt={card.galleries[0].title || name}
+                    alt={name}
                     className="h-full w-full object-cover"
                   />
                 ) : (

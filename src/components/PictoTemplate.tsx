@@ -213,7 +213,7 @@ export function PictoTemplate({
   const blogs =
     card?.blogs && card.blogs.length > 0 ? card.blogs : DEFAULT_BLOGS;
   const testimonials =
-    (card.testimonials && card.testimonials.length > 0)
+    card?.testimonials && card.testimonials.length > 0
       ? card.testimonials
       : (card as any)?.testimonials && (card as any).testimonials.length > 0
       ? (card as any).testimonials
@@ -735,7 +735,7 @@ export function PictoTemplate({
           </div>
         </section>
       
-        <VCardDynamicSections card={card} exclude={['testimonials']} />
+        {card && <VCardDynamicSections card={card as any} exclude={['testimonials']} />}
       </div>
     </div>
   );

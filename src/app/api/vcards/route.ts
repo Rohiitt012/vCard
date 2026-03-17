@@ -40,15 +40,29 @@ export async function POST(request: Request) {
       const msg = parsed.error.flatten().fieldErrors.slug?.[0] ?? "Invalid input";
       return NextResponse.json({ error: msg }, { status: 400 });
     }
-    const { slug: rawSlug, id: _id, viewCount: _vc, previewUrl: _pu, inquiries: _inq, editToken: _et, ...data } = parsed.data as Record<string, unknown>;
-    const existing = await prisma.vCard.findUnique({ where: { slug: rawSlug } });
+    const { slug: rawSlug, id: _id, viewCount: _vc, previewUrl: _pu, inquiries: _inq, editToken: _et, ...data } =
+      parsed.data as Record<string, unknown>;
+
+    // Ensure slug is a string for Prisma and handle unexpected types defensively
+    const slug =
+      typeof rawSlug === "string"
+        ? rawSlug
+        : rawSlug == null
+        ? ""
+        : String(rawSlug);
+
+    if (!slug) {
+      return NextResponse.json({ error: "Slug is required." }, { status: 400 });
+    }
+
+    const existing = await prisma.vCard.findUnique({ where: { slug } });
     if (existing) {
       return NextResponse.json({ error: "This URL alias already exists." }, { status: 409 });
     }
     const editToken = crypto.randomBytes(24).toString("hex");
     const vcard = await prisma.vCard.create({
       data: {
-        slug: rawSlug,
+        slug,
         editToken,
         data: data as object,
         viewCount: 0,

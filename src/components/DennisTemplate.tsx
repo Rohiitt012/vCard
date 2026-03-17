@@ -901,7 +901,7 @@ export function DennisTemplate({ card, slug, baseUrl = "", onDownloadVCard }: Pr
         <ArrowRight className="size-5 rotate-[-90deg]" />
       </a>
       
-        <VCardDynamicSections card={card} exclude={['testimonials']} />
+        {card && <VCardDynamicSections card={card as any} exclude={['testimonials']} />}
       </div>
     </div>
   );
