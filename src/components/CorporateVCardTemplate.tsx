@@ -3,6 +3,7 @@ import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink } from "lucide-react";
 
 type Props = {
   card: VCardItem;
@@ -88,6 +89,54 @@ const DEFAULT_SHOWCASE = [
   },
 ];
 
+const DEFAULT_GALLERY = [
+  { imageUrl: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1200" },
+];
+
+const DEFAULT_TESTIMONIALS = [
+  {
+    name: "Ronald Richards",
+    role: "Founding Partner",
+    quote: "Their strategic insight and design leadership transformed our corporate identity. The level of detail and execution across our product ecosystem was exceptional.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400"
+  }
+];
+
+const DEFAULT_PRODUCTS_LIST = [
+  {
+    name: "Brand Strategy",
+    description: "Positioning & Narrative",
+    price: "1500",
+    currency: "$",
+    icon: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=400"
+  },
+  {
+    name: "Design System",
+    description: "Multi-platform UI Kit",
+    price: "2400",
+    currency: "$",
+    icon: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=400"
+  }
+];
+
+const DEFAULT_BLOGS_LIST = [
+  {
+    title: "The Future of CXO Branding",
+    description: "How digital identity is shaping leadership trust in 2024.",
+    icon: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=600"
+  },
+  {
+    title: "Scaling Design Systems",
+    description: "Moving from modular components to unified brand narratives.",
+    icon: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=600"
+  },
+  {
+    title: "Organic Growth Loops",
+    description: "Leveraging internal rituals for external market positioning.",
+    icon: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600"
+  }
+];
+
 export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
   const name = card.title || "Corporate Profile";
   const role = card.occupation || card.tagline || "Founder · CXO · Advisor";
@@ -125,6 +174,26 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
       ? (card as any).faqs
       : DEFAULT_FAQ;
 
+  const gallery =
+    card.galleries && card.galleries.length > 0
+      ? card.galleries
+      : DEFAULT_GALLERY;
+
+  const testimonials =
+    card.testimonials && card.testimonials.length > 0
+      ? card.testimonials
+      : DEFAULT_TESTIMONIALS;
+
+  const products =
+    card.products && card.products.length > 0
+      ? card.products
+      : DEFAULT_PRODUCTS_LIST;
+
+  const blogs =
+    card.blogs && card.blogs.length > 0
+      ? card.blogs
+      : DEFAULT_BLOGS_LIST;
+
   const email = card.email;
   const phone = card.phone;
   const address = card.address;
@@ -136,334 +205,789 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
         : `https://${card.website.trim()}`
       : undefined;
 
-  const primaryColor = card.templatePrimaryColor || "#6366f1";
+  const primaryColor = card.templatePrimaryColor || "#3B82F6"; // Vibrant blue
+  const accentColor = "#FF8933"; // Orange from social icons in image 1
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex justify-center px-4 py-6 sm:py-10">
-      <div className="w-full max-w-[540px] rounded-[32px] bg-[#050816] border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.7)] overflow-hidden">
-        {/* Hero */}
-        <section className="relative px-6 sm:px-10 pt-10 pb-10 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 overflow-hidden">
-          <div className="pointer-events-none absolute -top-32 -left-24 h-64 w-64 rounded-full bg-indigo-500/30 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-40 -right-16 h-72 w-72 rounded-full bg-sky-400/25 blur-3xl" />
+    <div className="min-h-screen bg-[#F0F2F5] text-[#0F172A] font-sans flex justify-center px-0 py-0 overflow-x-hidden">
+      <div className="w-full max-w-[540px] bg-white relative flex flex-col shadow-[0_30px_60px_-12px_rgba(0,0,0,0.08)]">
+        
+        {/* TOP BANNER */}
+        <section className="relative h-[320px] w-full overflow-hidden">
+           <Image 
+             src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1200" 
+             alt="Banner" 
+             fill 
+             className="object-cover" 
+           />
+           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
+           
+           {/* Angled Mask Transition */}
+           <div 
+             className="absolute bottom-[-1px] left-0 right-0 h-40 bg-white z-10" 
+             style={{ clipPath: 'polygon(0 100%, 100% 100%, 100% 0, 0 100%)' }}
+           />
+        </section>
 
-          <div className="relative z-10 grid gap-10 md:grid-cols-[1.4fr,1fr] items-center">
-            <div className="space-y-5">
-              <p className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-medium tracking-[0.22em] uppercase text-slate-100">
-                Corporate vCard
-              </p>
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-semibold leading-tight">
-                  {name}
-                </h1>
-                <p className="text-sm sm:text-base text-indigo-200 font-medium">
-                  {role}
-                </p>
+        {/* IDENTITY SECTION (Image 1 Style Overlap) */}
+        <section className="relative px-8 pt-0 pb-12 z-20 -mt-24">
+           <div className="flex flex-col md:flex-row items-end gap-6 mb-10">
+              {/* Profile Image with thick white border */}
+              <div className="relative group shrink-0">
+                 <div className="absolute -inset-1 rounded-[40px] bg-white opacity-20 blur-md pointer-events-none" />
+                 <div className="relative w-44 h-44 rounded-[36px] border-4 border-white overflow-hidden shadow-2xl bg-[#0A0C14]">
+                    {card.image ? (
+                      <Image
+                        src={card.image}
+                        alt={name}
+                        fill
+                        className="object-cover"
+                        unoptimized={card.image.startsWith("data:")}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950">
+                        <span className="text-5xl font-bold text-white/20">
+                          {name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                 </div>
               </div>
-              <p className="text-sm sm:text-[15px] text-slate-100/90 leading-relaxed max-w-xl">
+
+              {/* Name and Role */}
+              <div className="flex-1 pb-4">
+                 <h1 className="text-4xl font-black tracking-tight leading-none text-slate-900 mb-2">
+                    {name}
+                 </h1>
+                 <p className="text-lg font-bold text-slate-500 tracking-wide uppercase text-[12px]">
+                    {role}
+                 </p>
+                 
+                 {/* Social Icons NEXT TO identity (Image 1 style) */}
+                 <div className="flex flex-wrap items-center gap-4 mt-6">
+                    {card.socialLinks && card.socialLinks.length > 0 ? (
+                      card.socialLinks.map((link, idx) => (
+                        <SocialCircleIcon 
+                          key={idx} 
+                          platform={link.platform} 
+                          url={link.url} 
+                          size={32} 
+                          bgColor={accentColor}
+                          className="transition-transform hover:scale-110 shadow-lg"
+                        />
+                      ))
+                    ) : (
+                      <div className="flex gap-4">
+                         {['facebook', 'whatsapp', 'linkedin', 'instagram', 'twitter'].map(p => (
+                            <SocialCircleIcon key={p} platform={p} size={32} bgColor={accentColor} />
+                         ))}
+                      </div>
+                    )}
+                 </div>
+              </div>
+           </div>
+
+           {/* DESCRIPTION */}
+           <div className="max-w-md">
+              <p className="text-[15px] text-slate-500 leading-relaxed italic font-medium">
                 {description}
               </p>
+           </div>
+        </section>
 
-              {/* Highlights strip */}
-              <div className="mt-3 grid grid-cols-3 gap-3 text-[11px] sm:text-xs">
-                {stats.slice(0, 3).map((s: any, idx: number) => (
-                  <div
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={idx}
-                    className="rounded-2xl bg-white/5 border border-white/15 px-3 py-3 flex flex-col gap-1"
-                  >
-                    <span className="text-sm sm:text-base font-semibold text-white">
-                      {s.value ?? s}
-                    </span>
-                    <span className="text-[10px] text-slate-200/80">
-                      {s.label || s.title}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => onDownloadVCard?.()}
-                  className="inline-flex items-center justify-center rounded-full px-6 py-2.5 text-[11px] sm:text-xs font-semibold text-slate-950 shadow-lg hover:opacity-95 transition-colors"
-                  style={{ backgroundColor: primaryColor }}
+        {/* STATS SECTION (Image 2 style) */}
+        <section className="px-8 pb-12">
+            <div className="grid grid-cols-3 gap-3">
+              {stats.slice(0, 3).map((s: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl bg-white border border-slate-100 p-5 flex flex-col gap-2 shadow-sm transition-all hover:shadow-md hover:border-slate-200"
                 >
-                  + Download vCard / Add to contact
-                </button>
-                {websiteUrl && (
-                  <a
-                    href={websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/5 px-5 py-2 text-[11px] sm:text-xs font-medium text-slate-100 hover:bg-white/10"
-                  >
-                    Visit corporate site
-                  </a>
-                )}
-              </div>
-            </div>
-
-            {/* Avatar side */}
-            <div className="flex items-center justify-center">
-              <div className="relative">
-                <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-tr from-indigo-500 via-sky-400 to-cyan-300 opacity-70 blur-xl" />
-                <div className="relative h-48 w-48 sm:h-56 sm:w-56 rounded-[32px] bg-slate-900 border border-white/15 flex items-center justify-center overflow-hidden">
-                  {card.image ? (
-                    <Image
-                      src={card.image}
-                      alt={name}
-                      fill
-                      className="object-cover"
-                      sizes="224px"
-                      unoptimized={card.image.startsWith("data:")}
-                    />
-                  ) : (
-                    <span className="text-5xl font-semibold text-slate-100">
-                      {name.charAt(0).toUpperCase()}
-                    </span>
-                  )}
+                  <span className="text-xl font-black text-slate-900 leading-none">
+                    {s.value ?? s}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">
+                    {s.label || s.title}
+                  </span>
                 </div>
-                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 rounded-2xl bg-slate-900/90 border border-white/10 px-4 py-2 text-[10px] text-slate-200 backdrop-blur">
-                  /{slug}
-                </div>
-              </div>
-            
-          {card.socialLinks && card.socialLinks.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
-              {card.socialLinks.map((link, idx) => (
-                <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
               ))}
             </div>
-          )}
+
+            {/* CTA Button (Image 2 style) */}
+            <div className="pt-8">
+              <button
+                type="button"
+                onClick={() => onDownloadVCard?.()}
+                className="w-full flex items-center justify-center gap-3 rounded-[24px] bg-blue-500 py-5 text-sm font-black text-white shadow-[0_20px_40px_rgba(59,130,246,0.2)] hover:bg-blue-400 transition-all hover:scale-[1.02] active:scale-95"
+              >
+                + Download vCard / Add to contact
+              </button>
             </div>
-          </div>
         </section>
 
-        {/* Expertise */}
-        <section className="px-6 sm:px-10 py-8 sm:py-10 bg-[#050816] border-t border-white/5">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
-            <div>
-              <p className="text-[10px] tracking-[0.24em] uppercase text-sky-300 mb-1">
-                {card.serviceTitleSmall || "Expertise"}
-              </p>
-              <h2 className="text-lg sm:text-xl font-semibold">
-                {card.serviceTitle || "How I create value"}
-              </h2>
-            </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3 text-[11px] sm:text-xs">
-            {services.map((s: any, idx: number) => (
-              <div
-                key={s.id || idx}
-                className="rounded-2xl bg-slate-900 border border-white/10 px-4 py-4 flex flex-col gap-2 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-transform transition-shadow duration-300"
-              >
-                <div className="inline-flex h-7 w-7 items-center justify-center rounded-xl bg-white/10 text-[11px] font-semibold text-sky-300 overflow-hidden">
-                  {s.icon ? (
-                    <img src={s.icon} alt={s.name || s.title} className="h-full w-full object-cover" />
-                  ) : (
-                    <span>✦</span>
-                  )}
+        {/* EXPERTISE / SERVICES */}
+        <section className="px-8 py-16 bg-white border-t border-slate-50">
+           <div className="mb-10">
+              <p className="text-[10px] tracking-[0.3em] uppercase text-blue-600 font-bold mb-2">Expertise</p>
+              <h2 className="text-2xl font-black italic tracking-tight text-slate-900">How I create value</h2>
+           </div>
+           
+           <div className="grid gap-6">
+              {services.map((s: any, idx: number) => (
+                <div key={idx} className="group p-8 rounded-[40px] bg-slate-50/50 border border-slate-100 transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 flex flex-col sm:flex-row gap-8 items-start">
+                   <div className="w-16 h-16 rounded-3xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 group-hover:scale-110 transition-transform shadow-inner">
+                      {s.icon ? (
+                        <img src={s.icon} alt={s.title} className="w-8 h-8 object-contain" />
+                      ) : (
+                        <span className="text-3xl select-none opacity-40">✦</span>
+                      )}
+                   </div>
+                   <div className="space-y-2">
+                      <h3 className="font-black text-xl tracking-tight">{s.name || s.title}</h3>
+                      <p className="text-[15px] text-gray-400 leading-relaxed font-light">{s.description || s.details}</p>
+                   </div>
                 </div>
-                <p className="text-[12px] font-semibold text-white">
-                  {s.name || s.title}
-                </p>
-                <p className="text-[11px] text-slate-200/85 leading-relaxed">
-                  {s.description ||
-                    s.details ||
-                    "Advisory, reviews and hands‑on support tailored to your leadership needs."}
-                </p>
-                {s.url && (
-                  <a
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-block text-[10px] font-semibold text-sky-300 hover:underline"
-                  >
-                    Details →
-                  </a>
+              ))}
+           </div>
+        </section>
+
+        {/* PROCESS / HOW WE WORK */}
+        <section className="px-8 py-16 bg-[#F8FAFC] border-t border-slate-100">
+           <div className="mb-10">
+              <p className="text-[10px] tracking-[0.3em] uppercase text-violet-600 font-bold mb-2">The Process</p>
+              <h2 className="text-2xl font-black italic tracking-tight uppercase text-slate-900">Idea to Launch</h2>
+           </div>
+ 
+           <div className="grid gap-4 sm:grid-cols-3">
+              {processSteps.slice(0, 3).map((step: any, idx: number) => (
+                <div key={idx} className="relative p-6 rounded-[32px] bg-white border border-slate-100 space-y-3 shadow-sm hover:shadow-md transition-shadow">
+                   <span className="text-[10px] font-black text-violet-600/50 uppercase tracking-widest">{step.label || `0${idx + 1} · STEP`}</span>
+                   <h3 className="font-bold text-[16px] text-slate-900">{step.title}</h3>
+                   <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-3">{step.description}</p>
+                </div>
+              ))}
+           </div>
+        </section>
+         {/* SHOWCASE / RECENT WORK */}
+        <section className="px-8 py-16 bg-white border-t border-slate-100">
+           <div className="mb-10 text-center">
+              <p className="text-[10px] tracking-[0.3em] uppercase text-indigo-600 font-bold mb-2 text-center">Portfolio</p>
+              <h2 className="text-2xl font-black italic tracking-tight uppercase text-center text-slate-900">Selected Initiatives</h2>
+           </div>
+ 
+           <div className="grid gap-6 sm:grid-cols-2">
+              {showcaseSource.map((item: any, idx: number) => (
+                <article key={idx} className="group rounded-[48px] bg-slate-50 border border-slate-100 overflow-hidden flex flex-col transition-all hover:scale-[1.02] hover:shadow-2xl hover:shadow-indigo-500/10 hover:border-indigo-100">
+                   <div className="h-40 relative bg-gradient-to-br from-blue-100 to-indigo-100 overflow-hidden">
+                       <div className="absolute inset-0 bg-blue-500/5 group-hover:bg-blue-500/10 transition-colors" />
+                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-200 text-4xl font-black uppercase tracking-tighter italic">Creative</div>
+                   </div>
+                   <div className="p-8 space-y-2 flex-1 flex flex-col justify-end text-center">
+                      <h3 className="text-lg font-black text-slate-900">{item.title || item.name}</h3>
+                      <p className="text-sm text-slate-500 leading-relaxed italic">{item.description || "Premium advisory and project delivery."}</p>
+                   </div>
+                </article>
+              ))}
+           </div>
+        </section>
+
+        {/* CLIENTS LOGOS */}
+        {clientLogos && clientLogos.length > 0 && (
+           <section className="px-8 py-12 bg-white border-t border-slate-50">
+              <div className="flex flex-wrap items-center justify-center gap-4 opacity-40 grayscale">
+                 {clientLogos.map((c: any, idx: number) => (
+                   <div key={idx} className="px-4 py-2 rounded-full border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                      {typeof c === "string" ? c : c.name}
+                   </div>
+                 ))}
+              </div>
+           </section>
+        )}
+
+        {/* PROFLIE PHOTO WITH GLOW (Image 2 Footer Identity) */}
+        <section className="mt-12 px-8 pb-20 flex flex-col items-center relative overflow-hidden bg-white">
+           {/* Background Glows */}
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/20 blur-[120px] rounded-full pointer-events-none" />
+           
+           <div className="relative group">
+              {/* Outer Pulsing Glow */}
+              <div className="absolute -inset-8 rounded-[60px] bg-blue-500/20 opacity-40 blur-[50px] group-hover:opacity-60 transition-opacity animate-pulse" />
+              
+              <div className="relative h-72 w-72 rounded-[48px] overflow-hidden border-4 border-white bg-slate-50 shadow-2xl">
+                {card.image ? (
+                  <Image
+                    src={card.image}
+                    alt={name}
+                    fill
+                    className="object-cover"
+                    unoptimized={card.image.startsWith("data:")}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-slate-100">
+                    <span className="text-7xl font-bold text-slate-300">{name.charAt(0)}</span>
+                  </div>
                 )}
               </div>
-            ))}
-          </div>
-        </section>
 
-        {/* Process / How we work */}
-        <section className="px-6 sm:px-10 py-8 sm:py-10 bg-[#050816] border-t border-white/5">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
-            <div>
-              <p className="text-[10px] tracking-[0.24em] uppercase text-violet-300 mb-1">
-                Process
-              </p>
-              <h2 className="text-lg sm:text-xl font-semibold">
-                How projects move from idea to launch
-              </h2>
-            </div>
-          </div>
-          <div className="grid gap-4 sm:gap-5 sm:grid-cols-3 text-[11px] sm:text-xs">
-            {processSteps.slice(0, 3).map((step: any, idx: number) => (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={idx}
-                className="relative rounded-2xl bg-slate-900 border border-white/10 px-4 py-4 flex flex-col gap-2"
-              >
-                <p className="text-[10px] uppercase tracking-[0.18em] text-slate-400">
-                  {step.label || `0${idx + 1} · Step`}
-                </p>
-                <p className="text-[12px] font-semibold text-white">
-                  {step.title}
-                </p>
-                <p className="text-[11px] text-slate-200/85 leading-relaxed">
-                  {step.description}
-                </p>
+              {/* Slug Badge (Image 1 Badge style) */}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-2xl bg-white border border-slate-100 px-8 py-3 text-[11px] font-black text-blue-600 tracking-widest uppercase shadow-2xl backdrop-blur-xl">
+                /{slug}
               </div>
-            ))}
-          </div>
+           </div>
         </section>
 
-        {/* Showcase */}
-        <section className="px-6 sm:px-10 py-8 sm:py-10 bg-[#050816] border-t border-white/5">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
-            <div>
-              <p className="text-[10px] tracking-[0.24em] uppercase text-indigo-300 mb-1">
-                Selected work
-              </p>
-              <h2 className="text-lg sm:text-xl font-semibold">
-                Recent initiatives
-              </h2>
-            </div>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 text-[11px] sm:text-xs">
-            {showcaseSource.map((item: any, idx: number) => (
-              <article
-                // eslint-disable-next-line react/no-array-index-key
-                key={idx}
-                className="rounded-2xl bg-slate-900 border border-white/10 overflow-hidden flex flex-col"
-              >
-                <div className="h-24 bg-gradient-to-r from-indigo-500 via-sky-400 to-cyan-300" />
-                <div className="px-4 py-4 space-y-1.5 flex-1">
-                  <p className="text-[12px] font-semibold text-white">
-                    {item.title || item.name}
-                  </p>
-                  <p className="text-[11px] text-slate-200/85 leading-relaxed">
-                    {item.description ||
-                      item.details ||
-                      "High‑impact work combining clear strategy, confident visuals and reliable delivery."}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Clients */}
-        <section className="px-6 sm:px-10 pb-8 sm:pb-10 pt-4 bg-[#050816] border-t border-white/5">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-            <p className="text-[10px] tracking-[0.24em] uppercase text-slate-400">
-              Selected clients
-            </p>
-            <p className="text-[11px] sm:text-xs text-slate-300">
-              Partnerships with teams across product, finance, tech and creative.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2 sm:gap-3 text-[10px] sm:text-xs text-slate-100/85">
-            {clientLogos.slice(0, 8).map((c: any, idx: number) => (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={idx}
-                className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5"
-              >
-                {typeof c === "string" ? c : c.name}
+        {/* PREMIUM CONTACT CARDS */}
+        {(email || phone || address || card.birthDate) && (
+           <section className="px-8 py-16 bg-white border-t border-slate-50 relative">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-12">
+                 {email && (
+                    <div className="relative pt-6">
+                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
+                          <Mail className="w-5 h-5 text-white" />
+                       </div>
+                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
+                          <p className="text-[13px] font-bold text-[#1e293b] break-all">{email}</p>
+                       </div>
+                    </div>
+                 )}
+                 {phone && (
+                    <div className="relative pt-6">
+                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
+                          <Phone className="w-5 h-5 text-white" />
+                       </div>
+                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
+                          <p className="text-[13px] font-bold text-[#1e293b]">{phone}</p>
+                       </div>
+                    </div>
+                 )}
+                 {card.birthDate && (
+                    <div className="relative pt-6">
+                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
+                          <Cake className="w-5 h-5 text-white" />
+                       </div>
+                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
+                          <p className="text-[13px] font-bold text-[#1e293b]">{card.birthDate}</p>
+                       </div>
+                    </div>
+                 )}
+                 {address && (
+                    <div className="relative pt-6">
+                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
+                          <MapPin className="w-5 h-5 text-white" />
+                       </div>
+                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
+                          <p className="text-[13px] font-bold text-[#1e293b]">{address}</p>
+                       </div>
+                    </div>
+                 )}
               </div>
-            ))}
-          </div>
-        </section>
+           </section>
+        )}
 
-        {/* FAQ */}
-        <section className="px-6 sm:px-10 py-8 sm:py-10 bg-[#050816] border-t border-white/5">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
-            <div>
-              <p className="text-[10px] tracking-[0.24em] uppercase text-sky-300 mb-1">
-                FAQ
-              </p>
-              <h2 className="text-lg sm:text-xl font-semibold">
-                Practical details before we start
-              </h2>
-            </div>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 text-[11px] sm:text-xs">
-            {faqItems.slice(0, 4).map((f: any, idx: number) => (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={idx}
-                className="rounded-2xl bg-slate-900 border border-white/10 px-4 py-4 space-y-1.5"
-              >
-                <p className="text-[12px] font-semibold text-white">
-                  {f.question}
-                </p>
-                <p className="text-[11px] text-slate-200/85 leading-relaxed">
-                  {f.answer}
-                </p>
+        {/* OUR SERVICES - OVAL STYLE (Image Style) */}
+        {services && services.length > 0 && (
+           <section className="px-8 py-20 bg-white relative overflow-hidden">
+              {/* Background Watermark Text */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] select-none">
+                 <div className="text-[120px] font-black leading-none text-slate-900 text-center uppercase tracking-tighter">
+                    STRATEGY<br/>EXPERIENCE<br/>KNOWLEDGE
+                 </div>
               </div>
-            ))}
-          </div>
+
+              <div className="relative z-10">
+                 <div className="text-center mb-16">
+                    <h2 className="text-3xl font-black text-[#0f172a] tracking-tight">Our Services</h2>
+                 </div>
+
+                 <div className="flex flex-col gap-12">
+                    {services.slice(0, 2).map((s: any, idx: number) => (
+                       <div key={idx} className="flex justify-center">
+                          <div className="w-full max-w-[280px] aspect-[4/5] rounded-[140px] border-2 border-dashed border-orange-500 bg-[#fff7ed] p-10 flex flex-col items-center justify-center text-center shadow-2xl relative transition-transform hover:scale-[1.02]">
+                             <div className="mb-6">
+                                {idx === 0 ? (
+                                   <Target className="w-12 h-12 text-orange-500" />
+                                ) : (
+                                   <Presentation className="w-12 h-12 text-orange-500" />
+                                )}
+                             </div>
+                             <h3 className="text-xl font-black text-[#0f172a] mb-4">{s.name || s.title}</h3>
+                             <p className="text-[13px] text-slate-500 leading-relaxed">
+                                {s.description || s.details || "Supporting organizations through clear narrative and reliable delivery."}
+                             </p>
+                          </div>
+                       </div>
+                    ))}
+                 </div>
+              </div>
+           </section>
+        )}
+
+        {/* MAKE AN APPOINTMENT (Image Style) */}
+        <section className="px-8 py-20 bg-white border-t border-slate-100 relative z-10">
+           <div className="text-center mb-12">
+              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Make An Appointment</h2>
+           </div>
+
+           <div className="max-w-md mx-auto space-y-8">
+              {/* Date Input */}
+              <div className="space-y-4">
+                 <label className="text-sm font-black text-[#0f172a] uppercase tracking-widest block">Date:</label>
+                 <div className="relative group">
+                    <input 
+                       type="text" 
+                       placeholder="Pick a date" 
+                       readOnly
+                       className="w-full h-16 px-6 rounded-2xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-300 font-bold focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all cursor-pointer shadow-sm"
+                    />
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
+                       <Calendar className="w-6 h-6 text-orange-500 group-hover:scale-110 transition-transform" />
+                    </div>
+                 </div>
+              </div>
+
+              {/* Hour Selection */}
+              <div className="space-y-4">
+                 <label className="text-sm font-black text-[#0f172a] uppercase tracking-widest block">Hour:</label>
+                 <div className="grid grid-cols-4 gap-3">
+                    {['8:10 - 20:00', '8:10 - 20:00', '8:10 - 20:00', '8:10 - 20:00'].map((time, idx) => (
+                       <div 
+                          key={idx} 
+                          className="h-14 rounded-xl border border-slate-100 bg-white flex items-center justify-center text-[9px] font-black text-slate-400 shadow-sm transition-all hover:border-orange-500 hover:text-orange-500 hover:shadow-orange-500/10 cursor-pointer"
+                       >
+                          {time}
+                       </div>
+                    ))}
+                 </div>
+              </div>
+
+              {/* Submit Button */}
+              <div className="pt-6">
+                 <button 
+                    type="button"
+                    className="w-full h-16 rounded-2xl bg-[#FF7222] text-white font-black text-lg shadow-xl shadow-orange-500/20 hover:bg-[#E65F1B] transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3"
+                 >
+                    Book Appointment
+                 </button>
+              </div>
+           </div>
         </section>
 
-        {/* Contact */}
-        <section className="px-6 sm:px-10 py-8 sm:py-10 bg-[#050816] border-t border-white/5">
-          <div className="grid gap-8 md:grid-cols-[1.2fr,0.9fr] items-start">
-            <div className="space-y-3">
-              <p className="text-[10px] tracking-[0.24em] uppercase text-emerald-300 mb-1">
-                Contact
-              </p>
-              <h2 className="text-lg sm:text-xl font-semibold">
-                Let&apos;s discuss your next initiative
-              </h2>
-              <p className="text-[11px] sm:text-xs text-slate-200/90 leading-relaxed max-w-md">
-                Send an email or call directly for consulting, advisory and collaboration requests.
-                You can always come back to this profile at{" "}
-                <span className="font-semibold text-slate-50">
-                  {baseUrl}/{slug}
-                </span>
-                .
-              </p>
-            </div>
-            <div className="space-y-3 text-[11px] sm:text-xs">
-              {email && (
-                <a
-                  href={`mailto:${email}`}
-                  className="block rounded-2xl bg-slate-900 border border-white/10 px-4 py-3 hover:border-emerald-400/80 transition-colors"
-                >
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                    Email
-                  </p>
-                  <p className="mt-1 text-slate-50 break-all">{email}</p>
-                </a>
-              )}
-              {phone && (
-                <a
-                  href={`tel:${phone}`}
-                  className="block rounded-2xl bg-slate-900 border border-white/10 px-4 py-3 hover:border-emerald-400/80 transition-colors"
-                >
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                    Phone
-                  </p>
-                  <p className="mt-1 text-slate-50">{phone}</p>
-                </a>
-              )}
-              {address && (
-                <div className="rounded-2xl bg-slate-900 border border-white/10 px-4 py-3">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                    Location
-                  </p>
-                  <p className="mt-1 text-slate-50">{address}</p>
-                </div>
-              )}
-            </div>
-          </div>
+        {/* GALLERY SECTION (Image Style) */}
+        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
+           {/* Decorative Illustration (Top Right) */}
+           <div className="absolute top-10 right-4 w-40 h-32 opacity-80 pointer-events-none select-none z-0">
+              <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-40">
+                 <path d="M40 100 L60 80 L80 100 L100 80 L120 100" stroke="#cbd5e1" strokeWidth="2" fill="none" />
+                 <circle cx="30" cy="40" r="10" fill="#f1f5f9" />
+                 <circle cx="170" cy="50" r="8" fill="#f1f5f9" />
+                 <path d="M140 30 Q160 10 180 30" stroke="#cbd5e1" strokeWidth="2" fill="none" />
+                 {/* Simplified people silhuettes */}
+                 <rect x="130" y="60" width="20" height="40" rx="4" fill="#94a3b8" />
+                 <rect x="155" y="65" width="20" height="40" rx="4" fill="#64748b" />
+                 <circle cx="140" cy="50" r="8" fill="#94a3b8" />
+                 <circle cx="165" cy="55" r="8" fill="#64748b" />
+              </svg>
+           </div>
+           
+           <div className="relative z-10">
+              <div className="text-center mb-10">
+                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight">Gallery</h2>
+              </div>
+
+              <div className="space-y-6">
+                 {/* Main Image Display */}
+                 <div className="relative w-full aspect-[4/3] rounded-[40px] overflow-hidden shadow-2xl border-4 border-white">
+                    <Image 
+                       src={gallery[0].imageUrl} 
+                       alt="Gallery Image" 
+                       fill 
+                       className="object-cover"
+                    />
+                 </div>
+
+                 {/* Premium Pagination Dots (Orange Pill Style) */}
+                 <div className="flex items-center justify-center gap-2">
+                    <div className="w-8 h-2.5 rounded-full bg-orange-500" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
+                 </div>
+              </div>
+           </div>
         </section>
-      <VCardDynamicSections card={card} />
+
+        {/* TESTIMONIALS SECTION (Image Style) */}
+        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
+           {/* Decorative Illustration (Top Left) */}
+           <div className="absolute top-10 left-4 w-48 h-36 opacity-80 pointer-events-none select-none z-0">
+              <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-30">
+                 <rect x="20" y="20" width="100" height="80" rx="4" stroke="#64748b" strokeWidth="2" fill="#f8fafc" />
+                 <path d="M40 50 Q60 30 80 50 L100 40" stroke="#64748b" strokeWidth="1.5" fill="none" />
+                 <circle cx="45" cy="70" r="5" fill="#cbd5e1" />
+                 <circle cx="65" cy="70" r="5" fill="#cbd5e1" />
+                 <circle cx="85" cy="70" r="5" fill="#cbd5e1" />
+                 <rect x="130" y="30" width="40" height="60" rx="4" stroke="#cbd5e1" strokeWidth="1.5" />
+                 <line x1="135" y1="40" x2="165" y2="40" stroke="#cbd5e1" strokeWidth="1.5" />
+                 <line x1="135" y1="50" x2="165" y2="50" stroke="#cbd5e1" strokeWidth="1.5" />
+                 <line x1="135" y1="60" x2="155" y2="60" stroke="#cbd5e1" strokeWidth="1.5" />
+              </svg>
+           </div>
+
+           <div className="relative z-10">
+              <div className="text-center mb-12">
+                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Testimonials</h2>
+              </div>
+
+              <div className="relative flex flex-col items-center">
+                 {/* Navigation Arrows */}
+                 <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between pointer-events-none px-0">
+                    <button className="w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-orange-500 hover:border-orange-500 transition-all pointer-events-auto shadow-sm">
+                       <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button className="w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-orange-500 hover:border-orange-500 transition-all pointer-events-auto shadow-sm">
+                       <ChevronRight className="w-6 h-6" />
+                    </button>
+                 </div>
+
+                 {/* Content */}
+                 <div className="w-full max-w-sm flex flex-col items-center text-center space-y-6">
+                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl bg-slate-100">
+                       <Image 
+                          src={testimonials[0].image || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400"} 
+                          alt={testimonials[0].name} 
+                          width={128}
+                          height={128}
+                          className="w-full h-full object-cover"
+                       />
+                    </div>
+
+                    <div className="space-y-1">
+                       <h3 className="text-xl font-black text-orange-500">{testimonials[0].name}</h3>
+                       <p className="text-sm font-bold text-[#0f172a] opacity-80">{testimonials[0].role || 'Customer'}</p>
+                    </div>
+
+                    <p className="text-sm text-slate-400 leading-relaxed font-bold max-w-[280px]">
+                       {testimonials[0].quote}
+                    </p>
+                 </div>
+              </div>
+           </div>
+        </section>
+
+        {/* PRODUCTS SECTION (Image Style) */}
+        <section className="px-8 py-20 bg-white border-t border-slate-100 relative">
+           <div className="flex justify-between items-start mb-12">
+              <div className="flex-1 text-center pl-16">
+                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Products</h2>
+              </div>
+              
+              {/* Floating Icons (Top Right) */}
+              <div className="flex flex-col gap-3 -mt-4">
+                 <div className="w-12 h-12 rounded-full border border-orange-200 bg-white flex items-center justify-center text-orange-500 shadow-sm">
+                    <MessageCircle className="w-6 h-6" />
+                 </div>
+                 <div className="w-12 h-12 rounded-full border border-orange-200 bg-white flex items-center justify-center text-orange-500 shadow-sm relative">
+                    <Share2 className="w-6 h-6" />
+                 </div>
+                 <div className="w-14 h-14 rounded-full bg-[#f97316] flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
+                    <LayoutGrid className="w-7 h-7" />
+                 </div>
+              </div>
+           </div>
+
+           <div className="grid grid-cols-2 gap-4">
+              {products.slice(0, 2).map((prod: any, idx: number) => (
+                 <div key={idx} className="rounded-[32px] overflow-hidden bg-[#fff7ed] shadow-md transition-transform hover:scale-[1.02]">
+                    <div className="h-40 relative">
+                       <Image 
+                          src={prod.icon || "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=400"} 
+                          alt={prod.name} 
+                          fill 
+                          className="object-cover"
+                       />
+                    </div>
+                    <div className="p-5 flex justify-between items-end">
+                       <div>
+                          <h3 className="text-[15px] font-black text-[#0f172a] mb-1">{prod.name}</h3>
+                          <p className="text-[11px] font-bold text-slate-400">{prod.description || 'Lorem Ipsum'}</p>
+                       </div>
+                       <div className="text-xl font-black text-orange-500">
+                          {prod.currency || '$'}{prod.price || '0'}
+                       </div>
+                    </div>
+                 </div>
+              ))}
+           </div>
+        </section>
+
+        {/* BLOG SECTION (Image Style) */}
+        <section className="px-8 py-24 bg-white border-t border-slate-100 relative overflow-hidden">
+           {/* Decorative Illustration (Full Background Center) */}
+           <div className="absolute inset-x-0 bottom-0 top-12 opacity-80 pointer-events-none select-none z-0">
+              <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-30">
+                 {/* Gear icons */}
+                 <circle cx="150" cy="250" r="30" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="5 5" />
+                 <circle cx="150" cy="250" r="15" stroke="#94a3b8" strokeWidth="2" />
+                 {/* Bars / Charts */}
+                 <rect x="280" y="200" width="12" height="60" fill="#e2e8f0" rx="2" />
+                 <rect x="300" y="180" width="12" height="80" fill="#cbd5e1" rx="2" />
+                 <rect x="320" y="220" width="12" height="40" fill="#94a3b8" rx="2" />
+                 {/* Lines / Grid */}
+                 <path d="M100 200 L350 200" stroke="#f1f5f9" strokeWidth="2" />
+                 <path d="M100 230 L350 230" stroke="#f1f5f9" strokeWidth="2" />
+                 <path d="M100 260 L350 260" stroke="#f1f5f9" strokeWidth="2" />
+                 <path d="M150 180 V280" stroke="#f1f5f9" strokeWidth="2" />
+                 {/* Abstract Shapes */}
+                 <circle cx="50" cy="230" r="8" fill="#e2e8f0" />
+                 <path d="M40 80 Q60 60 80 80 T120 80" stroke="#cbd5e1" strokeWidth="2" fill="none" />
+              </svg>
+           </div>
+           
+           <div className="relative z-10 flex flex-col items-center">
+              <div className="bg-white px-10 py-4 border border-slate-200 shadow-sm rounded-lg mb-8">
+                 <h2 className="text-3xl font-black text-[#0f172a] tracking-wider uppercase text-center">Blog</h2>
+              </div>
+              
+              {/* Premium Carousel Display (Image Style) */}
+              <div className="w-full relative px-2">
+                 <div className="flex items-center gap-4 overflow-hidden py-4">
+                    {/* Left preview (static for design) */}
+                    <div className="min-w-[120px] h-64 rounded-[32px] overflow-hidden opacity-40 blur-[1px] -ml-28">
+                       <Image 
+                          src={blogs[2 % blogs.length]?.icon || blogs[0].icon} 
+                          alt="Prev" 
+                          fill 
+                          className="object-cover"
+                       />
+                    </div>
+
+                    {/* Active Main Card */}
+                    <div className="min-w-[320px] flex-1">
+                       <div className="bg-white rounded-[40px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 transition-transform duration-500">
+                          <div className="h-48 relative">
+                             <Image 
+                                src={blogs[0].icon} 
+                                alt={blogs[0].title} 
+                                fill 
+                                className="object-cover"
+                             />
+                          </div>
+                          <div className="p-8 text-left bg-white">
+                             <h3 className="text-2xl font-black text-[#1e293b] mb-3">{blogs[0].title || "Loreum Ipsum"}</h3>
+                             <p className="text-sm text-slate-400 leading-relaxed font-bold italic">
+                                {blogs[0].description || "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text."}
+                             </p>
+                          </div>
+                       </div>
+                    </div>
+
+                    {/* Right preview (static for design) */}
+                    <div className="min-w-[120px] h-64 rounded-[32px] overflow-hidden opacity-40 blur-[1px]">
+                       <Image 
+                          src={blogs[1 % blogs.length]?.icon || blogs[0].icon} 
+                          alt="Next" 
+                          fill 
+                          className="object-cover"
+                       />
+                    </div>
+                 </div>
+
+                 {/* Pagination Dots (Orange Pill Style) */}
+                 <div className="flex items-center justify-center gap-2 mt-8">
+                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
+                    <div className="w-8 h-2.5 rounded-full bg-orange-500 shadow-sm" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
+                 </div>
+              </div>
+           </div>
+        </section>
+
+        {/* BUSINESS HOURS SECTION (Image Style) */}
+        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
+           <div className="text-center mb-10">
+              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Business Hours</h2>
+           </div>
+
+           <div className="max-w-md mx-auto">
+              <div className="rounded-[24px] border-2 border-orange-500/80 bg-white p-10 shadow-sm relative z-10">
+                 <div className="space-y-6">
+                    {[
+                      { day: 'Sunday', time: '08:10 - 20:00' },
+                      { day: 'Monday', time: '08:10 - 20:00' },
+                      { day: 'Tuesday', time: '08:10 - 20:00' },
+                      { day: 'Wednesday', time: '08:10 - 10:00' },
+                      { day: 'Thursday', time: '08:10 - 20:00' },
+                      { day: 'Friday', time: '08:10 - 20:00' },
+                      { day: 'Saturday', time: 'Closed' },
+                    ].map((item, idx) => (
+                       <div key={idx} className="flex justify-between items-center group">
+                          <span className="text-xl font-bold text-[#1e293b] group-hover:text-orange-500 transition-colors">
+                             {item.day} :
+                          </span>
+                          <span className="text-xl font-bold text-[#1e293b]">
+                             {item.time}
+                          </span>
+                       </div>
+                    ))}
+                 </div>
+              </div>
+           </div>
+
+           {/* Subtle Watermark Decoration (Bottom Right) */}
+           <div className="absolute right-0 bottom-0 w-32 h-32 opacity-10 pointer-events-none select-none">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-20">
+                 <circle cx="50" cy="50" r="40" stroke="#cbd5e1" strokeWidth="2" />
+                 <path d="M50 20 V50 L70 60" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+           </div>
+        </section>
+
+        {/* QR CODE SECTION (Image Style) */}
+        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
+           {/* Decorative Illustration (Top Right) */}
+           <div className="absolute top-10 right-4 w-48 h-36 opacity-30 pointer-events-none select-none z-0">
+              <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                 <rect x="20" y="20" width="160" height="110" rx="4" stroke="#cbd5e1" strokeWidth="2" fill="#f8fafc" opacity="0.4" />
+                 <line x1="40" y1="40" x2="140" y2="40" stroke="#cbd5e1" strokeWidth="3" />
+                 <rect x="40" y="55" width="20" height="50" fill="#e2e8f0" />
+                 <rect x="70" y="70" width="20" height="35" fill="#cbd5e1" />
+                 <rect x="100" y="45" width="20" height="60" fill="#94a3b8" />
+                 <circle cx="150" cy="50" r="15" fill="#f1f5f9" stroke="#cbd5e1" />
+              </svg>
+           </div>
+
+           <div className="relative z-10">
+              <div className="text-center mb-16">
+                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center uppercase">QR Code</h2>
+              </div>
+
+              <div className="max-w-xs mx-auto relative pt-8">
+                 {/* Floating Profile Image */}
+                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-4 border-orange-500 overflow-hidden shadow-xl z-20 bg-white">
+                    {card.image ? (
+                       <Image src={card.image} alt={name} fill className="object-cover" />
+                    ) : (
+                       <div className="w-full h-full flex items-center justify-center bg-slate-100 text-[#0f172a] font-bold">{name.charAt(0)}</div>
+                    )}
+                 </div>
+
+                 {/* QR Card Body */}
+                 <div className="bg-white rounded-[24px] p-8 pt-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] text-center">
+                    <div className="relative aspect-square w-full max-w-[180px] mx-auto mb-10 border border-slate-50 p-2 rounded-xl">
+                       {/* QR Code Placeholder (Using an SVG to match design style) */}
+                       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-90 text-[#0f172a]">
+                          <path d="M10 10h30v30H10zM10 60h30v30H10zM60 10h30v30H60z" fill="currentColor" />
+                          <path d="M20 20h10v10H20zM20 70h10v10H20zM70 20h10v10H70z" fill="white" />
+                          <path d="M45 10h10v10H45zM45 25h10v10H45zM45 40h10v10H45zM45 55h10v10H45zM45 70h10v10H45zM45 85h10v10H45z" fill="currentColor" />
+                          <path d="M10 45h10v10H10zM25 45h10v10H25zM60 45h10v10H60zM75 45h10v10H75zM90 45h10v10H90z" fill="currentColor" />
+                          <path d="M60 60h10v10H60zM80 60h10v10H80zM70 70h10v10H70zM60 80h10v10H60zM80 80h10v10H80z" fill="currentColor" />
+                       </svg>
+                    </div>
+
+                    <button className="w-full py-4 rounded-xl bg-[#f97316] text-white font-black text-sm uppercase tracking-wide shadow-lg shadow-orange-500/30 transition-all hover:bg-orange-600 hover:scale-[1.02]">
+                       Download My QR Code
+                    </button>
+                 </div>
+              </div>
+           </div>
+        </section>
+
+        {/* CONTACT US SECTION (Image Style) */}
+        <section className="px-8 py-20 bg-white border-t border-slate-100 relative z-10">
+           <div className="text-center mb-12">
+              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Contact Us</h2>
+           </div>
+
+           <div className="max-w-md mx-auto space-y-4">
+              <div className="relative">
+                 <input 
+                    type="text" 
+                    placeholder="Full Name" 
+                    className="w-full h-16 px-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all"
+                 />
+              </div>
+              <div className="relative">
+                 <input 
+                    type="email" 
+                    placeholder="Email Address" 
+                    className="w-full h-16 px-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all"
+                 />
+              </div>
+              <div className="relative">
+                 <input 
+                    type="tel" 
+                    placeholder="Phone Number" 
+                    className="w-full h-16 px-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all"
+                 />
+              </div>
+              <div className="relative">
+                 <textarea 
+                    placeholder="Your Message" 
+                    rows={6}
+                    className="w-full p-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all resize-none"
+                 />
+              </div>
+              
+              {/* Optional: Add a Send Button if needed for functionality, 
+              though not in image 10, it completes the form pattern */}
+              <div className="pt-4">
+                 <button className="w-full h-16 rounded-2xl bg-[#f97316] text-white font-black text-lg shadow-xl shadow-orange-500/20 hover:bg-orange-600 transition-all hover:scale-[1.01] active:scale-95">
+                    Send Message
+                 </button>
+              </div>
+           </div>
+        </section>
+
+        {/* FOOTER CTA & ILLUSTRATION (Image Style) */}
+        <section className="bg-white border-t border-slate-100">
+           {/* Detailed Corporate Illustration */}
+           <div className="px-8 py-10 flex justify-center bg-white">
+              <div className="w-full max-w-md h-64 relative opacity-60">
+                 <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full grayscale opacity-70">
+                    <rect x="150" y="50" width="120" height="80" rx="4" stroke="#64748b" strokeWidth="2" fill="#f1f5f9" />
+                    <circle cx="170" cy="90" r="20" fill="#e2e8f0" />
+                    <rect x="200" y="70" width="50" height="15" fill="#cbd5e1" rx="2" />
+                    <rect x="200" y="90" width="40" height="10" fill="#cbd5e1" rx="2" />
+                    <path d="M100 240 L120 200 L140 240 Z" fill="#94a3b8" />
+                    <circle cx="110" cy="220" r="10" fill="#94a3b8" />
+                    <rect x="250" y="180" width="30" height="80" fill="#64748b" rx="4" />
+                    <rect x="200" y="200" width="100" height="60" rx="30" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
+                    <path d="M50 100 Q80 80 110 100 T170 100" stroke="#cbd5e1" strokeWidth="2" fill="none" />
+                    <circle cx="80" cy="50" r="10" fill="#cbd5e1" />
+                    <circle cx="350" cy="70" r="15" fill="#e2e8f0" stroke="#cbd5e1" />
+                    <rect x="80" y="150" width="60" height="40" rx="5" fill="#cbd5e1" />
+                 </svg>
+              </div>
+           </div>
+
+           {/* Create Your VCard Promotion Section */}
+           <div className="bg-[#fff5f1] px-8 py-20 flex flex-col items-center">
+              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight mb-12 text-center">Create Your Vcard</h2>
+              
+              {/* URL Display Box */}
+              <div className="w-full max-w-sm bg-white rounded-2xl h-16 px-6 flex items-center justify-between shadow-sm border border-slate-100 mb-8">
+                 <span className="text-sm font-bold text-[#0f172a] truncate opacity-80">
+                    {baseUrl}/{slug}
+                 </span>
+                 <ExternalLink className="w-5 h-5 text-orange-500 shrink-0" />
+              </div>
+
+              {/* Final Add to Contact Button */}
+              <div className="w-full max-w-sm">
+                 <button 
+                    onClick={() => onDownloadVCard?.()}
+                    className="w-full h-16 rounded-2xl bg-[#FF7222] text-white font-black text-lg shadow-xl shadow-orange-500/20 hover:bg-[#E65F1B] transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center"
+                 >
+                    Add to Contact
+                 </button>
+              </div>
+           </div>
+        </section>
+
+        {/* Footer info */}
+        <footer className="px-8 py-10 border-t border-white/5 flex flex-col items-center gap-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+           <span>{name} © {new Date().getFullYear()}</span>
+        </footer>
       </div>
     </div>
   );
 }
-
