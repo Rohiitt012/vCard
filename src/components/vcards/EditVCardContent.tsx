@@ -515,7 +515,7 @@ function getPreviewType(template: { id: number; name: string }): "flower" | "flo
   if (n.includes("flower snap")) return "flower-snap";
   if (n.includes("flower garden") || n.includes("wedding planner") || n.includes("salon") || n.includes("boutique shop") || n.includes("floral") || n.includes("dental care")) return "flower";
   if (n.includes("flower shop") || (n.includes("garden") && !n.includes("flower garden"))) return "flower-shop";
-  if (n.includes("travel explorer") || n.includes("travel agent")) return "travel";
+  if (n.includes("travel explorer") || n.includes("travel agent") || n.includes("travel vcard") || n.includes("travel")) return "travel";
   if (n.includes("tours") || n.includes("travel agency") || n.includes("horizon pro")) return "travel-dark";
   if (n.includes("executive") || n.includes("modern minimal") || n.includes("consulting") || n.includes("simple contact") || n.includes("nonprofit") || n.includes("insurance") || n.includes("restaurant") || n.includes("realtor") || n.includes("yoga") || n.includes("freelancer")) return "personal";
   if (n.includes("corporate") || n.includes("legal") || n.includes("finance pro")) return "corporate";
@@ -2573,6 +2573,69 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                       </div>
                                     </div>
                                   </section>
+                                </div>
+                              </div>
+                            </div>
+                          ) : previewType === "travel" ? (
+                            <div className="flex-1 bg-sky-50 flex items-center justify-center px-4 py-6">
+                              <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-sky-100 relative group/travel-p">
+                                <div className="max-h-[520px] overflow-y-auto">
+                                  <div className="relative h-36 w-full overflow-hidden">
+                                    <div className="absolute inset-0 bg-sky-600">
+                                       <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover opacity-60" alt="" />
+                                    </div>
+                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                      <p className="text-[40px] font-black text-slate-900/10 tracking-widest uppercase">TRAVEL</p>
+                                    </div>
+                                    <div className="absolute inset-0 pointer-events-none">
+                                      <svg viewBox="0 0 280 144" className="w-full h-full">
+                                        <path d="M 230 40 C 200 130, 50 120, 100 80 C 150 40, 250 100, 200 140" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" className="opacity-50" />
+                                        <circle cx="200" cy="140" r="3" fill="#fbbf24" className="animate-pulse" />
+                                      </svg>
+                                    </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                                  </div>
+                                  
+                                  <div className="px-4 -mt-10 relative z-10 space-y-4">
+                                    <div className="flex items-end gap-3">
+                                      <div className="w-16 h-16 rounded-2xl border-4 border-white bg-sky-100 shadow-lg overflow-hidden shrink-0" />
+                                      <div className="pb-1">
+                                        <p className="text-slate-800 font-black text-xs">Bessie Cooper</p>
+                                        <p className="text-amber-500 font-bold text-[9px]">Travel Agent</p>
+                                      </div>
+                                    </div>
+                                    
+                                    <div className="flex justify-start gap-2">
+                                      {[1, 2, 3, 4, 5].map(i => (
+                                        <div key={i} className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 text-[10px] border border-slate-100 italic font-bold">
+                                          {i === 1 ? 'f' : i === 2 ? 'w' : i === 3 ? 'in' : i === 4 ? 'ig' : 'x'}
+                                        </div>
+                                      ))}
+                                    </div>
+                                    
+                                    <div className="space-y-2">
+                                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Email</p>
+                                        <p className="text-slate-700 text-[10px] font-semibold truncate">travel@example.com</p>
+                                      </div>
+                                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Mobile</p>
+                                        <p className="text-slate-700 text-[10px] font-semibold truncate">+49 95864 12484</p>
+                                      </div>
+                                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Official Website</p>
+                                        <p className="text-slate-700 text-[10px] font-semibold truncate">www.travelexplorer.com</p>
+                                      </div>
+                                    </div>
+                                    
+                                    <div className="h-20 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center">
+                                      <p className="text-sky-400 text-[10px]">Travel Gallery Preview</p>
+                                    </div>
+                                    
+                                    <button className="w-full bg-amber-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-amber-200">
+                                      Save Contact
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </div>

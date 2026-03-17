@@ -4,14 +4,14 @@ interface SocialCircleIconProps {
   platform: string;
   url?: string;
   size?: number;
+  className?: string;
 }
 
-export const SocialCircleIcon = ({ platform, url, size = 36 }: SocialCircleIconProps) => {
+export const SocialCircleIcon = ({ platform, url, size = 36, className = "" }: SocialCircleIconProps) => {
   const id = platform.toLowerCase();
   const iconSize = Math.floor(size * 0.55);
   
-  const base =
-    "flex items-center justify-center rounded-full text-white shrink-0 shadow-md transition-transform hover:scale-110 active:scale-95 overflow-hidden ring-1 ring-black/5";
+  const base = `flex items-center justify-center rounded-full text-white shrink-0 shadow-md transition-transform hover:scale-110 active:scale-95 overflow-hidden ring-1 ring-black/5 ${className}`;
   
   const style = {
     width: `${size}px`,

@@ -5,7 +5,7 @@ import type { VCardItem } from "@/context/VCardsContextTypes";
 
 interface Props {
   card: VCardItem;
-  exclude?: ("testimonials" | "galleries" | "businessHours" | "services" | "products")[];
+  exclude?: ("testimonials" | "galleries" | "businessHours" | "services" | "products" | "blogs")[];
 }
 
 export function VCardDynamicSections({ card, exclude = [] }: Props) {

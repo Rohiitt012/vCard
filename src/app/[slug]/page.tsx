@@ -20,6 +20,8 @@ import { MedicalVCardTemplate } from "@/components/MedicalVCardTemplate";
 import { MinimalVCardTemplate } from "@/components/MinimalVCardTemplate";
 import { PhotoVCardTemplate } from "@/components/PhotoVCardTemplate";
 import { PropertyVCardTemplate } from "@/components/PropertyVCardTemplate";
+import { TravelVCardTemplate } from "@/components/TravelVCardTemplate";
+import { CreativeVCardTemplate } from "@/components/CreativeVCardTemplate";
 
 const BUSINESS_HOURS_DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -434,10 +436,27 @@ export default function PublicVCardPage() {
     );
   }
 
+  const isTravelTemplate =
+    card.selectedTemplateId === 5 ||
+    (card.templateName || "").toLowerCase().includes("travel") ||
+    (card.title || "").toLowerCase().includes("travel");
+
+  if (isTravelTemplate) {
+    return (
+      <VCardWidthShell>
+        <TravelVCardTemplate
+          card={card}
+          slug={slug}
+          baseUrl={baseUrl}
+          onDownloadVCard={() => downloadVCard(card, baseUrl)}
+        />
+      </VCardWidthShell>
+    );
+  }
+
   const isMedicalTemplate =
     card.selectedTemplateId === 9 ||
     (card.templateName || card.title || "").toLowerCase().includes("medical") ||
-    (card.templateName || card.title || "").toLowerCase().includes("travel") ||
     (card.templateName || "").toLowerCase().includes("geeky");
 
   if (isMedicalTemplate) {
@@ -1147,281 +1166,18 @@ export default function PublicVCardPage() {
 
   const isCreativeStudioTemplate =
     card.selectedTemplateId === 3 ||
-    (card.templateName || card.title || "").toLowerCase().includes("creative studio");
+    (card.templateName || card.title || "").toLowerCase().includes("creative studio") ||
+    (card.templateName || "").toLowerCase().includes("creative vcard");
 
   if (isCreativeStudioTemplate) {
-    const websiteUrl =
-      card.website && card.website.trim()
-        ? card.website.trim().startsWith("http")
-          ? card.website.trim()
-          : `https://${card.website.trim()}`
-        : undefined;
-
-    const subtitle =
-      card.occupation || card.tagline || "Product designer · Developer";
-    const description =
-      card.description ||
-      "Designing and building thoughtful digital products, interfaces and systems with a focus on clarity and craft.";
-
-    const topics =
-      (card.services && card.services.length > 0
-        ? card.services.map((s: any) => s.title || s.name)
-        : []) ||
-      [];
-
-    const tags =
-      topics.length > 0
-        ? topics.slice(0, 5)
-        : ["Product design", "Frontend", "Systems", "Writing", "Strategy"];
-
-    const geekyStats =
-      (card as any).stats && Array.isArray((card as any).stats)
-        ? (card as any).stats
-        : [
-            { label: "Years building on the web", value: "10+" },
-            { label: "Public projects & case studies", value: "25+" },
-            { label: "Writing & talks", value: "40+" },
-          ];
-
-    const blogItems =
-      card.blogs && card.blogs.length > 0
-        ? card.blogs.slice(0, 4)
-        : [
-            {
-              id: "geeky-1",
-              title: "Designing interfaces that survive real usage",
-              description:
-                "Notes on constraints, naming and layering that keep products stable as they grow.",
-              icon: "",
-            },
-            {
-              id: "geeky-2",
-              title: "Shipping fast without destroying quality",
-              description:
-                "A practical approach to slicing work, making tradeoffs and writing things down.",
-              icon: "",
-            },
-          ];
-
     return (
       <VCardWidthShell>
-        <div className="rounded-[2.25rem] overflow-hidden shadow-2xl border border-slate-800 bg-[#020617] text-slate-50">
-          <div className="px-4 sm:px-5 py-6">
-          {/* Header */}
-          <header className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-xl bg-sky-500 flex items-center justify-center text-slate-950 font-semibold text-sm shadow-md">
-                {(card.title || "GK")[0]?.toUpperCase()}
-              </div>
-              <div className="space-y-0.5">
-                <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-slate-300">
-                  Geeky profile
-                </span>
-                <p className="text-xs text-slate-400">
-                  {websiteUrl
-                    ? websiteUrl.replace(/^https?:\/\//, "")
-                    : `${baseUrl.replace(/^https?:\/\//, "")}/${slug}`}
-                </p>
-              </div>
-            </div>
-            <div className="hidden md:flex items-center gap-3 text-[11px] text-slate-300">
-              <span className="rounded-full border border-slate-700/80 px-3 py-1">
-                About
-              </span>
-              <span className="rounded-full border border-slate-800 px-3 py-1">
-                Work
-              </span>
-              <span className="rounded-full border border-slate-800 px-3 py-1">
-                Writing
-              </span>
-              <span className="rounded-full border border-slate-800 px-3 py-1">
-                Contact
-              </span>
-            </div>
-          </header>
-
-          {/* Hero + sidebar layout */}
-          <main className="mt-10 md:mt-14 grid md:grid-cols-[minmax(0,1.6fr),minmax(0,1fr)] gap-10 items-start">
-            {/* Main column */}
-            <section className="space-y-7">
-              <div className="space-y-4">
-                <p className="inline-flex items-center rounded-full bg-emerald-500/10 border border-emerald-400/40 px-3 py-1 text-[11px] font-medium text-emerald-200">
-                  Available for selected projects
-                </p>
-                <div className="space-y-2">
-                  <h1 className="text-3xl sm:text-[2.4rem] md:text-[2.7rem] font-semibold leading-tight tracking-tight">
-                    {card.title || "Geeky product builder"}
-                  </h1>
-                  <p className="text-sm sm:text-[15px] text-slate-200">
-                    {subtitle}
-                  </p>
-                </div>
-                <p className="text-sm sm:text-[15px] text-slate-300 leading-relaxed max-w-2xl">
-                  {description}
-                </p>
-              </div>
-
-              {/* Tag chips */}
-              <div className="flex flex-wrap gap-2 text-[11px]">
-                {tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1 text-slate-200"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Primary actions */}
-              <div className="no-print flex flex-wrap items-center gap-3 pt-1">
-                <button
-                  type="button"
-                  onClick={() => downloadVCard(card, baseUrl)}
-                  className="inline-flex items-center gap-2 rounded-full bg-sky-500 text-[12px] font-semibold text-slate-950 px-6 py-2.5 shadow-md hover:bg-sky-400 transition-colors"
-                >
-                  + Download vCard / Add to contact
-                </button>
-                {websiteUrl && (
-                  <a
-                    href={websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-[11px] font-medium text-slate-100 hover:border-sky-500/70"
-                  >
-                    Open full site
-                  </a>
-                )}
-              </div>
-
-              {/* Long-form about / narrative */}
-              <section className="mt-4 space-y-4 text-[13px] text-slate-200 leading-relaxed">
-                <p>
-                  I work with teams to define how their products should feel, behave and be
-                  implemented. From the first conversation to the last pull request, the focus is on
-                  real constraints, maintainable systems and clear communication.
-                </p>
-                <p>
-                  Over the years this has meant designing dashboards, public marketing sites,
-                  internal tools, onboarding flows and component libraries – usually all connected
-                  to each other. I enjoy working where design and engineering overlap.
-                </p>
-              </section>
-
-              {/* Writing / articles list */}
-              <section className="mt-6 space-y-4">
-                <div className="flex items-center justify-between gap-3">
-                  <h2 className="text-sm font-semibold text-slate-50">
-                    Latest writing & notes
-                  </h2>
-                  <span className="text-[11px] text-slate-400">
-                    {blogItems.length} selected entries
-                  </span>
-                </div>
-                <div className="space-y-3">
-                  {blogItems.map((b) => (
-                    <article
-                      key={b.id}
-                      className="rounded-2xl border border-slate-800 bg-slate-950/60 px-4 py-3.5 hover:border-sky-500/60 transition-colors"
-                    >
-                      <p className="text-[12px] font-semibold text-slate-50">
-                        {b.title}
-                      </p>
-                      {b.description && (
-                        <p className="mt-1 text-[11px] text-slate-300 leading-relaxed">
-                          {b.description}
-                        </p>
-                      )}
-                    </article>
-                  ))}
-                </div>
-              </section>
-            </section>
-
-            {/* Sidebar column */}
-            <aside className="space-y-5">
-              {/* Avatar card */}
-              <div className="rounded-3xl border border-slate-800 bg-slate-950/80 px-5 py-5 flex flex-col items-center gap-3">
-                <div className="relative h-20 w-20 rounded-2xl overflow-hidden bg-slate-800 flex items-center justify-center">
-                  {card.image ? (
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      width={80}
-                      height={80}
-                      className="object-cover"
-                    />
-                  ) : (
-                    <span className="text-3xl font-semibold text-slate-100">
-                      {card.title?.charAt(0)?.toUpperCase() || "G"}
-                    </span>
-                  )}
-                </div>
-                <div className="text-center space-y-1">
-                  <p className="text-[13px] font-semibold">
-                    {card.title || "Geeky profile"}
-                  </p>
-                  <p className="text-[11px] text-slate-400">
-                    {subtitle}
-                  </p>
-                </div>
-                <div className="mt-1 space-y-1 text-[11px] text-slate-300 w-full">
-                  {card.email && <p>{card.email}</p>}
-                  {card.phone && <p>{card.phone}</p>}
-                  {card.address && <p>{card.address}</p>}
-                </div>
-              </div>
-
-              {/* Stats */}
-              <div className="rounded-3xl border border-slate-800 bg-slate-950/80 px-5 py-4 space-y-3 text-[11px]">
-                <p className="text-[11px] font-semibold text-slate-200">
-                  Snapshot
-                </p>
-                <div className="space-y-2">
-                  {geekyStats.slice(0, 3).map((s: any, idx: number) => (
-                    <div
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={idx}
-                      className="flex items-baseline justify-between gap-3"
-                    >
-                      <span className="text-[11px] text-slate-400">
-                        {s.label}
-                      </span>
-                      <span className="text-[12px] font-semibold text-slate-50">
-                        {s.value ?? s}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Simple "code" block – how I work */}
-              <div className="rounded-3xl border border-slate-800 bg-slate-950/90 px-4 py-4">
-                <p className="mb-2 text-[11px] text-sky-300">
-                  // How I usually work
-                </p>
-                <pre className="text-[11px] leading-relaxed text-slate-200 overflow-x-auto">
-{`project.setup({
-  focus: "shipping real interfaces",
-  expectations: ["clear scope", "written decisions"],
-  tools: ["Figma", "VS Code", "GitHub"]
-});`}
-                </pre>
-              </div>
-            </aside>
-          </main>
-
-          {/* Simple footer */}
-          <footer className="mt-10 border-t border-slate-800 pt-4 flex flex-col md:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
-            <p>
-              © {new Date().getFullYear()} {card.title || "Geeky profile"}
-            </p>
-            <p>
-              Built as a long single page so you can adapt it into a card layout later.
-            </p>
-          </footer>
-          </div>
-        </div>
+        <CreativeVCardTemplate
+          card={card}
+          slug={slug}
+          baseUrl={baseUrl}
+          onDownloadVCard={() => downloadVCard(card, baseUrl)}
+        />
       </VCardWidthShell>
     );
   }
