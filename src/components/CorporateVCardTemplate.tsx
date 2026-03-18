@@ -3,7 +3,7 @@ import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
-import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles } from "lucide-react";
 
 type Props = {
   card: VCardItem;
@@ -229,63 +229,98 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
            />
         </section>
 
-        {/* IDENTITY SECTION (Image 1 Style Overlap) */}
-        <section className="relative px-8 pt-0 pb-12 z-20 -mt-24">
-           <div className="flex flex-col md:flex-row items-end gap-6 mb-10">
-              {/* Profile Image with thick white border */}
-              <div className="relative group shrink-0">
-                 <div className="absolute -inset-1 rounded-[40px] bg-white opacity-20 blur-md pointer-events-none" />
-                 <div className="relative w-44 h-44 rounded-[36px] border-4 border-white overflow-hidden shadow-2xl bg-[#0A0C14]">
+        {/* IDENTITY SECTION (Image 1 Style Overlap - Centered) */}
+        <section className="relative px-8 pt-0 pb-10 z-20 -mt-24 flex flex-col items-center text-center">
+            {/* Profile Image with thick white border */}
+            <div className="relative group shrink-0 mb-6">
+                <div className="absolute -inset-1 rounded-[40px] bg-white opacity-20 blur-md pointer-events-none" />
+                <div className="relative w-44 h-44 rounded-full border-4 border-white overflow-hidden shadow-2xl bg-[#0A0C14]">
                     {card.image ? (
-                      <Image
-                        src={card.image}
-                        alt={name}
-                        fill
-                        className="object-cover"
-                        unoptimized={card.image.startsWith("data:")}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950">
-                        <span className="text-5xl font-bold text-white/20">
-                          {name.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                    )}
-                 </div>
-              </div>
-
-              {/* Name and Role */}
-              <div className="flex-1 pb-4">
-                 <h1 className="text-4xl font-black tracking-tight leading-none text-slate-900 mb-2">
-                    {name}
-                 </h1>
-                 <p className="text-lg font-bold text-slate-500 tracking-wide uppercase text-[12px]">
-                    {role}
-                 </p>
-                 
-                 {/* Social Icons NEXT TO identity (Image 1 style) */}
-                 <div className="flex flex-wrap items-center gap-4 mt-6">
-                    {card.socialLinks && card.socialLinks.length > 0 ? (
-                      card.socialLinks.map((link, idx) => (
-                        <SocialCircleIcon 
-                          key={idx} 
-                          platform={link.platform} 
-                          url={link.url} 
-                          size={32} 
-                          bgColor={accentColor}
-                          className="transition-transform hover:scale-110 shadow-lg"
+                        <Image
+                            src={card.image}
+                            alt={name}
+                            fill
+                            className="object-cover"
+                            unoptimized={card.image.startsWith("data:")}
                         />
-                      ))
                     ) : (
-                      <div className="flex gap-4">
-                         {['facebook', 'whatsapp', 'linkedin', 'instagram', 'twitter'].map(p => (
-                            <SocialCircleIcon key={p} platform={p} size={32} bgColor={accentColor} />
-                         ))}
-                      </div>
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950">
+                            <span className="text-5xl font-bold text-white/20">
+                                {name.charAt(0).toUpperCase()}
+                            </span>
+                        </div>
                     )}
-                 </div>
-              </div>
-           </div>
+                </div>
+            </div>
+
+            {/* Name and Role */}
+            <div className="space-y-2 mb-8">
+                <h1 className="text-[32px] font-bold text-slate-900 leading-tight">
+                    {name}
+                </h1>
+                <p className="text-[17px] font-medium text-slate-400">
+                    {role}
+                </p>
+            </div>
+
+            {/* Social Icons row (Image 1 Style) */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mb-10">
+                {card.socialLinks && card.socialLinks.length > 0 ? (
+                    card.socialLinks.map((link, idx) => (
+                        <SocialCircleIcon
+                            key={idx}
+                            platform={link.platform}
+                            url={link.url}
+                            size={44}
+                            className="shadow-none ring-0 transition-transform hover:scale-110"
+                        />
+                    ))
+                ) : (
+                    <div className="flex gap-6">
+                        {['facebook', 'instagram', 'linkedin', 'whatsapp', 'twitter'].map(p => (
+                            <SocialCircleIcon key={p} platform={p} size={44} className="shadow-none ring-0" />
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* CONTACT CARDS GRID MOVED TO START (Image 1 Style) */}
+            {(email || phone || address || card.birthDate) && (
+                <div className="w-full max-w-md grid grid-cols-2 gap-x-4 gap-y-12 pb-6">
+                    {email && (
+                        <div className="flex flex-col items-center text-center gap-3">
+                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                                <Mail className="w-6 h-6" />
+                            </div>
+                            <p className="text-[14px] font-bold text-slate-800 break-all">{email}</p>
+                        </div>
+                    )}
+                    {card.birthDate && (
+                        <div className="flex flex-col items-center text-center gap-3">
+                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                                <Cake className="w-6 h-6" />
+                            </div>
+                            <p className="text-[14px] font-bold text-slate-800">{card.birthDate}</p>
+                        </div>
+                    )}
+                    {phone && (
+                        <div className="flex flex-col items-center text-center gap-3">
+                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                                <Phone className="w-6 h-6" />
+                            </div>
+                            <p className="text-[14px] font-bold text-slate-800">{phone}</p>
+                        </div>
+                    )}
+                    {address && (
+                        <div className="flex flex-col items-center text-center gap-3">
+                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                                <MapPin className="w-6 h-6" />
+                            </div>
+                            <p className="text-[14px] font-bold text-slate-800 leading-snug">{address}</p>
+                        </div>
+                    )}
+                </div>
+            )}
 
            {/* DESCRIPTION */}
            <div className="max-w-md">
@@ -436,83 +471,38 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
            </div>
         </section>
 
-        {/* PREMIUM CONTACT CARDS */}
-        {(email || phone || address || card.birthDate) && (
-           <section className="px-8 py-16 bg-white border-t border-slate-50 relative">
-              <div className="grid grid-cols-2 gap-x-4 gap-y-12">
-                 {email && (
-                    <div className="relative pt-6">
-                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
-                          <Mail className="w-5 h-5 text-white" />
-                       </div>
-                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
-                          <p className="text-[13px] font-bold text-[#1e293b] break-all">{email}</p>
-                       </div>
-                    </div>
-                 )}
-                 {phone && (
-                    <div className="relative pt-6">
-                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
-                          <Phone className="w-5 h-5 text-white" />
-                       </div>
-                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
-                          <p className="text-[13px] font-bold text-[#1e293b]">{phone}</p>
-                       </div>
-                    </div>
-                 )}
-                 {card.birthDate && (
-                    <div className="relative pt-6">
-                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
-                          <Cake className="w-5 h-5 text-white" />
-                       </div>
-                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
-                          <p className="text-[13px] font-bold text-[#1e293b]">{card.birthDate}</p>
-                       </div>
-                    </div>
-                 )}
-                 {address && (
-                    <div className="relative pt-6">
-                       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white shadow-xl z-20">
-                          <MapPin className="w-5 h-5 text-white" />
-                       </div>
-                       <div className="bg-white rounded-[24px] p-6 pt-10 text-center shadow-lg h-full flex items-center justify-center">
-                          <p className="text-[13px] font-bold text-[#1e293b]">{address}</p>
-                       </div>
-                    </div>
-                 )}
-              </div>
-           </section>
-        )}
-
-        {/* OUR SERVICES - OVAL STYLE (Image Style) */}
+        {/* OUR SERVICES - EXPERTISE VALUE DESIGN (MATCH IMAGE) */}
         {services && services.length > 0 && (
-           <section className="px-8 py-20 bg-white relative overflow-hidden">
-              {/* Background Watermark Text */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] select-none">
-                 <div className="text-[120px] font-black leading-none text-slate-900 text-center uppercase tracking-tighter">
-                    STRATEGY<br/>EXPERIENCE<br/>KNOWLEDGE
-                 </div>
-              </div>
-
-              <div className="relative z-10">
-                 <div className="text-center mb-16">
-                    <h2 className="text-3xl font-black text-[#0f172a] tracking-tight">Our Services</h2>
+           <section className="px-8 py-32 bg-white border-t border-slate-50 relative overflow-hidden">
+              <div className="relative z-10 max-w-xl mx-auto">
+                 {/* Heading Group */}
+                 <div className="mb-20">
+                    <p className="text-[14px] font-black tracking-[0.2em] text-[#3F51B5] mb-2 uppercase">EXPERTISE</p>
+                    <h2 className="text-[40px] font-black text-[#111827] tracking-tight leading-none italic">
+                       How I create value
+                    </h2>
                  </div>
 
-                 <div className="flex flex-col gap-12">
-                    {services.slice(0, 2).map((s: any, idx: number) => (
-                       <div key={idx} className="flex justify-center">
-                          <div className="w-full max-w-[280px] aspect-[4/5] rounded-[140px] border-2 border-dashed border-orange-500 bg-[#fff7ed] p-10 flex flex-col items-center justify-center text-center shadow-2xl relative transition-transform hover:scale-[1.02]">
-                             <div className="mb-6">
-                                {idx === 0 ? (
-                                   <Target className="w-12 h-12 text-orange-500" />
-                                ) : (
-                                   <Presentation className="w-12 h-12 text-orange-500" />
-                                )}
+                 <div className="flex flex-col gap-6">
+                    {services.map((s: any, idx: number) => (
+                       <div 
+                         key={idx} 
+                         className="group flex items-center gap-8 p-12 bg-white rounded-[50px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.06)] border border-slate-50 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(63,81,181,0.12)] hover:translate-y-[-5px]"
+                       >
+                          {/* Sparkle Icon Container */}
+                          <div className="flex-shrink-0">
+                             <div className="w-24 h-24 rounded-full bg-[#EBF3FF] flex items-center justify-center text-[#94A3B8]">
+                                <Sparkles className="w-10 h-10 fill-[#94A3B8] stroke-none" />
                              </div>
-                             <h3 className="text-xl font-black text-[#0f172a] mb-4">{s.name || s.title}</h3>
-                             <p className="text-[13px] text-slate-500 leading-relaxed">
-                                {s.description || s.details || "Supporting organizations through clear narrative and reliable delivery."}
+                          </div>
+
+                          {/* Content */}
+                          <div className="flex-1 space-y-3">
+                             <h3 className="text-[26px] font-black text-[#111827] tracking-tight">
+                                {s.name || s.title}
+                             </h3>
+                             <p className="text-[17px] font-medium text-slate-400 leading-snug max-w-[340px]">
+                                {s.description || s.details}
                              </p>
                           </div>
                        </div>
@@ -801,34 +791,32 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
            </div>
         </section>
 
-        {/* BUSINESS HOURS SECTION (Image Style) */}
+        {/* BUSINESS HOURS SECTION (Image Style - Grid Layout) */}
         <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
-           <div className="text-center mb-10">
-              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Business Hours</h2>
+           <div className="text-center mb-12">
+              <h2 className="text-[32px] font-bold text-[#3F51B5] tracking-tight text-center">Business Hours</h2>
            </div>
 
-           <div className="max-w-md mx-auto">
-              <div className="rounded-[24px] border-2 border-orange-500/80 bg-white p-10 shadow-sm relative z-10">
-                 <div className="space-y-6">
-                    {[
-                      { day: 'Sunday', time: '08:10 - 20:00' },
-                      { day: 'Monday', time: '08:10 - 20:00' },
-                      { day: 'Tuesday', time: '08:10 - 20:00' },
-                      { day: 'Wednesday', time: '08:10 - 10:00' },
-                      { day: 'Thursday', time: '08:10 - 20:00' },
-                      { day: 'Friday', time: '08:10 - 20:00' },
-                      { day: 'Saturday', time: 'Closed' },
-                    ].map((item, idx) => (
-                       <div key={idx} className="flex justify-between items-center group">
-                          <span className="text-xl font-bold text-[#1e293b] group-hover:text-orange-500 transition-colors">
-                             {item.day} :
-                          </span>
-                          <span className="text-xl font-bold text-[#1e293b]">
-                             {item.time}
-                          </span>
-                       </div>
-                    ))}
-                 </div>
+           <div className="max-w-xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                 {[
+                   { day: 'Sunday', time: '08:10 - 20:00' },
+                   { day: 'Monday', time: '08:10 - 20:00' },
+                   { day: 'Tuesday', time: '08:10 - 20:00' },
+                   { day: 'Wednesday', time: '08:10 - 10:00' },
+                   { day: 'Thursday', time: '08:10 - 20:00' },
+                   { day: 'Friday', time: '08:10 - 20:00' },
+                   { day: 'Saturday', time: 'Closed' },
+                 ].map((item, idx) => (
+                    <div 
+                      key={idx} 
+                      className="bg-[#F0F5FA] rounded-md py-4 px-6 flex items-center justify-center transition-all hover:bg-[#E1EBF5]"
+                    >
+                       <span className="text-[17px] font-bold text-[#3F51B5] whitespace-nowrap">
+                          {item.day} : {item.time}
+                       </span>
+                    </div>
+                 ))}
               </div>
            </div>
 
@@ -890,49 +878,77 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
               </div>
            </div>
         </section>
+            {/* CONTACT US SECTION (Image Style - Redesigned) */}
+        <section className="px-8 py-20 bg-[#F4F7FB] border-t border-slate-100 relative overflow-hidden">
+           {/* Abstract Background Shapes */}
+           <div className="absolute top-20 right-[-50px] w-[300px] h-[300px] bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
+           <div className="absolute bottom-10 left-[-30px] w-[200px] h-[200px] bg-blue-50/50 rounded-full blur-2xl pointer-events-none" />
+           
+           <div className="relative z-10">
+              <div className="text-center mb-12">
+                 <h2 className="text-[32px] font-bold text-[#3F51B5] tracking-tight text-center">Contact Us</h2>
+              </div>
 
-        {/* CONTACT US SECTION (Image Style) */}
-        <section className="px-8 py-20 bg-white border-t border-slate-100 relative z-10">
-           <div className="text-center mb-12">
-              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Contact Us</h2>
-           </div>
+              <div className="max-w-xl mx-auto space-y-6">
+                 {/* Name Field */}
+                 <div className="space-y-2">
+                    <label className="text-sm font-bold text-[#3F51B5] ml-1">Your Name</label>
+                    <div className="relative">
+                       <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900">
+                          <User className="w-6 h-6" />
+                       </span>
+                       <input 
+                          type="text" 
+                          className="w-full h-[60px] pl-16 pr-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all"
+                       />
+                    </div>
+                 </div>
 
-           <div className="max-w-md mx-auto space-y-4">
-              <div className="relative">
-                 <input 
-                    type="text" 
-                    placeholder="Full Name" 
-                    className="w-full h-16 px-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all"
-                 />
-              </div>
-              <div className="relative">
-                 <input 
-                    type="email" 
-                    placeholder="Email Address" 
-                    className="w-full h-16 px-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all"
-                 />
-              </div>
-              <div className="relative">
-                 <input 
-                    type="tel" 
-                    placeholder="Phone Number" 
-                    className="w-full h-16 px-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all"
-                 />
-              </div>
-              <div className="relative">
-                 <textarea 
-                    placeholder="Your Message" 
-                    rows={6}
-                    className="w-full p-6 rounded-2xl bg-[#f8f9fa] text-slate-900 placeholder:text-slate-400 font-bold focus:ring-2 focus:ring-orange-500/10 focus:bg-white outline-none transition-all resize-none"
-                 />
-              </div>
-              
-              {/* Optional: Add a Send Button if needed for functionality, 
-              though not in image 10, it completes the form pattern */}
-              <div className="pt-4">
-                 <button className="w-full h-16 rounded-2xl bg-[#f97316] text-white font-black text-lg shadow-xl shadow-orange-500/20 hover:bg-orange-600 transition-all hover:scale-[1.01] active:scale-95">
-                    Send Message
-                 </button>
+                 {/* Email Field */}
+                 <div className="space-y-2">
+                    <label className="text-sm font-bold text-[#3F51B5] ml-1">E-mail</label>
+                    <div className="relative">
+                       <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900">
+                          <Mail className="w-6 h-6" />
+                       </span>
+                       <input 
+                          type="email" 
+                          className="w-full h-[60px] pl-16 pr-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all"
+                       />
+                    </div>
+                 </div>
+
+                 {/* Phone Field */}
+                 <div className="space-y-2">
+                    <label className="text-sm font-bold text-[#3F51B5] ml-1">Phone</label>
+                    <div className="relative">
+                       <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900">
+                          <Phone className="w-6 h-6" />
+                       </span>
+                       <input 
+                          type="tel" 
+                          className="w-full h-[60px] pl-16 pr-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all"
+                       />
+                    </div>
+                 </div>
+
+                 {/* Message Field */}
+                 <div className="space-y-2">
+                    <label className="text-sm font-bold text-[#3F51B5] ml-1">Message</label>
+                    <div className="relative">
+                       <textarea 
+                          placeholder="Type a message here..." 
+                          rows={6}
+                          className="w-full p-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all resize-none"
+                       />
+                    </div>
+                 </div>
+                 
+                 <div className="flex justify-end pt-2">
+                    <button className="px-10 h-[54px] rounded-lg bg-[#3241A9] text-white font-bold text-base shadow-lg hover:bg-[#28348a] transition-all hover:translate-y-[-2px] active:translate-y-0">
+                       Send Message
+                    </button>
+                 </div>
               </div>
            </div>
         </section>
@@ -942,20 +958,42 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
            {/* Detailed Corporate Illustration */}
            <div className="px-8 py-10 flex justify-center bg-white">
               <div className="w-full max-w-md h-64 relative opacity-60">
-                 <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full grayscale opacity-70">
-                    <rect x="150" y="50" width="120" height="80" rx="4" stroke="#64748b" strokeWidth="2" fill="#f1f5f9" />
-                    <circle cx="170" cy="90" r="20" fill="#e2e8f0" />
-                    <rect x="200" y="70" width="50" height="15" fill="#cbd5e1" rx="2" />
-                    <rect x="200" y="90" width="40" height="10" fill="#cbd5e1" rx="2" />
-                    <path d="M100 240 L120 200 L140 240 Z" fill="#94a3b8" />
-                    <circle cx="110" cy="220" r="10" fill="#94a3b8" />
-                    <rect x="250" y="180" width="30" height="80" fill="#64748b" rx="4" />
-                    <rect x="200" y="200" width="100" height="60" rx="30" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
-                    <path d="M50 100 Q80 80 110 100 T170 100" stroke="#cbd5e1" strokeWidth="2" fill="none" />
-                    <circle cx="80" cy="50" r="10" fill="#cbd5e1" />
-                    <circle cx="350" cy="70" r="15" fill="#e2e8f0" stroke="#cbd5e1" />
-                    <rect x="80" y="150" width="60" height="40" rx="5" fill="#cbd5e1" />
-                 </svg>
+                  <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-2xl">
+                    {/* Background Soft Glow */}
+                    <circle cx="200" cy="150" r="100" fill="url(#illust_glow)" opacity="0.4" />
+                    
+                    {/* Main Floating Card (Glassmorphism effect) */}
+                    <rect x="80" y="60" width="240" height="160" rx="24" fill="white" fillOpacity="0.8" stroke="#E2E8F0" strokeWidth="2" />
+                    <rect x="100" y="85" width="120" height="12" rx="6" fill="#F1F5F9" />
+                    <rect x="100" y="105" width="80" height="12" rx="6" fill="#F1F5F9" />
+                    <rect x="100" y="125" width="160" height="12" rx="6" fill="#F1F5F9" />
+                    
+                    {/* Accent Elements */}
+                    <circle cx="270" cy="115" r="30" fill="#3B82F6" fillOpacity="0.1" stroke="#3B82F6" strokeWidth="1.5" strokeDasharray="4 4" />
+                    <path d="M260 115 L280 115 M270 105 L270 125" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" />
+                    
+                    {/* Floating Growth Nodes */}
+                    <g className="animate-pulse" style={{ animationDuration: '3s' }}>
+                      <rect x="300" y="40" width="40" height="40" rx="12" fill="#FF7222" shadow-lg="true" />
+                      <path d="M312 65 L320 57 L328 65" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </g>
+                    
+                    <g className="animate-bounce" style={{ animationDuration: '4s' }}>
+                      <rect x="40" y="180" width="60" height="60" rx="20" fill="#3F51B5" />
+                      <circle cx="70" cy="210" r="12" stroke="white" strokeWidth="2" opacity="0.6" />
+                    </g>
+
+                    {/* Connecting Abstract Lines */}
+                    <path d="M40 80 Q100 40 160 80 T280 80" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.5" />
+                    <path d="M300 220 Q240 260 180 220 T60 220" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.5" />
+
+                    <defs>
+                      <radialGradient id="illust_glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 150) rotate(90) scale(150)">
+                        <stop stopColor="#3B82F6" stopOpacity="0.2" />
+                        <stop offset="1" stopColor="white" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+                  </svg>
               </div>
            </div>
 

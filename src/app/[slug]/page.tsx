@@ -11,6 +11,10 @@ import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { CafeVCardTemplate } from "@/components/CafeVCardTemplate";
 import { CorporateVCardTemplate } from "@/components/CorporateVCardTemplate";
+import { Corporate1VCardTemplate } from "@/components/Corporate1VCardTemplate";
+import { Corporate2VCardTemplate } from "@/components/Corporate2VCardTemplate";
+import { Corporate3VCardTemplate } from "@/components/Corporate3VCardTemplate";
+import { Corporate4VCardTemplate } from "@/components/Corporate4VCardTemplate";
 import { PlaseryExecutiveVCardTemplate } from "@/components/PlaseryExecutiveVCardTemplate";
 import { MedinovaFitnessVCardTemplate } from "@/components/MedinovaFitnessVCardTemplate";
 import { FloralVCardTemplate } from "@/components/FloralVCardTemplate";
@@ -181,7 +185,7 @@ export default function PublicVCardPage() {
   useEffect(() => {
     if (!card || viewCountIncremented.current) return;
     viewCountIncremented.current = true;
-    apiIncrementView(card.id).catch(() => {});
+    apiIncrementView(card.id).catch(() => { });
     if (cardFromContext) {
       setVCards((prev) =>
         prev.map((c) => (c.id === card.id ? { ...c, viewCount: (c.viewCount || 0) + 1 } : c))
@@ -329,10 +333,62 @@ export default function PublicVCardPage() {
     );
   }
 
+  const isCorporate1Template = card.selectedTemplateId === 13 || (card.templateName || "").toLowerCase().includes("corporate (1)");
+  if (isCorporate1Template) {
+    return (
+      <VCardWidthShell>
+        <Corporate1VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+
+  const isCorporate2Template = card.selectedTemplateId === 14 || (card.templateName || "").toLowerCase().includes("corporate (2)");
+  if (isCorporate2Template) {
+    return (
+      <VCardWidthShell>
+        <Corporate2VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+
+  const isCorporate3Template =
+    card.selectedTemplateId === 15 ||
+    (card.templateName || "").toLowerCase().includes("corporate (3)") ||
+    (card.templateName || "").toLowerCase().includes("cooporate (3)") ||
+    (card.templateName || "").toLowerCase().includes("corporate 3") ||
+    (card.templateName || "").toLowerCase().includes("cooporate 3") ||
+    (card.title || "").toLowerCase().includes("corporate 3") ||
+    (card.title || "").toLowerCase().includes("cooporate 3");
+  if (isCorporate3Template) {
+    return (
+      <VCardWidthShell>
+        <Corporate3VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+
+  const isCorporate4Template =
+    card.selectedTemplateId === 16 ||
+    (card.templateName || "").toLowerCase().includes("corporate (4)") ||
+    (card.templateName || "").toLowerCase().includes("cooporate (4)") ||
+    (card.templateName || "").toLowerCase().includes("corporate 4") ||
+    (card.templateName || "").toLowerCase().includes("cooporate 4") ||
+    (card.title || "").toLowerCase().includes("corporate 4") ||
+    (card.title || "").toLowerCase().includes("cooporate 4") ||
+    (slug === "cooporate-4") ||
+    (slug === "corporate-4");
+  if (isCorporate4Template) {
+    return (
+      <VCardWidthShell>
+        <Corporate4VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+
   const isCorporateTemplate =
-    card.selectedTemplateId === 7 ||
-    (card.templateName || card.title || "").toLowerCase().includes("corporate vcard") ||
-    (card.templateName || "").toLowerCase().includes("corporate");
+    [7, 17, 18, 19, 20].includes(card.selectedTemplateId || 0) ||
+    ((card.templateName || card.title || "").toLowerCase().includes("corporate") ||
+      (card.templateName || card.title || "").toLowerCase().includes("cooporate"));
 
   if (isCorporateTemplate) {
     return (
@@ -612,7 +668,7 @@ export default function PublicVCardPage() {
               <div className="absolute left-0 top-1/3 -translate-y-1/2 w-[110px] h-[110px] p-4 bg-white rounded-[24px] shadow-[0_18px_40px_rgba(0,0,0,0.35)] flex items-center justify-center">
                 <div className="text-center">
                   <p className="text-xl font-semibold text-[#202020]">
-                    {elitoProjectsCount}+ 
+                    {elitoProjectsCount}+
                   </p>
                   <p className="text-[11px] text-[#585858] leading-tight">
                     Complete Projects
@@ -685,19 +741,19 @@ export default function PublicVCardPage() {
               {(card.services && card.services.length > 0
                 ? card.services
                 : [
-                    {
-                      name: "Product Design",
-                      description: "From idea to clickable prototypes and final UI deliverables.",
-                    },
-                    {
-                      name: "Web Experience",
-                      description: "Modern responsive websites built with Tailwind and React.",
-                    },
-                    {
-                      name: "Brand Support",
-                      description: "Visual systems, design systems and ongoing design support.",
-                    },
-                  ]
+                  {
+                    name: "Product Design",
+                    description: "From idea to clickable prototypes and final UI deliverables.",
+                  },
+                  {
+                    name: "Web Experience",
+                    description: "Modern responsive websites built with Tailwind and React.",
+                  },
+                  {
+                    name: "Brand Support",
+                    description: "Visual systems, design systems and ongoing design support.",
+                  },
+                ]
               ).map((item: any, idx: number) => (
                 <div
                   key={item.id || idx}
@@ -932,11 +988,10 @@ export default function PublicVCardPage() {
               ].map((p) => (
                 <div
                   key={p.name}
-                  className={`rounded-2xl px-5 py-6 flex flex-col gap-3 border ${
-                    p.featured
-                      ? "bg-[#FFE600] text-[#111111] border-transparent"
-                      : "bg-[#181818] border-white/10"
-                  }`}
+                  className={`rounded-2xl px-5 py-6 flex flex-col gap-3 border ${p.featured
+                    ? "bg-[#FFE600] text-[#111111] border-transparent"
+                    : "bg-[#181818] border-white/10"
+                    }`}
                 >
                   <p className="text-xs uppercase tracking-[0.18em] opacity-80">
                     {p.name}
@@ -952,11 +1007,10 @@ export default function PublicVCardPage() {
                   </ul>
                   <button
                     type="button"
-                    className={`mt-3 inline-flex items-center justify-center rounded-full text-xs font-semibold px-4 py-2 border ${
-                      p.featured
-                        ? "border-[#111111] text-[#111111]"
-                        : "border-white/20 text-slate-100 hover:bg-white/10"
-                    }`}
+                    className={`mt-3 inline-flex items-center justify-center rounded-full text-xs font-semibold px-4 py-2 border ${p.featured
+                      ? "border-[#111111] text-[#111111]"
+                      : "border-white/20 text-slate-100 hover:bg-white/10"
+                      }`}
                   >
                     Start project
                   </button>
@@ -1190,12 +1244,12 @@ export default function PublicVCardPage() {
     card.fontFamily === "outfit"
       ? "font-[var(--font-outfit,theme(fontFamily.sans))]"
       : card.fontFamily === "inter"
-      ? "font-[var(--font-inter,theme(fontFamily.sans))]"
-      : card.fontFamily === "poppins"
-      ? "font-[var(--font-poppins,theme(fontFamily.sans))]"
-      : card.fontFamily === "roboto"
-      ? "font-[var(--font-roboto,theme(fontFamily.sans))]"
-      : "";
+        ? "font-[var(--font-inter,theme(fontFamily.sans))]"
+        : card.fontFamily === "poppins"
+          ? "font-[var(--font-poppins,theme(fontFamily.sans))]"
+          : card.fontFamily === "roboto"
+            ? "font-[var(--font-roboto,theme(fontFamily.sans))]"
+            : "";
   const dynamicFontSize =
     card.fontSizePx && card.fontSizePx >= 1 && card.fontSizePx <= 40
       ? card.fontSizePx
@@ -1270,7 +1324,7 @@ export default function PublicVCardPage() {
                 {typeof navigator !== "undefined" && navigator.share && (
                   <button
                     type="button"
-                    onClick={() => navigator.share({ title: card.title, text: card.description || card.title, url: `${window.location.origin}/${slug}` }).catch(() => {})}
+                    onClick={() => navigator.share({ title: card.title, text: card.description || card.title, url: `${window.location.origin}/${slug}` }).catch(() => { })}
                     className="text-xs text-slate-300 hover:text-white underline"
                   >
                     Share
@@ -1408,11 +1462,10 @@ export default function PublicVCardPage() {
                               key={b.id}
                               type="button"
                               onClick={() => setActiveBlogIndex(idx)}
-                              className={`h-1.5 rounded-full transition-all ${
-                                idx === activeBlogIndex
-                                  ? "w-4 bg-white"
-                                  : "w-1.5 bg-white/30"
-                              }`}
+                              className={`h-1.5 rounded-full transition-all ${idx === activeBlogIndex
+                                ? "w-4 bg-white"
+                                : "w-1.5 bg-white/30"
+                                }`}
                               aria-label={`Go to blog ${idx + 1}`}
                             />
                           ))}

@@ -633,6 +633,54 @@ const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: 
     description: "Travel themed vCard for agents, guides and tours.",
     accent: "from-sky-600 to-blue-800",
   },
+  {
+    id: 13,
+    name: "Corporate (1)",
+    description: "Professional variation for corporate branding.",
+    accent: "from-blue-600 to-indigo-700",
+  },
+  {
+    id: 14,
+    name: "Corporate (2)",
+    description: "Elegant business layout with deep ocean tones.",
+    accent: "from-sky-800 to-sky-950",
+  },
+  {
+    id: 15,
+    name: "Corporate (3)",
+    description: "Modern corporate design with a clean finish.",
+    accent: "from-cyan-700 to-blue-800",
+  },
+  {
+    id: 16,
+    name: "Corporate (4)",
+    description: "Premium leadership profile with sophisticated gradients.",
+    accent: "from-indigo-600 to-violet-800",
+  },
+  {
+    id: 17,
+    name: "Corporate (5)",
+    description: "Bold corporate presence for dynamic teams.",
+    accent: "from-slate-700 to-slate-900",
+  },
+  {
+    id: 18,
+    name: "Corporate (6)",
+    description: "Minimalist professional profile for founders.",
+    accent: "from-zinc-800 to-zinc-950",
+  },
+  {
+    id: 19,
+    name: "Corporate (7)",
+    description: "Sleek and efficient business card variation.",
+    accent: "from-neutral-700 to-black",
+  },
+  {
+    id: 20,
+    name: "Corporate (8)",
+    description: "Formal corporate template for established firms.",
+    accent: "from-stone-800 to-stone-950",
+  },
 ];
 
 function getInitialAppointmentSchedule(): Record<
