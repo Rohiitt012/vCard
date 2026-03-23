@@ -26,32 +26,32 @@ const EditNavIcon = ({ id, active }: { id: string; active: boolean }) => {
   const color = active
     ? "text-white"
     : (
-        {
-          basic: "text-blue-500",
-          templates: "text-red-500",
-          dynamic: "text-purple-500",
-          hours: "text-amber-500",
-          qr: "text-purple-500",
-          services: "text-amber-500",
-          products: "text-amber-500",
-          insta: "text-red-500",
-          linkedin: "text-blue-600",
-          galleries: "text-emerald-500",
-          blogs: "text-emerald-500",
-          testimonials: "text-red-500",
-          iframes: "text-purple-500",
-          appointments: "text-emerald-500",
-          "social-links": "text-blue-500",
-          "custom-links": "text-emerald-500",
-          banner: "text-red-500",
-          advanced: "text-orange-500",
-          fonts: "text-orange-500",
-          seo: "text-emerald-500",
-          terms: "text-red-500",
-          privacy: "text-red-500",
-          "manage-section": "text-purple-500",
-        } as Record<string, string | undefined>
-      )[id] ?? "";
+      {
+        basic: "text-blue-500",
+        templates: "text-red-500",
+        dynamic: "text-purple-500",
+        hours: "text-amber-500",
+        qr: "text-purple-500",
+        services: "text-amber-500",
+        products: "text-amber-500",
+        insta: "text-red-500",
+        linkedin: "text-blue-600",
+        galleries: "text-emerald-500",
+        blogs: "text-emerald-500",
+        testimonials: "text-red-500",
+        iframes: "text-purple-500",
+        appointments: "text-emerald-500",
+        "social-links": "text-blue-500",
+        "custom-links": "text-emerald-500",
+        banner: "text-red-500",
+        advanced: "text-orange-500",
+        fonts: "text-orange-500",
+        seo: "text-emerald-500",
+        terms: "text-red-500",
+        privacy: "text-red-500",
+        "manage-section": "text-purple-500",
+      } as Record<string, string | undefined>
+    )[id] ?? "";
 
   const cn = `${base} ${color}`;
 
@@ -560,126 +560,206 @@ function getMobilePreviewContent(template: { id: number; name: string }): {
   }
 }
 
-const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: string }[] = [
+const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: string; previewImage?: string }[] = [
   {
     id: 11,
-    name: "Cafe vCard",
+    name: "Cafe & Bistro",
     description: "Warm, inviting contact card for cafes and bistros.",
     accent: "from-amber-700 to-amber-900",
+    previewImage: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400",
   },
   {
     id: 7,
-    name: "Corporate vCard",
+    name: "Enterprise Corporate",
     description: "Professional vCard for businesses, agencies and teams.",
     accent: "from-blue-700 to-indigo-800",
+    previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400",
   },
   {
     id: 3,
-    name: "Creative vCard",
+    name: "Creative Studio",
     description: "Bold portfolio vCard for designers, studios and creators.",
     accent: "from-violet-600 to-purple-800",
+    previewImage: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=400",
   },
   {
     id: 1,
-    name: "Executive vCard",
+    name: "Classic Leadership",
     description: "Clean leadership vCard for founders, CXOs and managers.",
     accent: "from-slate-700 to-slate-900",
+    previewImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=400",
   },
   {
     id: 12,
-    name: "Fitness vCard",
+    name: "Fitness Trainer",
     description: "Energetic vCard for fitness trainers, gyms and coaches.",
     accent: "from-rose-600 to-red-700",
+    previewImage: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400",
   },
   {
     id: 6,
-    name: "Floral vCard",
+    name: "Floral Boutique",
     description: "Elegant vCard for florists, decorators and boutiques.",
     accent: "from-emerald-500 to-teal-600",
+    previewImage: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=400",
   },
   {
     id: 10,
-    name: "Legal vCard",
+    name: "Legal Consultant",
     description: "Formal vCard for lawyers, firms and legal consultants.",
     accent: "from-slate-800 to-slate-950",
+    previewImage: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=400",
   },
   {
     id: 9,
-    name: "Medical vCard",
+    name: "Medical Health",
     description: "Trust-focused vCard for clinics, doctors and healthcare.",
     accent: "from-cyan-600 to-blue-700",
+    previewImage: "https://images.unsplash.com/photo-1505751172107-593d63a710b9?q=80&w=400",
   },
   {
     id: 2,
-    name: "Minimal vCard",
+    name: "Pure Minimalist",
     description: "Simple, minimal vCard suitable for any profession.",
     accent: "from-gray-100 to-white",
+    previewImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=400",
   },
   {
     id: 8,
-    name: "Photo vCard",
+    name: "Visual Portfolio",
     description: "Image-first vCard for photographers and visual artists.",
     accent: "from-neutral-800 to-black",
+    previewImage: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=400",
   },
   {
     id: 4,
-    name: "Property vCard",
+    name: "Real Estate Pro",
     description: "Listing-friendly vCard for real estate and rentals.",
     accent: "from-amber-600 to-orange-700",
+    previewImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=400",
   },
   {
     id: 5,
-    name: "Travel vCard",
+    name: "Global Travel",
     description: "Travel themed vCard for agents, guides and tours.",
     accent: "from-sky-600 to-blue-800",
+    previewImage: "https://images.unsplash.com/photo-1488646953014-85cb44e2a028?q=80&w=400",
   },
   {
     id: 13,
-    name: "Corporate (1)",
+    name: "Professional Business",
     description: "Professional variation for corporate branding.",
     accent: "from-blue-600 to-indigo-700",
+    previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400",
   },
   {
     id: 14,
-    name: "Corporate (2)",
+    name: "Modern Arcs",
     description: "Elegant business layout with deep ocean tones.",
     accent: "from-sky-800 to-sky-950",
   },
   {
     id: 15,
-    name: "Corporate (3)",
+    name: "Clean Corporate",
     description: "Modern corporate design with a clean finish.",
     accent: "from-cyan-700 to-blue-800",
+    previewImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=400",
   },
   {
     id: 16,
-    name: "Corporate (4)",
+    name: "Premium Executive",
     description: "Premium leadership profile with sophisticated gradients.",
     accent: "from-indigo-600 to-violet-800",
+    previewImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400",
   },
   {
     id: 17,
-    name: "Corporate (5)",
+    name: "Dynamic Hub",
     description: "Bold corporate presence for dynamic teams.",
     accent: "from-slate-700 to-slate-900",
+    previewImage: "https://images.unsplash.com/photo-1436450412740-6b988f486c6b?q=80&w=400",
   },
   {
     id: 18,
-    name: "Corporate (6)",
+    name: "Founders Edition",
     description: "Minimalist professional profile for founders.",
     accent: "from-zinc-800 to-zinc-950",
+    previewImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=400",
   },
   {
     id: 19,
-    name: "Corporate (7)",
+    name: "Sleek Executive",
     description: "Sleek and efficient business card variation.",
     accent: "from-neutral-700 to-black",
+    previewImage: "https://images.unsplash.com/photo-1454165833767-027ee0b496d4?q=80&w=400",
   },
   {
     id: 20,
-    name: "Corporate (8)",
+    name: "Boutique Premium",
     description: "Formal corporate template for established firms.",
     accent: "from-stone-800 to-stone-950",
+    previewImage: "https://images.unsplash.com/photo-1522338255047-105ec746db95?q=80&w=400",
+  },
+  {
+    id: 21,
+    name: "Wavy Professional",
+    description: "Sleek professional profile with wavy gradients.",
+    accent: "from-indigo-500 via-purple-500 to-orange-500",
+    previewImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400",
+  },
+  {
+    id: 22,
+    name: "temp-22",
+    description: "Modern professional template with focus on typography.",
+    accent: "from-slate-800 to-black",
+  },
+  {
+    id: 23,
+    name: "temp-23",
+    description: "Elegant pastel design for boutiques and creative professionals.",
+    accent: "from-rose-100 to-teal-50",
+  },
+  {
+    id: 24,
+    name: "temp-24",
+    description: "Glassmorphic interface for a futuristic digital presence.",
+    accent: "from-blue-600 to-violet-600",
+  },
+  {
+    id: 25,
+    name: "temp-25",
+    description: "Vibrant neon accents for tech-savvy founders.",
+    accent: "from-emerald-400 to-cyan-500",
+  },
+  {
+    id: 26,
+    name: "temp-26",
+    description: "Pure white minimalist design for maximum clarity.",
+    accent: "from-white to-gray-50",
+  },
+  {
+    id: 27,
+    name: "temp-27",
+    description: "Deep space theme for high-end corporate consulting.",
+    accent: "from-sky-900 to-indigo-950",
+  },
+  {
+    id: 28,
+    name: "temp-28",
+    description: "Luxury gold theme for premium executive branding.",
+    accent: "from-amber-200 via-amber-400 to-amber-500",
+  },
+  {
+    id: 29,
+    name: "temp-29",
+    description: "Creative mesh gradients for a dynamic artistic look.",
+    accent: "from-fuchsia-500 via-purple-600 to-indigo-700",
+  },
+  {
+    id: 30,
+    name: "temp-30",
+    description: "Sleek industrial design for tech and manufacturing firms.",
+    accent: "from-zinc-700 to-zinc-900",
   },
 ];
 
@@ -857,18 +937,18 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
         prev.map((c) =>
           c.id === vcardId
             ? {
-                ...c,
-                blogs: (c.blogs ?? []).map((b) =>
-                  b.id === editingBlogId
-                    ? {
-                        ...b,
-                        title: newBlogTitle.trim(),
-                        description: newBlogDescription.trim(),
-                        icon: newBlogIconPreview!,
-                      }
-                    : b
-                ),
-              }
+              ...c,
+              blogs: (c.blogs ?? []).map((b) =>
+                b.id === editingBlogId
+                  ? {
+                    ...b,
+                    title: newBlogTitle.trim(),
+                    description: newBlogDescription.trim(),
+                    icon: newBlogIconPreview!,
+                  }
+                  : b
+              ),
+            }
             : c
         )
       );
@@ -920,21 +1000,21 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
         prev.map((c) =>
           c.id === vcardId
             ? {
-                ...c,
-                testimonials: (c as any).testimonials
-                  ? (c as any).testimonials.map((t: any) =>
-                      t.id === editingTestimonialId
-                        ? {
-                            ...t,
-                            name: newTestimonialName.trim(),
-                            role: newTestimonialRole.trim() || "Client",
-                            quote: newTestimonialQuote.trim(),
-                            image: newTestimonialImagePreview!,
-                          }
-                        : t
-                    )
-                  : [],
-              }
+              ...c,
+              testimonials: (c as any).testimonials
+                ? (c as any).testimonials.map((t: any) =>
+                  t.id === editingTestimonialId
+                    ? {
+                      ...t,
+                      name: newTestimonialName.trim(),
+                      role: newTestimonialRole.trim() || "Client",
+                      quote: newTestimonialQuote.trim(),
+                      image: newTestimonialImagePreview!,
+                    }
+                    : t
+                )
+                : [],
+            }
             : c
         )
       );
@@ -951,9 +1031,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
         prev.map((c) =>
           c.id === vcardId
             ? {
-                ...c,
-                testimonials: [...(((c as any).testimonials as any[]) ?? []), newTestimonial],
-              }
+              ...c,
+              testimonials: [...(((c as any).testimonials as any[]) ?? []), newTestimonial],
+            }
             : c
         )
       );
@@ -1188,9 +1268,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
     const absoluteUrl = pathOrUrl.startsWith("http")
       ? pathOrUrl
-      : `${window.location.origin}${
-          pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`
-        }`;
+      : `${window.location.origin}${pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`
+      }`;
 
     window.open(absoluteUrl, "_blank", "noopener,noreferrer");
   };
@@ -1330,9 +1409,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   key={item.id}
                   type="button"
                   onClick={() => setActiveSection(item.id)}
-                  className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-colors rounded-lg ${
-                    isActive ? `${activeBg} text-white` : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  }`}
+                  className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-colors rounded-lg ${isActive ? `${activeBg} text-white` : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    }`}
                 >
                   <EditNavIcon id={item.id} active={isActive} />
                   <span>{item.label}</span>
@@ -1359,11 +1437,10 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         key={tab.id}
                         type="button"
                         onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                        className={`relative -mb-px px-1 pb-3 text-sm font-medium transition-colors ${
-                          activeTab === tab.id
-                            ? "text-brand-600 dark:text-brand-400"
-                            : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                        }`}
+                        className={`relative -mb-px px-1 pb-3 text-sm font-medium transition-colors ${activeTab === tab.id
+                          ? "text-brand-600 dark:text-brand-400"
+                          : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                          }`}
                       >
                         {tab.label}
                         {activeTab === tab.id && (
@@ -1398,10 +1475,10 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         prev.map((card) =>
                           card.id === vcardId
                             ? {
-                                ...card,
-                                slug: alias,
-                                previewUrl: `/${alias}`,
-                              }
+                              ...card,
+                              slug: alias,
+                              previewUrl: `/${alias}`,
+                            }
                             : card
                         )
                       );
@@ -1803,14 +1880,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               role="switch"
                               aria-checked={on}
                               onClick={() => setOtherToggle(item.key)}
-                              className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
-                                on ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
-                              }`}
+                              className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${on ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
+                                }`}
                             >
                               <span
-                                className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
-                                  on ? "translate-x-[1.375rem]" : "translate-x-0"
-                                }`}
+                                className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${on ? "translate-x-[1.375rem]" : "translate-x-0"
+                                  }`}
                               />
                             </button>
                           </div>
@@ -1862,323 +1937,360 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     Select Template: <span className="text-red-500">*</span>
                   </label>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 max-h-[70vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600">
-                  {VCARD_TEMPLATES.map((template) => {
-                    const isSelected = selectedTemplateId === template.id;
-                    return (
-                      <button
-                        key={template.id}
-                        type="button"
-                        onClick={() => setSelectedTemplateId(template.id)}
-                        className={`group relative rounded-2xl border-2 p-0 text-left transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 overflow-hidden shadow-sm hover:shadow-md ${
-                          isSelected
+                    {VCARD_TEMPLATES.map((template) => {
+                      const isSelected = selectedTemplateId === template.id;
+                      return (
+                        <button
+                          key={template.id}
+                          type="button"
+                          onClick={() => setSelectedTemplateId(template.id)}
+                          className={`group relative rounded-2xl border-2 p-0 text-left transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 overflow-hidden shadow-sm hover:shadow-md ${isSelected
                             ? "border-brand-500 bg-white dark:bg-gray-800 shadow-md"
                             : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-brand-400 dark:hover:border-brand-500"
-                        }`}
-                      >
-                        {/* Preview area: gradient + placeholder content + title bar; on hover content scrolls upward */}
-                        <div className="relative mb-3 overflow-hidden rounded-t-2xl aspect-[9/16] w-full">
-                          <div
-                            className={`absolute inset-0 bg-gradient-to-b ${template.accent} transition-transform duration-500 ease-out group-hover:translate-y-[-12%]`}
-                          />
-                          {/* Template-specific preview content (screenshot-style) */}
-                          {(() => {
-                            const light = isLightTemplate(template.accent);
-                            const bar = light ? "bg-gray-700/80" : "bg-white/70";
-                            const circle = light ? "bg-gray-600/80" : "bg-white/80";
-                            const icon = light ? "bg-gray-600/70" : "bg-white/50";
-                            const text = light ? "text-gray-800/95" : "text-white/95";
-                            const textSec = light ? "text-gray-700/90" : "text-white/80";
-                            const pt = getPreviewType(template);
-                            const base = "absolute inset-0 flex flex-col pt-2 px-2 pointer-events-none overflow-hidden";
-                            if (pt === "flower") {
-                              // Jenny Wilson / Flower Garden style preview (with contact + mini gallery) for flower-type templates (including Executive Pro)
-                              return (
-                                <div className={base}>
-                                  <div className="h-full flex items-start justify-center">
-                                    <div className="mt-1 mx-auto w-full max-w-[120px] rounded-2xl bg-white/95 shadow-sm overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-2">
-                                      {/* Top hero image */}
-                                      <div
-                                        className="h-14 w-full bg-cover bg-center"
-                                        style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
-                                      />
-                                      {/* Bottom white content */}
-                                      <div className="px-2 pb-2 pt-1">
-                                        <div className="flex items-end gap-1 -mt-5">
-                                          <div className="w-8 h-8 rounded-lg bg-gray-200 border-[2px] border-white shadow-sm shrink-0" />
-                                          <div className="flex-1 min-w-0">
-                                            <p className="text-[8px] font-semibold text-emerald-800 leading-none truncate">
-                                              Jenny Wilson
-                                            </p>
-                                            <p className="text-[7px] text-emerald-600 leading-none mt-0.5 truncate">
-                                              Flower Garden
-                                            </p>
-                                          </div>
-                                        </div>
+                            }`}
+                        >
+                          {/* Preview area: gradient + placeholder content + title bar; on hover content scrolls upward */}
+                          <div className="relative mb-3 overflow-hidden rounded-t-2xl aspect-[9/16] w-full">
+                            {template.previewImage ? (
+                              <div className="absolute inset-0 z-0 transition-transform duration-500 ease-out group-hover:scale-110">
+                                <Image
+                                  src={template.previewImage}
+                                  alt={template.name}
+                                  fill
+                                  className="object-cover"
+                                  sizes="(max-width: 640px) 100vw, 300px"
+                                />
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-300" />
+                              </div>
+                            ) : (
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-b ${template.accent} transition-transform duration-500 ease-out group-hover:translate-y-[-12%]`}
+                              />
+                            )}
+                            {/* Template-specific preview content (screenshot-style) */}
+                            {(() => {
+                              // Special case for Corporate (2) - ID 14 to show its unique arcs
+                              if (template.id === 14) {
+                                return (
+                                  <div className="absolute inset-0 z-10 bg-white overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-3">
+                                    {/* Top Banner Dark */}
+                                    <div className="h-1/3 w-full bg-[#0A0C14]" />
+                                    {/* Decorative Arcs */}
+                                    <div className="absolute top-[25%] right-[-60px] w-48 h-48 pointer-events-none z-0">
+                                      <div className="absolute inset-0 rounded-full border-[25px] border-[#FF5E5E] scale-[1.2] translate-x-4 translate-y-4" />
+                                      <div className="absolute inset-0 rounded-full border-[25px] border-[#FFC15E] scale-[1.0] translate-x-10 translate-y-10" />
+                                      <div className="absolute inset-0 rounded-full bg-[#1A1E29] scale-[0.8] translate-x-16 translate-y-16" />
+                                    </div>
+                                    {/* Header Content Mockup */}
+                                    <div className="absolute top-[20%] left-4 z-10">
+                                      <div className="w-16 h-16 rounded-full border-2 border-white bg-slate-200 mb-2 shadow-md" />
+                                      <div className="h-3 w-20 bg-[#1A1E29] rounded-sm mb-1" />
+                                      <div className="h-2 w-16 bg-slate-300 rounded-sm" />
+                                    </div>
+                                    {/* Social row */}
+                                    <div className="absolute top-[45%] left-4 flex gap-1.5">
+                                      {[1, 2, 3, 4].map(i => <div key={i} className="w-4 h-4 rounded-full bg-[#1A1E29]" />)}
+                                    </div>
+                                    {/* Button */}
+                                    <div className="absolute bottom-4 left-4 right-4 h-6 rounded-lg bg-[#1A1E29]" />
+                                  </div>
+                                );
+                              }
 
-                                        {/* Social icons row */}
-                                        <div className="mt-2 flex justify-center gap-1.5">
-                                          {[1, 2, 3, 4, 5].map((i) => (
-                                            <div
-                                              // eslint-disable-next-line react/no-array-index-key
-                                              key={i}
-                                              className="w-4 h-4 rounded-full bg-emerald-50 border border-emerald-100"
-                                            />
-                                          ))}
-                                        </div>
-
-                                        {/* Description line */}
-                                        <p className="mt-2 text-[6px] leading-tight text-slate-600 text-center line-clamp-2">
-                                          Lorem ipsum is simply dummy text of the printing and typesetting industry.
-                                        </p>
-
-                                        {/* Compact contact row */}
-                                        <div className="mt-2 grid grid-cols-2 gap-1 text-[6px] text-slate-700">
-                                          <div className="flex items-center gap-0.5">
-                                            <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
-                                              ✉
+                              const light = isLightTemplate(template.accent);
+                              const bar = light ? "bg-gray-700/80" : "bg-white/70";
+                              const circle = light ? "bg-gray-600/80" : "bg-white/80";
+                              const icon = light ? "bg-gray-600/70" : "bg-white/50";
+                              const text = light ? "text-gray-800/95" : "text-white/95";
+                              const textSec = light ? "text-gray-700/90" : "text-white/80";
+                              const pt = getPreviewType(template);
+                              const base =
+                                "absolute inset-0 z-10 flex flex-col pt-2 px-2 pointer-events-none overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-3";
+                              if (pt === "flower") {
+                                // Jenny Wilson / Flower Garden style preview (with contact + mini gallery) for flower-type templates (including Executive Pro)
+                                return (
+                                  <div className={base}>
+                                    <div className="h-full flex items-start justify-center">
+                                      <div className="mt-1 mx-auto w-full max-w-[120px] rounded-2xl bg-white/95 shadow-sm overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-2">
+                                        {/* Top hero image */}
+                                        <div
+                                          className="h-14 w-full bg-cover bg-center"
+                                          style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
+                                        />
+                                        {/* Bottom white content */}
+                                        <div className="px-2 pb-2 pt-1">
+                                          <div className="flex items-end gap-1 -mt-5">
+                                            <div className="w-8 h-8 rounded-lg bg-gray-200 border-[2px] border-white shadow-sm shrink-0" />
+                                            <div className="flex-1 min-w-0">
+                                              <p className="text-[8px] font-semibold text-emerald-800 leading-none truncate">
+                                                {template.name}
+                                              </p>
+                                              <p className="text-[7px] text-emerald-600 leading-none mt-0.5 truncate">
+                                                Flower Garden
+                                              </p>
                                             </div>
-                                            <p className="truncate">jenny@gmail.com</p>
                                           </div>
-                                          <div className="flex items-center gap-0.5">
-                                            <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
-                                              ☎
-                                            </div>
-                                            <p className="truncate">+1 234567890</p>
-                                          </div>
-                                        </div>
 
-                                        {/* Mini gallery strip */}
-                                        <div className="mt-2">
-                                          <p className="text-[6px] font-semibold text-emerald-800 text-center">Gallery</p>
-                                          <div className="mt-1 grid grid-cols-3 gap-0.5">
-                                            {[1, 2, 3].map((i) => (
-                                              // eslint-disable-next-line react/no-array-index-key
+                                          {/* Social icons row */}
+                                          <div className="mt-2 flex justify-center gap-1.5">
+                                            {[1, 2, 3, 4, 5].map((i) => (
                                               <div
                                                 key={i}
-                                                className="aspect-[4/5] rounded-md overflow-hidden bg-emerald-50"
-                                              >
-                                                <div
-                                                  className="w-full h-full bg-cover bg-center"
-                                                  style={{
-                                                    backgroundImage: `url('/images/product/product-0${i}.png')`,
-                                                  }}
-                                                />
-                                              </div>
+                                                className="w-4 h-4 rounded-full bg-emerald-50 border border-emerald-100"
+                                              />
                                             ))}
+                                          </div>
+
+                                          {/* Description line */}
+                                          <p className="mt-2 text-[6px] leading-tight text-slate-600 text-center line-clamp-2">
+                                            Lorem ipsum is simply dummy text of the printing and typesetting industry.
+                                          </p>
+
+                                          {/* Compact contact row */}
+                                          <div className="mt-2 grid grid-cols-2 gap-1 text-[6px] text-slate-700">
+                                            <div className="flex items-center gap-0.5">
+                                              <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
+                                                ✉
+                                              </div>
+                                              <p className="truncate">jenny@gmail.com</p>
+                                            </div>
+                                            <div className="flex items-center gap-0.5">
+                                              <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
+                                                ☎
+                                              </div>
+                                              <p className="truncate">+1 234567890</p>
+                                            </div>
+                                          </div>
+
+                                          {/* Mini gallery strip */}
+                                          <div className="mt-2">
+                                            <p className="text-[6px] font-semibold text-emerald-800 text-center">Gallery</p>
+                                            <div className="mt-1 grid grid-cols-3 gap-0.5">
+                                              {[1, 2, 3].map((i) => (
+                                                <div
+                                                  key={i}
+                                                  className="aspect-[4/5] rounded-md overflow-hidden bg-emerald-50"
+                                                >
+                                                  <div
+                                                    className="w-full h-full bg-cover bg-center"
+                                                    style={{
+                                                      backgroundImage: `url('/images/product/product-0${i}.jpg')`,
+                                                    }}
+                                                  />
+                                                </div>
+                                              ))}
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            }
-                            if (pt === "flower-shop") {
-                              return (
-                                <div className={base}>
-                                  <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
-                                    <span className={`text-[6px] font-bold ${text} text-center leading-tight`}>SHOP</span>
-                                  </div>
-                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Flower Shop</p>
-                                  <p className={`text-[7px] ${textSec} text-center mb-1`}>Let Your Garden Bloom With Us</p>
-                                  <div className="flex justify-center gap-0.5 mb-1">
-                                    {[1, 2, 3, 4, 5].map((i) => (
-                                      <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
-                                    ))}
-                                  </div>
-                                  <p className={`text-[7px] ${textSec} text-center`}>flowergarden@gmail.com</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
-                                </div>
-                              );
-                            }
-                            if (pt === "flower-snap") {
-                              return (
-                                <div className={base}>
-                                  <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
-                                    <span className={`text-[5px] font-bold ${text} text-center leading-tight`}>FS</span>
-                                  </div>
-                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Flower Snap</p>
-                                  <p className={`text-[7px] ${textSec} text-center mb-0.5`}>Creative Flower & Garden.</p>
-                                  <p className={`text-[6px] ${textSec} text-center mb-1`}>Best Plant Selling Company</p>
-                                  <p className={`text-[6px] ${textSec} text-center mb-1`}>Green Market Mumbai</p>
-                                  <div className="flex justify-center gap-0.5 mb-1">
-                                    {[1, 2, 3, 4, 5].map((i) => (
-                                      <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
-                                    ))}
-                                  </div>
-                                  <p className={`text-[7px] ${textSec} text-center`}>flowersnap@gmail.com</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
-                                </div>
-                              );
-                            }
-                            if (pt === "travel") {
-                              return (
-                                <div className={base}>
-                                  <div className={`h-4 rounded ${bar} flex items-center justify-center mb-1`}>
-                                    <span className={`text-[8px] font-bold ${text}`}>TRAVEL</span>
-                                  </div>
-                                  <div className={`w-9 h-9 rounded-sm ${circle} shrink-0 mx-auto mb-1`} />
-                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Bessie Cooper</p>
-                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Travel Agent</p>
-                                  <div className="flex justify-center gap-0.5 mb-1">
-                                    {[1, 2, 3, 4].map((i) => (
-                                      <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
-                                    ))}
-                                  </div>
-                                  <p className={`text-[7px] ${textSec} text-center`}>michael@gmail.com · +49 95864 12484</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
-                                </div>
-                              );
-                            }
-                            if (pt === "travel-dark") {
-                              return (
-                                <div className={base}>
-                                  <div className={`w-8 h-6 rounded ${bar} flex items-center justify-center mx-auto mb-1`} />
-                                  <p className={`text-[9px] font-bold ${text} text-center`}>Desi Miles</p>
-                                  <p className={`text-[8px] ${textSec} text-center`}>Tours & Travel Agency</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5 leading-tight`}>Every Journey Begins With A Single Step</p>
-                                  <div className="flex justify-center gap-0.5 my-1">
-                                    {[1, 2, 3, 4, 5].map((i) => (
-                                      <div key={i} className={`w-3 h-3 rounded-full ${icon}`} />
-                                    ))}
-                                  </div>
-                                  <p className={`text-[7px] ${textSec} text-center`}>advmur@gmail.com · +91888887700</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
-                                </div>
-                              );
-                            }
-                            if (pt === "personal") {
-                              return (
-                                <div className="absolute inset-0 flex flex-col pointer-events-none overflow-hidden">
-                                  {/* Cover Area */}
-                                  <div className="h-[28%] w-full bg-white/10 relative">
-                                    <div className={`absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-[2px] border-white/30 ${circle} shadow-lg flex items-center justify-center backdrop-blur-sm`}>
-                                      <svg className={`w-6 h-6 ${text} opacity-80`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                      </svg>
+                                );
+                              }
+                              if (pt === "flower-shop") {
+                                return (
+                                  <div className={base}>
+                                    <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
+                                      <span className={`text-[6px] font-bold ${text} text-center leading-tight`}>SHOP</span>
                                     </div>
-                                  </div>
-                                  {/* Content Area */}
-                                  <div className="flex-1 flex flex-col items-center pt-7 px-3">
-                                    <p className={`text-[11px] font-extrabold tracking-wide ${text} text-center mb-0.5 drop-shadow-sm`}>John Doe</p>
-                                    <p className={`text-[7px] font-medium tracking-widest uppercase ${textSec} text-center mb-3 opacity-90`}>Executive Director</p>
-                                    
-                                    <div className="w-full flex justify-center gap-2 mb-4">
-                                      {[1, 2, 3, 4].map((i) => (
-                                        <div key={i} className={`w-5 h-5 rounded-full ${icon} shadow-sm backdrop-blur-md flex items-center justify-center`}>
-                                          <div className="w-2.5 h-2.5 rounded-[3px] bg-white/50" />
-                                        </div>
+                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                    <p className={`text-[7px] ${textSec} text-center mb-1`}>Let Your Garden Bloom With Us</p>
+                                    <div className="flex justify-center gap-0.5 mb-1">
+                                      {[1, 2, 3, 4, 5].map((i) => (
+                                        <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
                                       ))}
                                     </div>
-                                    
-                                    <div className="w-full space-y-1.5 px-1.5">
-                                      <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
-                                        <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
-                                          <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
-                                        </div>
-                                        <div className="flex-1">
-                                          <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Email</p>
-                                          <p className={`text-[6px] font-medium ${text}`}>john.doe@example.com</p>
-                                        </div>
-                                      </div>
-                                      <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
-                                        <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
-                                          <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
-                                        </div>
-                                        <div className="flex-1">
-                                          <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Phone</p>
-                                          <p className={`text-[6px] font-medium ${text}`}>+1 234 567 8900</p>
-                                        </div>
-                                      </div>
-                                      <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
-                                        <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
-                                          <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
-                                        </div>
-                                        <div className="flex-1">
-                                          <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Location</p>
-                                          <p className={`text-[6px] font-medium ${text}`}>New York, NY</p>
-                                        </div>
+                                    <p className={`text-[7px] ${textSec} text-center`}>flowergarden@gmail.com</p>
+                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
+                                  </div>
+                                );
+                              }
+                              if (pt === "flower-snap") {
+                                return (
+                                  <div className={base}>
+                                    <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
+                                      <span className={`text-[5px] font-bold ${text} text-center leading-tight`}>FS</span>
+                                    </div>
+                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                    <p className={`text-[7px] ${textSec} text-center mb-0.5`}>Creative Flower & Garden.</p>
+                                    <p className={`text-[6px] ${textSec} text-center mb-1`}>Best Plant Selling Company</p>
+                                    <p className={`text-[6px] ${textSec} text-center mb-1`}>Green Market Mumbai</p>
+                                    <div className="flex justify-center gap-0.5 mb-1">
+                                      {[1, 2, 3, 4, 5].map((i) => (
+                                        <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                      ))}
+                                    </div>
+                                    <p className={`text-[7px] ${textSec} text-center`}>flowersnap@gmail.com</p>
+                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
+                                  </div>
+                                );
+                              }
+                              if (pt === "travel") {
+                                return (
+                                  <div className={base}>
+                                    <div className={`h-4 rounded ${bar} flex items-center justify-center mb-1`}>
+                                      <span className={`text-[8px] font-bold ${text}`}>TRAVEL</span>
+                                    </div>
+                                    <div className={`w-9 h-9 rounded-sm ${circle} shrink-0 mx-auto mb-1`} />
+                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                    <p className={`text-[8px] ${textSec} text-center mb-1`}>Travel Agent</p>
+                                    <div className="flex justify-center gap-0.5 mb-1">
+                                      {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                      ))}
+                                    </div>
+                                    <p className={`text-[7px] ${textSec} text-center`}>michael@gmail.com · +49 95864 12484</p>
+                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
+                                  </div>
+                                );
+                              }
+                              if (pt === "travel-dark") {
+                                return (
+                                  <div className={base}>
+                                    <div className={`w-8 h-6 rounded ${bar} flex items-center justify-center mx-auto mb-1`} />
+                                    <p className={`text-[9px] font-bold ${text} text-center`}>{template.name}</p>
+                                    <p className={`text-[8px] ${textSec} text-center`}>Tours & Travel Agency</p>
+                                    <p className={`text-[6px] ${textSec} text-center mt-0.5 leading-tight`}>Every Journey Begins With A Single Step</p>
+                                    <div className="flex justify-center gap-0.5 my-1">
+                                      {[1, 2, 3, 4, 5].map((i) => (
+                                        <div key={i} className={`w-3 h-3 rounded-full ${icon}`} />
+                                      ))}
+                                    </div>
+                                    <p className={`text-[7px] ${textSec} text-center`}>advmur@gmail.com · +91888887700</p>
+                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
+                                  </div>
+                                );
+                              }
+                              if (pt === "personal") {
+                                return (
+                                  <div className="absolute inset-0 flex flex-col pointer-events-none overflow-hidden">
+                                    {/* Cover Area */}
+                                    <div className="h-[28%] w-full bg-white/10 relative">
+                                      <div className={`absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-[2px] border-white/30 ${circle} shadow-lg flex items-center justify-center backdrop-blur-sm`}>
+                                        <svg className={`w-6 h-6 ${text} opacity-80`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
                                       </div>
                                     </div>
+                                    {/* Content Area */}
+                                    <div className="flex-1 flex flex-col items-center pt-7 px-3">
+                                      <p className={`text-[11px] font-extrabold tracking-wide ${text} text-center mb-0.5 drop-shadow-sm`}>{template.name}</p>
+                                      <p className={`text-[7px] font-medium tracking-widest uppercase ${textSec} text-center mb-3 opacity-90`}>Executive Director</p>
 
-                                    <div className="mt-auto mb-[2.5rem] w-full px-2">
-                                      <div className={`w-full py-1.5 rounded-full ${icon} backdrop-blur-md shadow-md flex items-center justify-center border border-white/10`}>
-                                        <p className={`text-[7.5px] font-bold uppercase tracking-widest ${text}`}>Save Contact</p>
+                                      <div className="w-full flex justify-center gap-2 mb-4">
+                                        {[1, 2, 3, 4].map((i) => (
+                                          <div key={i} className={`w-5 h-5 rounded-full ${icon} shadow-sm backdrop-blur-md flex items-center justify-center`}>
+                                            <div className="w-2.5 h-2.5 rounded-[3px] bg-white/50" />
+                                          </div>
+                                        ))}
+                                      </div>
+
+                                      <div className="w-full space-y-1.5 px-1.5">
+                                        <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                          <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                            <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                          </div>
+                                          <div className="flex-1">
+                                            <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Email</p>
+                                            <p className={`text-[6px] font-medium ${text}`}>john.doe@example.com</p>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                          <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                            <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                          </div>
+                                          <div className="flex-1">
+                                            <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Phone</p>
+                                            <p className={`text-[6px] font-medium ${text}`}>+1 234 567 8900</p>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                          <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                            <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                          </div>
+                                          <div className="flex-1">
+                                            <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Location</p>
+                                            <p className={`text-[6px] font-medium ${text}`}>New York, NY</p>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div className="mt-auto mb-[2.5rem] w-full px-2">
+                                        <div className={`w-full py-1.5 rounded-full ${icon} backdrop-blur-md shadow-md flex items-center justify-center border border-white/10`}>
+                                          <p className={`text-[7.5px] font-bold uppercase tracking-widest ${text}`}>Save Contact</p>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            }
-                            if (pt === "corporate") {
+                                );
+                              }
+                              if (pt === "corporate") {
+                                return (
+                                  <div className={base}>
+                                    <div className={`w-10 h-10 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                    <p className={`text-[8px] ${textSec} text-center mb-1`}>Leadership · Board</p>
+                                    <div className={`h-1.5 rounded ${bar} w-full max-w-[90%] mx-auto mb-1`} />
+                                    <div className={`h-1.5 rounded ${bar} w-[70%] mx-auto mb-1`} />
+                                    <p className={`text-[7px] ${textSec} text-center`}>contact@company.com</p>
+                                    <p className={`text-[6px] ${textSec} text-center mt-0.5 border-t border-white/20 pt-0.5`}>Official Website</p>
+                                  </div>
+                                );
+                              }
+                              if (pt === "creative") {
+                                return (
+                                  <div className={base}>
+                                    <p className={`text-[10px] font-bold ${text} text-center uppercase tracking-wider mt-2`}>{template.name}</p>
+                                    <p className={`text-[8px] ${textSec} text-center mb-2`}>Studio</p>
+                                    <div className={`h-2 rounded ${bar} w-full mb-0.5`} />
+                                    <div className={`h-2 rounded ${bar} w-[85%] mx-auto mb-0.5`} />
+                                    <div className={`h-2 rounded ${bar} w-[60%] mx-auto mb-1`} />
+                                    <div className="flex justify-center gap-1">
+                                      {[1, 2, 3].map((i) => (
+                                        <div key={i} className={`w-6 h-6 rounded ${icon}`} />
+                                      ))}
+                                    </div>
+                                  </div>
+                                );
+                              }
+                              // generic = same filled style as screenshot (Jenny Wilson style so no blank PREVIEW)
                               return (
                                 <div className={base}>
-                                  <div className={`w-10 h-10 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
-                                  <p className={`text-[9px] font-semibold ${text} text-center`}>Executive</p>
-                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>Leadership · Board</p>
-                                  <div className={`h-1.5 rounded ${bar} w-full max-w-[90%] mx-auto mb-1`} />
-                                  <div className={`h-1.5 rounded ${bar} w-[70%] mx-auto mb-1`} />
-                                  <p className={`text-[7px] ${textSec} text-center`}>contact@company.com</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5 border-t border-white/20 pt-0.5`}>Official Website</p>
-                                </div>
-                              );
-                            }
-                            if (pt === "creative") {
-                              return (
-                                <div className={base}>
-                                  <p className={`text-[10px] font-bold ${text} text-center uppercase tracking-wider mt-2`}>Creative</p>
-                                  <p className={`text-[8px] ${textSec} text-center mb-2`}>Studio</p>
-                                  <div className={`h-2 rounded ${bar} w-full mb-0.5`} />
-                                  <div className={`h-2 rounded ${bar} w-[85%] mx-auto mb-0.5`} />
-                                  <div className={`h-2 rounded ${bar} w-[60%] mx-auto mb-1`} />
-                                  <div className="flex justify-center gap-1">
-                                    {[1, 2, 3].map((i) => (
-                                      <div key={i} className={`w-6 h-6 rounded ${icon}`} />
+                                  <div className={`w-8 h-8 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                  <p className={`text-[9px] font-semibold ${text} text-center leading-tight`}>{template.name}</p>
+                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>{template.name}</p>
+                                  <div className="flex justify-center gap-1 mb-1">
+                                    {[1, 2, 3, 4].map((i) => (
+                                      <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
                                     ))}
                                   </div>
+                                  <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
+                                  <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
+                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-1`}>Gallery</p>
                                 </div>
                               );
-                            }
-                            // generic = same filled style as screenshot (Jenny Wilson style so no blank PREVIEW)
-                            return (
-                              <div className={base}>
-                                <div className={`w-8 h-8 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
-                                <p className={`text-[9px] font-semibold ${text} text-center leading-tight`}>Jenny Wilson</p>
-                                <p className={`text-[8px] ${textSec} text-center mb-1`}>{template.name}</p>
-                                <div className="flex justify-center gap-1 mb-1">
-                                  {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
-                                  ))}
-                                </div>
-                                <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
-                                <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
-                                <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-1`}>Gallery</p>
-                              </div>
-                            );
-                          })()}
-                          {/* Dark bar at bottom of preview with template name */}
-                          <div className="absolute inset-x-0 bottom-0 h-10 flex items-center bg-gray-900/90 dark:bg-black/80 px-3">
-                            <p className="text-sm font-semibold text-white truncate">{template.name}</p>
+                            })()}
+                            {/* Dark bar at bottom of preview with template name */}
+                            <div className="absolute inset-x-0 bottom-0 z-20 h-10 flex items-center bg-gray-900/90 dark:bg-black/80 px-3">
+                              <p className="text-sm font-semibold text-white truncate">{template.name}</p>
+                            </div>
                           </div>
-                        </div>
-                        <div className="px-4 pb-4 pt-0">
-                          <p className="text-[11px] leading-snug text-gray-500 dark:text-gray-400">{template.description}</p>
-                        </div>
-                        {isSelected && (
-                          <span className="absolute top-3 right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white shadow">
-                            <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          </span>
-                        )}
-                      </button>
-                    );
-                  })}
+                          {/* Removed bottom template text (name/description) */}
+                          {isSelected && (
+                            <span className="absolute top-3 right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white shadow">
+                              <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                   {/* Save, Discard – left side */}
                   <div className="mt-6 w-full max-w-md space-y-4">
@@ -2231,12 +2343,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   const previewContent = selectedTemplate
                     ? getMobilePreviewContent(selectedTemplate)
                     : {
-                        name: "Your Name",
-                        subtitle: "Title / Profession",
-                        description:
-                          "Add your description and contact details. Choose a template to see its content here.",
-                        ctaLabel: "Add to contact",
-                      };
+                      name: "Your Name",
+                      subtitle: "Title / Profession",
+                      description:
+                        "Add your description and contact details. Choose a template to see its content here.",
+                      ctaLabel: "Add to contact",
+                    };
                   const previewType = selectedTemplate ? getPreviewType(selectedTemplate) : "generic";
 
                   return (
@@ -2245,762 +2357,807 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <div className="relative w-[320px] h-[640px] rounded-[2.25rem] bg-gray-900 shadow-2xl overflow-hidden border-[8px] border-gray-800 flex-shrink-0">
                         <div className="absolute left-1/2 top-0 -translate-x-1/2 w-24 h-5 rounded-b-2xl bg-black z-20" />
                         <div className="absolute inset-0 flex flex-col overflow-hidden">
-                          {previewType === "flower" ? (
-                            // Jenny Wilson / Flower Garden style full template preview inside phone
-                            <div className="flex-1 bg-[#f6faf7] flex items-center justify-center px-4 py-6">
-                              <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-emerald-100 relative">
-                                <div className="absolute inset-0 pointer-events-none">
-                                  <div className="absolute -left-4 top-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
-                                  <div className="absolute -right-4 bottom-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
+                          {selectedTemplate?.id === 14 ? (
+                            <div className="flex-1 bg-white relative overflow-hidden">
+                              {/* Full scale mimic of Corporate (2) arcs */}
+                              <div className="h-[40%] w-full bg-[#0A0C14] relative">
+                                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-950/20 via-transparent to-red-950/30" />
+                              </div>
+                              <div className="absolute top-[25%] right-[-140px] w-80 h-80 pointer-events-none z-0">
+                                <div className="absolute inset-0 rounded-full border-[40px] border-[#FF5E5E] scale-[1.2] translate-x-8 translate-y-8" />
+                                <div className="absolute inset-0 rounded-full border-[40px] border-[#FFC15E] scale-[1.0] translate-x-24 translate-y-24" />
+                                <div className="absolute inset-0 rounded-full bg-[#1A1E29] scale-[0.8] translate-x-36 translate-y-36" />
+                              </div>
+                              <div className="relative px-8 -mt-20 z-10 flex flex-col items-start">
+                                <div className="w-32 h-32 rounded-full border-4 border-white bg-slate-100 shadow-xl mb-6 overflow-hidden relative">
+                                  <div className="w-full h-full flex items-center justify-center text-4xl font-black text-slate-300">N</div>
                                 </div>
-                                <div className="max-h-[520px] overflow-y-auto">
-                                  <section className="relative">
-                                    <div
-                                      className="h-24 w-full bg-cover bg-center bg-no-repeat"
-                                      style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
-                                    />
-                                    <div className="px-4 pb-4 pt-3 bg-white relative">
-                                      <div className="-mt-10 flex items-end gap-2">
-                                        <div className="relative w-12 h-12 rounded-xl border-2 border-white shadow-md overflow-hidden flex-shrink-0 bg-emerald-100" />
-                                        <div className="flex-1 min-w-0">
-                                          <p className="text-sm font-semibold text-emerald-900 leading-tight truncate">
-                                            Jenny Wilson
-                                          </p>
-                                          <p className="text-[11px] font-medium text-emerald-700 mt-0.5 truncate">
-                                            Flower Garden
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div className="mt-3 flex justify-center gap-3">
-                                        {[1, 2, 3, 4, 5].map((i) => (
-                                          // eslint-disable-next-line react/no-array-index-key
-                                          <div
-                                            key={i}
-                                            className="h-7 w-7 rounded-full bg-emerald-50 text-emerald-600 text-[11px] flex items-center justify-center shadow-sm"
-                                          >
-                                            ●
-                                          </div>
-                                        ))}
-                                      </div>
-                                      <p className="mt-3 text-[10px] text-slate-600 text-center leading-snug">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                        has been the industry&apos;s standard dummy text ever since the 1500s.
-                                      </p>
-
-                                      {/* Contact row (email, phone, birth date, location) */}
-                                      <div className="mt-4 grid grid-cols-2 gap-2 text-[9px] text-slate-700">
-                                        <div className="flex items-center gap-1.5">
-                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                            ✉
-                                          </div>
-                                          <div className="min-w-0">
-                                            <p className="text-[8px] text-slate-500">Email</p>
-                                            <p className="truncate">jenny@gmail.com</p>
-                                          </div>
-                                        </div>
-                                        <div className="flex items-center gap-1.5">
-                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                            ☎
-                                          </div>
-                                          <div className="min-w-0">
-                                            <p className="text-[8px] text-slate-500">Phone</p>
-                                            <p className="truncate">+1 234567890</p>
-                                          </div>
-                                        </div>
-                                        <div className="flex items-center gap-1.5">
-                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                            🎂
-                                          </div>
-                                          <div className="min-w-0">
-                                            <p className="text-[8px] text-slate-500">Birth Date</p>
-                                            <p className="truncate">12th March, 1990</p>
-                                          </div>
-                                        </div>
-                                        <div className="flex items-center gap-1.5">
-                                          <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                            📍
-                                          </div>
-                                          <div className="min-w-0">
-                                            <p className="text-[8px] text-slate-500">Location</p>
-                                            <p className="truncate">Berlin, Germany</p>
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      {/* Gallery section */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Gallery
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 grid grid-cols-3 gap-2">
-                                          {[1, 2, 3].map((i) => (
-                                            // eslint-disable-next-line react/no-array-index-key
-                                            <div
-                                              key={i}
-                                              className="aspect-[4/5] rounded-xl overflow-hidden bg-emerald-50"
-                                            >
-                                              <div
-                                                className="w-full h-full bg-cover bg-center"
-                                                style={{
-                                                  backgroundImage: `url('/images/product/product-0${i}.png')`,
-                                                }}
-                                              />
+                                <div className="space-y-2 mb-8 items-start text-left">
+                                  <div className="h-10 w-48 bg-[#1A1E29] rounded-md" />
+                                  <div className="h-6 w-32 bg-slate-300 rounded-md" />
+                                </div>
+                                <div className="flex gap-4 mb-10">
+                                  {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-10 h-10 rounded-full bg-[#1A1E29]" />)}
+                                </div>
+                                <div className="w-full h-14 rounded-2xl bg-[#1A1E29] shadow-lg flex items-center justify-center text-white font-bold">Add to Contact</div>
+                              </div>
+                            </div>
+                          ) : (
+                            selectedTemplate?.previewImage ? (
+                              <div className="flex-1 relative">
+                                <Image
+                                  src={selectedTemplate.previewImage}
+                                  alt={selectedTemplate.name}
+                                  fill
+                                  className="object-cover"
+                                  sizes="320px"
+                                />
+                                <div className="absolute inset-0 bg-black/10" />
+                                {/* Overlay text matching the user's need for a "real" feel */}
+                                <div className="absolute bottom-10 left-0 right-0 p-6 text-white text-center pb-20">
+                                  <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md mx-auto mb-4 border border-white/30" />
+                                  <h3 className="text-xl font-bold mb-1">{previewContent.name}</h3>
+                                  <p className="text-sm opacity-80">{previewContent.subtitle}</p>
+                                </div>
+                              </div>
+                            ) : (
+                              // Original hardcoded mockups as fallback
+                              previewType === "flower" ? (
+                                // Jenny Wilson / Flower Garden style full template preview inside phone
+                                <div className="flex-1 bg-[#f6faf7] flex items-center justify-center px-4 py-6">
+                                  <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-emerald-100 relative">
+                                    <div className="absolute inset-0 pointer-events-none">
+                                      <div className="absolute -left-4 top-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
+                                      <div className="absolute -right-4 bottom-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
+                                    </div>
+                                    <div className="max-h-[520px] overflow-y-auto">
+                                      <section className="relative">
+                                        <div
+                                          className="h-24 w-full bg-cover bg-center bg-no-repeat"
+                                          style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
+                                        />
+                                        <div className="px-4 pb-4 pt-3 bg-white relative">
+                                          <div className="-mt-10 flex items-end gap-2">
+                                            <div className="relative w-12 h-12 rounded-xl border-2 border-white shadow-md overflow-hidden flex-shrink-0 bg-emerald-100" />
+                                            <div className="flex-1 min-w-0">
+                                              <p className="text-sm font-semibold text-emerald-900 leading-tight truncate">
+                                                {previewContent.name}
+                                              </p>
+                                              <p className="text-[11px] font-medium text-emerald-700 mt-0.5 truncate">
+                                                Flower Garden
+                                              </p>
                                             </div>
-                                          ))}
-                                        </div>
-                                      </div>
-
-                                      {/* Our Service – Dynamic from card data */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Our Service
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
-                                          <div className="mt-3 space-y-2">
-                                            {(((currentCard as any)?.services as any[]) ?? []).slice(0, 2).map((svc, idx) => (
-                                              <div key={svc.id || idx} className="rounded-2xl border border-emerald-100 bg-white shadow-sm overflow-hidden flex">
-                                                <div className="w-16 h-16 bg-emerald-50 shrink-0 overflow-hidden flex items-center justify-center">
-                                                  {svc.icon ? (
-                                                    <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
-                                                  ) : (
-                                                    <span className="text-emerald-300 font-bold text-lg">{idx + 1}</span>
-                                                  )}
-                                                </div>
-                                                <div className="px-2 py-1.5 flex-1 min-w-0">
-                                                  <p className="text-[9px] font-semibold text-slate-900 truncate">{svc.name}</p>
-                                                  <p className="mt-0.5 text-[8px] text-slate-600 leading-snug line-clamp-2">
-                                                    {svc.description}
-                                                  </p>
-                                                </div>
+                                          </div>
+                                          <div className="mt-3 flex justify-center gap-3">
+                                            {[1, 2, 3, 4, 5].map((i) => (
+                                              // eslint-disable-next-line react/no-array-index-key
+                                              <div
+                                                key={i}
+                                                className="h-7 w-7 rounded-full bg-emerald-50 text-emerald-600 text-[11px] flex items-center justify-center shadow-sm"
+                                              >
+                                                ●
                                               </div>
                                             ))}
                                           </div>
-                                        ) : (
-                                          <div className="mt-3 py-4 text-center rounded-2xl border border-dashed border-emerald-100">
-                                            <p className="text-emerald-300 text-[8px]">No services added yet.</p>
-                                          </div>
-                                        )}
-                                      </div>
+                                          <p className="mt-3 text-[10px] text-slate-600 text-center leading-snug">
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                            has been the industry&apos;s standard dummy text ever since the 1500s.
+                                          </p>
 
-                                      {/* Make an Appointment – compact preview */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Make an Appointment
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 space-y-2">
-                                          <div>
-                                            <p className="text-[8px] text-slate-600 mb-0.5">Date :</p>
-                                            <div className="h-7 rounded-full border border-emerald-200 bg-white flex items-center justify-between px-2 text-[8px] text-slate-500">
-                                              <span>Pick a date</span>
-                                              <span>📅</span>
+                                          {/* Contact row (email, phone, birth date, location) */}
+                                          <div className="mt-4 grid grid-cols-2 gap-2 text-[9px] text-slate-700">
+                                            <div className="flex items-center gap-1.5">
+                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                ✉
+                                              </div>
+                                              <div className="min-w-0">
+                                                <p className="text-[8px] text-slate-500">Email</p>
+                                                <p className="truncate">jenny@gmail.com</p>
+                                              </div>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                ☎
+                                              </div>
+                                              <div className="min-w-0">
+                                                <p className="text-[8px] text-slate-500">Phone</p>
+                                                <p className="truncate">+1 234567890</p>
+                                              </div>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                🎂
+                                              </div>
+                                              <div className="min-w-0">
+                                                <p className="text-[8px] text-slate-500">Birth Date</p>
+                                                <p className="truncate">12th March, 1990</p>
+                                              </div>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                📍
+                                              </div>
+                                              <div className="min-w-0">
+                                                <p className="text-[8px] text-slate-500">Location</p>
+                                                <p className="truncate">Berlin, Germany</p>
+                                              </div>
                                             </div>
                                           </div>
-                                          <div>
-                                            <p className="text-[8px] text-slate-600 mb-0.5">Hour:</p>
-                                            <div className="flex gap-1 overflow-x-auto pb-0.5">
-                                              {["8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00"].map((label, idx) => (
-                                                <button
-                                                  key={`${label}-${idx}`}
-                                                  type="button"
-                                                  className="px-2 py-1 rounded-full bg-white/60 border border-emerald-100 text-[8px] text-slate-600 whitespace-nowrap"
+
+                                          {/* Gallery section */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Gallery
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 grid grid-cols-3 gap-2">
+                                              {[1, 2, 3].map((i) => (
+                                                // eslint-disable-next-line react/no-array-index-key
+                                                <div
+                                                  key={i}
+                                                  className="aspect-[4/5] rounded-xl overflow-hidden bg-emerald-50"
                                                 >
-                                                  {label}
-                                                </button>
+                                                  <div
+                                                    className="w-full h-full bg-cover bg-center"
+                                                    style={{
+                                                      backgroundImage: `url('/images/product/product-0${i}.jpg')`,
+                                                    }}
+                                                  />
+                                                </div>
                                               ))}
                                             </div>
                                           </div>
-                                          <button
-                                            type="button"
-                                            className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.5 shadow-md"
-                                          >
-                                            Make An Appointment
-                                          </button>
+
+                                          {/* Our Service – Dynamic from card data */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Our Service
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
+                                              <div className="mt-3 space-y-2">
+                                                {(((currentCard as any)?.services as any[]) ?? []).slice(0, 2).map((svc, idx) => (
+                                                  <div key={svc.id || idx} className="rounded-2xl border border-emerald-100 bg-white shadow-sm overflow-hidden flex">
+                                                    <div className="w-16 h-16 bg-emerald-50 shrink-0 overflow-hidden flex items-center justify-center">
+                                                      {svc.icon ? (
+                                                        <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                                      ) : (
+                                                        <span className="text-emerald-300 font-bold text-lg">{idx + 1}</span>
+                                                      )}
+                                                    </div>
+                                                    <div className="px-2 py-1.5 flex-1 min-w-0">
+                                                      <p className="text-[9px] font-semibold text-slate-900 truncate">{svc.name}</p>
+                                                      <p className="mt-0.5 text-[8px] text-slate-600 leading-snug line-clamp-2">
+                                                        {svc.description}
+                                                      </p>
+                                                    </div>
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            ) : (
+                                              <div className="mt-3 py-4 text-center rounded-2xl border border-dashed border-emerald-100">
+                                                <p className="text-emerald-300 text-[8px]">No services added yet.</p>
+                                              </div>
+                                            )}
+                                          </div>
+
+                                          {/* Make an Appointment – compact preview */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Make an Appointment
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 space-y-2">
+                                              <div>
+                                                <p className="text-[8px] text-slate-600 mb-0.5">Date :</p>
+                                                <div className="h-7 rounded-full border border-emerald-200 bg-white flex items-center justify-between px-2 text-[8px] text-slate-500">
+                                                  <span>Pick a date</span>
+                                                  <span>📅</span>
+                                                </div>
+                                              </div>
+                                              <div>
+                                                <p className="text-[8px] text-slate-600 mb-0.5">Hour:</p>
+                                                <div className="flex gap-1 overflow-x-auto pb-0.5">
+                                                  {["8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00"].map((label, idx) => (
+                                                    <button
+                                                      key={`${label}-${idx}`}
+                                                      type="button"
+                                                      className="px-2 py-1 rounded-full bg-white/60 border border-emerald-100 text-[8px] text-slate-600 whitespace-nowrap"
+                                                    >
+                                                      {label}
+                                                    </button>
+                                                  ))}
+                                                </div>
+                                              </div>
+                                              <button
+                                                type="button"
+                                                className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.5 shadow-md"
+                                              >
+                                                Make An Appointment
+                                              </button>
+                                            </div>
+                                          </div>
+
+                                          {/* Product – compact two-column layout */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Product
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 grid grid-cols-2 gap-2">
+                                              {[1, 2].map((i) => (
+                                                // eslint-disable-next-line react/no-array-index-key
+                                                <div key={i} className="rounded-2xl bg-white border border-emerald-100 overflow-hidden">
+                                                  <div
+                                                    className="h-16 w-full bg-cover bg-center"
+                                                    style={{
+                                                      backgroundImage: `url('/images/product/product-0${i}.jpg')`,
+                                                    }}
+                                                  />
+                                                  <div className="px-3 py-2">
+                                                    <div className="flex items-center justify-between text-[9px] text-slate-900 font-semibold">
+                                                      <span>Flower Name</span>
+                                                      <span>$25.00</span>
+                                                    </div>
+                                                    <p className="mt-0.5 text-[8px] text-slate-600">Lorem Ipsum dummy text</p>
+                                                  </div>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          </div>
+
+                                          {/* Testimonials section */}
+                                          {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
+                                            <div className="mt-4 pt-3 border-t border-emerald-50">
+                                              <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                <span className="flex-1 h-px bg-emerald-100" />
+                                                Testimonials
+                                                <span className="flex-1 h-px bg-emerald-100" />
+                                              </h3>
+                                              <div className="mt-3 space-y-3">
+                                                {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
+                                                  <div key={t.id || idx} className="rounded-2xl bg-white border border-emerald-100 px-3 py-3 flex gap-2">
+                                                    <div className="w-10 h-10 rounded-full bg-emerald-50 overflow-hidden flex-shrink-0">
+                                                      {t.image ? (
+                                                        // eslint-disable-next-line @next/next/no-img-element
+                                                        <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
+                                                      ) : (
+                                                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-emerald-600 bg-emerald-100">
+                                                          {(t.name || "C")[0].toUpperCase()}
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                      <p className="text-[8px] text-slate-600 leading-snug line-clamp-3">
+                                                        &quot;{t.quote}&quot;
+                                                      </p>
+                                                      <p className="mt-1 text-[9px] font-semibold text-slate-900">{t.name}</p>
+                                                      <p className="text-[8px] text-emerald-600">- {t.role}</p>
+                                                    </div>
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            </div>
+                                          )}
+
+                                          {/* Blog – compact layout */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Blog
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 grid grid-cols-[1.1fr,1fr] gap-2 items-center">
+                                              <div>
+                                                <p className="text-[9px] font-semibold text-slate-900 mb-0.5">Lorem Ipsum</p>
+                                                <p className="text-[8px] text-slate-600 leading-snug">
+                                                  Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has
+                                                  been the industry&apos;s standard.
+                                                </p>
+                                                <div className="mt-2 flex gap-1.5">
+                                                  <button
+                                                    type="button"
+                                                    className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
+                                                  >
+                                                    ←
+                                                  </button>
+                                                  <button
+                                                    type="button"
+                                                    className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
+                                                  >
+                                                    →
+                                                  </button>
+                                                </div>
+                                              </div>
+                                              <div className="relative">
+                                                <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg border border-emerald-200" />
+                                                <div className="relative rounded-lg overflow-hidden border border-emerald-200">
+                                                  <div
+                                                    className="h-20 w-full bg-cover bg-center"
+                                                    style={{ backgroundImage: "url('/images/product/product-03.jpg')" }}
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          {/* Business Hours – compact grid */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Business Hours
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 grid grid-cols-2 gap-y-1.5 text-[8px] text-slate-700">
+                                              <p>Sunday : 08:10 - 20:00</p>
+                                              <p>Monday : 08:10 - 20:00</p>
+                                              <p>Tuesday : 08:10 - 20:00</p>
+                                              <p>Wednesday : 08:10 - 10:00</p>
+                                              <p>Thursday : 08:10 - 20:00</p>
+                                              <p>Friday : 08:10 - 20:00</p>
+                                              <p className="col-span-2 text-center">Saturday : Closed</p>
+                                            </div>
+                                          </div>
+
+                                          {/* QR Code – compact preview */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              QR Code
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 flex flex-col items-center gap-3">
+                                              <div className="relative w-20 h-20 rounded-lg bg-white border border-emerald-100 flex items-center justify-center shadow-sm">
+                                                <div className="w-16 h-16 bg-[radial-gradient(circle,_#000_40%,_transparent_41%)] [background-size:8px_8px]" />
+                                              </div>
+                                              <button
+                                                type="button"
+                                                className="px-4 py-1.5 rounded-full bg-emerald-700 text-white text-[9px] font-semibold shadow-md"
+                                              >
+                                                Download My QR Code
+                                              </button>
+                                            </div>
+                                          </div>
+
+                                          {/* Contact Us – compact form preview */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Contact Us
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 space-y-1.5">
+                                              <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                                Full Name
+                                              </div>
+                                              <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                                Email Address
+                                              </div>
+                                              <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                                Phone Number
+                                              </div>
+                                              <div className="h-10 rounded-2xl bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-start px-3 py-1.5">
+                                                Your Message
+                                              </div>
+                                              <button
+                                                type="button"
+                                                className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
+                                              >
+                                                Send Message
+                                              </button>
+                                            </div>
+                                          </div>
+
+                                          {/* Create Your vCard – link preview */}
+                                          <div className="mt-4 pt-3 border-t border-emerald-50 mb-3">
+                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                              Create Your vCard
+                                              <span className="flex-1 h-px bg-emerald-100" />
+                                            </h3>
+                                            <div className="mt-3 rounded-2xl overflow-hidden border border-emerald-100 bg-emerald-50/60">
+                                              <div className="px-3 py-3 bg-[url('/images/cards/card-02.png')] bg-cover bg-center">
+                                                <div className="rounded-full bg-white/95 border border-slate-200 px-3 py-1.5 flex items-center justify-between text-[8px] text-slate-700">
+                                                  <span className="truncate mr-2">
+                                                    https://vcards.infyom.com/marlonbrasil
+                                                  </span>
+                                                  <span className="shrink-0 text-[9px]">↗</span>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <button
+                                              type="button"
+                                              className="mt-3 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
+                                            >
+                                              Add to Contact
+                                            </button>
+                                          </div>
                                         </div>
+                                      </section>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : previewType === "travel" ? (
+                                <div className="flex-1 bg-sky-50 flex items-center justify-center px-4 py-6">
+                                  <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-sky-100 relative group/travel-p">
+                                    <div className="max-h-[520px] overflow-y-auto">
+                                      <div className="relative h-36 w-full overflow-hidden">
+                                        <div className="absolute inset-0 bg-sky-600">
+                                          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover opacity-60" alt="" />
+                                        </div>
+                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                          <p className="text-[40px] font-black text-slate-900/10 tracking-widest uppercase">TRAVEL</p>
+                                        </div>
+                                        <div className="absolute inset-0 pointer-events-none">
+                                          <svg viewBox="0 0 280 144" className="w-full h-full">
+                                            <path d="M 230 40 C 200 130, 50 120, 100 80 C 150 40, 250 100, 200 140" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" className="opacity-50" />
+                                            <circle cx="200" cy="140" r="3" fill="#fbbf24" className="animate-pulse" />
+                                          </svg>
+                                        </div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
                                       </div>
 
-                                      {/* Product – compact two-column layout */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Product
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 grid grid-cols-2 gap-2">
-                                          {[1, 2].map((i) => (
-                                            // eslint-disable-next-line react/no-array-index-key
-                                            <div key={i} className="rounded-2xl bg-white border border-emerald-100 overflow-hidden">
-                                              <div
-                                                className="h-16 w-full bg-cover bg-center"
-                                                style={{
-                                                  backgroundImage: `url('/images/product/product-0${i}.png')`,
-                                                }}
-                                              />
-                                              <div className="px-3 py-2">
-                                                <div className="flex items-center justify-between text-[9px] text-slate-900 font-semibold">
-                                                  <span>Flower Name</span>
-                                                  <span>$25.00</span>
-                                                </div>
-                                                <p className="mt-0.5 text-[8px] text-slate-600">Lorem Ipsum dummy text</p>
-                                              </div>
+                                      <div className="px-4 -mt-10 relative z-10 space-y-4">
+                                        <div className="flex items-end gap-3">
+                                          <div className="w-16 h-16 rounded-2xl border-4 border-white bg-sky-100 shadow-lg overflow-hidden shrink-0" />
+                                          <div className="pb-1">
+                                            <p className="text-slate-800 font-black text-xs">{previewContent.name}</p>
+                                            <p className="text-amber-500 font-bold text-[9px]">Travel Agent</p>
+                                          </div>
+                                        </div>
+
+                                        <div className="flex justify-start gap-2">
+                                          {[1, 2, 3, 4, 5].map(i => (
+                                            <div key={i} className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 text-[10px] border border-slate-100 italic font-bold">
+                                              {i === 1 ? 'f' : i === 2 ? 'w' : i === 3 ? 'in' : i === 4 ? 'ig' : 'x'}
                                             </div>
                                           ))}
                                         </div>
-                                      </div>
 
-                                      {/* Testimonials section */}
-                                      {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
-                                        <div className="mt-4 pt-3 border-t border-emerald-50">
-                                          <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                            <span className="flex-1 h-px bg-emerald-100" />
-                                            Testimonials
-                                            <span className="flex-1 h-px bg-emerald-100" />
-                                          </h3>
-                                          <div className="mt-3 space-y-3">
-                                            {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
-                                              <div key={t.id || idx} className="rounded-2xl bg-white border border-emerald-100 px-3 py-3 flex gap-2">
-                                                <div className="w-10 h-10 rounded-full bg-emerald-50 overflow-hidden flex-shrink-0">
+                                        <div className="space-y-2">
+                                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                            <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Email</p>
+                                            <p className="text-slate-700 text-[10px] font-semibold truncate">travel@example.com</p>
+                                          </div>
+                                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                            <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Mobile</p>
+                                            <p className="text-slate-700 text-[10px] font-semibold truncate">+49 95864 12484</p>
+                                          </div>
+                                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                            <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Official Website</p>
+                                            <p className="text-slate-700 text-[10px] font-semibold truncate">www.travelexplorer.com</p>
+                                          </div>
+                                        </div>
+
+                                        <div className="h-20 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center">
+                                          <p className="text-sky-400 text-[10px]">Travel Gallery Preview</p>
+                                        </div>
+
+                                        <button className="w-full bg-amber-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-amber-200">
+                                          Save Contact
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : previewType === "travel-dark" ? (
+                                /* Digital business card template style (screenshot) – not website style */
+                                <div className="flex-1 overflow-y-auto flex flex-col bg-[#1A1A2E] text-left min-h-0 relative" data-single-page-template>
+                                  {/* Floating grid icon – top right */}
+                                  <button type="button" className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-[#38bdf8]/90 flex items-center justify-center shadow-lg">
+                                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
+                                  </button>
+                                  {/* Top banner – name, title, CTA (template header) */}
+                                  <header className="bg-black pt-4 pb-8 px-4 relative">
+                                    <div className="flex justify-end mb-2">
+                                      <button type="button" className="text-white/80 text-[9px] flex items-center gap-0.5 border border-white/30 rounded-full px-2 py-1">EN <span>▼</span></button>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center text-white font-bold text-xs shrink-0">
+                                        {(previewContent.name || "N").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase() || "N"}
+                                      </div>
+                                      <div>
+                                        <h1 className="text-white text-sm font-bold leading-tight truncate">{previewContent.name || "Your Name"}</h1>
+                                        <p className="text-white text-[9px] truncate">{previewContent.subtitle || "Title"}</p>
+                                      </div>
+                                    </div>
+                                    <p className="text-white/90 text-[9px] mt-2 line-clamp-2">{previewContent.description}</p>
+                                    {previewContent.extraLine && <p className="text-white/70 text-[8px] mt-0.5 truncate">{previewContent.extraLine}</p>}
+                                    <button type="button" className="mt-3 w-full rounded-lg border border-white text-white text-[9px] font-medium py-2">Let&apos;s Build Your Brand Online – DM To Connect</button>
+                                  </header>
+                                  {/* Profile picture – centered, overlapping */}
+                                  <div className="flex justify-center -mt-6 relative z-10 px-4">
+                                    <div className="w-16 h-16 rounded-full border-4 border-[#1A1A2E] bg-slate-600 overflow-hidden shrink-0" />
+                                  </div>
+                                  {/* Name + role + company */}
+                                  <div className="text-center pt-2 px-4">
+                                    <p className="text-white text-sm font-bold inline-flex items-center gap-1">{previewContent.name} <span className="text-[#38bdf8]">✓</span></p>
+                                    <p className="text-white/90 text-[10px] mt-0.5">{previewContent.subtitle}</p>
+                                    <p className="text-white/80 text-[9px]">Founder & CEO · Aayzen Digital</p>
+                                  </div>
+                                  {/* Description */}
+                                  <div className="px-4 pt-3 text-center">
+                                    <p className="text-white/90 text-[9px] leading-snug">Helping businesses grow their online presence through <strong className="text-white">digital marketing, social media marketing,</strong> and brand-focused growth strategies.</p>
+                                    <p className="text-white/90 text-[9px] leading-snug mt-1.5">Also building smart <strong className="text-white">digital business card solutions</strong> to help professionals showcase and share their identity online.</p>
+                                  </div>
+                                  {/* Add to contact – primary CTA */}
+                                  <div className="px-4 pt-4">
+                                    <button type="button" className="w-full rounded-xl bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white text-[10px] font-semibold py-2.5 flex items-center justify-center gap-2 shadow-lg">
+                                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                                      Add to contact
+                                    </button>
+                                  </div>
+                                  {/* Title banner – OpenMyProfile style */}
+                                  <div className="mt-4 mx-4 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#2563eb] py-2 px-3 text-center">
+                                    <p className="text-white text-[10px] font-bold">OpenMyProfile – Digital Business Card</p>
+                                  </div>
+                                  {/* Contact grid – 2x2 with icons in light blue circles */}
+                                  <div className="px-4 pt-4 grid grid-cols-2 gap-2">
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">✉</div>
+                                      <div className="min-w-0">
+                                        <p className="text-white/60 text-[8px]">Email</p>
+                                        <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[0]?.trim() || previewContent.officialWebsite || "email@example.com"}</p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📱</div>
+                                      <div className="min-w-0">
+                                        <p className="text-white/60 text-[8px]">Mobile Number</p>
+                                        <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[1]?.trim() || "+91 9977216140"}</p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">🎂</div>
+                                      <div className="min-w-0">
+                                        <p className="text-white/60 text-[8px]">Date of Birth</p>
+                                        <p className="text-white text-[9px]">18/09/1996</p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-start gap-2">
+                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📍</div>
+                                      <div className="min-w-0">
+                                        <p className="text-white/60 text-[8px]">Address</p>
+                                        <p className="text-white text-[9px] truncate">Madhya Pradesh, India</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  {/* QR Code section – white card, QR + profile */}
+                                  <div className="px-4 pt-4">
+                                    <p className="text-white text-xs font-bold mb-2 flex items-center justify-between">
+                                      QR Code
+                                      <span className="w-7 h-7 rounded-full bg-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
+                                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
+                                      </span>
+                                    </p>
+                                    <div className="bg-white rounded-2xl p-3 flex items-center gap-3">
+                                      <div className="w-14 h-14 rounded-lg bg-black flex-shrink-0 [background-size:6px_6px]" style={{ backgroundImage: "radial-gradient(circle, #000 40%, transparent 41%)" }} />
+                                      <div className="w-12 h-12 rounded-full bg-slate-300 flex-shrink-0" />
+                                    </div>
+                                  </div>
+                                  {/* Our Services – Dynamic from card data */}
+                                  <div className="px-4 pt-4">
+                                    <p className="text-white text-xs font-bold mb-3 text-center">Our Services</p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                      {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
+                                        (((currentCard as any)?.services as any[]) ?? []).slice(0, 4).map((svc, idx) => (
+                                          <div key={svc.id || idx} className="rounded-xl border border-[#38bdf8]/30 bg-white/5 p-2">
+                                            <div className="w-full h-10 rounded-lg bg-white/10 mb-1.5 flex items-center justify-center overflow-hidden">
+                                              {svc.icon ? (
+                                                <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                              ) : (
+                                                <span className="text-[#38bdf8] text-xs font-bold">{idx + 1}</span>
+                                              )}
+                                            </div>
+                                            <p className="text-white text-[10px] font-bold line-clamp-1">{svc.name}</p>
+                                            <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">{svc.description}</p>
+                                          </div>
+                                        ))
+                                      ) : (
+                                        <div className="col-span-2 text-center py-4 rounded-xl border border-dashed border-white/20">
+                                          <p className="text-white/40 text-[9px]">No services added yet.</p>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                  {/* Gallery – 2 images + carousel dots */}
+                                  <div className="px-4 pt-4">
+                                    <p className="text-white text-xs font-bold mb-2 text-center">Gallery</p>
+                                    <div className="flex gap-2">
+                                      <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
+                                      <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
+                                    </div>
+                                    <div className="flex items-center justify-center gap-2 mt-2">
+                                      <span className="text-white/50 text-xs">◀</span>
+                                      <span className="flex gap-1"><span className="w-1.5 h-1.5 rounded-full bg-white/40" /><span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" /><span className="w-1.5 h-1.5 rounded-full bg-white/40" /></span>
+                                      <span className="text-white/50 text-xs">▶</span>
+                                    </div>
+                                  </div>
+                                  {/* Products – one product card */}
+                                  <div className="px-4 pt-4 pb-4">
+                                    <p className="text-white text-xs font-bold mb-2 text-center">Products</p>
+                                    <div className="rounded-2xl border border-[#38bdf8]/40 bg-gradient-to-b from-[#38bdf8]/20 to-transparent overflow-hidden">
+                                      <div className="h-16 bg-white/10 flex items-center justify-center text-[#38bdf8] text-2xl">📱</div>
+                                      <div className="p-2">
+                                        <p className="text-white text-[10px] font-bold">Digital Business Card</p>
+                                        <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">A smart digital business card to share your details, services, and links instantly.</p>
+                                        <p className="text-white font-bold text-[10px] mt-1">₹2,999.00</p>
+                                      </div>
+                                    </div>
+                                    <p className="text-center text-[#38bdf8] text-[9px] underline mt-2">View More Products</p>
+                                  </div>
+                                  {/* Social icons row */}
+                                  <div className="flex items-center justify-center gap-4 py-3 px-4 border-t border-white/10">
+                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">🌐</span>
+                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">X</span>
+                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">f</span>
+                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">📷</span>
+                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">▶</span>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="flex-1 flex flex-col bg-[#0f2630]">
+                                  <div className={`relative h-24 bg-gradient-to-b ${accent} rounded-t-[1.5rem] overflow-hidden`}>
+                                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+                                    <button
+                                      type="button"
+                                      className="absolute top-8 right-3 flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-medium shadow"
+                                      style={{
+                                        backgroundColor: isLight ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.2)",
+                                        color: textOnPrimary,
+                                      }}
+                                    >
+                                      EN
+                                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                  <div className="relative -mt-6 px-4 pb-2">
+                                    <div className="absolute inset-0 top-0 h-20 bg-[#142633] rounded-t-2xl" />
+                                    <div className="relative flex items-center gap-3 pt-2">
+                                      <div
+                                        className="h-14 w-14 rounded-full border-2 overflow-hidden bg-gray-600 flex-shrink-0"
+                                        style={{ borderColor: primaryColor }}
+                                      />
+                                      <div className="flex-1 min-w-0">
+                                        <p
+                                          className="text-base font-semibold truncate"
+                                          style={{ color: primaryColor }}
+                                        >
+                                          {previewContent.name}
+                                        </p>
+                                        <p
+                                          className="text-xs opacity-90 truncate"
+                                          style={{ color: primaryColor }}
+                                        >
+                                          {previewContent.subtitle}
+                                        </p>
+                                      </div>
+                                      <button
+                                        type="button"
+                                        className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+                                        style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                                      >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                                          />
+                                        </svg>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div className="flex-1 px-4 py-3 overflow-y-auto">
+                                    <p className="text-[11px] leading-relaxed text-gray-300">
+                                      {previewContent.description}
+                                    </p>
+                                    {previewContent.extraLine && (
+                                      <p className="text-[10px] text-gray-400 mt-2">{previewContent.extraLine}</p>
+                                    )}
+                                    {previewContent.officialWebsite && (
+                                      <p className="text-[10px] text-gray-400 mt-1.5 flex items-center gap-1">
+                                        <span className="text-gray-500">Official Website:</span>
+                                        <span className="text-brand-400 underline">{previewContent.officialWebsite}</span>
+                                      </p>
+                                    )}
+                                    {(previewContent.address || previewContent.company) && (
+                                      <p className="text-[10px] text-gray-400 mt-1">
+                                        {[previewContent.company, previewContent.address].filter(Boolean).join(" · ")}
+                                      </p>
+                                    )}
+                                    <div className="mt-6 space-y-3">
+                                      <button
+                                        type="button"
+                                        className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                                        style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                                      >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                                          />
+                                        </svg>
+                                        {previewContent.ctaLabel}
+                                      </button>
+                                      <div className="flex gap-2">
+                                        <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                          fb
+                                        </div>
+                                        <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                          in
+                                        </div>
+                                        <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                          x
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
+                                      <div className="mt-8 pt-4 border-t border-white/10">
+                                        <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
+                                          Testimonials
+                                        </p>
+                                        <div className="space-y-3">
+                                          {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
+                                            <div key={t.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3">
+                                              <div className="flex items-center gap-2 mb-2">
+                                                <div className="w-8 h-8 rounded-full bg-white/10 overflow-hidden shrink-0">
                                                   {t.image ? (
-                                                    // eslint-disable-next-line @next/next/no-img-element
                                                     <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
                                                   ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-xs font-bold text-emerald-600 bg-emerald-100">
+                                                    <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-white/40">
                                                       {(t.name || "C")[0].toUpperCase()}
                                                     </div>
                                                   )}
                                                 </div>
-                                                <div className="flex-1 min-w-0">
-                                                  <p className="text-[8px] text-slate-600 leading-snug line-clamp-3">
-                                                    &quot;{t.quote}&quot;
-                                                  </p>
-                                                  <p className="mt-1 text-[9px] font-semibold text-slate-900">{t.name}</p>
-                                                  <p className="text-[8px] text-emerald-600">- {t.role}</p>
+                                                <div className="min-w-0">
+                                                  <p className="text-[10px] font-semibold text-white truncate">{t.name}</p>
+                                                  <p className="text-[8px] text-white/40 truncate">{t.role}</p>
                                                 </div>
                                               </div>
-                                            ))}
-                                          </div>
-                                        </div>
-                                      )}
-
-                                      {/* Blog – compact layout */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Blog
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 grid grid-cols-[1.1fr,1fr] gap-2 items-center">
-                                          <div>
-                                            <p className="text-[9px] font-semibold text-slate-900 mb-0.5">Lorem Ipsum</p>
-                                            <p className="text-[8px] text-slate-600 leading-snug">
-                                              Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has
-                                              been the industry&apos;s standard.
-                                            </p>
-                                            <div className="mt-2 flex gap-1.5">
-                                              <button
-                                                type="button"
-                                                className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
-                                              >
-                                                ←
-                                              </button>
-                                              <button
-                                                type="button"
-                                                className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
-                                              >
-                                                →
-                                              </button>
+                                              <p className="text-[9px] text-white/70 leading-relaxed line-clamp-3 italic">
+                                                &quot;{t.quote}&quot;
+                                              </p>
                                             </div>
-                                          </div>
-                                          <div className="relative">
-                                            <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg border border-emerald-200" />
-                                            <div className="relative rounded-lg overflow-hidden border border-emerald-200">
-                                              <div
-                                                className="h-20 w-full bg-cover bg-center"
-                                                style={{ backgroundImage: "url('/images/product/product-03.png')" }}
-                                              />
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
+                                    {(((currentCard as any)?.services as any[]) ?? []).length > 0 && (
+                                      <div className="mt-8 pt-4 border-t border-white/10">
+                                        <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
+                                          Services
+                                        </p>
+                                        <div className="grid grid-cols-1 gap-3">
+                                          {(((currentCard as any)?.services as any[]) ?? []).slice(0, 3).map((svc, idx) => (
+                                            <div key={svc.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3 flex items-start gap-3">
+                                              <div className="w-10 h-10 rounded-lg bg-white/10 overflow-hidden shrink-0 flex items-center justify-center text-white/60 text-xs">
+                                                {svc.icon ? (
+                                                  <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                                ) : (
+                                                  <span>{idx + 1}</span>
+                                                )}
+                                              </div>
+                                              <div className="min-w-0">
+                                                <p className="text-[10px] font-semibold text-white truncate">{svc.name}</p>
+                                                <p className="text-[8px] text-white/60 leading-normal line-clamp-2">{svc.description}</p>
+                                              </div>
                                             </div>
-                                          </div>
+                                          ))}
                                         </div>
                                       </div>
-
-                                      {/* Business Hours – compact grid */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Business Hours
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 grid grid-cols-2 gap-y-1.5 text-[8px] text-slate-700">
-                                          <p>Sunday : 08:10 - 20:00</p>
-                                          <p>Monday : 08:10 - 20:00</p>
-                                          <p>Tuesday : 08:10 - 20:00</p>
-                                          <p>Wednesday : 08:10 - 10:00</p>
-                                          <p>Thursday : 08:10 - 20:00</p>
-                                          <p>Friday : 08:10 - 20:00</p>
-                                          <p className="col-span-2 text-center">Saturday : Closed</p>
-                                        </div>
-                                      </div>
-
-                                      {/* QR Code – compact preview */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          QR Code
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 flex flex-col items-center gap-3">
-                                          <div className="relative w-20 h-20 rounded-lg bg-white border border-emerald-100 flex items-center justify-center shadow-sm">
-                                            <div className="w-16 h-16 bg-[radial-gradient(circle,_#000_40%,_transparent_41%)] [background-size:8px_8px]" />
-                                          </div>
-                                          <button
-                                            type="button"
-                                            className="px-4 py-1.5 rounded-full bg-emerald-700 text-white text-[9px] font-semibold shadow-md"
-                                          >
-                                            Download My QR Code
-                                          </button>
-                                        </div>
-                                      </div>
-
-                                      {/* Contact Us – compact form preview */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Contact Us
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 space-y-1.5">
-                                          <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
-                                            Full Name
-                                          </div>
-                                          <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
-                                            Email Address
-                                          </div>
-                                          <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
-                                            Phone Number
-                                          </div>
-                                          <div className="h-10 rounded-2xl bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-start px-3 py-1.5">
-                                            Your Message
-                                          </div>
-                                          <button
-                                            type="button"
-                                            className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
-                                          >
-                                            Send Message
-                                          </button>
-                                        </div>
-                                      </div>
-
-                                      {/* Create Your vCard – link preview */}
-                                      <div className="mt-4 pt-3 border-t border-emerald-50 mb-3">
-                                        <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                          Create Your vCard
-                                          <span className="flex-1 h-px bg-emerald-100" />
-                                        </h3>
-                                        <div className="mt-3 rounded-2xl overflow-hidden border border-emerald-100 bg-emerald-50/60">
-                                          <div className="px-3 py-3 bg-[url('/images/cards/card-02.png')] bg-cover bg-center">
-                                            <div className="rounded-full bg-white/95 border border-slate-200 px-3 py-1.5 flex items-center justify-between text-[8px] text-slate-700">
-                                              <span className="truncate mr-2">
-                                                https://vcards.infyom.com/marlonbrasil
-                                              </span>
-                                              <span className="shrink-0 text-[9px]">↗</span>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <button
-                                          type="button"
-                                          className="mt-3 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
-                                        >
-                                          Add to Contact
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </section>
-                                </div>
-                              </div>
-                            </div>
-                          ) : previewType === "travel" ? (
-                            <div className="flex-1 bg-sky-50 flex items-center justify-center px-4 py-6">
-                              <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-sky-100 relative group/travel-p">
-                                <div className="max-h-[520px] overflow-y-auto">
-                                  <div className="relative h-36 w-full overflow-hidden">
-                                    <div className="absolute inset-0 bg-sky-600">
-                                       <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover opacity-60" alt="" />
-                                    </div>
-                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                      <p className="text-[40px] font-black text-slate-900/10 tracking-widest uppercase">TRAVEL</p>
-                                    </div>
-                                    <div className="absolute inset-0 pointer-events-none">
-                                      <svg viewBox="0 0 280 144" className="w-full h-full">
-                                        <path d="M 230 40 C 200 130, 50 120, 100 80 C 150 40, 250 100, 200 140" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" className="opacity-50" />
-                                        <circle cx="200" cy="140" r="3" fill="#fbbf24" className="animate-pulse" />
-                                      </svg>
-                                    </div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-                                  </div>
-                                  
-                                  <div className="px-4 -mt-10 relative z-10 space-y-4">
-                                    <div className="flex items-end gap-3">
-                                      <div className="w-16 h-16 rounded-2xl border-4 border-white bg-sky-100 shadow-lg overflow-hidden shrink-0" />
-                                      <div className="pb-1">
-                                        <p className="text-slate-800 font-black text-xs">Bessie Cooper</p>
-                                        <p className="text-amber-500 font-bold text-[9px]">Travel Agent</p>
-                                      </div>
-                                    </div>
-                                    
-                                    <div className="flex justify-start gap-2">
-                                      {[1, 2, 3, 4, 5].map(i => (
-                                        <div key={i} className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 text-[10px] border border-slate-100 italic font-bold">
-                                          {i === 1 ? 'f' : i === 2 ? 'w' : i === 3 ? 'in' : i === 4 ? 'ig' : 'x'}
-                                        </div>
-                                      ))}
-                                    </div>
-                                    
-                                    <div className="space-y-2">
-                                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                        <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Email</p>
-                                        <p className="text-slate-700 text-[10px] font-semibold truncate">travel@example.com</p>
-                                      </div>
-                                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                        <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Mobile</p>
-                                        <p className="text-slate-700 text-[10px] font-semibold truncate">+49 95864 12484</p>
-                                      </div>
-                                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                        <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Official Website</p>
-                                        <p className="text-slate-700 text-[10px] font-semibold truncate">www.travelexplorer.com</p>
-                                      </div>
-                                    </div>
-                                    
-                                    <div className="h-20 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center">
-                                      <p className="text-sky-400 text-[10px]">Travel Gallery Preview</p>
-                                    </div>
-                                    
-                                    <button className="w-full bg-amber-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-amber-200">
-                                      Save Contact
-                                    </button>
+                                    )}
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                          ) : previewType === "travel-dark" ? (
-                            /* Digital business card template style (screenshot) – not website style */
-                            <div className="flex-1 overflow-y-auto flex flex-col bg-[#1A1A2E] text-left min-h-0 relative" data-single-page-template>
-                              {/* Floating grid icon – top right */}
-                              <button type="button" className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-[#38bdf8]/90 flex items-center justify-center shadow-lg">
-                                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
-                              </button>
-                              {/* Top banner – name, title, CTA (template header) */}
-                              <header className="bg-black pt-4 pb-8 px-4 relative">
-                                <div className="flex justify-end mb-2">
-                                  <button type="button" className="text-white/80 text-[9px] flex items-center gap-0.5 border border-white/30 rounded-full px-2 py-1">EN <span>▼</span></button>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <div className="w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center text-white font-bold text-xs shrink-0">
-                                    {(previewContent.name || "N").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase() || "N"}
-                                  </div>
-                                  <div>
-                                    <h1 className="text-white text-sm font-bold leading-tight truncate">{previewContent.name || "Your Name"}</h1>
-                                    <p className="text-white text-[9px] truncate">{previewContent.subtitle || "Title"}</p>
-                                  </div>
-                                </div>
-                                <p className="text-white/90 text-[9px] mt-2 line-clamp-2">{previewContent.description}</p>
-                                {previewContent.extraLine && <p className="text-white/70 text-[8px] mt-0.5 truncate">{previewContent.extraLine}</p>}
-                                <button type="button" className="mt-3 w-full rounded-lg border border-white text-white text-[9px] font-medium py-2">Let&apos;s Build Your Brand Online – DM To Connect</button>
-                              </header>
-                              {/* Profile picture – centered, overlapping */}
-                              <div className="flex justify-center -mt-6 relative z-10 px-4">
-                                <div className="w-16 h-16 rounded-full border-4 border-[#1A1A2E] bg-slate-600 overflow-hidden shrink-0" />
-                              </div>
-                              {/* Name + role + company */}
-                              <div className="text-center pt-2 px-4">
-                                <p className="text-white text-sm font-bold inline-flex items-center gap-1">{previewContent.name} <span className="text-[#38bdf8]">✓</span></p>
-                                <p className="text-white/90 text-[10px] mt-0.5">{previewContent.subtitle}</p>
-                                <p className="text-white/80 text-[9px]">Founder & CEO · Aayzen Digital</p>
-                              </div>
-                              {/* Description */}
-                              <div className="px-4 pt-3 text-center">
-                                <p className="text-white/90 text-[9px] leading-snug">Helping businesses grow their online presence through <strong className="text-white">digital marketing, social media marketing,</strong> and brand-focused growth strategies.</p>
-                                <p className="text-white/90 text-[9px] leading-snug mt-1.5">Also building smart <strong className="text-white">digital business card solutions</strong> to help professionals showcase and share their identity online.</p>
-                              </div>
-                              {/* Add to contact – primary CTA */}
-                              <div className="px-4 pt-4">
-                                <button type="button" className="w-full rounded-xl bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white text-[10px] font-semibold py-2.5 flex items-center justify-center gap-2 shadow-lg">
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
-                                  Add to contact
-                                </button>
-                              </div>
-                              {/* Title banner – OpenMyProfile style */}
-                              <div className="mt-4 mx-4 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#2563eb] py-2 px-3 text-center">
-                                <p className="text-white text-[10px] font-bold">OpenMyProfile – Digital Business Card</p>
-                              </div>
-                              {/* Contact grid – 2x2 with icons in light blue circles */}
-                              <div className="px-4 pt-4 grid grid-cols-2 gap-2">
-                                <div className="flex items-start gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">✉</div>
-                                  <div className="min-w-0">
-                                    <p className="text-white/60 text-[8px]">Email</p>
-                                    <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[0]?.trim() || previewContent.officialWebsite || "email@example.com"}</p>
-                                  </div>
-                                </div>
-                                <div className="flex items-start gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📱</div>
-                                  <div className="min-w-0">
-                                    <p className="text-white/60 text-[8px]">Mobile Number</p>
-                                    <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[1]?.trim() || "+91 9977216140"}</p>
-                                  </div>
-                                </div>
-                                <div className="flex items-start gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">🎂</div>
-                                  <div className="min-w-0">
-                                    <p className="text-white/60 text-[8px]">Date of Birth</p>
-                                    <p className="text-white text-[9px]">18/09/1996</p>
-                                  </div>
-                                </div>
-                                <div className="flex items-start gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📍</div>
-                                  <div className="min-w-0">
-                                    <p className="text-white/60 text-[8px]">Address</p>
-                                    <p className="text-white text-[9px] truncate">Madhya Pradesh, India</p>
-                                  </div>
-                                </div>
-                              </div>
-                              {/* QR Code section – white card, QR + profile */}
-                              <div className="px-4 pt-4">
-                                <p className="text-white text-xs font-bold mb-2 flex items-center justify-between">
-                                  QR Code
-                                  <span className="w-7 h-7 rounded-full bg-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
-                                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
-                                  </span>
-                                </p>
-                                <div className="bg-white rounded-2xl p-3 flex items-center gap-3">
-                                  <div className="w-14 h-14 rounded-lg bg-black flex-shrink-0 [background-size:6px_6px]" style={{ backgroundImage: "radial-gradient(circle, #000 40%, transparent 41%)" }} />
-                                  <div className="w-12 h-12 rounded-full bg-slate-300 flex-shrink-0" />
-                                </div>
-                              </div>
-                               {/* Our Services – Dynamic from card data */}
-                              <div className="px-4 pt-4">
-                                <p className="text-white text-xs font-bold mb-3 text-center">Our Services</p>
-                                <div className="grid grid-cols-2 gap-2">
-                                  {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
-                                    (((currentCard as any)?.services as any[]) ?? []).slice(0, 4).map((svc, idx) => (
-                                      <div key={svc.id || idx} className="rounded-xl border border-[#38bdf8]/30 bg-white/5 p-2">
-                                        <div className="w-full h-10 rounded-lg bg-white/10 mb-1.5 flex items-center justify-center overflow-hidden">
-                                          {svc.icon ? (
-                                            <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
-                                          ) : (
-                                            <span className="text-[#38bdf8] text-xs font-bold">{idx + 1}</span>
-                                          )}
-                                        </div>
-                                        <p className="text-white text-[10px] font-bold line-clamp-1">{svc.name}</p>
-                                        <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">{svc.description}</p>
-                                      </div>
-                                    ))
-                                  ) : (
-                                    <div className="col-span-2 text-center py-4 rounded-xl border border-dashed border-white/20">
-                                       <p className="text-white/40 text-[9px]">No services added yet.</p>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                              {/* Gallery – 2 images + carousel dots */}
-                              <div className="px-4 pt-4">
-                                <p className="text-white text-xs font-bold mb-2 text-center">Gallery</p>
-                                <div className="flex gap-2">
-                                  <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
-                                  <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
-                                </div>
-                                <div className="flex items-center justify-center gap-2 mt-2">
-                                  <span className="text-white/50 text-xs">◀</span>
-                                  <span className="flex gap-1"><span className="w-1.5 h-1.5 rounded-full bg-white/40" /><span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" /><span className="w-1.5 h-1.5 rounded-full bg-white/40" /></span>
-                                  <span className="text-white/50 text-xs">▶</span>
-                                </div>
-                              </div>
-                              {/* Products – one product card */}
-                              <div className="px-4 pt-4 pb-4">
-                                <p className="text-white text-xs font-bold mb-2 text-center">Products</p>
-                                <div className="rounded-2xl border border-[#38bdf8]/40 bg-gradient-to-b from-[#38bdf8]/20 to-transparent overflow-hidden">
-                                  <div className="h-16 bg-white/10 flex items-center justify-center text-[#38bdf8] text-2xl">📱</div>
-                                  <div className="p-2">
-                                    <p className="text-white text-[10px] font-bold">Digital Business Card</p>
-                                    <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">A smart digital business card to share your details, services, and links instantly.</p>
-                                    <p className="text-white font-bold text-[10px] mt-1">₹2,999.00</p>
-                                  </div>
-                                </div>
-                                <p className="text-center text-[#38bdf8] text-[9px] underline mt-2">View More Products</p>
-                              </div>
-                              {/* Social icons row */}
-                              <div className="flex items-center justify-center gap-4 py-3 px-4 border-t border-white/10">
-                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">🌐</span>
-                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">X</span>
-                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">f</span>
-                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">📷</span>
-                                <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">▶</span>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="flex-1 flex flex-col bg-[#0f2630]">
-                              <div className={`relative h-24 bg-gradient-to-b ${accent} rounded-t-[1.5rem] overflow-hidden`}>
-                                <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
-                                <button
-                                  type="button"
-                                  className="absolute top-8 right-3 flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-medium shadow"
-                                  style={{
-                                    backgroundColor: isLight ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.2)",
-                                    color: textOnPrimary,
-                                  }}
-                                >
-                                  EN
-                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                </button>
-                              </div>
-                              <div className="relative -mt-6 px-4 pb-2">
-                                <div className="absolute inset-0 top-0 h-20 bg-[#142633] rounded-t-2xl" />
-                                <div className="relative flex items-center gap-3 pt-2">
-                                  <div
-                                    className="h-14 w-14 rounded-full border-2 overflow-hidden bg-gray-600 flex-shrink-0"
-                                    style={{ borderColor: primaryColor }}
-                                  />
-                                  <div className="flex-1 min-w-0">
-                                    <p
-                                      className="text-base font-semibold truncate"
-                                      style={{ color: primaryColor }}
-                                    >
-                                      {previewContent.name}
-                                    </p>
-                                    <p
-                                      className="text-xs opacity-90 truncate"
-                                      style={{ color: primaryColor }}
-                                    >
-                                      {previewContent.subtitle}
-                                    </p>
-                                  </div>
-                                  <button
-                                    type="button"
-                                    className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
-                                    style={{ backgroundColor: primaryColor, color: textOnPrimary }}
-                                  >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                                      />
-                                    </svg>
-                                  </button>
-                                </div>
-                              </div>
-                              <div className="flex-1 px-4 py-3 overflow-y-auto">
-                                <p className="text-[11px] leading-relaxed text-gray-300">
-                                  {previewContent.description}
-                                </p>
-                                {previewContent.extraLine && (
-                                  <p className="text-[10px] text-gray-400 mt-2">{previewContent.extraLine}</p>
-                                )}
-                                {previewContent.officialWebsite && (
-                                  <p className="text-[10px] text-gray-400 mt-1.5 flex items-center gap-1">
-                                    <span className="text-gray-500">Official Website:</span>
-                                    <span className="text-brand-400 underline">{previewContent.officialWebsite}</span>
-                                  </p>
-                                )}
-                                {(previewContent.address || previewContent.company) && (
-                                  <p className="text-[10px] text-gray-400 mt-1">
-                                    {[previewContent.company, previewContent.address].filter(Boolean).join(" · ")}
-                                  </p>
-                                )}
-                                <div className="mt-6 space-y-3">
-                                  <button
-                                    type="button"
-                                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold"
-                                    style={{ backgroundColor: primaryColor, color: textOnPrimary }}
-                                  >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                                      />
-                                    </svg>
-                                    {previewContent.ctaLabel}
-                                  </button>
-                                  <div className="flex gap-2">
-                                    <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
-                                      fb
-                                    </div>
-                                    <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
-                                      in
-                                    </div>
-                                    <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
-                                      x
-                                    </div>
-                                  </div>
-                                </div>
-                                {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
-                                  <div className="mt-8 pt-4 border-t border-white/10">
-                                    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
-                                      Testimonials
-                                    </p>
-                                    <div className="space-y-3">
-                                      {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
-                                        <div key={t.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3">
-                                          <div className="flex items-center gap-2 mb-2">
-                                            <div className="w-8 h-8 rounded-full bg-white/10 overflow-hidden shrink-0">
-                                              {t.image ? (
-                                                <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
-                                              ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-white/40">
-                                                  {(t.name || "C")[0].toUpperCase()}
-                                                </div>
-                                              )}
-                                            </div>
-                                            <div className="min-w-0">
-                                              <p className="text-[10px] font-semibold text-white truncate">{t.name}</p>
-                                              <p className="text-[8px] text-white/40 truncate">{t.role}</p>
-                                            </div>
-                                          </div>
-                                          <p className="text-[9px] text-white/70 leading-relaxed line-clamp-3 italic">
-                                            &quot;{t.quote}&quot;
-                                          </p>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-                                {(((currentCard as any)?.services as any[]) ?? []).length > 0 && (
-                                  <div className="mt-8 pt-4 border-t border-white/10">
-                                    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
-                                      Services
-                                    </p>
-                                    <div className="grid grid-cols-1 gap-3">
-                                      {(((currentCard as any)?.services as any[]) ?? []).slice(0, 3).map((svc, idx) => (
-                                        <div key={svc.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3 flex items-start gap-3">
-                                          <div className="w-10 h-10 rounded-lg bg-white/10 overflow-hidden shrink-0 flex items-center justify-center text-white/60 text-xs">
-                                             {svc.icon ? (
-                                               <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
-                                             ) : (
-                                               <span>{idx + 1}</span>
-                                             )}
-                                          </div>
-                                          <div className="min-w-0">
-                                            <p className="text-[10px] font-semibold text-white truncate">{svc.name}</p>
-                                            <p className="text-[8px] text-white/60 leading-normal line-clamp-2">{svc.description}</p>
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          )}
+                              )))}
                         </div>
                       </div>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
@@ -3160,22 +3317,20 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <button
                         type="button"
                         onClick={() => setStickyButtonPosition("left")}
-                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium shadow-sm transition-colors ${
-                          stickyButtonPosition === "left"
-                            ? "bg-gray-800 text-white border-2 border-gray-800"
-                            : "bg-gray-300 text-gray-900 hover:bg-gray-400"
-                        }`}
+                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium shadow-sm transition-colors ${stickyButtonPosition === "left"
+                          ? "bg-gray-800 text-white border-2 border-gray-800"
+                          : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                          }`}
                       >
                         Left
                       </button>
                       <button
                         type="button"
                         onClick={() => setStickyButtonPosition("right")}
-                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium transition-colors ${
-                          stickyButtonPosition === "right"
-                            ? "bg-gray-800 text-white border-2 border-black"
-                            : "bg-gray-300 text-gray-900 hover:bg-gray-400"
-                        }`}
+                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium transition-colors ${stickyButtonPosition === "right"
+                          ? "bg-gray-800 text-white border-2 border-black"
+                          : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                          }`}
                       >
                         Right
                       </button>
@@ -3201,9 +3356,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           key={n}
                           type="button"
                           onClick={() => setSelectedButtonStyle(n as typeof selectedButtonStyle)}
-                          className={`flex items-center justify-center px-4 py-2 text-xs font-semibold transition-all ${className} ${
-                            selectedButtonStyle === n ? "ring-2 ring-brand-500 ring-offset-2" : ""
-                          }`}
+                          className={`flex items-center justify-center px-4 py-2 text-xs font-semibold transition-all ${className} ${selectedButtonStyle === n ? "ring-2 ring-brand-500 ring-offset-2" : ""
+                            }`}
                         >
                           Style {n}
                         </button>
@@ -3211,7 +3365,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </div>
                   </div>
 
-                  </div>
+                </div>
 
                 {/* Phone preview – uses Dynamic vCard colors + sticky button position */}
                 <div className="flex-1 flex justify-center">
@@ -3257,23 +3411,22 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <div className="flex items-center justify-between gap-2">
                           <button
                             type="button"
-                            className={`inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold shadow ${
-                              selectedButtonStyle === 9
-                                ? "rounded-[999px] rounded-bl-[2rem]"
-                                : selectedButtonStyle === 3 || selectedButtonStyle === 5
-                                  ? "rounded-full"
-                                  : "rounded-md"
-                            }`}
+                            className={`inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold shadow ${selectedButtonStyle === 9
+                              ? "rounded-[999px] rounded-bl-[2rem]"
+                              : selectedButtonStyle === 3 || selectedButtonStyle === 5
+                                ? "rounded-full"
+                                : "rounded-md"
+                              }`}
                             style={
                               [2, 3, 4, 8, 9].includes(selectedButtonStyle)
                                 ? { backgroundColor: dynamicPrimaryColor, color: dynamicButtonTextColor }
                                 : {
-                                    borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
-                                    borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
-                                    borderColor: dynamicPrimaryColor,
-                                    color: dynamicPrimaryColor,
-                                    backgroundColor: "transparent",
-                                  }
+                                  borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
+                                  borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
+                                  borderColor: dynamicPrimaryColor,
+                                  color: dynamicPrimaryColor,
+                                  backgroundColor: "transparent",
+                                }
                             }
                           >
                             <span className="mr-1.5">Add to contact</span>
@@ -3283,13 +3436,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           {(["fb", "in", "x"] as const).map((label) => (
                             <div
                               key={label}
-                              className={`flex-1 flex items-center justify-center h-9 ${
-                                selectedButtonStyle === 9
-                                  ? "rounded-[999px] rounded-bl-[2rem]"
-                                  : selectedButtonStyle === 3 || selectedButtonStyle === 5
-                                    ? "rounded-full"
-                                    : "rounded-md"
-                              }`}
+                              className={`flex-1 flex items-center justify-center h-9 ${selectedButtonStyle === 9
+                                ? "rounded-[999px] rounded-bl-[2rem]"
+                                : selectedButtonStyle === 3 || selectedButtonStyle === 5
+                                  ? "rounded-full"
+                                  : "rounded-md"
+                                }`}
                               style={{
                                 borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
                                 borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
@@ -3347,14 +3499,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           role="switch"
                           aria-checked={enabled}
                           onClick={() => setBusinessHoursDay(d, { enabled: !enabled })}
-                          className={`relative h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
-                            enabled ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
-                          }`}
+                          className={`relative h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${enabled ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                            }`}
                         >
                           <span
-                            className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition-transform ${
-                              enabled ? "translate-x-5" : "translate-x-0"
-                            }`}
+                            className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition-transform ${enabled ? "translate-x-5" : "translate-x-0"
+                              }`}
                           />
                         </button>
                         <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide min-w-[100px]">
@@ -3457,14 +3607,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           role="switch"
                           aria-checked={useQrConfiguration}
                           onClick={() => setUseQrConfiguration((prev) => !prev)}
-                          className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
-                            useQrConfiguration ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
-                          }`}
+                          className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${useQrConfiguration ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                            }`}
                         >
                           <span
-                            className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
-                              useQrConfiguration ? "translate-x-5" : "translate-x-0"
-                            }`}
+                            className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${useQrConfiguration ? "translate-x-5" : "translate-x-0"
+                              }`}
                           />
                         </button>
                         <span className="text-sm text-gray-700 dark:text-gray-300">Use This Configuration</span>
@@ -3561,14 +3709,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           setServicesSuccessMessage("Service Section Enquiry Button updated successfully.");
                           setShowServicesSuccessToast(true);
                         }}
-                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                          displayServiceEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
-                        }`}
+                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${displayServiceEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
+                          }`}
                       >
                         <span
-                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
-                            displayServiceEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
-                          }`}
+                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${displayServiceEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
+                            }`}
                         />
                       </button>
                     </label>
@@ -3586,14 +3732,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           setServicesSuccessMessage("Display Images with Slider updated successfully.");
                           setShowServicesSuccessToast(true);
                         }}
-                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                          displayImagesWithSlider ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
-                        }`}
+                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${displayImagesWithSlider ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
+                          }`}
                       >
                         <span
-                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
-                            displayImagesWithSlider ? "translate-x-[1.375rem]" : "translate-x-0"
-                          }`}
+                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${displayImagesWithSlider ? "translate-x-[1.375rem]" : "translate-x-0"
+                            }`}
                         />
                       </button>
                     </label>
@@ -3648,19 +3792,19 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               prev.map((c) =>
                                 c.id === vcardId
                                   ? {
-                                      ...c,
-                                      services: ((c as any).services ?? []).map((s: any) =>
-                                        s.id === editingServiceId
-                                          ? {
-                                              ...s,
-                                              name: newServiceName.trim(),
-                                              url: newServiceUrl.trim() || undefined,
-                                              description: newServiceDescription.trim(),
-                                              icon: newServiceIconPreview,
-                                            }
-                                          : s,
-                                      ),
-                                    }
+                                    ...c,
+                                    services: ((c as any).services ?? []).map((s: any) =>
+                                      s.id === editingServiceId
+                                        ? {
+                                          ...s,
+                                          name: newServiceName.trim(),
+                                          url: newServiceUrl.trim() || undefined,
+                                          description: newServiceDescription.trim(),
+                                          icon: newServiceIconPreview,
+                                        }
+                                        : s,
+                                    ),
+                                  }
                                   : c,
                               ),
                             );
@@ -3678,9 +3822,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               prev.map((c) =>
                                 c.id === vcardId
                                   ? {
-                                      ...c,
-                                      services: [...((c as any).services ?? []), newService],
-                                    }
+                                    ...c,
+                                    services: [...((c as any).services ?? []), newService],
+                                  }
                                   : c,
                               ),
                             );
@@ -3819,8 +3963,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           }[];
                           const filtered = servicesSearch.trim()
                             ? all.filter((s) =>
-                                s.name.toLowerCase().includes(servicesSearch.toLowerCase()),
-                              )
+                              s.name.toLowerCase().includes(servicesSearch.toLowerCase()),
+                            )
                             : all;
                           if (!filtered.length) {
                             return (
@@ -3897,11 +4041,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                         prev.map((c) =>
                                           c.id === vcardId
                                             ? {
-                                                ...c,
-                                                services: ((c as any).services ?? []).filter(
-                                                  (x: any) => x.id !== s.id,
-                                                ),
-                                              }
+                                              ...c,
+                                              services: ((c as any).services ?? []).filter(
+                                                (x: any) => x.id !== s.id,
+                                              ),
+                                            }
                                             : c,
                                         ),
                                       );
@@ -4088,33 +4232,31 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
                         Display Product Enquiry Button
                       </span>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={displayProductEnquiryButton}
-                      onClick={() => {
-                        if (!vcardId) {
-                          setDisplayProductEnquiryButton((prev) => !prev);
-                          return;
-                        }
-                        setDisplayProductEnquiryButton((prev) => {
-                          const next = !prev;
-                          setVCards((cards) =>
-                            cards.map((c) =>
-                              c.id === vcardId ? { ...c, displayProductEnquiryButton: next } : c,
-                            ),
-                          );
-                          return next;
-                        });
-                      }}
-                      className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                        displayProductEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
-                      }`}
-                    >
-                        <span
-                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
-                            displayProductEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
+                      <button
+                        type="button"
+                        role="switch"
+                        aria-checked={displayProductEnquiryButton}
+                        onClick={() => {
+                          if (!vcardId) {
+                            setDisplayProductEnquiryButton((prev) => !prev);
+                            return;
+                          }
+                          setDisplayProductEnquiryButton((prev) => {
+                            const next = !prev;
+                            setVCards((cards) =>
+                              cards.map((c) =>
+                                c.id === vcardId ? { ...c, displayProductEnquiryButton: next } : c,
+                              ),
+                            );
+                            return next;
+                          });
+                        }}
+                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${displayProductEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
                           }`}
+                      >
+                        <span
+                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${displayProductEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
+                            }`}
                         />
                       </button>
                     </label>
@@ -4172,22 +4314,22 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               prev.map((c) =>
                                 c.id === vcardId
                                   ? {
-                                      ...c,
-                                      products: (c.products ?? []).map((p) =>
-                                        p.id === editingProductId
-                                          ? {
-                                              ...p,
-                                              name: newProductName.trim(),
-                                              currency: newProductCurrency || undefined,
-                                              price: newProductPrice || undefined,
-                                              sort: newProductSort || undefined,
-                                              url: newProductUrl || undefined,
-                                              description: newProductDescription || undefined,
-                                              icon: newProductIconPreview,
-                                            }
-                                          : p,
-                                      ),
-                                    }
+                                    ...c,
+                                    products: (c.products ?? []).map((p) =>
+                                      p.id === editingProductId
+                                        ? {
+                                          ...p,
+                                          name: newProductName.trim(),
+                                          currency: newProductCurrency || undefined,
+                                          price: newProductPrice || undefined,
+                                          sort: newProductSort || undefined,
+                                          url: newProductUrl || undefined,
+                                          description: newProductDescription || undefined,
+                                          icon: newProductIconPreview,
+                                        }
+                                        : p,
+                                    ),
+                                  }
                                   : c,
                               ),
                             );
@@ -4208,9 +4350,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               prev.map((c) =>
                                 c.id === vcardId
                                   ? {
-                                      ...c,
-                                      products: [...(c.products ?? []), newProduct],
-                                    }
+                                    ...c,
+                                    products: [...(c.products ?? []), newProduct],
+                                  }
                                   : c,
                               ),
                             );
@@ -4409,8 +4551,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           }[];
                           const filtered = productsSearch.trim()
                             ? all.filter((p) =>
-                                p.name.toLowerCase().includes(productsSearch.toLowerCase()),
-                              )
+                              p.name.toLowerCase().includes(productsSearch.toLowerCase()),
+                            )
                             : all;
                           const rows = filtered.slice(0, productsShowPerPage);
                           if (!rows.length) {
@@ -4506,11 +4648,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                         prev.map((c) =>
                                           c.id === vcardId
                                             ? {
-                                                ...c,
-                                                products: (c.products ?? []).filter(
-                                                  (x) => x.id !== p.id,
-                                                ),
-                                              }
+                                              ...c,
+                                              products: (c.products ?? []).filter(
+                                                (x) => x.id !== p.id,
+                                              ),
+                                            }
                                             : c,
                                         ),
                                       );
@@ -4733,8 +4875,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           const allGalls = currentCard?.galleries ?? [];
                           const filtered = (galleriesSearch ?? "").trim()
                             ? allGalls.filter((g) =>
-                                g.type.toLowerCase().includes(galleriesSearch.toLowerCase())
-                              )
+                              g.type.toLowerCase().includes(galleriesSearch.toLowerCase())
+                            )
                             : allGalls;
 
                           if (!filtered.length) {
@@ -4750,9 +4892,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           return filtered.map((g) => (
                             <tr key={g.id} className="border-t border-gray-100 dark:border-gray-800">
                               <td className="px-4 py-3">
-                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                  g.type === "image" ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"
-                                } capitalize`}>
+                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${g.type === "image" ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"
+                                  } capitalize`}>
                                   {g.type}
                                 </span>
                               </td>
@@ -4775,9 +4916,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                       prev.map((c) =>
                                         c.id === vcardId
                                           ? {
-                                              ...c,
-                                              galleries: (c.galleries ?? []).filter((x) => x.id !== g.id),
-                                            }
+                                            ...c,
+                                            galleries: (c.galleries ?? []).filter((x) => x.id !== g.id),
+                                          }
                                           : c
                                       )
                                     );
@@ -4847,8 +4988,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           const allBlogs = currentCard?.blogs ?? [];
                           const filtered = blogsSearch.trim()
                             ? allBlogs.filter((b) =>
-                                b.title.toLowerCase().includes(blogsSearch.toLowerCase())
-                              )
+                              b.title.toLowerCase().includes(blogsSearch.toLowerCase())
+                            )
                             : allBlogs;
                           if (!filtered.length) {
                             return (
@@ -4912,9 +5053,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                         prev.map((c) =>
                                           c.id === vcardId
                                             ? {
-                                                ...c,
-                                                blogs: (c.blogs ?? []).filter((b) => b.id !== blog.id),
-                                              }
+                                              ...c,
+                                              blogs: (c.blogs ?? []).filter((b) => b.id !== blog.id),
+                                            }
                                             : c
                                         )
                                       );
@@ -4945,47 +5086,47 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   </div>
                 </div>
 
-              {previewBlog && (
-                <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                  <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
-                    <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-                      <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Blog preview</h2>
-                      <button
-                        type="button"
-                        onClick={() => setPreviewBlog(null)}
-                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                        aria-label="Close preview"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="px-6 py-5 space-y-4">
-                      <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                        {previewBlog.icon ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={previewBlog.icon}
-                            alt={previewBlog.title}
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-sm text-gray-400">No image set for this blog.</span>
-                        )}
+                {previewBlog && (
+                  <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                    <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Blog preview</h2>
+                        <button
+                          type="button"
+                          onClick={() => setPreviewBlog(null)}
+                          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                          aria-label="Close preview"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
                       </div>
-                      <div>
-                        <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                          {previewBlog.title}
-                        </h3>
-                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
-                          {previewBlog.description}
-                        </p>
+                      <div className="px-6 py-5 space-y-4">
+                        <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                          {previewBlog.icon ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={previewBlog.icon}
+                              alt={previewBlog.title}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <span className="text-sm text-gray-400">No image set for this blog.</span>
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                            {previewBlog.title}
+                          </h3>
+                          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                            {previewBlog.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
                 {showNewBlogModal && (
                   <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
@@ -5043,9 +5184,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               </button>
                             </div>
                             <textarea
-                              className={`w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400 ${
-                                blogFormErrors.description ? "ring-1 ring-red-500" : ""
-                              }`}
+                              className={`w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400 ${blogFormErrors.description ? "ring-1 ring-red-500" : ""
+                                }`}
                               placeholder="Description"
                               value={newBlogDescription}
                               onChange={(e) => setNewBlogDescription(e.target.value)}
@@ -5188,8 +5328,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           const all = ((currentCard as any)?.testimonials as any[]) ?? [];
                           const filtered = testimonialsSearch.trim()
                             ? all.filter((t) =>
-                                (t.name || "").toLowerCase().includes(testimonialsSearch.toLowerCase())
-                              )
+                              (t.name || "").toLowerCase().includes(testimonialsSearch.toLowerCase())
+                            )
                             : all;
                           if (!filtered.length) {
                             return (
@@ -5256,11 +5396,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                                         prev.map((c) =>
                                           c.id === vcardId
                                             ? {
-                                                ...c,
-                                                testimonials: (((c as any).testimonials as any[]) ?? []).filter(
-                                                  (x) => x.id !== t.id
-                                                ),
-                                              }
+                                              ...c,
+                                              testimonials: (((c as any).testimonials as any[]) ?? []).filter(
+                                                (x) => x.id !== t.id
+                                              ),
+                                            }
                                             : c
                                         )
                                       );
@@ -5323,9 +5463,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                             value={newTestimonialName}
                             onChange={(e) => setNewTestimonialName(e.target.value)}
                             placeholder="Enter Testimonial Name"
-                            className={`${inputClass} ${
-                              testimonialFormErrors.name ? "border-red-500 focus:ring-red-500" : ""
-                            }`}
+                            className={`${inputClass} ${testimonialFormErrors.name ? "border-red-500 focus:ring-red-500" : ""
+                              }`}
                           />
                           {testimonialFormErrors.name && (
                             <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.name}</p>
@@ -5340,9 +5479,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                             value={newTestimonialQuote}
                             onChange={(e) => setNewTestimonialQuote(e.target.value)}
                             placeholder="Enter Short Description"
-                            className={`${inputClass} ${
-                              testimonialFormErrors.quote ? "border-red-500 focus:ring-red-500" : ""
-                            }`}
+                            className={`${inputClass} ${testimonialFormErrors.quote ? "border-red-500 focus:ring-red-500" : ""
+                              }`}
                           />
                           {testimonialFormErrors.quote && (
                             <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.quote}</p>
@@ -5724,12 +5862,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         prev.map((c) =>
                           c.id === vcardId
                             ? {
-                                ...c,
-                                socialLinks: SOCIAL_LINKS.map((item) => ({
-                                  platform: item.id,
-                                  url: (socialLinksForm[item.id] ?? "").trim(),
-                                })).filter((link) => link.url !== ""),
-                              }
+                              ...c,
+                              socialLinks: SOCIAL_LINKS.map((item) => ({
+                                platform: item.id,
+                                url: (socialLinksForm[item.id] ?? "").trim(),
+                              })).filter((link) => link.url !== ""),
+                            }
                             : c,
                         ),
                       );
@@ -5934,13 +6072,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   />
                 </div>
                 <div className="flex justify-start gap-2.5 pt-2">
-                <button
-                  type="button"
-                  className="btn-primary-premium inline-flex items-center justify-center"
-                  onClick={handlePrivacySave}
-                >
-                  Save
-                </button>
+                  <button
+                    type="button"
+                    className="btn-primary-premium inline-flex items-center justify-center"
+                    onClick={handlePrivacySave}
+                  >
+                    Save
+                  </button>
                   <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
                     Discard
                   </button>
@@ -6142,14 +6280,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     role="switch"
                     aria-checked={removeBranding}
                     onClick={() => setRemoveBranding(!removeBranding)}
-                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
-                      removeBranding ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
-                    }`}
+                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${removeBranding ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
+                      }`}
                   >
                     <span
-                      className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${
-                        removeBranding ? "translate-x-[1.375rem]" : "translate-x-0"
-                      }`}
+                      className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${removeBranding ? "translate-x-[1.375rem]" : "translate-x-0"
+                        }`}
                     />
                   </button>
                 </div>
@@ -6162,9 +6298,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         prev.map((card) =>
                           card.id === vcardId
                             ? {
-                                ...card,
-                                // yahan baad me actual SEO fields bind kar sakte hain
-                              }
+                              ...card,
+                              // yahan baad me actual SEO fields bind kar sakte hain
+                            }
                             : card
                         )
                       );
@@ -6234,10 +6370,10 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         prev.map((card) =>
                           card.id === vcardId
                             ? {
-                                ...card,
-                                fontFamily,
-                                fontSizePx,
-                              }
+                              ...card,
+                              fontFamily,
+                              fontSizePx,
+                            }
                             : card
                         )
                       );
@@ -6464,9 +6600,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   prev.map((c) =>
                     c.id === vcardId
                       ? {
-                          ...c,
-                          galleries: [...(c.galleries ?? []), newGalleryItem],
-                        }
+                        ...c,
+                        galleries: [...(c.galleries ?? []), newGalleryItem],
+                      }
                       : c,
                   ),
                 );

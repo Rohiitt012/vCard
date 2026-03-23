@@ -140,7 +140,8 @@ export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
               {/* Premium Social Icons row (Custom Gloss Style) */}
               <div className="flex justify-center flex-wrap gap-7 items-center relative z-10">
-                  {['facebook', 'instagram', 'linkedin', 'whatsapp', 'twitter'].map((p) => {
+                  {card.socialLinks?.filter(link => link.url).map((link) => {
+                      const p = link.platform.toLowerCase();
                       const isInstagram = p === 'instagram';
                       return (
                          <div key={p} className="relative group cursor-pointer">
@@ -154,7 +155,7 @@ export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                                ? 'bg-gradient-to-tr from-[#515BD4] via-[#DD2A7B] to-[#FEDA78] text-white' 
                                : 'bg-[#151B29] border border-white/5 text-slate-600 group-hover:text-slate-200 group-hover:border-white/20'
                             }`}>
-                               <SocialCircleIcon platform={p} size={30} className="bg-transparent border-none shadow-none ring-0 p-0" />
+                               <SocialCircleIcon platform={p} url={link.url} size={30} className="bg-transparent border-none shadow-none ring-0 p-0" />
                             </div>
                          </div>
                       );

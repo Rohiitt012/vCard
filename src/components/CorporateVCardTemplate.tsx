@@ -3,12 +3,14 @@ import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
-import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles, ChevronDown, Globe, Instagram, Youtube, Linkedin, Maximize, ArrowRight, Wifi, Clock, ArrowLeft, Cpu } from "lucide-react";
+import { getSocialIcon } from "@/lib/social-icons";
 
 type Props = {
   card: VCardItem;
   slug: string;
   baseUrl: string;
+  qrDataUrl?: string;
   onDownloadVCard?: () => void;
 };
 
@@ -137,7 +139,7 @@ const DEFAULT_BLOGS_LIST = [
   }
 ];
 
-export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
+export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownloadVCard }: Props) {
   const name = card.title || "Corporate Profile";
   const role = card.occupation || card.tagline || "Founder · CXO · Advisor";
   const description =
@@ -212,814 +214,1210 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
     <div className="min-h-screen bg-[#F0F2F5] text-[#0F172A] font-sans flex justify-center px-0 py-0 overflow-x-hidden">
       <div className="w-full max-w-[540px] bg-white relative flex flex-col shadow-[0_30px_60px_-12px_rgba(0,0,0,0.08)]">
         
-        {/* TOP BANNER */}
-        <section className="relative h-[320px] w-full overflow-hidden">
-           <Image 
-             src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1200" 
-             alt="Banner" 
-             fill 
-             className="object-cover" 
-           />
-           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
-           
-           {/* Angled Mask Transition */}
-           <div 
-             className="absolute bottom-[-1px] left-0 right-0 h-40 bg-white z-10" 
-             style={{ clipPath: 'polygon(0 100%, 100% 100%, 100% 0, 0 100%)' }}
-           />
-        </section>
+        {/* DYNAMIC HEADER: DARK PROGRAMMING THEME FOR COOPORATE-6 OR DEFAULT WAVY BANNER */}
+        {slug === "cooporate-6" ? (
+             <section className="bg-[#111113] relative w-full pt-8 pb-10 px-6 sm:px-8 flex flex-col justify-between overflow-hidden min-h-[360px] shrink-0 border-b-[3px] border-[#ff7b1c]">
+                 {/* Top Right EN Button */}
+                 <div className="absolute top-5 right-5 bg-gradient-to-tr from-[#ff6b00] to-[#ff983a] text-white text-[10px] font-black uppercase px-2 py-1 flex items-center gap-1 z-30 shadow-[0_4px_10px_rgba(255,107,0,0.3)] rounded-[3px]">
+                     EN <ChevronDown className="w-3 h-3" />
+                 </div>
 
-        {/* IDENTITY SECTION (Image 1 Style Overlap - Centered) */}
-        <section className="relative px-8 pt-0 pb-10 z-20 -mt-24 flex flex-col items-center text-center">
-            {/* Profile Image with thick white border */}
-            <div className="relative group shrink-0 mb-6">
-                <div className="absolute -inset-1 rounded-[40px] bg-white opacity-20 blur-md pointer-events-none" />
-                <div className="relative w-44 h-44 rounded-full border-4 border-white overflow-hidden shadow-2xl bg-[#0A0C14]">
+                 {/* Text Content */}
+                 <div className="relative z-20 w-full mt-2 mb-8">
+                     <h1 className="text-[38px] font-black text-white leading-none tracking-tight mb-3">
+                         Programming
+                     </h1>
+                     <p className="text-[#a4a4aa] text-[15px] leading-snug font-medium max-w-[210px]">
+                         Start your business with the best programming
+                     </p>
+                 </div>
+
+                 {/* Laptop Illustration Layout */}
+                 <div className="absolute bottom-4 right-[-5%] sm:right-0 w-[240px] h-[240px] z-10 pointer-events-none drop-shadow-[0_10px_30px_rgba(255,107,0,0.15)] flex flex-col items-center justify-center">
+                     
+                     <Image 
+                         src={(card as any).bannerImage || "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=800"} 
+                         alt="Programming" 
+                         fill 
+                         className="object-contain opacity-90 mix-blend-screen" 
+                         unoptimized={(card as any).bannerImage?.startsWith("data:")} 
+                     />
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#111113] via-[#111113]/20 to-transparent"></div>
+
+                     {/* Floating syntax/language tags relative to laptop */}
+                     <div className="absolute top-0 right-[40%] border-[1.5px] border-[#ec4899] text-[#ec4899] rounded-full px-2.5 py-0.5 text-[9px] font-bold bg-[#111113]/90">Python</div>
+                     <div className="absolute top-[20%] left-[-5%] border-[1.5px] border-[#38bdf8] text-[#38bdf8] rounded-full px-2.5 py-0.5 text-[9px] font-bold bg-[#111113]/90">Golang</div>
+                     <div className="absolute top-[18%] right-0 border-[1.5px] border-[#d946ef] text-[#d946ef] rounded-full px-2.5 py-0.5 text-[9px] font-bold bg-[#111113]/90">Kotlin</div>
+                     <div className="absolute bottom-[40%] left-[5%] border-[1.5px] border-[#14b8a6] text-[#14b8a6] rounded-full px-2.5 py-0.5 text-[9px] font-bold bg-[#111113]/90">C++</div>
+                     <div className="absolute bottom-[35%] right-[10%] border-[1.5px] border-[#a855f7] text-[#a855f7] rounded-full px-2.5 py-0.5 text-[9px] font-bold bg-[#111113]/90">TypeScript</div>
+                     <div className="absolute bottom-[20%] right-[-5%] border-[1.5px] border-[#f43f5e] text-[#f43f5e] rounded-full px-2.5 py-0.5 text-[9px] font-bold bg-[#111113]/90">JavaScript</div>
+                 </div>
+
+                 {/* Bottom Floating HTML chat bubble */}
+                 <div className="absolute bottom-6 left-6 z-30 pointer-events-none">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[12px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px]">
+                         HTML
+                         <div className="absolute -bottom-1.5 left-3 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Bottom Right FAB Grid overlapping the border */}
+                 <div className="absolute bottom-[-22px] right-6 z-40 w-12 h-12 bg-gradient-to-br from-[#ff9b44] to-[#f06100] rounded-full shadow-[0_4px_15px_rgba(240,97,0,0.4)] flex items-center justify-center cursor-pointer hover:scale-105 transition-transform ring-4 ring-[#111113]">
+                     <LayoutGrid className="w-[18px] h-[18px] text-white" strokeWidth={2.5} />
+                 </div>
+             </section>
+        ) : (
+             <section className="relative h-[260px] w-full overflow-hidden shrink-0">
+               <Image 
+                 src={(card as any).bannerImage || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200"} 
+                 alt="Banner" 
+                 fill 
+                 className="object-cover" 
+               />
+             </section>
+        )}
+
+        {/* IDENTITY SECTION (Target Layout) */}
+        {slug === "cooporate-6" ? (
+          <>
+             <section className="relative bg-[#111113] px-6 pt-12 pb-14 z-20 flex flex-col items-center">
+                 {/* The Main Profile Box */}
+                 <div className="w-full max-w-[460px] h-[160px] sm:h-[180px] bg-[#1a1a1c] border border-white/5 rounded-2xl overflow-hidden shadow-2xl relative flex text-left mt-6">
+                     
+                     {/* Clean Clip-Path Strategy for the Slanted Separator */}
+                     <div className="absolute inset-y-0 left-0 w-[45%] bg-[#0a0a0a] z-10 flex items-center justify-center" style={{ clipPath: 'polygon(0 0, 100% 0, 75% 100%, 0 100%)' }}>
+                         {/* The shape holding the code bracket */}
+                         <div className="relative z-30 w-[70px] h-[70px] sm:w-[85px] sm:h-[85px] bg-black flex items-center justify-center shadow-2xl ml-[-15%]" style={{ clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)' }}>
+                             <div className="flex font-black text-[30px] sm:text-[38px] tracking-tighter items-center">
+                                 <span className="text-[#ff7b1c]">{"<"}</span>
+                                 <span className="text-white transform rotate-[10deg] scale-110 mx-1.5 -translate-y-[1px]">{"/"}</span>
+                                 <span className="text-[#ff7b1c]">{">"}</span>
+                             </div>
+                         </div>
+                     </div>
+
+                     {/* The gray slanted border effect sitting neatly beneath the clip-path */}
+                     <div className="absolute inset-y-0 left-0 w-[45%] z-0 pointer-events-none">
+                         <div className="absolute top-0 bottom-0 right-0 w-[2px] bg-white/20 transform -skew-x-[14deg] origin-bottom-right drop-shadow-lg"></div>
+                     </div>
+
+                     {/* Right Details Side */}
+                     <div className="absolute inset-y-0 right-0 w-[65%] h-full p-4 pl-6 sm:pl-8 flex flex-col justify-center z-10">
+                         {/* Code background with blend */}
+                         <div className="absolute inset-0 z-0 opacity-20 overflow-hidden mix-blend-screen pointer-events-none">
+                             <Image src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400" fill className="object-cover" alt="code bg" unoptimized />
+                             <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/90 via-[#111113]/80 to-[#111113]/40"></div>
+                         </div>
+                         
+                         {/* Text Content */}
+                         <div className="relative z-10 w-full mt-1">
+                             <h2 className="text-[22px] sm:text-[26px] font-black text-white leading-tight mb-1 tracking-tight drop-shadow-md">{name || "Chris Morries"}</h2>
+                             {/* Subtext typing animation line */}
+                             <p className="text-[13px] sm:text-[15px] font-bold text-[#f06100] tracking-wide flex items-center whitespace-nowrap drop-shadow-md">
+                                 {role || "Turning Ideas Into Code"}
+                                 <span className="animate-pulse w-[2px] h-[14px] bg-[#f06100] ml-1.5"></span>
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+                 {/* Social Icons row beneath the card */}
+                  {(() => {
+                      const btns = [
+                          ...(card.website ? [{ icon: <Globe className="w-[18px] h-[18px] text-white" strokeWidth={1.5} />, link: card.website }] : []),
+                          ...(card.socialLinks?.filter(l => l.url).map(l => {
+                              const Icon = getSocialIcon(l.platform);
+                              return {
+                                  icon: <Icon size={18} className="text-white" />,
+                                  link: l.url
+                              };
+                          }) || [])
+                      ];
+
+                      if (btns.length === 0) return null;
+
+                      return (
+                          <div className="mt-8 flex justify-center gap-3 sm:gap-4 max-w-[460px] pb-6 flex-wrap">
+                              {btns.map((btn, idx) => (
+                                  <a key={idx} href={btn.link} target="_blank" rel="noreferrer" className="group">
+                                      <div className="relative z-10 w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] bg-[#222325] rounded-[10px] sm:rounded-[12px] flex items-center justify-center transition-all group-hover:bg-[#2a2a2c] shadow-md border border-white/5">
+                                          {btn.icon}
+                                          <div className="absolute top-[-1px] left-[-1px] w-[12px] h-[12px] border-t-2 border-l-2 border-[#f06100] rounded-tl-[10px] sm:rounded-tl-[12px] group-hover:scale-110 transition-transform origin-top-left z-20" />
+                                          <div className="absolute bottom-[-1px] right-[-1px] w-[12px] h-[12px] border-b-2 border-r-2 border-[#f06100] rounded-br-[10px] sm:rounded-br-[12px] group-hover:scale-110 transition-transform origin-bottom-right z-20" />
+                                      </div>
+                                  </a>
+                              ))}
+                          </div>
+                      );
+                  })()}
+
+                 {/* Decorator Glass on the left bottom */}
+                 <div className="absolute bottom-6 left-6 z-10 pointer-events-none opacity-80 w-6 h-6 transform -rotate-[15deg]">
+                     <svg viewBox="0 0 24 24" fill="none" stroke="#f06100" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full drop-shadow-md">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                     </svg>
+                 </div>
+
+                 {/* BIO TEXT */}
+                 <div className="w-full max-w-[460px] text-center px-1 sm:px-2 mt-8 z-20">
+                     <p className="text-[#c6c6cc] text-[13px] sm:text-[14.5px] leading-relaxed">
+                         A <strong className="text-white">programmer</strong> is a professional who creates software applications or systems by writing instructions in a programming language. They use logic, problem-solving skills, and technical knowledge to develop solutions for specific tasks or problems. Programmers work with languages such as <strong className="text-white">Python, Java, C++, JavaScript, and many others</strong>, depending on the project's needs.
+                     </p>
+                 </div>
+             </section>
+
+             {/* CONTACTS SECTION */}
+             <section className="relative w-full pt-16 pb-20 px-6 sm:px-8 flex flex-col items-center border-[0.5px] border-t-white/10 border-b-white/10 overflow-hidden bg-[#0f0f11]">
+                 {/* Background mix */}
+                 <div className="absolute inset-0 z-0">
+                     <Image src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800" fill className="object-cover opacity-[0.10] mix-blend-screen" alt="code bg" unoptimized />
+                     <div className="absolute inset-0 bg-gradient-to-b from-[#111113] via-[#111113]/90 to-[#111113]"></div>
+                 </div>
+
+                 {/* Floating Chat Bubble C++ on top right */}
+                 <div className="absolute top-10 w-full max-w-[480px] z-10 pointer-events-none flex justify-end px-2">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px]">
+                         C++
+                         <div className="absolute -bottom-1.5 right-3 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-10 flex items-center justify-center gap-2">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Contacts</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Contact Pills Grid */}
+                 <div className="relative z-10 w-full max-w-[480px] grid grid-cols-1 sm:grid-cols-2 gap-4">
+                     {[
+                         { icon: <Mail className="w-[18px] h-[18px] text-[#f06100]" strokeWidth={2.5}/>, value: email || "chris.morries.dev@gmail.com" },
+                         { icon: <Mail className="w-[18px] h-[18px] text-[#f06100]" strokeWidth={2.5}/>, value: "info.chrismorries@outlook.com" },
+                         { icon: <Phone className="w-[18px] h-[18px] text-[#f06100]" strokeWidth={2.5}/>, value: phone || "+91 9876543210" },
+                         { icon: <Phone className="w-[18px] h-[18px] text-[#f06100]" strokeWidth={2.5}/>, value: "+91 7894561230" },
+                         { icon: <Cake className="w-[18px] h-[18px] text-[#f06100]" strokeWidth={2.5}/>, value: "12th June, 1990" },
+                         { icon: <MapPin className="w-[18px] h-[18px] text-[#f06100]" strokeWidth={2.5}/>, value: address || "India - Pune" }
+                     ].map((item, idx) => (
+                         <div key={idx} className="relative w-full h-[54px] bg-[#1d1d1f] border-[1.5px] border-white/5 rounded-[8px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.4)] group hover:border-[#f06100]/50 transition-all flex items-center">
+                             {/* Darker left section with slanted clip */}
+                             <div className="absolute inset-y-0 left-0 w-[28%] bg-[#0a0a0a] z-10 flex items-center justify-center p-1" style={{ clipPath: 'polygon(0 0, 100% 0, 70% 100%, 0 100%)' }}>
+                                 {item.icon}
+                             </div>
+                             {/* The slanted gray separator line sitting right on the edge */}
+                             <div className="absolute inset-y-0 left-0 w-[28%] z-0 pointer-events-none">
+                                <div className="absolute top-[-20%] bottom-[-20%] right-[-1px] w-[1.5px] bg-white/20 transform -skew-x-[16deg] origin-bottom-right drop-shadow-lg"></div>
+                             </div>
+
+                             {/* Right text section */}
+                             <div className="pl-[33%] pr-3 flex items-center w-full h-full">
+                                 <span className="text-[12px] sm:text-[13px] font-bold text-white truncate w-full leading-tight">
+                                     {item.value}
+                                 </span>
+                             </div>
+                         </div>
+                     ))}
+                 </div>
+             </section>
+
+             {/* QR CODE SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-14 pb-16 px-6 sm:px-8 flex flex-col items-center bg-[#111113] overflow-hidden">
+                 {/* Top Left Floating JAVA Chat Bubble */}
+                 <div className="absolute top-10 w-full max-w-[500px] z-20 pointer-events-none flex justify-start px-2 sm:px-4">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] ml-2">
+                         JAVA
+                         <div className="absolute -bottom-1.5 left-3 border-t-[6px] border-t-[#f06100] border-r-[5px] border-r-transparent border-l-[5px] border-l-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Middle Right Wireframe Globe Icon */}
+                 <div className="absolute top-20 right-[-10px] sm:right-6 z-0 opacity-[0.35] pointer-events-none">
+                     <Globe className="w-16 h-16 text-[#f06100]" strokeWidth={1} />
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-10 mt-6 flex items-center justify-center gap-2">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">QR Code</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Main QR Card */}
+                 <div className="relative z-10 w-full max-w-[460px] min-h-[160px] sm:min-h-[180px] bg-[#1a1a1c] border-[1px] border-white/5 rounded-2xl overflow-hidden shadow-2xl flex text-left">
+                     {/* Left Logo Side */}
+                     <div className="absolute inset-y-0 left-0 w-[42%] bg-[#111113] z-10 flex items-center justify-center pl-2 pr-4 sm:pl-3 sm:pr-6" style={{ clipPath: 'polygon(0 0, 88% 0, 100% 100%, 0 100%)' }}>
+                         {/* QR Code Container */}
+                         <div className="relative z-30 w-[110px] h-[110px] sm:w-[130px] sm:h-[130px] bg-white rounded-[10px] flex items-center justify-center p-2.5 shadow-[0_0_20px_rgba(0,0,0,0.6)] ml-1">
+                             {qrDataUrl ? (
+                               <Image src={qrDataUrl} alt="QR Code" fill className="object-contain p-2" />
+                             ) : (
+                               <div className="w-full h-full border border-gray-200 flex items-center justify-center rounded-lg">
+                                 <span className="text-[10px] text-gray-400 font-bold">QR</span>
+                               </div>
+                             )}
+                         </div>
+                     </div>
+                     
+                     {/* The slanted gray separator line sitting right on the edge */}
+                     <div className="absolute inset-y-0 left-0 w-[42%] z-20 pointer-events-none">
+                        <div className="absolute top-[-10%] bottom-[-10%] right-[0.5px] w-[1.5px] bg-white/10 transform skew-x-[8deg] origin-bottom-right"></div>
+                     </div>
+
+                     {/* Right Text Side */}
+                     <div className="absolute inset-y-0 right-0 w-[58%] h-full p-4 sm:p-6 flex flex-col justify-center">
+                         {/* Subtle gradient bg overlay inside text area */}
+                         <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+
+                         <div className="relative z-10 pl-2">
+                            <h3 className="text-[17px] sm:text-[19px] font-black text-[#f06100] tracking-tight mb-2">Scan to Contact</h3>
+                            <p className="text-[11px] sm:text-[12px] font-medium text-white/90 leading-[1.6]">
+                                Point your phone&apos;s camera at the QR code to quickly add our contact information. 
+                                You can also use the &quot;Add to Contacts&quot; button below for fast saving.
+                            </p>
+                         </div>
+                     </div>
+                 </div>
+
+                 {/* Bottom Right Floating PHP Chat Bubble */}
+                 <div className="absolute bottom-6 right-2 sm:right-6 z-10 pointer-events-none flex justify-end">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px]">
+                         PHP
+                         <div className="absolute -bottom-1.5 left-3 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+             </section>
+
+             {/* OUR SERVICES SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-10 pb-20 px-6 sm:px-8 flex flex-col items-center bg-[#111113]">
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-12 flex items-center justify-center gap-2">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Our Services</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Grid for Service Cards */}
+                 <div className="w-full max-w-[500px] grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-5">
+                     {(services?.length > 0 ? services : [
+                         { title: "Custom Software Development", desc: "Building tailored desktop, web, or mobile applications to meet specific business needs." },
+                         { title: "Website & Web Application Development", desc: "Creating responsive, user-friendly websites and online platforms." },
+                         { title: "API Development & Integration", desc: "Connecting different software systems to work together seamlessly." },
+                         { title: "Database Design & Management", desc: "Creating, optimizing, and maintaining databases for storing and managing data." },
+                         { title: "Software Maintenance & Bug Fixing", desc: "Updating existing applications, fixing errors, and improving performance." },
+                         { title: "Automation & Scripting Solutions", desc: "Writing scripts to automate repetitive tasks and improve efficiency." }
+                     ]).map((s: any, idx: number) => (
+                         <div key={idx} className="relative bg-[#1a1a1c] border border-white/5 rounded-[12px] overflow-hidden shadow-2xl flex flex-col group transition-all hover:bg-[#1d1d1f]">
+                             {/* The Image Section with Slanted Clip Path cutting the bottom edge */}
+                             <div className="relative w-full h-[155px] sm:h-[140px] z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 88%, 0 100%)' }}>
+                                 {s.icon || s.image ? (
+                                    <Image src={s.icon || s.image} alt={s.name || s.title} fill className="object-cover opacity-80 mix-blend-lighten group-hover:opacity-100 transition-opacity" />
+                                 ) : (
+                                    <div className="w-full h-full bg-gradient-to-br from-[#0c0c0e] to-[#222] flex items-center justify-center">
+                                       <Target className="w-10 h-10 text-white/20" />
+                                    </div>
+                                 )}
+                             </div>
+
+                             {/* Bottom half text description */}
+                             <div className="px-5 pt-3 pb-8 flex flex-col items-center text-center relative z-20 -mt-1">
+                                <h3 className="text-[14.5px] sm:text-[13.5px] font-black text-[#f06100] mb-2.5 leading-snug px-1 drop-shadow-md">
+                                    {s.name || s.title}
+                                </h3>
+                                <p className="text-[12.5px] sm:text-[12px] font-medium text-white/90 leading-relaxed">
+                                    {s.description || s.details || s.desc}
+                                </p>
+                             </div>
+
+                             {/* DECORATIVE HOVER CORNER BRACKETS */}
+                             {/* Top Right Bracket */}
+                             <div className="absolute top-[-1px] right-[-1px] w-5 h-5 sm:w-6 sm:h-6 border-t-[1.5px] border-r-[1.5px] border-[#f06100] rounded-tr-[12px] z-30 transition-all opacity-90 group-hover:scale-105 origin-top-right"></div>
+                             {/* Bottom Left Bracket */}
+                             <div className="absolute bottom-[-1px] left-[-1px] w-5 h-5 sm:w-6 sm:h-6 border-b-[1.5px] border-l-[1.5px] border-[#f06100] rounded-bl-[12px] z-30 transition-all opacity-90 group-hover:scale-105 origin-bottom-left"></div>
+                         </div>
+                     ))}
+                 </div>
+             </section>
+
+             {/* GALLERY SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-16 pb-20 px-4 sm:px-6 flex flex-col items-center bg-[#111113] overflow-hidden">
+                 {/* Floating Chat Bubble PHYTON on top left */}
+                 <div className="absolute top-10 w-full max-w-[500px] z-10 pointer-events-none flex justify-start px-2 sm:px-4">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] ml-1 sm:ml-2">
+                         PHYTON
+                         <div className="absolute -bottom-1.5 left-4 border-t-[6px] border-t-[#f06100] border-r-[5px] border-r-transparent border-l-[5px] border-l-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Cloud Upload Icon on top right */}
+                 <div className="absolute top-10 right-4 sm:right-10 z-0 flex flex-col items-center justify-center transform scale-[1.05] pointer-events-none">
+                     <svg width="65" height="50" viewBox="0 0 24 24" className="drop-shadow-lg">
+                        <path fill="#ffffff" d="M17.5 19C19.9853 19 22 16.9853 22 14.5C22 12.1388 20.1835 10.2023 17.8687 10.0249C17.33 6.64388 14.9602 4 12 4C9.03983 4 6.66996 6.64388 6.13133 10.0249C3.81646 10.2023 2 12.1388 2 14.5C2 16.9853 4.01472 19 6.5 19H17.5Z"/>
+                        <path fill="#f06100" d="M12 9L8 14h3v6h2v-6h3l-4-5z"/>
+                     </svg>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-14 mt-4 flex items-center justify-center gap-2">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Gallery</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Custom CSS Laptop Mockup Wrapper */}
+                 <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center px-1">
+                     {/* Outer Screen Bezel */}
+                     <div className="w-[92%] sm:w-[94%] bg-[#252528] rounded-t-[16px] sm:rounded-t-[20px] p-[5px] sm:p-[6px] pb-0 relative shadow-[0_-5px_30px_rgba(0,0,0,0.5)] z-20">
+                         {/* Inner Screen Bezel with screen bounds */}
+                         <div className="w-full bg-[#111] rounded-t-[10px] sm:rounded-t-[14px] p-[2px] pb-0 border border-white/5 border-b-0 relative">
+                             {/* The actual Screen Canvas */}
+                             <div className="relative w-full aspect-[16/10] bg-black rounded-t-[8px] sm:rounded-t-[12px] overflow-hidden flex items-center justify-center">
+                                 <Image 
+                                     src={gallery?.[0]?.imageUrl || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800"} 
+                                     alt="Gallery Image" 
+                                     fill 
+                                     className="object-cover opacity-90 transition-opacity hover:opacity-100" 
+                                     unoptimized={(gallery as any)?.[0]?.imageUrl?.startsWith("data:")}
+                                 />
+                                 
+                                 {/* Fullscreen Maximize Button */}
+                                 <div className="absolute top-4 right-4 w-[42px] h-[42px] sm:w-[46px] sm:h-[46px] bg-gradient-to-br from-[#ff9b44] to-[#f06100] rounded-full flex items-center justify-center cursor-pointer shadow-[0_4px_15px_rgba(240,97,0,0.4)] z-40 hover:scale-105 transition-transform group">
+                                     <Maximize className="w-5 h-5 text-white opacity-95 group-hover:opacity-100" strokeWidth={2.5} />
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     
+                     {/* Laptop Base Hinge / Lower Lip */}
+                     <div className="w-full h-[14px] sm:h-[18px] bg-gradient-to-b from-[#6e6e73] via-[#4c4c52] to-[#2b2b2e] rounded-b-[20px] sm:rounded-b-[24px] relative z-30 flex justify-center -mt-[1px] shadow-[0_15px_30px_rgba(0,0,0,0.8)]">
+                         {/* Central thumb indent for opening lid */}
+                         <div className="w-[18%] h-[35%] bg-gradient-to-b from-[#111] to-[#333] rounded-b-md absolute top-0 shadow-inner"></div>
+                     </div>
+                     {/* Bottom resting shadow / Table light reflection */}
+                     <div className="w-[85%] h-1 sm:h-1.5 bg-black/80 rounded-b-[100%] shadow-[0_8px_20px_black] z-10 -mt-[1px]"></div>
+                 </div>
+
+                 {/* Pagination Dots */}
+                 <div className="flex justify-center gap-[6px] sm:gap-[8px] mt-10 z-10 relative">
+                     <div className="w-[16px] h-[7px] rounded-sm bg-[#f06100] shadow-[0_0_8px_rgba(240,97,0,0.5)] cursor-pointer"></div>
+                     <div className="w-[16px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                     <div className="w-[16px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                     <div className="w-[16px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                 </div>
+             </section>
+
+             {/* BLOG SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-16 pb-20 px-4 sm:px-6 flex flex-col items-center bg-[#111113] overflow-hidden">
+                 {/* Floating Chat Bubble OBJECTIVE-C on top left */}
+                 <div className="absolute top-10 w-full max-w-[500px] z-10 pointer-events-none flex justify-start px-2 sm:px-4">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] ml-1 sm:ml-2">
+                         OBJECTIVE-C
+                         <div className="absolute -bottom-1.5 left-4 border-t-[6px] border-t-[#f06100] border-r-[5px] border-r-transparent border-l-[5px] border-l-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Search/Analytics Icon on top right */}
+                 <div className="absolute top-10 right-4 sm:right-10 z-0 flex flex-col items-center justify-center transform scale-[1.05] pointer-events-none">
+                     <div className="relative w-[65px] h-[50px]">
+                         {/* Window icon with chart */}
+                         <div className="absolute right-0 top-0 w-[45px] h-[35px] bg-[#1a1a1c] border border-white/10 rounded-md overflow-hidden shadow-lg p-1.5">
+                             <div className="flex gap-1 mb-1">
+                                 <div className="w-1 h-1 bg-red-500 rounded-full"></div>
+                                 <div className="w-1 h-1 bg-yellow-500 rounded-full"></div>
+                                 <div className="w-1 h-1 bg-green-500 rounded-full"></div>
+                             </div>
+                             <div className="flex items-end gap-[2px] h-[15px]">
+                                 <div className="w-1.5 h-[40%] bg-[#f06100]"></div>
+                                 <div className="w-1.5 h-[70%] bg-[#f06100]"></div>
+                                 <div className="w-1.5 h-[50%] bg-[#f06100]"></div>
+                                 <div className="w-1.5 h-[90%] bg-[#f06100]"></div>
+                             </div>
+                         </div>
+                         {/* Magnifying glass overlaying it */}
+                         <div className="absolute bottom-1 left-2 w-[34px] h-[34px] flex items-center justify-center z-10">
+                             <div className="w-[18px] h-[18px] border-[3px] border-[#f06100] rounded-full relative bg-[#111113]">
+                                 <div className="absolute -bottom-2 -right-2 w-[10px] h-[3px] bg-[#f06100] rotate-45 transform origin-top-left"></div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-14 mt-4 flex items-center justify-center gap-2">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Blog</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Custom CSS Laptop Mockup Wrapper */}
+                 <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center px-1">
+                     {/* Outer Screen Bezel */}
+                     <div className="w-[92%] sm:w-[94%] bg-[#252528] rounded-t-[16px] sm:rounded-t-[20px] p-[5px] sm:p-[6px] pb-0 relative shadow-[0_-5px_30px_rgba(0,0,0,0.5)] z-20">
+                         {/* Inner Screen Bezel with screen bounds */}
+                         <div className="w-full bg-[#111] rounded-t-[10px] sm:rounded-t-[14px] p-[2px] pb-0 border border-white/5 border-b-0 relative">
+                             {/* The actual Screen Canvas */}
+                             <div className="relative w-full aspect-[16/10] bg-[#1a1a1c] rounded-t-[8px] sm:rounded-t-[12px] overflow-hidden">
+                                 {/* Blog Content Layout */}
+                                 <div className="absolute inset-0 flex flex-col">
+                                     {/* Hero Image Area */}
+                                     <div className="relative w-full h-[65%]">
+                                         <Image 
+                                             src={blogs?.[0]?.icon || "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800"} 
+                                             alt="Blog Hero" 
+                                             fill 
+                                             className="object-cover opacity-90"
+                                         />
+                                         {/* Gradient Overlay */}
+                                         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1c] via-transparent to-transparent"></div>
+                                     </div>
+                                     
+                                     {/* Blog Text Area */}
+                                     <div className="flex-1 bg-[#1a1a1c] p-4 pt-1 flex flex-col justify-start relative text-left">
+                                         {/* Read More Button Overlapping */}
+                                         <div className="absolute top-[-18px] right-4 bg-gradient-to-r from-[#ff6b00] to-[#ffa03a] text-white px-4 py-1.5 rounded-full text-[12px] font-black flex items-center gap-1.5 shadow-lg shadow-[#f06100]/30 cursor-pointer hover:scale-105 transition-transform z-20">
+                                             Read More <ArrowRight className="w-3.5 h-3.5 stroke-[3px]" />
+                                         </div>
+
+                                         <h3 className="text-[15px] sm:text-[17px] font-black text-[#f06100] leading-tight mb-2 tracking-tight">
+                                             {blogs?.[0]?.title || "Top 10 Programming Languages to Learn in 2025"}
+                                         </h3>
+                                         <p className="text-[11px] sm:text-[12px] text-white/70 leading-relaxed line-clamp-2">
+                                             {blogs?.[0]?.description || "A detailed guide to the most in-demand programming languages in the coming year, including Python, JavaScript, Go, Rust, and..."}
+                                         </p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     
+                     {/* Laptop Base Hinge / Lower Lip */}
+                     <div className="w-full h-[14px] sm:h-[18px] bg-gradient-to-b from-[#6e6e73] via-[#4c4c52] to-[#2b2b2e] rounded-b-[20px] sm:rounded-b-[24px] relative z-30 flex justify-center -mt-[1px] shadow-[0_15px_30px_rgba(0,0,0,0.8)]">
+                         {/* Central thumb indent for opening lid */}
+                         <div className="w-[18%] h-[35%] bg-gradient-to-b from-[#111] to-[#333] rounded-b-md absolute top-0 shadow-inner"></div>
+                     </div>
+                     {/* Bottom resting shadow / Table light reflection */}
+                     <div className="w-[85%] h-1 sm:h-1.5 bg-black/80 rounded-b-[100%] shadow-[0_8px_20px_black] z-10 -mt-[1px]"></div>
+                 </div>
+
+                 {/* Pagination Dots */}
+                 <div className="flex justify-center gap-[6px] sm:gap-[8px] mt-10 z-10 relative">
+                     <div className="w-[14px] h-[7px] rounded-sm bg-[#f06100] shadow-[0_0_8px_rgba(240,97,0,0.5)] cursor-pointer"></div>
+                     <div className="w-[14px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                     <div className="w-[14px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                     <div className="w-[14px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                 </div>
+             </section>
+
+             {/* PRODUCTS SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-16 pb-20 flex flex-col items-center bg-[#111113] overflow-hidden">
+                 {/* Top Right Floating JS Chat Bubble */}
+                 <div className="absolute top-8 w-full max-w-[500px] z-10 pointer-events-none flex justify-end px-4 sm:px-6">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] mr-2">
+                         JS
+                         <div className="absolute -bottom-1.5 right-3 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Top Left Wifi Logo Icon */}
+                 <div className="absolute top-10 left-4 sm:left-8 z-10 pointer-events-none">
+                     <div className="w-[46px] h-[46px] bg-gradient-to-br from-[#ff9b44] to-[#f06100] rounded-full flex flex-col items-center justify-center shadow-[0_4px_15px_rgba(240,97,0,0.4)]">
+                         <Wifi className="w-[22px] h-[22px] text-white" strokeWidth={2.5} />
+                     </div>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-14 mt-4 flex items-center justify-center gap-2 px-6">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Products</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Products Horizontal Scroll/Carousel Setup */}
+                 <div className="w-full relative z-10 mb-8 max-w-[600px] mx-auto">
+                     <div 
+                        className="flex overflow-x-auto gap-4 sm:gap-6 px-6 sm:px-8 pb-10 snap-x snap-mandatory hide-scrollbar" 
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                     >
+                         <style jsx>{`
+                            .hide-scrollbar::-webkit-scrollbar { display: none; }
+                         `}</style>
+                         
+                         {(products?.length > 0 ? products : [
+                             { title: "Management Website", price: 250.00, image: "https://plus.unsplash.com/premium_photo-1661292026194-672957b4477c?q=80&w=600" },
+                             { title: "Billing & Invoicing Software", price: 1479.99, image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600" },
+                             { title: "Inventory Management System", price: 2548.00, image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600" }
+                         ]).map((p: any, idx: number) => (
+                             <div key={idx} className="relative bg-[#1a1a1c] border border-white/5 rounded-[12px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.6)] flex flex-col group min-w-[250px] sm:min-w-[270px] max-w-[250px] sm:max-w-[270px] shrink-0 snap-center transition-all hover:bg-[#1d1d1f]">
+                                 {/* Image Section cleanly sliced exactly matching previous design tilts */}
+                                 <div className="relative w-full h-[160px] sm:h-[180px] z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 86%, 0 100%)' }}>
+                                     <Image 
+                                        src={p.image || p.imageUrl || "https://images.unsplash.com/photo-1498050108023-c5249f4df085"} 
+                                        alt={p.name || p.title} 
+                                        fill 
+                                        className="object-cover opacity-90 transition-transform group-hover:scale-110 duration-500" 
+                                        unoptimized 
+                                     />
+                                     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#1a1a1c] to-transparent pointer-events-none opacity-80" />
+                                 </div>
+
+                                 {/* Bottom Details Section */}
+                                 <div className="px-4 py-6 flex flex-col items-center justify-center text-center relative z-20 pb-8 mt-[-8px]">
+                                     <h3 className="text-[15px] sm:text-[16px] font-black text-white mb-2.5 leading-snug px-1">
+                                         {p.name || p.title}
+                                     </h3>
+                                     <span className="text-[17px] sm:text-[19px] font-black text-[#f06100]">
+                                         ${Number(p.price || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}
+                                     </span>
+                                 </div>
+
+                                 {/* DECORATIVE HOVER CORNER BRACKETS */}
+                                 <div className="absolute top-[-1px] right-[-1px] w-5 h-5 sm:w-6 sm:h-6 border-t-[1.5px] border-r-[1.5px] border-[#f06100] rounded-tr-[12px] z-30 transition-all opacity-90 group-hover:scale-105 origin-top-right"></div>
+                                 <div className="absolute bottom-[-1px] left-[-1px] w-5 h-5 sm:w-6 sm:h-6 border-b-[1.5px] border-l-[1.5px] border-[#f06100] rounded-bl-[12px] z-30 transition-all opacity-90 group-hover:scale-105 origin-bottom-left"></div>
+                             </div>
+                         ))}
+                     </div>
+                 </div>
+
+                 {/* View More Products Button */}
+                 <div className="mt-2 relative z-20">
+                    <a href={websiteUrl || "#"} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-[6px] bg-gradient-to-r from-[#ff6b00] to-[#ffa03a] text-white text-[14px] font-black tracking-wide px-8 py-3.5 rounded-full shadow-[0_5px_15px_rgba(240,97,0,0.4)] transition-all hover:scale-[1.03] cursor-pointer">
+                        <span className="underline underline-offset-[4px] decoration-2 decoration-white/90">View More Products</span>
+                        <ArrowRight className="w-[18px] h-[18px] stroke-[2.5px]" />
+                    </a>
+                 </div>
+             </section>
+
+             {/* TESTIMONIALS SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-16 pb-20 px-6 sm:px-8 flex flex-col items-center border-[0.5px] border-t-white/10 overflow-hidden bg-[#0a0a0c]">
+                 {/* Background Ambient Image */}
+                 <div className="absolute inset-0 z-0">
+                     <Image src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1200" fill className="object-cover opacity-[0.12] mix-blend-screen" alt="code bg" unoptimized />
+                     <div className="absolute inset-0 bg-gradient-to-b from-[#111113] via-[#111113]/90 to-[#111113]"></div>
+                 </div>
+
+                 {/* Top Left Floating CSS Chat Bubble */}
+                 <div className="absolute top-12 w-full max-w-[500px] z-10 pointer-events-none flex justify-start px-2 sm:px-4">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] ml-2">
+                         CSS
+                         <div className="absolute -bottom-1.5 left-3 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Top Right CSS IDE Window Icon */}
+                 <div className="absolute top-10 right-4 sm:right-8 z-10 pointer-events-none flex opacity-90 scale-[1.1] sm:scale-[1.2]">
+                     <div className="w-[52px] h-[44px] bg-[#1a1a1c]/80 backdrop-blur rounded-[6px] border border-white/10 p-1.5 shadow-[0_6px_20px_rgba(0,0,0,0.6)]">
+                         {/* Window buttons */}
+                         <div className="flex gap-[3.5px] mb-[6px] px-[2px]">
+                            <div className="w-[4.5px] h-[4.5px] bg-[#ff5f56] rounded-full"></div>
+                            <div className="w-[4.5px] h-[4.5px] bg-[#ffbd2e] rounded-full"></div>
+                            <div className="w-[4.5px] h-[4.5px] bg-[#27c93f] rounded-full"></div>
+                         </div>
+                         {/* Code lines */}
+                         <div className="space-y-[3px] px-[2px]">
+                            <div className="w-[65%] h-[2.5px] bg-[#f06100]/90 rounded-full"></div>
+                            <div className="w-[45%] h-[2.5px] bg-white/40 rounded-full ml-[6px]"></div>
+                            <div className="w-[85%] h-[2.5px] bg-white/30 rounded-full"></div>
+                            <div className="w-[55%] h-[2.5px] bg-[#f06100]/70 rounded-full ml-[10px]"></div>
+                         </div>
+                     </div>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-16 mt-6 flex items-center justify-center gap-2">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Testimonials</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Testimonial Card */}
+                 <div className="relative z-10 w-full max-w-[500px] min-h-[170px] sm:min-h-[190px] bg-[#1a1a1c] border-[1.5px] border-white/10 rounded-2xl sm:rounded-3xl overflow-visible shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex mt-2">
+                     
+                     {/* Left Image Side precisely sliced */}
+                     <div className="absolute inset-y-0 left-0 w-[35%] bg-[#111] z-10 overflow-hidden rounded-l-[14px] sm:rounded-l-[22px]" style={{ clipPath: 'polygon(0 0, 78% 0, 100% 100%, 0 100%)' }}>
+                         <Image 
+                            src={testimonials?.[0]?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400"} 
+                            alt="Testimonial Profile" 
+                            fill 
+                            className="object-cover" 
+                            unoptimized 
+                         />
+                     </div>
+                     
+                     {/* The slanted gray separator line sitting right on the diagonal edge */}
+                     <div className="absolute inset-y-0 left-0 w-[35%] z-20 pointer-events-none">
+                        <div className="absolute top-[-10%] bottom-[-10%] right-[-1px] w-[2px] bg-white/10 transform -skew-x-[12deg] origin-bottom-right drop-shadow-lg"></div>
+                     </div>
+
+                     {/* Right Text Side */}
+                     <div className="pl-[38%] pr-5 sm:pr-8 py-6 sm:py-8 flex flex-col justify-center w-full min-h-full">
+                         <div className="relative z-10 text-center sm:text-left flex flex-col items-center sm:items-center w-full pl-2">
+                             <h3 className="text-[17px] sm:text-[19px] font-black text-[#f06100] mb-2 sm:mb-3">
+                                 {testimonials?.[0]?.name || "Michael Thompson"}
+                             </h3>
+                             <p className="text-[12px] sm:text-[13px] font-medium text-white/90 leading-[1.65] text-center px-1">
+                                 {(testimonials?.[0] as any)?.review || (testimonials?.[0] as any)?.quote || "Working with Chris Morries was a game-changer for our business. The custom software he built has streamlined our operations and saved us countless hours every week."}
+                             </p>
+                         </div>
+                     </div>
+
+                     {/* OVERLAPPING QUOTE BADGES */}
+                     {/* Top Left Quote Badge */}
+                     <div className="absolute -top-[22px] left-[26%] sm:left-[28%] w-[44px] h-[44px] bg-[#1a1a1c] border-[1.5px] border-white/10 rounded-full flex items-center justify-center shadow-lg z-30">
+                         <span className="font-serif text-[38px] text-[#f06100] leading-none mb-[-20px] ml-[2px]">“</span>
+                     </div>
+                     
+                     {/* Bottom Right Quote Badge */}
+                     <div className="absolute -bottom-[22px] right-4 sm:right-8 w-[44px] h-[44px] bg-[#1a1a1c] border-[1.5px] border-white/10 rounded-full flex items-center justify-center shadow-lg z-30">
+                         <span className="font-serif text-[38px] text-[#f06100] leading-none mb-[-20px] ml-[2px]">”</span>
+                     </div>
+                 </div>
+
+                 {/* Pagination Dots */}
+                 <div className="flex justify-center gap-[6px] sm:gap-[8px] mt-[48px] z-10 relative">
+                     <div className="w-[14px] h-[7px] rounded-sm bg-[#f06100] shadow-[0_0_8px_rgba(240,97,0,0.5)] cursor-pointer"></div>
+                     <div className="w-[14px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                     <div className="w-[14px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                     <div className="w-[14px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                     <div className="w-[14px] h-[7px] rounded-sm bg-white hover:bg-white/80 cursor-pointer shadow-sm"></div>
+                 </div>
+             </section>
+
+             {/* BUSINESS HOURS SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-16 pb-20 px-6 sm:px-8 flex flex-col items-center overflow-hidden bg-[#0a0a0c]">
+                 {/* Background Image with Overlay */}
+                 <div className="absolute inset-0 z-0">
+                     <Image 
+                        src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1200" 
+                        fill 
+                        className="object-cover opacity-[0.12] mix-blend-screen" 
+                        alt="workstation bg" 
+                        unoptimized 
+                     />
+                     <div className="absolute inset-0 bg-gradient-to-b from-[#111113] via-[#111113]/95 to-[#111113]"></div>
+                 </div>
+
+                 {/* Top Left Floating API Icon */}
+                 <div className="absolute top-10 w-full max-w-[500px] z-10 pointer-events-none flex justify-start px-2 sm:px-4">
+                    <div className="flex items-center gap-2.5 scale-[0.85] sm:scale-100 origin-left">
+                        <ArrowLeft className="w-5 h-5 text-[#f06100]" strokeWidth={3} />
+                        <div className="w-[52px] h-[38px] bg-[#1a1a1c] border border-white/10 rounded-md p-1.5 shadow-xl relative flex flex-col">
+                            <div className="flex gap-[3.5px] mb-[4px]">
+                                <div className="w-[3.5px] h-[3.5px] bg-white/20 rounded-full"></div>
+                                <div className="w-[3.5px] h-[3.5px] bg-white/20 rounded-full"></div>
+                                <div className="w-[3.5px] h-[3.5px] bg-white/20 rounded-full"></div>
+                            </div>
+                            <span className="text-[10px] font-black text-[#f06100] text-center tracking-tighter mt-auto">API</span>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-[#f06100]" strokeWidth={3} />
+                    </div>
+                 </div>
+
+                 {/* Top Right Floating SQL Chat Bubble */}
+                 <div className="absolute top-10 w-full max-w-[500px] z-10 pointer-events-none flex justify-end px-2 sm:px-4">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] mr-2">
+                         SQL
+                         <div className="absolute -bottom-1.5 right-4 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-16 mt-6 flex items-center justify-center gap-2">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Business Hours</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Hours Grid */}
+                 <div className="relative z-10 w-full max-w-[520px] grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 px-2">
+                     {((card as any).businessHours && Array.isArray((card as any).businessHours) && (card as any).businessHours.length > 0 ? (card as any).businessHours : [
+                         { day: 'Monday', time: '10:00 - 18:00' },
+                         { day: 'Tuesday', time: '10:00 - 18:00' },
+                         { day: 'Wednesday', time: '10:00 - 18:00' },
+                         { day: 'Thursday', time: '10:00 - 18:00' },
+                         { day: 'Friday', time: '10:00 - 18:00' },
+                         { day: 'Saturday', time: 'Closed' },
+                         { day: 'Sunday', time: 'Closed' },
+                     ]).map((item: any, idx: number) => {
+                         const isSunday = item.day?.toLowerCase() === 'sunday' || idx === 6;
+                         const isClosed = (item.time || item.value)?.toLowerCase().includes('closed');
+                         
+                         return (
+                             <div key={idx} className={`relative h-[62px] bg-[#1a1a1c]/80 backdrop-blur-md border border-white/5 rounded-xl overflow-hidden shadow-2xl flex items-center group transition-all hover:bg-[#202022] ${isSunday ? 'sm:col-span-2 sm:w-[54%] sm:mx-auto' : ''}`}>
+                                 {/* Icon Section with slanted clip */}
+                                 <div className="absolute inset-y-0 left-0 w-[24%] bg-[#0a0a0c] z-10 flex items-center justify-center" style={{ clipPath: 'polygon(0 0, 100% 0, 75% 100%, 0 100%)' }}>
+                                     <div className="relative">
+                                         <Calendar className="w-[20px] h-[20px] text-[#f06100]" strokeWidth={2.5} />
+                                         <div className="absolute -bottom-1 -right-1.5 w-4 h-4 bg-[#0a0a0c] rounded-full flex items-center justify-center">
+                                             <Clock className="w-3 h-3 text-[#f06100]" strokeWidth={3} />
+                                         </div>
+                                     </div>
+                                 </div>
+                                 {/* Separator Line */}
+                                 <div className="absolute inset-y-0 left-0 w-[24%] z-0 pointer-events-none">
+                                    <div className="absolute top-0 bottom-0 right-[2px] w-[1.5px] bg-white/10 transform -skew-x-[14deg] origin-bottom-right"></div>
+                                 </div>
+
+                                 {/* Text Section */}
+                                 <div className="pl-[28%] pr-4 w-full flex flex-col justify-center">
+                                     <span className="text-[13px] font-black text-white/95 mb-0.5 tracking-tight uppercase">{item.day}</span>
+                                     <span className="text-[15px] font-black tracking-wide text-[#f06100]">
+                                         {item.time || item.value || (isClosed ? "Closed" : "10:00 - 18:00")}
+                                     </span>
+                                 </div>
+                             </div>
+                         );
+                     })}
+                 </div>
+             </section>
+
+             {/* MAKE AN APPOINTMENT SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-16 pb-20 px-6 sm:px-8 flex flex-col items-center overflow-hidden bg-[#0f0f11] border-t-[0.5px] border-white/5">
+                 {/* Top Left Floating SHELL Chat Bubble */}
+                 <div className="absolute top-10 w-full max-w-[500px] z-10 pointer-events-none flex justify-start px-2 sm:px-4">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] ml-1 sm:ml-2">
+                         SHELL
+                         <div className="absolute -bottom-1.5 left-4 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Top Right Floating CPU/Circuit Icon */}
+                 <div className="absolute top-10 right-6 sm:right-10 z-0 opacity-80 pointer-events-none scale-110">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 3V5M15 3V5M9 19V21M15 19V21M3 9H5M3 15H5M19 9H21M19 15H21" stroke="#f06100" strokeWidth="1.2" strokeLinecap="round"/>
+                        <rect x="7" y="7" width="10" height="10" rx="2" stroke="#f06100" strokeWidth="1.2"/>
+                        <circle cx="12" cy="12" r="2.5" fill="#f06100" fillOpacity="0.4"/>
+                        <circle cx="12" cy="12" r="1.2" fill="#f06100"/>
+                        {/* More lines for circuit feel */}
+                        <path d="M12 7V9M12 15V17M7 12H9M15 12H17" stroke="#f06100" strokeWidth="0.8" strokeLinecap="round"/>
+                    </svg>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-16 mt-6 flex items-center justify-center gap-2 px-6">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Make an Appointment</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Appointment Input Area */}
+                 <div className="relative z-10 w-full max-w-[500px]">
+                     {/* Decorative bottom-left corner accent mimicking design */}
+                     <div className="absolute -bottom-1 -left-1 w-12 h-12 border-b-[2px] border-l-[2px] border-[#f06100] rounded-bl-[16px] z-0 opacity-80"></div>
+                     {/* Decorative top-right corner accent mimicking design */}
+                     <div className="absolute -top-1 -right-1 w-12 h-12 border-t-[2px] border-r-[2px] border-[#f06100] rounded-tr-[16px] z-0 opacity-30"></div>
+
+                     {/* Main Container */}
+                     <div className="relative z-10 w-full bg-[#1a1a1c] border border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col items-center shadow-2xl">
+                         <div className="w-full relative h-[56px] bg-[#111] border border-white/5 rounded-xl px-5 flex items-center justify-between group cursor-pointer hover:border-[#f06100]/30 transition-all">
+                             <span className="text-white font-bold text-[15px] tracking-wide">Pick a Date</span>
+                             <Calendar className="w-6 h-6 text-white/60 group-hover:text-[#f06100] transition-colors" strokeWidth={1.5} />
+                         </div>
+                     </div>
+                 </div>
+             </section>
+
+             {/* INQUIRIES SECTION (Exclusive for cooporate-6) */}
+             <section className="relative w-full pt-16 pb-20 px-6 sm:px-8 flex flex-col items-center overflow-hidden bg-[#111113] border-t-[0.5px] border-white/5">
+                 {/* Top Left Floating SWIFT Chat Bubble */}
+                 <div className="absolute top-10 w-full max-w-[500px] z-10 pointer-events-none flex justify-start px-2 sm:px-4">
+                     <div className="bg-gradient-to-br from-[#ffa03a] to-[#f06100] text-white text-[15px] font-black tracking-wider px-3.5 py-1.5 shadow-[0_4px_10px_rgba(240,97,0,0.3)] relative rounded-[4px] ml-1 sm:ml-2">
+                         SWIFT
+                         <div className="absolute -bottom-1.5 left-4 border-t-[6px] border-t-[#f06100] border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent"></div>
+                     </div>
+                 </div>
+
+                 {/* Top Right Floating Code/Analytics Icon */}
+                 <div className="absolute top-10 right-6 sm:right-10 z-0 opacity-80 pointer-events-none">
+                     <div className="relative w-[60px] h-[50px] flex items-center justify-center">
+                         {/* Window with code lines */}
+                         <div className="absolute top-0 right-0 w-[42px] h-[32px] bg-[#1a1a1c] border border-white/10 rounded-md p-1.5 flex flex-col gap-1 shadow-lg">
+                             <div className="w-[80%] h-0.5 bg-[#f06100]/60 rounded-full"></div>
+                             <div className="w-[50%] h-0.5 bg-[#f06100]/40 rounded-full"></div>
+                             <div className="w-[90%] h-0.5 bg-[#f06100]/50 rounded-full"></div>
+                         </div>
+                         {/* Magnifying glass overlay */}
+                         <div className="absolute bottom-1 left-2 w-[24px] h-[24px] border-[2.5px] border-[#f06100] rounded-full relative bg-[#111113]">
+                             <div className="absolute -bottom-1.5 -right-1.5 w-[8px] h-[2.5px] bg-[#f06100] rotate-45 transform origin-top-left"></div>
+                         </div>
+                         {/* Chart icon */}
+                         <div className="absolute bottom-2 right-2 flex items-end gap-[1px] h-3">
+                             <div className="w-1 h-[40%] bg-[#f06100]"></div>
+                             <div className="w-1 h-[70%] bg-[#f06100]"></div>
+                             <div className="w-1 h-[100%] bg-[#f06100]"></div>
+                         </div>
+                     </div>
+                 </div>
+
+                 {/* Title */}
+                 <div className="relative z-10 text-center mb-16 mt-6 flex items-center justify-center gap-2 px-6">
+                     <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
+                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Inquiries</h2>
+                     <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
+                 </div>
+
+                 {/* Main Inquiries Card */}
+                 <div className="relative z-10 w-full max-w-[500px]">
+                     {/* Decorative corner accents mirroring Appointment section */}
+                     <div className="absolute -top-1.5 -right-1.5 w-16 h-16 border-t-[2.5px] border-r-[2.5px] border-[#f06100] rounded-tr-[24px] z-0 opacity-80"></div>
+                     <div className="absolute -bottom-1.5 -left-1.5 w-16 h-16 border-b-[2.5px] border-l-[2.5px] border-[#f06100] rounded-bl-[24px] z-0 opacity-80"></div>
+
+                     {/* The Dark Form Box */}
+                     <div className="relative z-10 w-full bg-[#1a1a1c] border border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col gap-4 shadow-2xl">
+                         <div className="flex flex-col gap-4">
+                             <input type="text" placeholder="Your Name" className="w-full h-14 bg-[#111] border border-white/5 rounded-xl px-5 text-white font-medium focus:border-[#f06100]/40 outline-none transition-all" />
+                             <input type="tel" placeholder="Enter Phone Number" className="w-full h-14 bg-[#111] border border-white/5 rounded-xl px-5 text-white font-medium focus:border-[#f06100]/40 outline-none transition-all" />
+                             <input type="email" placeholder="Email Address" className="w-full h-14 bg-[#111] border border-white/5 rounded-xl px-5 text-white font-medium focus:border-[#f06100]/40 outline-none transition-all" />
+                             <textarea 
+                                placeholder="Type a message here..." 
+                                className="w-full h-32 bg-[#111] border border-white/5 rounded-xl px-5 py-4 text-white font-medium focus:border-[#f06100]/40 outline-none transition-all resize-none"
+                             ></textarea>
+                             
+                             {/* File Upload Area */}
+                             <div className="relative w-full h-14 bg-[#111] border border-white/5 border-dashed rounded-xl px-5 flex items-center justify-center gap-2 cursor-pointer group hover:bg-[#151517] transition-all">
+                                 <svg className="w-5 h-5 text-white/60 group-hover:text-[#f06100] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                                 </svg>
+                                 <span className="text-white/80 font-bold tracking-wide">Choose File to upload</span>
+                             </div>
+                             <p className="text-[11px] text-white/30 font-bold uppercase tracking-wider -mt-1 ml-1">Files Supported: JPG, PNG, JPEG</p>
+                         </div>
+
+                         {/* Submit Button */}
+                         <div className="mt-4 flex justify-center">
+                             <button className="bg-gradient-to-r from-[#ff6b00] to-[#ffa03a] text-white px-10 py-4 rounded-xl font-black text-[16px] tracking-wide shadow-lg shadow-[#f06100]/30 hover:scale-105 active:scale-95 transition-all">
+                                 Send Message
+                             </button>
+                         </div>
+                     </div>
+                 </div>
+             </section>
+          </>
+        ) : (
+             <section className="relative bg-gradient-to-br from-[#e1def4] to-[#d6f0f5] px-6 pt-0 pb-12 z-20 flex flex-col items-center">
+            {/* Top row: Profile & Name */}
+            <div className="flex w-full items-center gap-4 -mt-16 mb-8 px-2 max-w-[460px]">
+                {/* Profile Image with outline */}
+                <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full border-[6px] border-white overflow-hidden shadow-md bg-white shrink-0">
                     {card.image ? (
-                        <Image
-                            src={card.image}
-                            alt={name}
-                            fill
-                            className="object-cover"
-                            unoptimized={card.image.startsWith("data:")}
-                        />
+                        <Image src={card.image} alt={name} fill className="object-cover" unoptimized={card.image.startsWith("data:")} />
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950">
-                            <span className="text-5xl font-bold text-white/20">
-                                {name.charAt(0).toUpperCase()}
-                            </span>
+                        <div className="w-full h-full flex items-center justify-center bg-slate-100">
+                            <span className="text-4xl font-bold text-slate-400">{name.charAt(0).toUpperCase()}</span>
                         </div>
                     )}
                 </div>
+                
+                {/* Name and Role */}
+                <div className="flex flex-col justify-center pt-16 flex-1 text-left">
+                    {(() => {
+                        const isOriginalName = name.startsWith("I'm");
+                        const parts = name.split(' ');
+                        const safeName = isOriginalName ? name : `I'm ${parts[0]} ${parts.slice(1).join(' ')}`;
+                        return (
+                            <h1 className="text-[22px] md:text-[25px] font-black text-[#372b61] leading-tight tracking-tight">
+                                {safeName}
+                            </h1>
+                        );
+                    })()}
+                    <p className="text-[14px] md:text-[15px] font-bold text-[#8174aa] pt-1">
+                        a {role.replace(/^A\s|^a\s/i, '')}
+                    </p>
+                </div>
             </div>
 
-            {/* Name and Role */}
-            <div className="space-y-2 mb-8">
-                <h1 className="text-[32px] font-bold text-slate-900 leading-tight">
-                    {name}
-                </h1>
-                <p className="text-[17px] font-medium text-slate-400">
-                    {role}
-                </p>
-            </div>
+            {/* Social Icons row (Target Style: single white pill) */}
+            {(() => {
+                const availableSocials = card.socialLinks?.filter(l => l.url).map(l => ({ p: l.platform, url: l.url, Icon: getSocialIcon(l.platform) })) || [];
+                if (availableSocials.length === 0) return null;
 
-            {/* Social Icons row (Image 1 Style) */}
-            <div className="flex flex-wrap items-center justify-center gap-6 mb-10">
-                {card.socialLinks && card.socialLinks.length > 0 ? (
-                    card.socialLinks.map((link, idx) => (
-                        <SocialCircleIcon
-                            key={idx}
-                            platform={link.platform}
-                            url={link.url}
-                            size={44}
-                            className="shadow-none ring-0 transition-transform hover:scale-110"
-                        />
-                    ))
-                ) : (
-                    <div className="flex gap-6">
-                        {['facebook', 'instagram', 'linkedin', 'whatsapp', 'twitter'].map(p => (
-                            <SocialCircleIcon key={p} platform={p} size={44} className="shadow-none ring-0" />
+                return (
+                    <div className="w-full max-w-[460px] bg-white rounded-2xl py-4 flex items-center justify-center gap-7 mb-8 shadow-sm">
+                        {availableSocials.map((item) => (
+                            <a 
+                              key={item.p} 
+                              href={item.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="cursor-pointer hover:scale-110 transition-transform hover:opacity-80"
+                            >
+                                <item.Icon size={40} />
+                            </a>
                         ))}
                     </div>
-                )}
-            </div>
+                );
+            })()}
 
-            {/* CONTACT CARDS GRID MOVED TO START (Image 1 Style) */}
+            {/* CONTACT CARDS GRID (Target Style: 2x2 white cards) */}
             {(email || phone || address || card.birthDate) && (
-                <div className="w-full max-w-md grid grid-cols-2 gap-x-4 gap-y-12 pb-6">
+                <div className="w-full max-w-[460px] grid grid-cols-2 gap-4 pb-6">
                     {email && (
-                        <div className="flex flex-col items-center text-center gap-3">
-                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                                <Mail className="w-6 h-6" />
-                            </div>
-                            <p className="text-[14px] font-bold text-slate-800 break-all">{email}</p>
+                        <div className="bg-white rounded-2xl p-5 flex flex-col items-center text-center gap-3 shadow-sm border border-transparent hover:border-slate-100 transition-colors">
+                            <Mail className="w-8 h-8 text-[#867ba9]" strokeWidth={2} />
+                            <p className="text-[14px] sm:text-[15px] font-bold text-[#372b61] break-all w-full">{email}</p>
                         </div>
                     )}
                     {card.birthDate && (
-                        <div className="flex flex-col items-center text-center gap-3">
-                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                                <Cake className="w-6 h-6" />
-                            </div>
-                            <p className="text-[14px] font-bold text-slate-800">{card.birthDate}</p>
+                        <div className="bg-white rounded-2xl p-5 flex flex-col items-center text-center gap-3 shadow-sm border border-transparent hover:border-slate-100 transition-colors">
+                            <Cake className="w-8 h-8 text-[#867ba9]" strokeWidth={2} />
+                            <p className="text-[14px] sm:text-[15px] font-bold text-[#372b61] w-full">{card.birthDate}</p>
                         </div>
                     )}
                     {phone && (
-                        <div className="flex flex-col items-center text-center gap-3">
-                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                                <Phone className="w-6 h-6" />
-                            </div>
-                            <p className="text-[14px] font-bold text-slate-800">{phone}</p>
+                        <div className="bg-white rounded-2xl p-5 flex flex-col items-center text-center gap-3 shadow-sm border border-transparent hover:border-slate-100 transition-colors">
+                            <Phone className="w-8 h-8 text-[#867ba9]" strokeWidth={2} />
+                            <p className="text-[14px] sm:text-[15px] font-bold text-[#372b61] w-full">{phone}</p>
                         </div>
                     )}
                     {address && (
-                        <div className="flex flex-col items-center text-center gap-3">
-                            <div className="w-12 h-12 bg-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                                <MapPin className="w-6 h-6" />
-                            </div>
-                            <p className="text-[14px] font-bold text-slate-800 leading-snug">{address}</p>
+                        <div className="bg-white rounded-2xl p-5 flex flex-col items-center text-center gap-3 shadow-sm border border-transparent hover:border-slate-100 transition-colors">
+                            <MapPin className="w-8 h-8 text-[#867ba9]" strokeWidth={2} />
+                            <p className="text-[14px] sm:text-[15px] font-bold text-[#372b61] leading-snug w-full line-clamp-2">{address}</p>
                         </div>
                     )}
                 </div>
             )}
-
-           {/* DESCRIPTION */}
-           <div className="max-w-md">
-              <p className="text-[15px] text-slate-500 leading-relaxed italic font-medium">
-                {description}
-              </p>
-           </div>
-        </section>
-
-        {/* STATS SECTION (Image 2 style) */}
-        <section className="px-8 pb-12">
-            <div className="grid grid-cols-3 gap-3">
-              {stats.slice(0, 3).map((s: any, idx: number) => (
-                <div
-                  key={idx}
-                  className="rounded-3xl bg-white border border-slate-100 p-5 flex flex-col gap-2 shadow-sm transition-all hover:shadow-md hover:border-slate-200"
-                >
-                  <span className="text-xl font-black text-slate-900 leading-none">
-                    {s.value ?? s}
-                  </span>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">
-                    {s.label || s.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA Button (Image 2 style) */}
-            <div className="pt-8">
-              <button
-                type="button"
-                onClick={() => onDownloadVCard?.()}
-                className="w-full flex items-center justify-center gap-3 rounded-[24px] bg-blue-500 py-5 text-sm font-black text-white shadow-[0_20px_40px_rgba(59,130,246,0.2)] hover:bg-blue-400 transition-all hover:scale-[1.02] active:scale-95"
-              >
-                + Download vCard / Add to contact
-              </button>
-            </div>
-        </section>
-
-        {/* EXPERTISE / SERVICES */}
-        <section className="px-8 py-16 bg-white border-t border-slate-50">
-           <div className="mb-10">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-blue-600 font-bold mb-2">Expertise</p>
-              <h2 className="text-2xl font-black italic tracking-tight text-slate-900">How I create value</h2>
-           </div>
-           
-           <div className="grid gap-6">
-              {services.map((s: any, idx: number) => (
-                <div key={idx} className="group p-8 rounded-[40px] bg-slate-50/50 border border-slate-100 transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 flex flex-col sm:flex-row gap-8 items-start">
-                   <div className="w-16 h-16 rounded-3xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 group-hover:scale-110 transition-transform shadow-inner">
-                      {s.icon ? (
-                        <img src={s.icon} alt={s.title} className="w-8 h-8 object-contain" />
-                      ) : (
-                        <span className="text-3xl select-none opacity-40">✦</span>
-                      )}
-                   </div>
-                   <div className="space-y-2">
-                      <h3 className="font-black text-xl tracking-tight">{s.name || s.title}</h3>
-                      <p className="text-[15px] text-gray-400 leading-relaxed font-light">{s.description || s.details}</p>
-                   </div>
-                </div>
-              ))}
-           </div>
-        </section>
-
-        {/* PROCESS / HOW WE WORK */}
-        <section className="px-8 py-16 bg-[#F8FAFC] border-t border-slate-100">
-           <div className="mb-10">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-violet-600 font-bold mb-2">The Process</p>
-              <h2 className="text-2xl font-black italic tracking-tight uppercase text-slate-900">Idea to Launch</h2>
-           </div>
- 
-           <div className="grid gap-4 sm:grid-cols-3">
-              {processSteps.slice(0, 3).map((step: any, idx: number) => (
-                <div key={idx} className="relative p-6 rounded-[32px] bg-white border border-slate-100 space-y-3 shadow-sm hover:shadow-md transition-shadow">
-                   <span className="text-[10px] font-black text-violet-600/50 uppercase tracking-widest">{step.label || `0${idx + 1} · STEP`}</span>
-                   <h3 className="font-bold text-[16px] text-slate-900">{step.title}</h3>
-                   <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-3">{step.description}</p>
-                </div>
-              ))}
-           </div>
-        </section>
-         {/* SHOWCASE / RECENT WORK */}
-        <section className="px-8 py-16 bg-white border-t border-slate-100">
-           <div className="mb-10 text-center">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-indigo-600 font-bold mb-2 text-center">Portfolio</p>
-              <h2 className="text-2xl font-black italic tracking-tight uppercase text-center text-slate-900">Selected Initiatives</h2>
-           </div>
- 
-           <div className="grid gap-6 sm:grid-cols-2">
-              {showcaseSource.map((item: any, idx: number) => (
-                <article key={idx} className="group rounded-[48px] bg-slate-50 border border-slate-100 overflow-hidden flex flex-col transition-all hover:scale-[1.02] hover:shadow-2xl hover:shadow-indigo-500/10 hover:border-indigo-100">
-                   <div className="h-40 relative bg-gradient-to-br from-blue-100 to-indigo-100 overflow-hidden">
-                       <div className="absolute inset-0 bg-blue-500/5 group-hover:bg-blue-500/10 transition-colors" />
-                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-200 text-4xl font-black uppercase tracking-tighter italic">Creative</div>
-                   </div>
-                   <div className="p-8 space-y-2 flex-1 flex flex-col justify-end text-center">
-                      <h3 className="text-lg font-black text-slate-900">{item.title || item.name}</h3>
-                      <p className="text-sm text-slate-500 leading-relaxed italic">{item.description || "Premium advisory and project delivery."}</p>
-                   </div>
-                </article>
-              ))}
-           </div>
-        </section>
-
-        {/* CLIENTS LOGOS */}
-        {clientLogos && clientLogos.length > 0 && (
-           <section className="px-8 py-12 bg-white border-t border-slate-50">
-              <div className="flex flex-wrap items-center justify-center gap-4 opacity-40 grayscale">
-                 {clientLogos.map((c: any, idx: number) => (
-                   <div key={idx} className="px-4 py-2 rounded-full border border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                      {typeof c === "string" ? c : c.name}
-                   </div>
-                 ))}
-              </div>
-           </section>
+         </section>
         )}
 
-        {/* PROFLIE PHOTO WITH GLOW (Image 2 Footer Identity) */}
-        <section className="mt-12 px-8 pb-20 flex flex-col items-center relative overflow-hidden bg-white">
-           {/* Background Glows */}
-           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/20 blur-[120px] rounded-full pointer-events-none" />
-           
-           <div className="relative group">
-              {/* Outer Pulsing Glow */}
-              <div className="absolute -inset-8 rounded-[60px] bg-blue-500/20 opacity-40 blur-[50px] group-hover:opacity-60 transition-opacity animate-pulse" />
-              
-              <div className="relative h-72 w-72 rounded-[48px] overflow-hidden border-4 border-white bg-slate-50 shadow-2xl">
-                {card.image ? (
-                  <Image
-                    src={card.image}
-                    alt={name}
-                    fill
-                    className="object-cover"
-                    unoptimized={card.image.startsWith("data:")}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-slate-100">
-                    <span className="text-7xl font-bold text-slate-300">{name.charAt(0)}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Slug Badge (Image 1 Badge style) */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-2xl bg-white border border-slate-100 px-8 py-3 text-[11px] font-black text-blue-600 tracking-widest uppercase shadow-2xl backdrop-blur-xl">
-                /{slug}
-              </div>
-           </div>
-        </section>
-
-        {/* OUR SERVICES - EXPERTISE VALUE DESIGN (MATCH IMAGE) */}
-        {services && services.length > 0 && (
-           <section className="px-8 py-32 bg-white border-t border-slate-50 relative overflow-hidden">
-              <div className="relative z-10 max-w-xl mx-auto">
-                 {/* Heading Group */}
-                 <div className="mb-20">
-                    <p className="text-[14px] font-black tracking-[0.2em] text-[#3F51B5] mb-2 uppercase">EXPERTISE</p>
-                    <h2 className="text-[40px] font-black text-[#111827] tracking-tight leading-none italic">
-                       How I create value
-                    </h2>
-                 </div>
-
-                 <div className="flex flex-col gap-6">
+        {slug !== "cooporate-6" && (
+          <>
+            {/* OUR SERVICES SECTION (Requested Design) */}
+            <section className="px-6 pb-16 bg-gradient-to-b from-[#d6f0f5] to-[#c2eaef] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Our Services</h2>
+                
+                <div className="grid grid-cols-2 gap-4 w-full max-w-[460px]">
                     {services.map((s: any, idx: number) => (
-                       <div 
-                         key={idx} 
-                         className="group flex items-center gap-8 p-12 bg-white rounded-[50px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.06)] border border-slate-50 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(63,81,181,0.12)] hover:translate-y-[-5px]"
-                       >
-                          {/* Sparkle Icon Container */}
-                          <div className="flex-shrink-0">
-                             <div className="w-24 h-24 rounded-full bg-[#EBF3FF] flex items-center justify-center text-[#94A3B8]">
-                                <Sparkles className="w-10 h-10 fill-[#94A3B8] stroke-none" />
-                             </div>
-                          </div>
-
-                          {/* Content */}
-                          <div className="flex-1 space-y-3">
-                             <h3 className="text-[26px] font-black text-[#111827] tracking-tight">
-                                {s.name || s.title}
-                             </h3>
-                             <p className="text-[17px] font-medium text-slate-400 leading-snug max-w-[340px]">
-                                {s.description || s.details}
-                             </p>
-                          </div>
-                       </div>
+                        <div key={idx} className="border border-[#b4bbd4] rounded-3xl p-3.5 flex flex-col gap-3 bg-white/20 backdrop-blur-md shadow-[0_10px_20px_rgba(0,0,0,0.02)] transition-all hover:bg-white/40 hover:-translate-y-1">
+                            <div className="w-full aspect-square rounded-2xl overflow-hidden relative border border-white/50 shadow-sm bg-white/50">
+                                {s.icon ? (
+                                    <Image src={s.icon} alt={s.name || s.title} fill className="object-cover" />
+                                ) : (
+                                    <div className="w-full h-full flex flex-col items-center justify-center text-[#51437c] gap-2">
+                                        <Target className="w-8 h-8 opacity-50" />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="px-1 pb-1">
+                                <h3 className="text-[14px] sm:text-[15px] font-black text-[#4b3f7a] mb-1.5 leading-tight">
+                                    {s.name || s.title}
+                                </h3>
+                                <p className="text-[11px] sm:text-[12px] font-medium text-[#686d8a] leading-relaxed line-clamp-6">
+                                    {s.description || s.details}
+                                </p>
+                            </div>
+                        </div>
                     ))}
-                 </div>
-              </div>
-           </section>
+                </div>
+            </section>
+
+            {/* TESTIMONIALS SECTION (Requested Design) */}
+            <section className="px-6 py-10 bg-gradient-to-b from-[#c2eaef] to-[#edf3f7] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Testimonial</h2>
+                
+                <div className="w-full max-w-[460px] relative mt-2">
+                    <div className="bg-white rounded-[24px] p-6 sm:p-8 shadow-sm relative z-20">
+                        <p className="text-[13px] sm:text-[14px] leading-relaxed font-bold text-[#867ba9] mb-8">
+                            &ldquo;{testimonials[0]?.quote || "Designing systems useful for the user is the most interesting element in the entire field of design, which makes it goosebumps with each completed project."}&rdquo;
+                        </p>
+                        
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-100 bg-slate-50">
+                                <Image 
+                                    src={testimonials[0]?.image || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200"} 
+                                    alt={testimonials[0]?.name || "Scarlett Aria"} 
+                                    width={48} 
+                                    height={48} 
+                                    className="object-cover w-full h-full" 
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <h4 className="text-[15px] font-black text-[#372b61] tracking-tight mb-0.5">{testimonials[0]?.name || "Scarlett Aria"}</h4>
+                                <p className="text-[12px] font-medium text-[#aba6c9]">{testimonials[0]?.role || "CEO General Electric"}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Floating Elements mimicking the screenshot layout */}
+                    <div className="absolute right-0 bottom-0 pointer-events-none w-full h-full z-30">
+                        {/* WhatsApp Button */}
+                        <div className="absolute right-14 sm:right-16 bottom-[82px] sm:bottom-[86px] w-[42px] h-[42px] bg-white rounded-full border-[1.5px] border-[#eff5fc] flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.06)] pointer-events-auto hover:-translate-y-1 transition-transform">
+                            <MessageCircle className="w-5 h-5 text-[#8dbce7]" strokeWidth={2.5} />
+                        </div>
+                        {/* Share Button */}
+                        <div className="absolute right-16 -bottom-5 w-[42px] h-[42px] bg-white rounded-full border-[1.5px] border-[#eff5fc] flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.06)] pointer-events-auto hover:-translate-y-1 transition-transform">
+                            <Share2 className="w-5 h-5 text-[#8dbce7]" strokeWidth={2.5} />
+                        </div>
+                        {/* Main Grid Button */}
+                        <div className="absolute right-1 lg:-right-4 bottom-5 w-14 h-14 bg-gradient-to-br from-[#9ac7f4] to-[#8dbce7] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/20 pointer-events-auto hover:scale-105 transition-transform cursor-pointer">
+                            <LayoutGrid className="w-[22px] h-[22px] text-white" strokeWidth={2.5} />
+                        </div>
+                        {/* Stars */}
+                        <div className="absolute right-20 bottom-[44px] flex gap-0.5 text-[#fbdd70] text-[15px]">
+                            <span>★</span><span>★</span><span>★</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Pagination Dots */}
+                <div className="flex justify-center gap-2.5 mt-16 mb-6">
+                    <div className="w-2 h-2 rounded-full bg-[#8271aa]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#d6d8eb]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#d6d8eb]"></div>
+                </div>
+            </section>
+
+            {/* QR CODE SECTION (Requested Design) */}
+            <section className="px-6 py-16 bg-white relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-12 tracking-tight">QR Code</h2>
+                
+                <div className="w-full max-w-[400px] flex flex-row items-center justify-between gap-4 px-2">
+                    {/* Left: QR Code */}
+                    <div className="w-40 h-40 sm:w-44 sm:h-44 shrink-0 rounded-2xl flex items-center justify-center">
+                        {qrDataUrl ? (
+                            <Image src={qrDataUrl} alt="QR Code" width={176} height={176} className="w-full h-full object-contain mix-blend-multiply" />
+                        ) : (
+                            <div className="w-full h-full bg-slate-50 flex items-center justify-center rounded-2xl border-2 border-slate-100 text-[#372b61]">
+                                <Target className="w-10 h-10 opacity-30" />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Right: Avatar & Button */}
+                    <div className="flex flex-col items-center justify-center gap-7">
+                        <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden shadow-sm bg-slate-50">
+                            {card.image ? (
+                            <Image 
+                                src={card.image} 
+                                alt={name} 
+                                width={128} 
+                                height={128} 
+                                className="object-cover w-full h-full" 
+                                unoptimized={card.image.startsWith("data:")}
+                            />
+                            ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-[#c2eaef] text-[#372b61] text-3xl font-black">{name.charAt(0)}</div>
+                            )}
+                        </div>
+                        
+                        {/* Dark Purple Button */}
+                        <button onClick={onDownloadVCard} className="bg-[#3b326b] text-white text-[11px] sm:text-[12px] font-bold tracking-wide px-5 py-3 rounded-lg hover:bg-[#2b254a] transition-colors shadow-md">
+                            Download My QR Code
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* BUSINESS HOURS SECTION (Requested Design) */}
+            <section className="px-6 py-16 bg-gradient-to-br from-[#dfdcf2] to-[#d1eaf0] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-10 tracking-tight">Business Hours</h2>
+                
+                <div className="w-full max-w-[460px] flex flex-col gap-4">
+                    {((card as any).businessHours && Array.isArray((card as any).businessHours) && (card as any).businessHours.length > 0 ? (card as any).businessHours : [
+                        { day: 'Monday', time: '12:00 AM - 12:00 AM' },
+                        { day: 'Tuesday', time: '12:00 AM - 12:00 AM' },
+                        { day: 'Wednesday', time: '12:00 AM - 12:00 AM' },
+                        { day: 'Thursday', time: '12:00 AM - 12:00 AM' },
+                        { day: 'Friday', time: '12:00 AM - 12:00 AM' },
+                        { day: 'Saturday', time: '12:00 AM - 12:00 AM' },
+                        { day: 'Sunday', time: 'Closed' },
+                    ]).map((item: any, idx: number) => (
+                        <div key={idx} className="bg-white rounded-2xl p-3 flex flex-row items-center gap-5 shadow-sm hover:shadow-md transition-shadow">
+                            <div className="w-14 h-14 shrink-0 bg-[#352a5f] rounded-xl flex items-center justify-center text-white shadow-inner">
+                                <Calendar className="w-6 h-6 text-[#efebf8]" strokeWidth={2.5} />
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-[12px] md:text-[13px] font-bold text-[#958ebe] mb-1">
+                                    {item.day}
+                                </span>
+                                <span className="text-[14px] md:text-[15px] font-black text-[#372b61]">
+                                    {item.time || item.value || "12:00 AM - 12:00 AM"}
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* CONTACT US SECTION (Requested Design) */}
+            <section className="px-5 py-16 bg-gradient-to-b from-[#d1eaf0] to-[#dfdcf2] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-10 tracking-tight">Contact Us</h2>
+                
+                <div className="w-full max-w-[460px] bg-white rounded-2xl p-6 md:p-8 shadow-[0_10px_20px_rgba(0,0,0,0.03)] border border-white">
+                    <form className="flex flex-col md:flex-row gap-5">
+                        {/* Left Column */}
+                        <div className="flex-1 flex flex-col gap-4">
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[13px] font-bold text-[#6f6393]">Your Name</label>
+                                <div className="relative">
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9892c4]">
+                                        <User className="w-4 h-4" strokeWidth={2.5} />
+                                    </span>
+                                    <input type="text" className="w-full h-10 pl-10 pr-3 rounded-[8px] border border-[#d6d0f0] bg-white text-sm text-[#372b61] outline-none focus:border-[#6f6393] transition-colors" />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[13px] font-bold text-[#6f6393]">E-mail</label>
+                                <div className="relative">
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9892c4]">
+                                        <Mail className="w-4 h-4" strokeWidth={2.5} />
+                                    </span>
+                                    <input type="email" className="w-full h-10 pl-10 pr-3 rounded-[8px] border border-[#d6d0f0] bg-white text-sm text-[#372b61] outline-none focus:border-[#6f6393] transition-colors" />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-[13px] font-bold text-[#6f6393]">Phone</label>
+                                <div className="relative">
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9892c4]">
+                                        <Phone className="w-4 h-4" strokeWidth={2.5} />
+                                    </span>
+                                    <input type="tel" className="w-full h-10 pl-10 pr-3 rounded-[8px] border border-[#d6d0f0] bg-white text-sm text-[#372b61] outline-none focus:border-[#6f6393] transition-colors" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Column */}
+                        <div className="flex-1 flex flex-col gap-1.5">
+                            <label className="text-[13px] font-bold text-[#6f6393]">Your Message</label>
+                            <div className="relative h-full">
+                                <textarea 
+                                    placeholder="Type a Message.."
+                                    className="w-full h-[140px] md:h-full p-3 pt-3.5 rounded-[8px] border border-[#d6d0f0] bg-white text-[13px] text-[#372b61] outline-none focus:border-[#6f6393] transition-colors resize-none placeholder:text-[#a09bc3]"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </form>
+
+                    {/* Submit button */}
+                    <div className="mt-8 flex justify-center">
+                        <button type="button" className="bg-[#3b326b] flex items-center justify-center text-white text-[13px] font-bold tracking-wide px-8 py-3 rounded-lg hover:bg-[#2e2652] transition-all shadow-md">
+                            Send Message
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* CREATE YOUR VCARD SECTION (Requested Design) */}
+            <section className="px-6 py-12 pb-20 bg-gradient-to-b from-[#dfdcf2] to-[#c2eaef] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] tracking-tight mb-8">Create Your VCard</h2>
+
+                <div className="w-full max-w-[460px] bg-white rounded-2xl py-5 px-6 flex items-center justify-center gap-3 shadow-sm mb-12 border border-[#ffffff]">
+                    <span className="text-[14px] md:text-[15px] font-bold text-[#45396f] truncate">
+                        {baseUrl}/{slug}
+                    </span>
+                    <ExternalLink className="w-5 h-5 text-[#45396f] shrink-0 pointer-events-none" strokeWidth={2.5} />
+                </div>
+
+                <button 
+                    onClick={() => onDownloadVCard?.()}
+                    className="bg-[#3b326b] flex items-center justify-center text-white text-[13px] font-bold tracking-wide px-8 py-3.5 rounded-lg hover:bg-[#2b2450] transition-colors shadow-md"
+                >
+                    Add To Contact
+                </button>
+            </section>
+          </>
         )}
 
-        {/* MAKE AN APPOINTMENT (Image Style) */}
-        <section className="px-8 py-20 bg-white border-t border-slate-100 relative z-10">
-           <div className="text-center mb-12">
-              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Make An Appointment</h2>
-           </div>
-
-           <div className="max-w-md mx-auto space-y-8">
-              {/* Date Input */}
-              <div className="space-y-4">
-                 <label className="text-sm font-black text-[#0f172a] uppercase tracking-widest block">Date:</label>
-                 <div className="relative group">
-                    <input 
-                       type="text" 
-                       placeholder="Pick a date" 
-                       readOnly
-                       className="w-full h-16 px-6 rounded-2xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-300 font-bold focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all cursor-pointer shadow-sm"
-                    />
-                    <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
-                       <Calendar className="w-6 h-6 text-orange-500 group-hover:scale-110 transition-transform" />
-                    </div>
-                 </div>
-              </div>
-
-              {/* Hour Selection */}
-              <div className="space-y-4">
-                 <label className="text-sm font-black text-[#0f172a] uppercase tracking-widest block">Hour:</label>
-                 <div className="grid grid-cols-4 gap-3">
-                    {['8:10 - 20:00', '8:10 - 20:00', '8:10 - 20:00', '8:10 - 20:00'].map((time, idx) => (
-                       <div 
-                          key={idx} 
-                          className="h-14 rounded-xl border border-slate-100 bg-white flex items-center justify-center text-[9px] font-black text-slate-400 shadow-sm transition-all hover:border-orange-500 hover:text-orange-500 hover:shadow-orange-500/10 cursor-pointer"
-                       >
-                          {time}
-                       </div>
-                    ))}
-                 </div>
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-6">
-                 <button 
-                    type="button"
-                    className="w-full h-16 rounded-2xl bg-[#FF7222] text-white font-black text-lg shadow-xl shadow-orange-500/20 hover:bg-[#E65F1B] transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3"
-                 >
-                    Book Appointment
-                 </button>
-              </div>
-           </div>
-        </section>
-
-        {/* GALLERY SECTION (Image Style) */}
-        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
-           {/* Decorative Illustration (Top Right) */}
-           <div className="absolute top-10 right-4 w-40 h-32 opacity-80 pointer-events-none select-none z-0">
-              <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-40">
-                 <path d="M40 100 L60 80 L80 100 L100 80 L120 100" stroke="#cbd5e1" strokeWidth="2" fill="none" />
-                 <circle cx="30" cy="40" r="10" fill="#f1f5f9" />
-                 <circle cx="170" cy="50" r="8" fill="#f1f5f9" />
-                 <path d="M140 30 Q160 10 180 30" stroke="#cbd5e1" strokeWidth="2" fill="none" />
-                 {/* Simplified people silhuettes */}
-                 <rect x="130" y="60" width="20" height="40" rx="4" fill="#94a3b8" />
-                 <rect x="155" y="65" width="20" height="40" rx="4" fill="#64748b" />
-                 <circle cx="140" cy="50" r="8" fill="#94a3b8" />
-                 <circle cx="165" cy="55" r="8" fill="#64748b" />
-              </svg>
-           </div>
-           
-           <div className="relative z-10">
-              <div className="text-center mb-10">
-                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight">Gallery</h2>
-              </div>
-
-              <div className="space-y-6">
-                 {/* Main Image Display */}
-                 <div className="relative w-full aspect-[4/3] rounded-[40px] overflow-hidden shadow-2xl border-4 border-white">
-                    <Image 
-                       src={gallery[0].imageUrl} 
-                       alt="Gallery Image" 
-                       fill 
-                       className="object-cover"
-                    />
-                 </div>
-
-                 {/* Premium Pagination Dots (Orange Pill Style) */}
-                 <div className="flex items-center justify-center gap-2">
-                    <div className="w-8 h-2.5 rounded-full bg-orange-500" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
-                 </div>
-              </div>
-           </div>
-        </section>
-
-        {/* TESTIMONIALS SECTION (Image Style) */}
-        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
-           {/* Decorative Illustration (Top Left) */}
-           <div className="absolute top-10 left-4 w-48 h-36 opacity-80 pointer-events-none select-none z-0">
-              <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-30">
-                 <rect x="20" y="20" width="100" height="80" rx="4" stroke="#64748b" strokeWidth="2" fill="#f8fafc" />
-                 <path d="M40 50 Q60 30 80 50 L100 40" stroke="#64748b" strokeWidth="1.5" fill="none" />
-                 <circle cx="45" cy="70" r="5" fill="#cbd5e1" />
-                 <circle cx="65" cy="70" r="5" fill="#cbd5e1" />
-                 <circle cx="85" cy="70" r="5" fill="#cbd5e1" />
-                 <rect x="130" y="30" width="40" height="60" rx="4" stroke="#cbd5e1" strokeWidth="1.5" />
-                 <line x1="135" y1="40" x2="165" y2="40" stroke="#cbd5e1" strokeWidth="1.5" />
-                 <line x1="135" y1="50" x2="165" y2="50" stroke="#cbd5e1" strokeWidth="1.5" />
-                 <line x1="135" y1="60" x2="155" y2="60" stroke="#cbd5e1" strokeWidth="1.5" />
-              </svg>
-           </div>
-
-           <div className="relative z-10">
-              <div className="text-center mb-12">
-                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Testimonials</h2>
-              </div>
-
-              <div className="relative flex flex-col items-center">
-                 {/* Navigation Arrows */}
-                 <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between pointer-events-none px-0">
-                    <button className="w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-orange-500 hover:border-orange-500 transition-all pointer-events-auto shadow-sm">
-                       <ChevronLeft className="w-6 h-6" />
-                    </button>
-                    <button className="w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-orange-500 hover:border-orange-500 transition-all pointer-events-auto shadow-sm">
-                       <ChevronRight className="w-6 h-6" />
-                    </button>
-                 </div>
-
-                 {/* Content */}
-                 <div className="w-full max-w-sm flex flex-col items-center text-center space-y-6">
-                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl bg-slate-100">
-                       <Image 
-                          src={testimonials[0].image || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400"} 
-                          alt={testimonials[0].name} 
-                          width={128}
-                          height={128}
-                          className="w-full h-full object-cover"
-                       />
-                    </div>
-
-                    <div className="space-y-1">
-                       <h3 className="text-xl font-black text-orange-500">{testimonials[0].name}</h3>
-                       <p className="text-sm font-bold text-[#0f172a] opacity-80">{testimonials[0].role || 'Customer'}</p>
-                    </div>
-
-                    <p className="text-sm text-slate-400 leading-relaxed font-bold max-w-[280px]">
-                       {testimonials[0].quote}
-                    </p>
-                 </div>
-              </div>
-           </div>
-        </section>
-
-        {/* PRODUCTS SECTION (Image Style) */}
-        <section className="px-8 py-20 bg-white border-t border-slate-100 relative">
-           <div className="flex justify-between items-start mb-12">
-              <div className="flex-1 text-center pl-16">
-                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center">Products</h2>
-              </div>
-              
-              {/* Floating Icons (Top Right) */}
-              <div className="flex flex-col gap-3 -mt-4">
-                 <div className="w-12 h-12 rounded-full border border-orange-200 bg-white flex items-center justify-center text-orange-500 shadow-sm">
-                    <MessageCircle className="w-6 h-6" />
-                 </div>
-                 <div className="w-12 h-12 rounded-full border border-orange-200 bg-white flex items-center justify-center text-orange-500 shadow-sm relative">
-                    <Share2 className="w-6 h-6" />
-                 </div>
-                 <div className="w-14 h-14 rounded-full bg-[#f97316] flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
-                    <LayoutGrid className="w-7 h-7" />
-                 </div>
-              </div>
-           </div>
-
-           <div className="grid grid-cols-2 gap-4">
-              {products.slice(0, 2).map((prod: any, idx: number) => (
-                 <div key={idx} className="rounded-[32px] overflow-hidden bg-[#fff7ed] shadow-md transition-transform hover:scale-[1.02]">
-                    <div className="h-40 relative">
-                       <Image 
-                          src={prod.icon || "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=400"} 
-                          alt={prod.name} 
-                          fill 
-                          className="object-cover"
-                       />
-                    </div>
-                    <div className="p-5 flex justify-between items-end">
-                       <div>
-                          <h3 className="text-[15px] font-black text-[#0f172a] mb-1">{prod.name}</h3>
-                          <p className="text-[11px] font-bold text-slate-400">{prod.description || 'Lorem Ipsum'}</p>
-                       </div>
-                       <div className="text-xl font-black text-orange-500">
-                          {prod.currency || '$'}{prod.price || '0'}
-                       </div>
-                    </div>
-                 </div>
-              ))}
-           </div>
-        </section>
-
-        {/* BLOG SECTION (Image Style) */}
-        <section className="px-8 py-24 bg-white border-t border-slate-100 relative overflow-hidden">
-           {/* Decorative Illustration (Full Background Center) */}
-           <div className="absolute inset-x-0 bottom-0 top-12 opacity-80 pointer-events-none select-none z-0">
-              <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-30">
-                 {/* Gear icons */}
-                 <circle cx="150" cy="250" r="30" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="5 5" />
-                 <circle cx="150" cy="250" r="15" stroke="#94a3b8" strokeWidth="2" />
-                 {/* Bars / Charts */}
-                 <rect x="280" y="200" width="12" height="60" fill="#e2e8f0" rx="2" />
-                 <rect x="300" y="180" width="12" height="80" fill="#cbd5e1" rx="2" />
-                 <rect x="320" y="220" width="12" height="40" fill="#94a3b8" rx="2" />
-                 {/* Lines / Grid */}
-                 <path d="M100 200 L350 200" stroke="#f1f5f9" strokeWidth="2" />
-                 <path d="M100 230 L350 230" stroke="#f1f5f9" strokeWidth="2" />
-                 <path d="M100 260 L350 260" stroke="#f1f5f9" strokeWidth="2" />
-                 <path d="M150 180 V280" stroke="#f1f5f9" strokeWidth="2" />
-                 {/* Abstract Shapes */}
-                 <circle cx="50" cy="230" r="8" fill="#e2e8f0" />
-                 <path d="M40 80 Q60 60 80 80 T120 80" stroke="#cbd5e1" strokeWidth="2" fill="none" />
-              </svg>
-           </div>
-           
-           <div className="relative z-10 flex flex-col items-center">
-              <div className="bg-white px-10 py-4 border border-slate-200 shadow-sm rounded-lg mb-8">
-                 <h2 className="text-3xl font-black text-[#0f172a] tracking-wider uppercase text-center">Blog</h2>
-              </div>
-              
-              {/* Premium Carousel Display (Image Style) */}
-              <div className="w-full relative px-2">
-                 <div className="flex items-center gap-4 overflow-hidden py-4">
-                    {/* Left preview (static for design) */}
-                    <div className="min-w-[120px] h-64 rounded-[32px] overflow-hidden opacity-40 blur-[1px] -ml-28">
-                       <Image 
-                          src={blogs[2 % blogs.length]?.icon || blogs[0].icon} 
-                          alt="Prev" 
-                          fill 
-                          className="object-cover"
-                       />
-                    </div>
-
-                    {/* Active Main Card */}
-                    <div className="min-w-[320px] flex-1">
-                       <div className="bg-white rounded-[40px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 transition-transform duration-500">
-                          <div className="h-48 relative">
-                             <Image 
-                                src={blogs[0].icon} 
-                                alt={blogs[0].title} 
-                                fill 
-                                className="object-cover"
-                             />
-                          </div>
-                          <div className="p-8 text-left bg-white">
-                             <h3 className="text-2xl font-black text-[#1e293b] mb-3">{blogs[0].title || "Loreum Ipsum"}</h3>
-                             <p className="text-sm text-slate-400 leading-relaxed font-bold italic">
-                                {blogs[0].description || "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text."}
-                             </p>
-                          </div>
-                       </div>
-                    </div>
-
-                    {/* Right preview (static for design) */}
-                    <div className="min-w-[120px] h-64 rounded-[32px] overflow-hidden opacity-40 blur-[1px]">
-                       <Image 
-                          src={blogs[1 % blogs.length]?.icon || blogs[0].icon} 
-                          alt="Next" 
-                          fill 
-                          className="object-cover"
-                       />
-                    </div>
-                 </div>
-
-                 {/* Pagination Dots (Orange Pill Style) */}
-                 <div className="flex items-center justify-center gap-2 mt-8">
-                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
-                    <div className="w-8 h-2.5 rounded-full bg-orange-500 shadow-sm" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-orange-200" />
-                 </div>
-              </div>
-           </div>
-        </section>
-
-        {/* BUSINESS HOURS SECTION (Image Style - Grid Layout) */}
-        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
-           <div className="text-center mb-12">
-              <h2 className="text-[32px] font-bold text-[#3F51B5] tracking-tight text-center">Business Hours</h2>
-           </div>
-
-           <div className="max-w-xl mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                 {[
-                   { day: 'Sunday', time: '08:10 - 20:00' },
-                   { day: 'Monday', time: '08:10 - 20:00' },
-                   { day: 'Tuesday', time: '08:10 - 20:00' },
-                   { day: 'Wednesday', time: '08:10 - 10:00' },
-                   { day: 'Thursday', time: '08:10 - 20:00' },
-                   { day: 'Friday', time: '08:10 - 20:00' },
-                   { day: 'Saturday', time: 'Closed' },
-                 ].map((item, idx) => (
-                    <div 
-                      key={idx} 
-                      className="bg-[#F0F5FA] rounded-md py-4 px-6 flex items-center justify-center transition-all hover:bg-[#E1EBF5]"
-                    >
-                       <span className="text-[17px] font-bold text-[#3F51B5] whitespace-nowrap">
-                          {item.day} : {item.time}
-                       </span>
-                    </div>
-                 ))}
-              </div>
-           </div>
-
-           {/* Subtle Watermark Decoration (Bottom Right) */}
-           <div className="absolute right-0 bottom-0 w-32 h-32 opacity-10 pointer-events-none select-none">
-              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-20">
-                 <circle cx="50" cy="50" r="40" stroke="#cbd5e1" strokeWidth="2" />
-                 <path d="M50 20 V50 L70 60" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-           </div>
-        </section>
-
-        {/* QR CODE SECTION (Image Style) */}
-        <section className="px-8 py-20 bg-white border-t border-slate-100 relative overflow-hidden">
-           {/* Decorative Illustration (Top Right) */}
-           <div className="absolute top-10 right-4 w-48 h-36 opacity-30 pointer-events-none select-none z-0">
-              <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                 <rect x="20" y="20" width="160" height="110" rx="4" stroke="#cbd5e1" strokeWidth="2" fill="#f8fafc" opacity="0.4" />
-                 <line x1="40" y1="40" x2="140" y2="40" stroke="#cbd5e1" strokeWidth="3" />
-                 <rect x="40" y="55" width="20" height="50" fill="#e2e8f0" />
-                 <rect x="70" y="70" width="20" height="35" fill="#cbd5e1" />
-                 <rect x="100" y="45" width="20" height="60" fill="#94a3b8" />
-                 <circle cx="150" cy="50" r="15" fill="#f1f5f9" stroke="#cbd5e1" />
-              </svg>
-           </div>
-
-           <div className="relative z-10">
-              <div className="text-center mb-16">
-                 <h2 className="text-3xl font-black text-[#0f172a] tracking-tight text-center uppercase">QR Code</h2>
-              </div>
-
-              <div className="max-w-xs mx-auto relative pt-8">
-                 {/* Floating Profile Image */}
-                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-4 border-orange-500 overflow-hidden shadow-xl z-20 bg-white">
-                    {card.image ? (
-                       <Image src={card.image} alt={name} fill className="object-cover" />
-                    ) : (
-                       <div className="w-full h-full flex items-center justify-center bg-slate-100 text-[#0f172a] font-bold">{name.charAt(0)}</div>
-                    )}
-                 </div>
-
-                 {/* QR Card Body */}
-                 <div className="bg-white rounded-[24px] p-8 pt-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] text-center">
-                    <div className="relative aspect-square w-full max-w-[180px] mx-auto mb-10 border border-slate-50 p-2 rounded-xl">
-                       {/* QR Code Placeholder (Using an SVG to match design style) */}
-                       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full opacity-90 text-[#0f172a]">
-                          <path d="M10 10h30v30H10zM10 60h30v30H10zM60 10h30v30H60z" fill="currentColor" />
-                          <path d="M20 20h10v10H20zM20 70h10v10H20zM70 20h10v10H70z" fill="white" />
-                          <path d="M45 10h10v10H45zM45 25h10v10H45zM45 40h10v10H45zM45 55h10v10H45zM45 70h10v10H45zM45 85h10v10H45z" fill="currentColor" />
-                          <path d="M10 45h10v10H10zM25 45h10v10H25zM60 45h10v10H60zM75 45h10v10H75zM90 45h10v10H90z" fill="currentColor" />
-                          <path d="M60 60h10v10H60zM80 60h10v10H80zM70 70h10v10H70zM60 80h10v10H60zM80 80h10v10H80z" fill="currentColor" />
-                       </svg>
-                    </div>
-
-                    <button className="w-full py-4 rounded-xl bg-[#f97316] text-white font-black text-sm uppercase tracking-wide shadow-lg shadow-orange-500/30 transition-all hover:bg-orange-600 hover:scale-[1.02]">
-                       Download My QR Code
-                    </button>
-                 </div>
-              </div>
-           </div>
-        </section>
-            {/* CONTACT US SECTION (Image Style - Redesigned) */}
-        <section className="px-8 py-20 bg-[#F4F7FB] border-t border-slate-100 relative overflow-hidden">
-           {/* Abstract Background Shapes */}
-           <div className="absolute top-20 right-[-50px] w-[300px] h-[300px] bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
-           <div className="absolute bottom-10 left-[-30px] w-[200px] h-[200px] bg-blue-50/50 rounded-full blur-2xl pointer-events-none" />
-           
-           <div className="relative z-10">
-              <div className="text-center mb-12">
-                 <h2 className="text-[32px] font-bold text-[#3F51B5] tracking-tight text-center">Contact Us</h2>
-              </div>
-
-              <div className="max-w-xl mx-auto space-y-6">
-                 {/* Name Field */}
-                 <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#3F51B5] ml-1">Your Name</label>
-                    <div className="relative">
-                       <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900">
-                          <User className="w-6 h-6" />
-                       </span>
-                       <input 
-                          type="text" 
-                          className="w-full h-[60px] pl-16 pr-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all"
-                       />
-                    </div>
-                 </div>
-
-                 {/* Email Field */}
-                 <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#3F51B5] ml-1">E-mail</label>
-                    <div className="relative">
-                       <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900">
-                          <Mail className="w-6 h-6" />
-                       </span>
-                       <input 
-                          type="email" 
-                          className="w-full h-[60px] pl-16 pr-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all"
-                       />
-                    </div>
-                 </div>
-
-                 {/* Phone Field */}
-                 <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#3F51B5] ml-1">Phone</label>
-                    <div className="relative">
-                       <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900">
-                          <Phone className="w-6 h-6" />
-                       </span>
-                       <input 
-                          type="tel" 
-                          className="w-full h-[60px] pl-16 pr-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all"
-                       />
-                    </div>
-                 </div>
-
-                 {/* Message Field */}
-                 <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#3F51B5] ml-1">Message</label>
-                    <div className="relative">
-                       <textarea 
-                          placeholder="Type a message here..." 
-                          rows={6}
-                          className="w-full p-6 rounded-lg bg-white border border-slate-300 text-slate-900 focus:border-[#3F51B5] focus:ring-1 focus:ring-[#3F51B5] outline-none transition-all resize-none"
-                       />
-                    </div>
-                 </div>
-                 
-                 <div className="flex justify-end pt-2">
-                    <button className="px-10 h-[54px] rounded-lg bg-[#3241A9] text-white font-bold text-base shadow-lg hover:bg-[#28348a] transition-all hover:translate-y-[-2px] active:translate-y-0">
-                       Send Message
-                    </button>
-                 </div>
-              </div>
-           </div>
-        </section>
-
-        {/* FOOTER CTA & ILLUSTRATION (Image Style) */}
-        <section className="bg-white border-t border-slate-100">
-           {/* Detailed Corporate Illustration */}
-           <div className="px-8 py-10 flex justify-center bg-white">
-              <div className="w-full max-w-md h-64 relative opacity-60">
-                  <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-2xl">
-                    {/* Background Soft Glow */}
-                    <circle cx="200" cy="150" r="100" fill="url(#illust_glow)" opacity="0.4" />
-                    
-                    {/* Main Floating Card (Glassmorphism effect) */}
-                    <rect x="80" y="60" width="240" height="160" rx="24" fill="white" fillOpacity="0.8" stroke="#E2E8F0" strokeWidth="2" />
-                    <rect x="100" y="85" width="120" height="12" rx="6" fill="#F1F5F9" />
-                    <rect x="100" y="105" width="80" height="12" rx="6" fill="#F1F5F9" />
-                    <rect x="100" y="125" width="160" height="12" rx="6" fill="#F1F5F9" />
-                    
-                    {/* Accent Elements */}
-                    <circle cx="270" cy="115" r="30" fill="#3B82F6" fillOpacity="0.1" stroke="#3B82F6" strokeWidth="1.5" strokeDasharray="4 4" />
-                    <path d="M260 115 L280 115 M270 105 L270 125" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" />
-                    
-                    {/* Floating Growth Nodes */}
-                    <g className="animate-pulse" style={{ animationDuration: '3s' }}>
-                      <rect x="300" y="40" width="40" height="40" rx="12" fill="#FF7222" shadow-lg="true" />
-                      <path d="M312 65 L320 57 L328 65" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </g>
-                    
-                    <g className="animate-bounce" style={{ animationDuration: '4s' }}>
-                      <rect x="40" y="180" width="60" height="60" rx="20" fill="#3F51B5" />
-                      <circle cx="70" cy="210" r="12" stroke="white" strokeWidth="2" opacity="0.6" />
-                    </g>
-
-                    {/* Connecting Abstract Lines */}
-                    <path d="M40 80 Q100 40 160 80 T280 80" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.5" />
-                    <path d="M300 220 Q240 260 180 220 T60 220" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="6 6" opacity="0.5" />
-
-                    <defs>
-                      <radialGradient id="illust_glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 150) rotate(90) scale(150)">
-                        <stop stopColor="#3B82F6" stopOpacity="0.2" />
-                        <stop offset="1" stopColor="white" stopOpacity="0" />
-                      </radialGradient>
-                    </defs>
-                  </svg>
-              </div>
-           </div>
-
-           {/* Create Your VCard Promotion Section */}
-           <div className="bg-[#fff5f1] px-8 py-20 flex flex-col items-center">
-              <h2 className="text-3xl font-black text-[#0f172a] tracking-tight mb-12 text-center">Create Your Vcard</h2>
-              
-              {/* URL Display Box */}
-              <div className="w-full max-w-sm bg-white rounded-2xl h-16 px-6 flex items-center justify-between shadow-sm border border-slate-100 mb-8">
-                 <span className="text-sm font-bold text-[#0f172a] truncate opacity-80">
-                    {baseUrl}/{slug}
-                 </span>
-                 <ExternalLink className="w-5 h-5 text-orange-500 shrink-0" />
-              </div>
-
-              {/* Final Add to Contact Button */}
-              <div className="w-full max-w-sm">
-                 <button 
-                    onClick={() => onDownloadVCard?.()}
-                    className="w-full h-16 rounded-2xl bg-[#FF7222] text-white font-black text-lg shadow-xl shadow-orange-500/20 hover:bg-[#E65F1B] transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center"
-                 >
-                    Add to Contact
-                 </button>
-              </div>
-           </div>
-        </section>
 
         {/* Footer info */}
         <footer className="px-8 py-10 border-t border-white/5 flex flex-col items-center gap-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
@@ -1029,3 +1427,4 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, onDownloadVCard }:
     </div>
   );
 }
+

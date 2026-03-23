@@ -26,6 +26,17 @@ import { PhotoVCardTemplate } from "@/components/PhotoVCardTemplate";
 import { PropertyVCardTemplate } from "@/components/PropertyVCardTemplate";
 import { TravelVCardTemplate } from "@/components/TravelVCardTemplate";
 import { CreativeVCardTemplate } from "@/components/CreativeVCardTemplate";
+import { Corporate7VCardTemplate } from "@/components/Corporate7VCardTemplate";
+import { Corporate8VCardTemplate } from "@/components/Corporate8VCardTemplate";
+import { Temp22VCardTemplate } from "@/components/Temp22VCardTemplate";
+import { Temp23VCardTemplate } from "@/components/Temp23VCardTemplate";
+import { Temp24VCardTemplate } from "@/components/Temp24VCardTemplate";
+import { Temp25VCardTemplate } from "@/components/Temp25VCardTemplate";
+import { Temp26VCardTemplate } from "@/components/Temp26VCardTemplate";
+import { Temp27VCardTemplate } from "@/components/Temp27VCardTemplate";
+import { Temp28VCardTemplate } from "@/components/Temp28VCardTemplate";
+import { Temp29VCardTemplate } from "@/components/Temp29VCardTemplate";
+import { Temp30VCardTemplate } from "@/components/Temp30VCardTemplate";
 
 const BUSINESS_HOURS_DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -241,30 +252,49 @@ export default function PublicVCardPage() {
     return () => clearInterval(id);
   }, [blogs.length]);
 
+  useEffect(() => {
+    // Forge hide ALL scrollbars globally for this page while allowing scroll
+    const style = document.createElement("style");
+    style.id = "hide-scrollbar-style";
+    style.innerHTML = `
+      *::-webkit-scrollbar { display: none !important; }
+      * { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+      html, body { overflow-x: hidden !important; }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      const existingStyle = document.getElementById("hide-scrollbar-style");
+      if (existingStyle) document.head.removeChild(existingStyle);
+    };
+  }, []);
+
   if (!card) {
     const loading = !slugFetchDone && !cardFromContext;
-    if (!loading) notFound();
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f6faf7] px-4 py-8">
-        <div className="w-full max-w-md rounded-[2.5rem] bg-white shadow-2xl overflow-hidden border border-emerald-100 animate-pulse">
-          <div className="h-40 w-full bg-emerald-200" />
-          <div className="px-6 pb-6 pt-4">
-            <div className="flex items-end gap-3 -mt-16">
-              <div className="w-20 h-20 rounded-2xl bg-emerald-200 flex-shrink-0" />
-              <div className="flex-1 space-y-2 pb-1">
-                <div className="h-5 w-3/4 bg-emerald-200 rounded" />
-                <div className="h-4 w-1/2 bg-emerald-100 rounded" />
+    if (loading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-[#f6faf7] px-4 py-8">
+          <div className="w-full max-w-md rounded-[2.5rem] bg-white shadow-2xl overflow-hidden border border-emerald-100 animate-pulse">
+            <div className="h-40 w-full bg-emerald-200" />
+            <div className="px-6 pb-6 pt-4">
+              <div className="flex items-end gap-3 -mt-16">
+                <div className="w-20 h-20 rounded-2xl bg-emerald-200 flex-shrink-0" />
+                <div className="flex-1 space-y-2 pb-1">
+                  <div className="h-5 w-3/4 bg-emerald-200 rounded" />
+                  <div className="h-4 w-1/2 bg-emerald-100 rounded" />
+                </div>
               </div>
-            </div>
-            <div className="mt-5 space-y-2">
-              <div className="h-3 w-full bg-gray-100 rounded" />
-              <div className="h-3 w-full bg-gray-100 rounded" />
-              <div className="h-3 w-2/3 bg-gray-100 rounded" />
+              <div className="mt-5 space-y-2">
+                <div className="h-3 w-full bg-gray-100 rounded" />
+                <div className="h-3 w-full bg-gray-100 rounded" />
+                <div className="h-3 w-2/3 bg-gray-100 rounded" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
+    notFound();
+    return null;
   }
 
   if (card.requiresPassword && !unlocked) {
@@ -313,10 +343,77 @@ export default function PublicVCardPage() {
   const privacyHtml = card.privacyHtml;
 
   const VCardWidthShell = ({ children }: { children: React.ReactNode }) => (
-    <div className="min-h-screen bg-gray-100 flex justify-center px-4 py-8">
-      <div className="w-full max-w-[540px]">{children}</div>
+    <div className="min-h-screen bg-gray-100 flex justify-center px-0 sm:px-4 py-0 sm:py-8 no-scrollbar overflow-x-hidden">
+      <div className="w-full max-w-[540px] no-scrollbar">{children}</div>
     </div>
   );
+
+  const lowerSlug = slug.toLowerCase();
+  
+  if (card.selectedTemplateId === 22 || lowerSlug === "temp-22" || lowerSlug.includes("temp22")) {
+    return (
+      <VCardWidthShell>
+        <Temp22VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 23 || lowerSlug === "temp-23" || lowerSlug.includes("temp23")) {
+    return (
+      <VCardWidthShell>
+        <Temp23VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 24 || lowerSlug === "temp-24" || lowerSlug.includes("temp24")) {
+    return (
+      <VCardWidthShell>
+        <Temp24VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 25 || lowerSlug === "temp-25" || lowerSlug.includes("temp25")) {
+    return (
+      <VCardWidthShell>
+        <Temp25VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 26 || lowerSlug === "temp-26" || lowerSlug.includes("temp26")) {
+    return (
+      <VCardWidthShell>
+        <Temp26VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 27 || lowerSlug === "temp-27" || lowerSlug.includes("temp27")) {
+    return (
+      <VCardWidthShell>
+        <Temp27VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 28 || lowerSlug === "temp-28" || lowerSlug.includes("temp28")) {
+    return (
+      <VCardWidthShell>
+        <Temp28VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 29 || lowerSlug === "temp-29" || lowerSlug.includes("temp29")) {
+    return (
+      <VCardWidthShell>
+        <Temp29VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+  if (card.selectedTemplateId === 30 || lowerSlug === "temp-30" || lowerSlug.includes("temp30")) {
+    return (
+      <VCardWidthShell>
+        <Temp30VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+
 
   const isCafeTemplate =
     card.templateName?.trim().toLowerCase() === "cafe vcard";
@@ -385,6 +482,43 @@ export default function PublicVCardPage() {
     );
   }
 
+  const isCorporate7Template =
+    card.selectedTemplateId === 19 ||
+    card.selectedTemplateId === 21 ||
+    (card.templateName || "").toLowerCase().includes("corporate (7)") ||
+    (card.templateName || "").toLowerCase().includes("cooporate (7)") ||
+    (card.templateName || "").toLowerCase().includes("corporate 7") ||
+    (card.templateName || "").toLowerCase().includes("cooporate 7") ||
+    (card.title || "").toLowerCase().includes("corporate 7") ||
+    (card.title || "").toLowerCase().includes("cooporate 7") ||
+    (slug === "cooporate-7") ||
+    (slug === "corporate-7");
+  if (isCorporate7Template) {
+    return (
+      <VCardWidthShell>
+        <Corporate7VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+
+  const isCorporate8Template =
+    (card.selectedTemplateId === 22 && (card.templateName || "").toLowerCase().includes("corporate (8)")) ||
+    (card.templateName || "").toLowerCase().includes("corporate (8)") ||
+    (card.templateName || "").toLowerCase().includes("cooporate (8)") ||
+    (card.templateName || "").toLowerCase().includes("corporate 8") ||
+    (card.title || "").toLowerCase().includes("corporate 8") ||
+    (card.title || "").toLowerCase().includes("cooporate 8") ||
+    (slug === "cooporate-8") ||
+    (slug === "corporate-8");
+
+  if (isCorporate8Template) {
+    return (
+      <VCardWidthShell>
+        <Corporate8VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
+      </VCardWidthShell>
+    );
+  }
+
   const isCorporateTemplate =
     [7, 17, 18, 19, 20].includes(card.selectedTemplateId || 0) ||
     ((card.templateName || card.title || "").toLowerCase().includes("corporate") ||
@@ -397,6 +531,7 @@ export default function PublicVCardPage() {
           card={card}
           slug={slug}
           baseUrl={baseUrl}
+          qrDataUrl={qrDataUrl}
           onDownloadVCard={() => downloadVCard(card, baseUrl)}
         />
       </VCardWidthShell>
@@ -595,7 +730,7 @@ export default function PublicVCardPage() {
     const website =
       card.website && card.website.trim()
         ? card.website.trim().startsWith("http")
-          ? card.website.trim()
+        ? card.website.trim()
           : `https://${card.website.trim()}`
         : undefined;
 

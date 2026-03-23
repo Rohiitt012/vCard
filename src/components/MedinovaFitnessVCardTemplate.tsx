@@ -186,7 +186,7 @@ export function MedinovaFitnessVCardTemplate({ card, slug, baseUrl, onDownloadVC
 
             {/* Centered Yellow Social Icons */}
             <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
-              {card.socialLinks && card.socialLinks.length > 0 ? (
+              {card.socialLinks && card.socialLinks.length > 0 && (
                 card.socialLinks.slice(0, 5).map((link, idx) => (
                   <SocialCircleIcon 
                     key={idx} 
@@ -196,10 +196,6 @@ export function MedinovaFitnessVCardTemplate({ card, slug, baseUrl, onDownloadVC
                     bgColor="#facc15"
                     iconColor="#000000"
                   />
-                ))
-              ) : (
-                ["website", "x", "instagram", "linkedin", "whatsapp"].map((p, idx) => (
-                  <SocialCircleIcon key={idx} platform={p} size={48} bgColor="#facc15" iconColor="#000000" />
                 ))
               )}
             </div>

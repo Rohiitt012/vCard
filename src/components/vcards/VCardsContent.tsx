@@ -312,14 +312,7 @@ export const VCardsContent = () => {
         delete next[deleteConfirmCardId];
         return next;
       });
-      if (card && token) {
-        setLastDeletedCard({ card, token });
-        if (undoDeleteTimeoutRef.current) clearTimeout(undoDeleteTimeoutRef.current);
-        undoDeleteTimeoutRef.current = setTimeout(() => {
-          setLastDeletedCard(null);
-          undoDeleteTimeoutRef.current = null;
-        }, UNDO_DURATION_MS);
-      }
+      // setLastDeletedCard(null); — disabled undo toast per user request
     }
     setDeleteConfirmCardId(null);
   };
@@ -615,7 +608,7 @@ export const VCardsContent = () => {
         <>
         {/* Desktop table */}
         <div className="hidden md:block rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-          <div className="overflow-x-auto overflow-y-visible">
+          <div className="overflow-visible">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-gray-200 bg-gray-100 dark:border-gray-600 dark:bg-gray-700/50">
@@ -1352,14 +1345,7 @@ export const VCardsContent = () => {
           vCard duplicated. Opening editor…
         </div>
       )}
-      {lastDeletedCard && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100001] flex items-center gap-3 rounded-lg bg-gray-900 text-white px-4 py-3 text-sm shadow-lg" role="status" aria-live="polite">
-          <span>vCard deleted.</span>
-          <button type="button" onClick={handleUndoDelete} className="font-medium text-blue-300 hover:text-white underline">
-            Undo
-          </button>
-        </div>
-      )}
+      {/* Delete toast hidden per user request */}
 
       {/* Bulk delete confirmation modal */}
       {showBulkDeleteConfirm && (

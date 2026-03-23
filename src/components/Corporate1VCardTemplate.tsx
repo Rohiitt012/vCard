@@ -84,15 +84,13 @@ export function Corporate1VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
         </section>
 
         {/* SOCIAL LINKS - CENTERED */}
-        <section className="px-8 pb-10 flex flex-wrap justify-center gap-6">
-            {card.socialLinks?.map((link, idx) => (
-                <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={50} />
-            )) || (
-                ['facebook', 'instagram', 'linkedin', 'whatsapp', 'twitter'].map(p => (
-                    <SocialCircleIcon key={p} platform={p} size={50} />
-                ))
-            )}
-        </section>
+        {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
+          <section className="px-8 pb-10 flex flex-wrap justify-center gap-6">
+              {card.socialLinks.filter(l => l.url).map((link, idx) => (
+                  <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={50} />
+              ))}
+          </section>
+        )}
 
         {/* CONTACT DATA */}
         {(email || phone || address) && (

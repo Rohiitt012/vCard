@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import type { VCardItem } from "@/context/VCardsContextTypes";
+import { getSocialIcon } from "@/lib/social-icons";
 
 type Props = {
   card: VCardItem;
@@ -77,13 +78,19 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
            </div>
 
            {/* Social Icons (Hollow Minimalist Style) */}
-           <div className="flex flex-wrap items-center gap-4 mb-14">
-              {['facebook', 'whatsapp', 'linkedin', 'instagram', 'twitter'].map((platform, idx) => (
-                 <div key={idx} className="w-14 h-14 rounded-full border border-slate-300 flex items-center justify-center text-slate-800 bg-white shadow-sm transition-all hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:scale-110 cursor-pointer">
-                    <SocialIcon platform={platform} />
-                 </div>
-              ))}
-           </div>
+            <div className="flex flex-wrap items-center gap-4 mb-14">
+               {card.socialLinks?.map((social, idx) => (
+                  <a 
+                    key={idx} 
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-14 h-14 rounded-full border border-slate-300 flex items-center justify-center text-slate-800 bg-white shadow-sm transition-all hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:scale-110 cursor-pointer"
+                  >
+                     <SocialIcon platform={social.platform} />
+                  </a>
+               ))}
+            </div>
 
            {/* Description Text */}
            <div className="mb-14 px-2">
@@ -738,13 +745,6 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
 
 // Minimal Social Icon Helper
 function SocialIcon({ platform }: { platform: string }) {
-  const p = platform.toLowerCase();
-  const size = 20;
-  if (p.includes("facebook")) return <Facebook size={size} />;
-  if (p.includes("whatsapp")) return <MessageCircle size={size} />;
-  if (p.includes("linkedin")) return <Linkedin size={size} />;
-  if (p.includes("instagram")) return <Instagram size={size} />;
-  if (p.includes("twitter")) return <Twitter size={size} />;
-  if (p.includes("youtube")) return <Youtube size={size} />;
-  return <Globe size={size} />;
+  const Icon = getSocialIcon(platform);
+  return <Icon size={20} />;
 }

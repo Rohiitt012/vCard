@@ -10,6 +10,7 @@ import {
 import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import type { VCardItem } from "@/context/VCardsContextTypes";
+import { getSocialIcon } from "@/lib/social-icons";
 
 type Props = {
   card: VCardItem;
@@ -152,21 +153,19 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
 
            {/* 5. Sunburst Social Icons (Image 2 Style) */}
            <div className="flex justify-center flex-wrap gap-6 animate-premium [animation-delay:600ms] relative">
-              {[
-                { icon: Globe, label: "Web" },
-                { icon: Twitter, label: "X" },
-                { icon: Facebook, label: "FB" },
-                { icon: Instagram, label: "IG" },
-                { icon: Linkedin, label: "LN" },
-                { icon: MessageCircle, label: "WA" }
-              ].map((social, i) => (
+              {card.socialLinks?.filter(social => social.url).map((social, i) => (
                 <div key={i} className="relative group">
                    {/* Radial Sunburst Ring (Visual match for Image 2) */}
                    <div className="absolute inset-[-14px] opacity-0 group-hover:opacity-100 transition-all duration-500 sunburst-bg rounded-full animate-[spinSlow_20s_linear_infinite] scale-75 group-hover:scale-100" />
                    
-                   <div className="relative w-14 h-14 rounded-full border-2 border-purple-50 flex items-center justify-center text-purple-600 bg-white hover:border-purple-600 hover:scale-110 transition-all cursor-pointer shadow-sm group-hover:shadow-[0_10px_30px_rgba(168,85,247,0.2)]">
-                      <social.icon size={22} />
-                   </div>
+                   <a 
+                     href={social.url}
+                     target="_blank"
+                     rel="noreferrer"
+                     className="relative w-14 h-14 rounded-full border-2 border-purple-50 flex items-center justify-center text-purple-600 bg-white hover:border-purple-600 hover:scale-110 transition-all cursor-pointer shadow-sm group-hover:shadow-[0_10px_30px_rgba(168,85,247,0.2)]"
+                   >
+                      <SocialCircleIcon platform={social.platform} url={social.url} size={22} />
+                   </a>
                 </div>
               ))}
               
@@ -792,12 +791,6 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
 
 // Icon Helper
 function SocialIcon({ platform }: { platform: string }) {
-  const p = platform.toLowerCase();
-  if (p.includes("facebook")) return <Facebook size={18} />;
-  if (p.includes("whatsapp")) return <MessageCircle size={18} />;
-  if (p.includes("linkedin")) return <Linkedin size={18} />;
-  if (p.includes("instagram")) return <Instagram size={18} />;
-  if (p.includes("twitter")) return <Twitter size={18} />;
-  if (p.includes("youtube")) return <Youtube size={18} />;
-  return <Globe size={18} />;
+  const Icon = getSocialIcon(platform);
+  return <Icon size={18} />;
 }

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { getSocialIcon } from "@/lib/social-icons";
 
 type Props = {
   card: VCardItem;
@@ -122,19 +123,12 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
 
            {/* Redesigned Social Identity Icons */}
             <section className="flex flex-wrap items-center justify-center gap-4 py-8 relative">
-               {[
-                 { p: 'globe', url: '#' },
-                 { p: 'twitter', url: '#' },
-                 { p: 'facebook', url: '#' },
-                 { p: 'instagram', url: '#' },
-                 { p: 'youtube', url: '#' },
-                 { p: 'reddit', url: '#' },
-                 { p: 'linkedin', url: '#' },
-                 { p: 'whatsapp', url: '#' }
-               ].map((s, idx) => (
+               {card.socialLinks?.map((s, idx) => (
                   <a 
                      key={idx} 
                      href={s.url}
+                     target="_blank"
+                     rel="noreferrer"
                      className="group relative w-14 h-14 flex items-center justify-center transition-all duration-300 hover:-translate-y-2"
                   >
                      {/* Circular Background with Glow */}
@@ -142,7 +136,7 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
                      
                      {/* Icon Container with Soft Background */}
                      <div className="w-10 h-10 rounded-full flex items-center justify-center relative z-10 transition-colors bg-[#6366F1]/10 group-hover:bg-[#6366F1] text-[#6366F1] group-hover:text-white">
-                        <SocialIconSmall platform={s.p} />
+                        <SocialIconSmall platform={s.platform} />
                      </div>
 
                      {/* Decorative Floating Paw Badge (Bottom Right) */}
@@ -854,17 +848,6 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
 }
 // Minimal Social Icon Helper for Small Containers
 function SocialIconSmall({ platform }: { platform: string }) {
-  const p = platform.toLowerCase();
-  switch (p) {
-    case 'globe': return <Globe size={18} />;
-    case 'facebook': return <Facebook size={18} />;
-    case 'instagram': return <Instagram size={18} />;
-    case 'twitter': 
-    case 'x': return <Twitter size={18} />;
-    case 'youtube': return <Youtube size={18} />;
-    case 'linkedin': return <Linkedin size={18} />;
-    case 'whatsapp': return <MessageCircle size={18} />;
-    case 'reddit': return <Globe size={18} />; // Default to globe for reddit if not specifically imported
-    default: return <Globe size={18} />;
-  }
+  const Icon = getSocialIcon(platform);
+  return <Icon size={18} />;
 }

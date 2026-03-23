@@ -122,29 +122,9 @@ export function TravelVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
           {/* Social Icons Container */}
           <div className="mt-8 flex flex-wrap gap-3">
-            {card.socialLinks && card.socialLinks.length > 0 ? (
-               card.socialLinks.map((link, idx) => (
-                 <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={42} />
-               ))
-            ) : (
-              <>
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#3b5998] hover:bg-white transition-colors">
-                  <Facebook size={18} fill="currentColor" />
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-100/50 border border-slate-200/50 flex items-center justify-center text-slate-600">
-                  <span className="text-sm font-bold">💬</span>
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0077b5] hover:bg-white transition-colors">
-                  <Linkedin size={18} fill="currentColor" />
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#e4405f] hover:bg-white transition-colors">
-                  <Instagram size={18} />
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#1da1f2] hover:bg-white transition-colors">
-                  <Twitter size={18} fill="currentColor" />
-                </div>
-              </>
-            )}
+            {card.socialLinks?.map((link, idx) => (
+              <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={42} />
+            ))}
           </div>
 
           {/* Contact Details List - Refined as per user image */}

@@ -93,9 +93,9 @@ export function YogaMindTemplate({ card, slug, baseUrl, onDownloadVCard }: Props
               </p>
               <h1 className="text-lg font-semibold leading-tight">{name}</h1>
         
-          {card.socialLinks && card.socialLinks.length > 0 && (
+          {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
             <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
-              {card.socialLinks.map((link, idx) => (
+              {card.socialLinks.filter(l => l.url).map((link, idx) => (
                 <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
               ))}
             </div>

@@ -124,15 +124,11 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                </div>
 
                {/* Social Icons row (Branded as per Image 1) */}
-               <div className="flex flex-wrap items-center gap-6 mb-12">
-                   {card.socialLinks?.map((link, idx) => (
-                       <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={48} className="shadow-none ring-0" />
-                   )) || (
-                       ['facebook', 'instagram', 'linkedin', 'whatsapp', 'twitter'].map(p => (
-                           <SocialCircleIcon key={p} platform={p} size={48} className="shadow-none ring-0" />
-                       ))
-                   )}
-               </div>
+                <div className="flex flex-wrap items-center gap-6 mb-12">
+                    {card.socialLinks?.filter(link => link.url).map((link, idx) => (
+                        <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={48} className="shadow-none ring-0" />
+                    ))}
+                </div>
 
                {/* Contact List (Image 1 List style) */}
                <div className="space-y-10 mb-12">

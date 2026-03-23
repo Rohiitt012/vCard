@@ -26,6 +26,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "api.qrserver.com", pathname: "/**" },
+      { protocol: "https", hostname: "cdni.iconscout.com", pathname: "/**" },
     ],
   },
   webpack(config) {
