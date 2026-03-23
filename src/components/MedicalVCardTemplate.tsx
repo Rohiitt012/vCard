@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from "react";
 import Image from "next/image";
 import { 
@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { getSocialIcon } from "@/lib/social-icons";
 
 type Props = {
@@ -103,7 +104,7 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
            </div>
            
            <div className="absolute top-[40%] -right-4 w-10 h-10 opacity-30 rotate-45 text-[#6366F1] font-black pointer-events-none">
-              <span className="text-4xl">×</span>
+              <span className="text-4xl">Ã—</span>
            </div>
 
            <div className="absolute top-[50%] -right-8 w-16 h-16 opacity-40 -rotate-12 pointer-events-none">
@@ -122,31 +123,14 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
            </section>
 
            {/* Redesigned Social Identity Icons */}
-            <section className="flex flex-wrap items-center justify-center gap-4 py-8 relative">
-               {card.socialLinks?.map((s, idx) => (
-                  <a 
-                     key={idx} 
-                     href={s.url}
-                     target="_blank"
-                     rel="noreferrer"
-                     className="group relative w-14 h-14 flex items-center justify-center transition-all duration-300 hover:-translate-y-2"
-                  >
-                     {/* Circular Background with Glow */}
-                     <div className="absolute inset-0 rounded-full bg-white shadow-md border border-slate-100 transition-all group-hover:shadow-xl group-hover:shadow-indigo-500/20 group-hover:border-indigo-500/30" />
-                     
-                     {/* Icon Container with Soft Background */}
-                     <div className="w-10 h-10 rounded-full flex items-center justify-center relative z-10 transition-colors bg-[#6366F1]/10 group-hover:bg-[#6366F1] text-[#6366F1] group-hover:text-white">
-                        <SocialIconSmall platform={s.platform} />
-                     </div>
-
-                     {/* Decorative Floating Paw Badge (Bottom Right) */}
-                     <div className="absolute -right-1 -bottom-1 w-6 h-6 bg-[#10B981] rounded-full border-2 border-white flex items-center justify-center shadow-sm z-20 transition-transform group-hover:scale-125 group-hover:rotate-12">
-                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white">
-                           <path d="M12,18c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S13.1,18,12,18z M7,13c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S8.1,13,7,13z M17,13 c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S18.1,13,17,13z M12,10c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S13.1,10,12,10z" />
-                        </svg>
-                     </div>
-                  </a>
-               ))}
+           <section className="flex flex-col items-center py-8 relative">
+                <VCardSocialLinks 
+                    card={card} 
+                    layout="vertical" 
+                    variant="circular" 
+                    iconSize={20}
+                    itemClassName="bg-white rounded-[24px] border border-slate-100 shadow-sm p-3 w-full max-w-[400px] hover:border-[#6366F1]/30 hover:shadow-md h-14"
+                />
             </section>
 
            {/* Contact Divider */}
@@ -411,12 +395,12 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
                  {[
                    { 
                       title: "First-Aid Kits", 
-                      price: "₹ 2,500.00",
+                      price: "â‚¹ 2,500.00",
                       img: "https://images.unsplash.com/photo-1603398938378-e54eab446df1?q=80&w=600" 
                    },
                    { 
                       title: "Dental Care Kits", 
-                      price: "₹ 599.00",
+                      price: "â‚¹ 599.00",
                       img: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=600" 
                    }
                  ].map((product, i) => (
@@ -834,11 +818,11 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
                      <Heart size={10} fill="currentColor" />
                   </div>
                   <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.5em] opacity-80">
-                     Healthy Pets · Happy Life
+                     Healthy Pets Â· Happy Life
                   </span>
                </div>
                {/* Fixed Name variable usage if needed, or just hardcode generic if props are tricky, but 'name' is available in scope */}
-               <p className="text-[9px] text-slate-300 font-bold opacity-60">© {new Date().getFullYear()} {typeof name !== 'undefined' ? name : 'PetCare'}</p>
+               <p className="text-[9px] text-slate-300 font-bold opacity-60">Â© {new Date().getFullYear()} {typeof name !== 'undefined' ? name : 'PetCare'}</p>
             </div>
          </footer>
 

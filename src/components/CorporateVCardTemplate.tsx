@@ -5,6 +5,7 @@ import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles, ChevronDown, Globe, Instagram, Youtube, Linkedin, Maximize, ArrowRight, Wifi, Clock, ArrowLeft, Cpu } from "lucide-react";
 import { getSocialIcon } from "@/lib/social-icons";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -320,35 +321,16 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                          </div>
                      </div>
                  </div>
-                 {/* Social Icons row beneath the card */}
-                  {(() => {
-                      const btns = [
-                          ...(card.website ? [{ icon: <Globe className="w-[18px] h-[18px] text-white" strokeWidth={1.5} />, link: card.website }] : []),
-                          ...(card.socialLinks?.filter(l => l.url).map(l => {
-                              const Icon = getSocialIcon(l.platform);
-                              return {
-                                  icon: <Icon size={18} className="text-white" />,
-                                  link: l.url
-                              };
-                          }) || [])
-                      ];
-
-                      if (btns.length === 0) return null;
-
-                      return (
-                          <div className="mt-8 flex justify-center gap-3 sm:gap-4 max-w-[460px] pb-6 flex-wrap">
-                              {btns.map((btn, idx) => (
-                                  <a key={idx} href={btn.link} target="_blank" rel="noreferrer" className="group">
-                                      <div className="relative z-10 w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] bg-[#222325] rounded-[10px] sm:rounded-[12px] flex items-center justify-center transition-all group-hover:bg-[#2a2a2c] shadow-md border border-white/5">
-                                          {btn.icon}
-                                          <div className="absolute top-[-1px] left-[-1px] w-[12px] h-[12px] border-t-2 border-l-2 border-[#f06100] rounded-tl-[10px] sm:rounded-tl-[12px] group-hover:scale-110 transition-transform origin-top-left z-20" />
-                                          <div className="absolute bottom-[-1px] right-[-1px] w-[12px] h-[12px] border-b-2 border-r-2 border-[#f06100] rounded-br-[10px] sm:rounded-br-[12px] group-hover:scale-110 transition-transform origin-bottom-right z-20" />
-                                      </div>
-                                  </a>
-                              ))}
-                          </div>
-                      );
-                  })()}
+                  {/* Social Vertical Stack */}
+                  <div className="mt-8 flex flex-col items-center w-full max-w-[460px] pb-6">
+                      <VCardSocialLinks 
+                          card={card} 
+                          layout="vertical" 
+                          variant="circular" 
+                          iconSize={20}
+                          itemClassName="bg-[#1a1a1c] border border-white/10 rounded-2xl p-4 w-full hover:bg-[#222] transition-all"
+                      />
+                  </div>
 
                  {/* Decorator Glass on the left bottom */}
                  <div className="absolute bottom-6 left-6 z-10 pointer-events-none opacity-80 w-6 h-6 transform -rotate-[15deg]">
@@ -1117,7 +1099,6 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                                 {safeName}
                             </h1>
                         );
-                    })()}
                     <p className="text-[14px] md:text-[15px] font-bold text-[#8174aa] pt-1">
                         a {role.replace(/^A\s|^a\s/i, '')}
                     </p>
@@ -1144,7 +1125,6 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                         ))}
                     </div>
                 );
-            })()}
 
             {/* CONTACT CARDS GRID (Target Style: 2x2 white cards) */}
             {(email || phone || address || card.birthDate) && (

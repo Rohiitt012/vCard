@@ -10,6 +10,7 @@ import {
      Activity, HeartPulse, Stethoscope, Microscope, Dna, Pill, Syringe, Plus, ArrowLeft, Play, Share2, Quote, Cake, FlaskConical, Heart, Thermometer
 } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { getSocialIcon } from "@/lib/social-icons";
 
 type Props = {
@@ -145,24 +146,18 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                          </div>
 
                          <div className="relative z-10 space-y-20">
-                              {/* Social Cinematic Bar */}
-                              {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
-                                   <div className="flex justify-center gap-6">
-                                        {card.socialLinks.filter(l => l.url).map((social, idx) => {
-                                             const Icon = getSocialIcon(social.platform);
-                                             return (
-                                                  <a 
-                                                       key={idx} 
-                                                       href={social.url} 
-                                                       target="_blank" 
-                                                       rel="noopener noreferrer"
-                                                       className="w-12 h-12 rounded-full bg-[#38b2ac]/5 border border-[#38b2ac]/10 flex items-center justify-center text-[#38b2ac] hover:bg-[#38b2ac] hover:text-white transition-all cursor-pointer shadow-sm hover:-translate-y-1"
-                                                  >
-                                                       <Icon size={20} strokeWidth={2} />
-                                                  </a>
-                                             );
-                                        })}
-                                   </div>
+                               {/* Social Vertical Stack */}
+                               {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
+                                    <div className="flex flex-col items-center w-full">
+                                         <VCardSocialLinks 
+                                             card={card} 
+                                             layout="vertical" 
+                                             variant="circular" 
+                                             iconSize={20}
+                                             itemClassName="bg-[#38b2ac]/5 border border-[#38b2ac]/10 rounded-2xl p-4 w-full max-w-[400px] hover:bg-[#38b2ac]/10 transition-all shadow-sm"
+                                         />
+                                    </div>
+                               )}
                               )}
 
                               <div className="text-center space-y-4">

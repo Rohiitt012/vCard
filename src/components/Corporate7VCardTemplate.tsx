@@ -5,7 +5,8 @@ import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Calendar, ExternalLink, Facebook, Instagram, Linkedin, Twitter, MessageCircle, Monitor, PenTool, Layout, Code, User } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
-import { getSocialIcon } from "@/lib/social-icons";
+import { getSocialIcon, getSocialColor } from "@/lib/social-icons";
+import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 
 type Props = {
   card: VCardItem;
@@ -118,8 +119,8 @@ export function Corporate7VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
             <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-orange-500/5 rounded-[32px] blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative bg-white/40 backdrop-blur-3xl rounded-[32px] py-8 px-8 shadow-[0_20px_50px_-20px_rgba(30,27,75,0.1)] border border-white flex items-center justify-center gap-6 sm:gap-10 transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(30,27,75,0.15)] group-hover:-translate-y-1">
-                    {card.socialLinks?.filter(link => link.url).map((link) => (
-                        <SocialIcon key={link.platform} platform={link.platform} href={link.url} />
+                    {card.socialLinks?.filter(link => link.url).map((link, idx) => (
+                        <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={44} />
                     ))}
                 </div>
             </div>
@@ -585,25 +586,6 @@ export function Corporate7VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
   );
 }
 
-function SocialIcon({ platform, href }: { platform: string, href: string }) {
-    const colors: Record<string, string> = {
-        facebook: "#1877F2",
-        instagram: "#E4405F",
-        linkedin: "#0A66C2",
-        whatsapp: "#25D366",
-        twitter: "#1DA1F2"
-    };
-    const color = colors[platform.toLowerCase()] || "#6366f1";
-    const Icon = getSocialIcon(platform);
-
-    return (
-        <a href={href} target="_blank" rel="noreferrer" className="transition-transform hover:scale-110 active:scale-95">
-            <div style={{ color }} className="w-10 h-10 flex items-center justify-center">
-                 <Icon size={32} />
-            </div>
-        </a>
-    );
-}
 
 function ProfessionalContactItem({ icon: Icon, value, label }: { icon: any, value?: string, label: string }) {
     if (!value) return null;

@@ -23,6 +23,7 @@ import {
   ExternalLink
 } from "lucide-react";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 
@@ -159,10 +160,14 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
             </p>
             
             {socialLinks.length > 0 && (
-              <div className="mt-8 flex flex-wrap gap-4 justify-center sm:justify-start">
-                {socialLinks.map((link) => (
-                  <SocialCircleIcon key={link.platform} platform={link.platform} url={link.url} className="hover:scale-110 transition-transform" />
-                ))}
+              <div className="mt-8 flex flex-col items-center sm:items-start w-full gap-4">
+                <VCardSocialLinks 
+                    card={card} 
+                    layout="vertical" 
+                    variant="circular" 
+                    iconSize={20}
+                    itemClassName="w-full max-w-[400px] h-14 bg-white/50 backdrop-blur-md border border-black/5 rounded-2xl flex items-center p-3 hover:bg-white/80 transition-all shadow-sm"
+                />
               </div>
             )}
           </div>

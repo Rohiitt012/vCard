@@ -8,6 +8,7 @@ import {
   Gem, Sparkles, LayoutGrid, Music, Mic2, Star
 } from "lucide-react";
 import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { getSocialIcon } from "@/lib/social-icons";
@@ -152,22 +153,14 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
            </p>
 
            {/* 5. Sunburst Social Icons (Image 2 Style) */}
-           <div className="flex justify-center flex-wrap gap-6 animate-premium [animation-delay:600ms] relative">
-              {card.socialLinks?.filter(social => social.url).map((social, i) => (
-                <div key={i} className="relative group">
-                   {/* Radial Sunburst Ring (Visual match for Image 2) */}
-                   <div className="absolute inset-[-14px] opacity-0 group-hover:opacity-100 transition-all duration-500 sunburst-bg rounded-full animate-[spinSlow_20s_linear_infinite] scale-75 group-hover:scale-100" />
-                   
-                   <a 
-                     href={social.url}
-                     target="_blank"
-                     rel="noreferrer"
-                     className="relative w-14 h-14 rounded-full border-2 border-purple-50 flex items-center justify-center text-purple-600 bg-white hover:border-purple-600 hover:scale-110 transition-all cursor-pointer shadow-sm group-hover:shadow-[0_10px_30px_rgba(168,85,247,0.2)]"
-                   >
-                      <SocialCircleIcon platform={social.platform} url={social.url} size={22} />
-                   </a>
-                </div>
-              ))}
+           <div className="flex flex-col items-center animate-premium [animation-delay:600ms] relative w-full">
+              <VCardSocialLinks 
+                  card={card} 
+                  layout="vertical" 
+                  variant="circular" 
+                  iconSize={22}
+                  itemClassName="w-full max-w-[400px] h-16 bg-white border-2 border-purple-50 rounded-[28px] hover:border-purple-600 hover:scale-[1.02] transition-all shadow-sm flex items-center p-4"
+              />
               
             {/* Floating Decorative Elements */}
             <div className="absolute -left-12 top-0 animate-float opacity-40">
@@ -787,10 +780,4 @@ export function MinimalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
       </div>
     </div>
   );
-}
-
-// Icon Helper
-function SocialIcon({ platform }: { platform: string }) {
-  const Icon = getSocialIcon(platform);
-  return <Icon size={18} />;
 }

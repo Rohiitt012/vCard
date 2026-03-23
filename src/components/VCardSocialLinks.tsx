@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { getSocialIcon } from '@/lib/social-icons';
+import { getSocialIcon, getSocialColor } from '@/lib/social-icons';
 import type { VCardItem } from '@/context/VCardsContextTypes';
 
 interface Props {
@@ -9,56 +9,82 @@ interface Props {
   className?: string; // for the icon
   containerClassName?: string;
   itemClassName?: string;
+  variant?: 'outline' | 'circular';
+  layout?: 'horizontal' | 'vertical';
 }
 
 export function VCardSocialLinks({ 
   card, 
-  iconSize = 20, 
+  iconSize = 18, 
   className = "", 
-  containerClassName = "flex justify-center gap-4", 
-  itemClassName = "" 
+  containerClassName = "", 
+  itemClassName = "",
+  variant = 'circular',
+  layout = 'horizontal'
 }: Props) {
   const socialLinks = card.socialLinks || [];
   const activeLinks = socialLinks.filter(l => l.url);
   
-  // Also include website if it exists and we want it in the same bar
-  // Some templates handle website separately, some include it.
-  // The user said "social link icon", and website is often treated as one.
-  
   if (activeLinks.length === 0 && !card.website) return null;
 
-  return (
-    <div className={containerClassName}>
-      {/* Website Link */}
-      {card.website && (
+  const finalContainerClass = containerClassName || (layout === 'vertical' ? 'flex flex-col gap-3' : 'flex justify-center flex-wrap gap-4');
+
+  const renderIcon = (platform: string, url: string) => {
+    const Icon = getSocialIcon(platform);
+    const brandColor = getSocialColor(platform);
+    
+    if (variant === 'circular') {
+      return (
         <a
-          href={card.website}
+          href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className={itemClassName}
+          className={`group flex items-center transition-all duration-300 ${layout === 'vertical' ? 'w-full' : ''} ${itemClassName}`}
         >
-          {(() => {
-            const Icon = getSocialIcon('website');
-            return <Icon size={iconSize} className={className} />;
-          })()}
+          <div 
+            className="flex items-center justify-center rounded-full shadow-sm group-hover:scale-110 transition-transform duration-200"
+            style={{ 
+              backgroundColor: brandColor,
+              width: iconSize * 2,
+              height: iconSize * 2,
+              minWidth: iconSize * 2,
+              minHeight: iconSize * 2
+            }}
+          >
+            <Icon size={iconSize} className="text-white fill-current" />
+          </div>
+          {layout === 'vertical' && (
+            <span className="ml-3 text-sm font-medium capitalize text-gray-700 dark:text-gray-200">
+              {platform}
+            </span>
+          )}
         </a>
-      )}
+      );
+    }
+
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`hover:opacity-80 transition-opacity ${itemClassName}`}
+      >
+        <Icon size={iconSize} className={className} />
+      </a>
+    );
+  };
+
+  return (
+    <div className={finalContainerClass}>
+      {/* Website Link */}
+      {card.website && renderIcon('website', card.website)}
 
       {/* Social Links */}
-      {activeLinks.map((link, idx) => {
-        const Icon = getSocialIcon(link.platform);
-        return (
-          <a
-            key={idx}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={itemClassName}
-          >
-            <Icon size={iconSize} className={className} />
-          </a>
-        );
-      })}
+      {activeLinks.map((link, idx) => (
+        <React.Fragment key={idx}>
+          {renderIcon(link.platform, link.url)}
+        </React.Fragment>
+      ))}
     </div>
   );
 }

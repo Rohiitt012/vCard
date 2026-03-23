@@ -5,7 +5,7 @@ import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Calendar, ExternalLink, Facebook, Instagram, Linkedin, Twitter, MessageCircle, ChevronDown, LayoutGrid, User, Sparkles, Globe, Maximize, ArrowRight, Quote, Clock, Upload } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
-import { getSocialIcon } from "@/lib/social-icons";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -175,41 +175,14 @@ export function Corporate8VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
             </div>
 
             {/* SCALLOPED SOCIAL LINKS - Matching Image 14 */}
-            <div className="mt-16 flex flex-wrap justify-center gap-4">
-                 {card.website && (
-                    <a 
-                        href={card.website.startsWith('http') ? card.website : `https://${card.website}`}
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="relative w-14 h-14 flex items-center justify-center group transition-transform hover:scale-110 active:scale-95"
-                    >
-                        <div className="absolute inset-0 bg-[#C19A6B]/80 text-[#C19A6B] opacity-[0.85] group-hover:bg-[#2D241E] transition-colors" style={{ clipPath: 'polygon(50% 0%, 61% 5%, 72% 0%, 80% 9%, 91% 5%, 95% 15%, 100% 25%, 95% 35%, 100% 45%, 95% 55%, 100% 65%, 95% 75%, 100% 85%, 91% 95%, 80% 91%, 72% 100%, 61% 95%, 50% 100%, 39% 95%, 28% 100%, 20% 91%, 9% 95%, 5% 85%, 0% 75%, 5% 65%, 0% 55%, 5% 45%, 0% 35%, 5% 25%, 9% 15%, 20% 9%, 28% 0%, 39% 5%)' }}>
-                        </div>
-                        <div className="relative z-10 text-white">
-                            <Globe size={24} />
-                        </div>
-                    </a>
-                 )}
-                 {card.socialLinks?.filter((social: any) => social.url).map((social: any, idx: number) => {
-                    const Icon = getSocialIcon(social.platform);
-                    const icon = <Icon size={24} />;
-
-                    return (
-                        <a 
-                            key={idx} 
-                            href={social.url} 
-                            target="_blank" 
-                            rel="noreferrer" 
-                            className="relative w-14 h-14 flex items-center justify-center group transition-transform hover:scale-110 active:scale-95"
-                        >
-                            <div className="absolute inset-0 bg-[#C19A6B]/80 text-[#C19A6B] opacity-[0.85] group-hover:bg-[#2D241E] transition-colors" style={{ clipPath: 'polygon(50% 0%, 61% 5%, 72% 0%, 80% 9%, 91% 5%, 95% 15%, 100% 25%, 95% 35%, 100% 45%, 95% 55%, 100% 65%, 95% 75%, 100% 85%, 91% 95%, 80% 91%, 72% 100%, 61% 95%, 50% 100%, 39% 95%, 28% 100%, 20% 91%, 9% 95%, 5% 85%, 0% 75%, 5% 65%, 0% 55%, 5% 45%, 0% 35%, 5% 25%, 9% 15%, 20% 9%, 28% 0%, 39% 5%)' }}>
-                            </div>
-                            <div className="relative z-10 text-white">
-                                {icon}
-                            </div>
-                        </a>
-                    );
-                 })}
+            <div className="mt-16 flex flex-col items-center">
+                <VCardSocialLinks 
+                    card={card} 
+                    layout="vertical" 
+                    variant="circular" 
+                    iconSize={22}
+                    itemClassName="bg-[#F3E9DD] rounded-[24px] border border-[#D2B48C]/20 p-4 w-full max-w-[340px] shadow-md hover:border-[#C19A6B]/30"
+                />
             </div>
 
             <div className="mt-16 flex flex-col items-center gap-6">

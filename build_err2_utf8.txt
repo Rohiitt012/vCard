@@ -1,0 +1,117 @@
+﻿
+> free-nextjs-admin-dashboard@2.2.2 build
+> node scripts/ensure-env.js && next build
+
+node.exe : Loaded Prisma config from prisma.config.ts.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Loaded Prisma c...isma.config.ts.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+Prisma schema loaded from prisma\schema.prisma.
+ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö
+ÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
+Γöé  Update available 7.4.2 -> 7.5.0                        Γöé
+Γöé  Run the following to update                            Γöé
+Γöé    npm i --save-dev prisma@latest                       Γöé
+Γöé    npm i @prisma/client@latest                          Γöé
+ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö
+ÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
+
+Γ£ö Generated Prisma Client (v7.4.2) to .\node_modules\@prisma\client in 96ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline 
+data, please update: `npm i baseline-browser-mapping@latest -D`
+ ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\SK 003\package-lock.json as the 
+root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the 
+lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more 
+information.
+ Detected additional lockfiles: 
+   * C:\Users\SK 003\Downloads\free-nextjs-admin-dashboard-main 
+(1)\free-nextjs-admin-dashboard-main\package-lock.json
+
+   Γû▓ Next.js 16.0.10 (Turbopack)
+
+   Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline 
+data, please update: `npm i baseline-browser-mapping@latest -D`
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/MedicalVCardTemplate.tsx:854:1
+Parsing ecmascript source code failed
+[0m [90m 852 |[39m   [36mreturn[39m [33m<[39m[33mIcon[39m size[33m=[39m{[35m18[39m} 
+[33m/[39m[33m>[39m[33m;[39m
+ [90m 853 |[39m }
+[31m[1m>[22m[39m[90m 854 |[39m }
+ [90m     |[39m [31m[1m^[22m[39m
+ [90m 855 |[39m[0m
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/MedicalVCardTemplate.tsx [Client Component Browser]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Client Component Browser]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/MedicalVCardTemplate.tsx [Client Component SSR]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Client Component SSR]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Server Component]
+
+
+./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/SocialCircleIcon.tsx:34:4
+Parsing ecmascript source code failed
+[0m [90m 32 |[39m     )[33m;[39m
+ [90m 33 |[39m     [90m//[39m
+[31m[1m>[22m[39m[90m 34 |[39m   })()[33m;[39m
+ [90m    |[39m    [31m[1m^[22m[39m
+ [90m 35 |[39m
+ [90m 36 |[39m   [36mif[39m (url) {
+ [90m 37 |[39m     [36mreturn[39m ([0m
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/SocialCircleIcon.tsx [Client Component Browser]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/CreativeVCardTemplate.tsx [Client Component Browser]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Client Component Browser]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/SocialCircleIcon.tsx [Client Component SSR]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/CreativeVCardTemplate.tsx [Client Component SSR]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Client Component SSR]
+    ./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/app/[slug]/page.tsx [Server Component]
+
+
+    at <unknown> (./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/MedicalVCardTemplate.tsx:854:1)
+    at <unknown> (./Downloads/free-nextjs-admin-dashboard-main 
+(1)/free-nextjs-admin-dashboard-main/src/components/SocialCircleIcon.tsx:34:4)

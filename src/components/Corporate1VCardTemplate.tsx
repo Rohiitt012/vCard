@@ -1,5 +1,5 @@
 "use client";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
@@ -85,10 +85,14 @@ export function Corporate1VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
         {/* SOCIAL LINKS - CENTERED */}
         {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
-          <section className="px-8 pb-10 flex flex-wrap justify-center gap-6">
-              {card.socialLinks.filter(l => l.url).map((link, idx) => (
-                  <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={50} />
-              ))}
+          <section className="px-8 pb-10 flex flex-col items-center">
+              <VCardSocialLinks 
+                  card={card} 
+                  layout="vertical" 
+                  variant="circular" 
+                  iconSize={24}
+                  itemClassName="w-full max-w-[400px] h-16 bg-white border border-slate-100 rounded-2xl flex items-center p-4 hover:border-blue-500 hover:scale-[1.02] transition-all shadow-sm"
+              />
           </section>
         )}
 
