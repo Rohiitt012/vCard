@@ -1095,13 +1095,16 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                         const parts = name.split(' ');
                         const safeName = isOriginalName ? name : `I'm ${parts[0]} ${parts.slice(1).join(' ')}`;
                         return (
-                            <h1 className="text-[22px] md:text-[25px] font-black text-[#372b61] leading-tight tracking-tight">
-                                {safeName}
-                            </h1>
+                            <>
+                                <h1 className="text-[22px] md:text-[25px] font-black text-[#372b61] leading-tight tracking-tight">
+                                    {safeName}
+                                </h1>
+                                <p className="text-[14px] md:text-[15px] font-bold text-[#8174aa] pt-1">
+                                    a {role.replace(/^A\s|^a\s/i, '')}
+                                </p>
+                            </>
                         );
-                    <p className="text-[14px] md:text-[15px] font-bold text-[#8174aa] pt-1">
-                        a {role.replace(/^A\s|^a\s/i, '')}
-                    </p>
+                    })()}
                 </div>
             </div>
 
@@ -1125,6 +1128,7 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                         ))}
                     </div>
                 );
+            })()}
 
             {/* CONTACT CARDS GRID (Target Style: 2x2 white cards) */}
             {(email || phone || address || card.birthDate) && (

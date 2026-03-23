@@ -158,7 +158,6 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                                          />
                                     </div>
                                )}
-                              )}
 
                               <div className="text-center space-y-4">
                                    <h2 className="text-5xl font-serif font-black text-slate-900 tracking-tight">Contact</h2>
