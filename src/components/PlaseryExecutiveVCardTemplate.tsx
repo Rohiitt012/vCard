@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { generateQrDataUrl, downloadQrPng } from "@/lib/qr";
@@ -122,21 +122,14 @@ export function PlaseryExecutiveVCardTemplate({ card, slug, baseUrl, onDownloadV
 
         {/* Brand Rounded Social Bar */}
         <div className="px-6 sm:px-10 mb-10">
-           <div className="max-w-[400px] mx-auto bg-white rounded-[40px] py-6 px-4 shadow-[0_8px_40px_rgba(0,0,0,0.04)] border border-slate-50 flex items-center justify-evenly transition-transform hover:scale-[1.01]">
-              {socialLinks && socialLinks.length > 0 ? (
-                socialLinks.map((link: any, idx: number) => (
-                   <div key={idx} className="hover:scale-110 active:scale-95 transition-all">
-                      <SocialCircleIcon 
-                        platform={link.platform} 
-                        url={link.url} 
-                        size={42} 
-                      />
-                   </div>
-                ))
-              ) : (
-                 <p className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black">Digital Hub</p>
-              )}
-           </div>
+           <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={21}
+                itemClassName="hover:scale-110 active:scale-95 transition-all"
+                containerClassName="max-w-[400px] mx-auto bg-white rounded-[40px] py-6 px-4 shadow-[0_8px_40px_rgba(0,0,0,0.04)] border border-slate-50 flex items-center justify-evenly transition-transform hover:scale-[1.01]"
+            />
         </div>
 
         {/* Premium Contact Info Grid */}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
@@ -60,17 +60,34 @@ const DEFAULT_BUSINESS_HOURS = {
 
 export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
   const [qrCode, setQrCode] = useState<string>("");
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   useEffect(() => {
     const url = `${baseUrl}/${slug}`;
     generateQrDataUrl(url).then(setQrCode);
   }, [baseUrl, slug]);
   const name = card.title || "Corporate Profile";
-  const role = card.occupation || card.tagline || "Founder · CXO · Advisor";
+  const role = card.occupation || card.tagline || "Founder Â· CXO Â· Advisor";
   const email = card.email;
   const phone = card.phone;
   const address = card.address;
   const birthDate = card.birthDate;
+  const testimonials =
+    card.testimonials && card.testimonials.length > 0 ? card.testimonials : DEFAULT_TESTIMONIALS;
+  const activeTestimonial =
+    testimonials[(testimonialIndex + testimonials.length) % testimonials.length];
+
+  useEffect(() => {
+    setTestimonialIndex(0);
+  }, [card.id, testimonials.length]);
+
+  useEffect(() => {
+    if (testimonials.length <= 1) return;
+    const timer = setInterval(() => {
+      setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
 
   return (
     <div className="min-h-screen bg-[#F0F2F5] text-[#1A1E29] font-sans flex justify-center px-0 py-0 overflow-x-hidden">
@@ -124,11 +141,15 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                </div>
 
                {/* Social Icons row (Branded as per Image 1) */}
-                <div className="flex flex-wrap items-center gap-6 mb-12">
-                    {card.socialLinks?.filter(link => link.url).map((link, idx) => (
-                        <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={48} className="shadow-none ring-0" />
-                    ))}
-                </div>
+               <div className="mb-8">
+                  <VCardSocialLinks
+                     card={card}
+                     iconSize={16}
+                     layout="horizontal"
+                     variant="circular"
+                     containerClassName="flex justify-start flex-wrap gap-4"
+                  />
+               </div>
 
                {/* Contact List (Image 1 List style) */}
                <div className="space-y-10 mb-12">
@@ -199,29 +220,29 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
                  <div className="grid grid-cols-2 gap-6">
                     {(card.services && card.services.length > 0 ? card.services : DEFAULT_SERVICES).map((s, idx) => (
-                       <div key={idx} className="bg-white rounded-[40px] border border-slate-100 p-4 shadow-sm pb-8">
-                          <div className="relative w-full aspect-square rounded-[32px] overflow-hidden mb-6 bg-slate-50">
-                             {s.icon ? (
-                                <Image 
-                                   src={s.icon} 
-                                   alt={s.name} 
-                                   fill 
-                                   className="object-cover"
-                                />
-                             ) : (
-                                <div className="w-full h-full flex items-center justify-center text-slate-200">
-                                   <Sparkles className="w-12 h-12" />
-                                </div>
-                             )}
-                          </div>
-                          
-                          <div className="space-y-3 px-2">
-                             <h3 className="text-lg font-black text-[#323743] leading-tight">{s.name}</h3>
-                             <p className="text-[13px] font-medium text-slate-400 leading-relaxed line-clamp-6">
-                                {s.description}
-                             </p>
-                          </div>
-                       </div>
+                      <div key={idx} className="bg-white rounded-[40px] border border-slate-100 p-4 shadow-sm pb-8">
+                        <div className="relative w-full aspect-square rounded-[32px] overflow-hidden mb-6 bg-slate-50">
+                          {s.icon ? (
+                            <Image
+                              src={s.icon}
+                              alt={s.name}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-slate-200">
+                              <Sparkles className="w-12 h-12" />
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="space-y-3 px-2">
+                          <h3 className="text-lg font-black text-[#323743] leading-tight">{s.name}</h3>
+                          <p className="text-[13px] font-medium text-slate-400 leading-relaxed line-clamp-6">
+                            {s.description}
+                          </p>
+                        </div>
+                      </div>
                     ))}
                  </div>
               </div>
@@ -285,14 +306,14 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                     </div>
                     {/* Quote */}
                     <p className="text-[15px] font-medium text-slate-400 leading-relaxed italic">
-                       {(card.testimonials && card.testimonials[0]?.quote) || DEFAULT_TESTIMONIALS[0].quote}
+                       {activeTestimonial.quote}
                     </p>
                     {/* Author */}
                     <div className="pt-4 border-t border-slate-50">
                        <p className="text-[14px] font-black text-slate-400">
-                          <span className="text-slate-400">{(card.testimonials && card.testimonials[0]?.name) || DEFAULT_TESTIMONIALS[0].name}</span>
+                          <span className="text-slate-400">{activeTestimonial.name}</span>
                           <span className="mx-2 opacity-30">-</span>
-                          <span className="font-medium">{(card.testimonials && card.testimonials[0]?.role) || DEFAULT_TESTIMONIALS[0].role}</span>
+                          <span className="font-medium">{activeTestimonial.role}</span>
                        </p>
                     </div>
                  </div>
@@ -300,8 +321,8 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                  {/* Author Image on Right */}
                  <div className="w-28 h-28 rounded-full border-4 border-white shadow-xl overflow-hidden bg-slate-50 flex-shrink-0">
                     <Image 
-                       src={(card.testimonials && card.testimonials[0]?.image) || DEFAULT_TESTIMONIALS[0].image} 
-                       alt="Author" 
+                       src={activeTestimonial.image || DEFAULT_TESTIMONIALS[0].image} 
+                       alt={activeTestimonial.name || "Author"} 
                        width={112} 
                        height={112} 
                        className="w-full h-full object-cover"
@@ -311,24 +332,41 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
               {/* Floating Action Buttons Side Menu */}
               <div className="absolute top-1/2 -right-10 -translate-y-1/2 flex flex-col gap-4 z-50">
-                  <div className="w-16 h-16 rounded-full bg-white border border-[#FF5E5E]/20 shadow-lg flex items-center justify-center text-[#FF5E5E] cursor-pointer hover:bg-[#FF5E5E] hover:text-white transition-colors">
+                  <button
+                     type="button"
+                     onClick={() => setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                     className="w-16 h-16 rounded-full bg-white border border-[#FF5E5E]/20 shadow-lg flex items-center justify-center text-[#FF5E5E] cursor-pointer hover:bg-[#FF5E5E] hover:text-white transition-colors"
+                     aria-label="Previous testimonial"
+                  >
                      <MessageCircle className="w-8 h-8" />
-                  </div>
+                  </button>
                   <div className="w-20 h-20 rounded-full bg-[#FF5E5E] shadow-2xl flex items-center justify-center text-white cursor-pointer hover:scale-110 transition-transform">
                      <LayoutGrid className="w-10 h-10" />
                   </div>
-                  <div className="w-16 h-16 rounded-full bg-white border border-[#FF5E5E]/20 shadow-lg flex items-center justify-center text-[#FF5E5E] cursor-pointer hover:bg-[#FF5E5E] hover:text-white transition-colors">
+                  <button
+                     type="button"
+                     onClick={() => setTestimonialIndex((prev) => (prev + 1) % testimonials.length)}
+                     className="w-16 h-16 rounded-full bg-white border border-[#FF5E5E]/20 shadow-lg flex items-center justify-center text-[#FF5E5E] cursor-pointer hover:bg-[#FF5E5E] hover:text-white transition-colors"
+                     aria-label="Next testimonial"
+                  >
                      <Share2 className="w-8 h-8" />
-                  </div>
+                  </button>
               </div>
            </div>
 
            {/* Carousel Dots */}
            <div className="flex justify-center gap-2 mb-8">
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-100" />
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-50" />
+              {testimonials.map((_, idx) => (
+                <button
+                  key={`testimonial-dot-${idx}`}
+                  type="button"
+                  onClick={() => setTestimonialIndex(idx)}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                    idx === testimonialIndex ? "bg-[#FF5E5E]" : "bg-slate-200 hover:bg-slate-300"
+                  }`}
+                  aria-label={`Show testimonial ${idx + 1}`}
+                />
+              ))}
            </div>
         </section>
 
@@ -399,8 +437,8 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                        </p>
                     </div>
                  </div>
-              ))}
-           </div>
+               ))}
+          </div>
         </section>
 
         {/* CONTACT US SECTION (Image Style) */}

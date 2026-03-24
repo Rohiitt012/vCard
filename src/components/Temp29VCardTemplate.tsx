@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { getSocialIcon } from "@/lib/social-icons";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -149,24 +150,15 @@ export function Temp29VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
         {/* SOCIAL & CONTACT GRID - ULTRA PREMIUM */}
         <section className="px-12 pb-32 relative z-10">
-             {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
-                  <div className="flex justify-center gap-12 mb-16 opacity-30">
-                       {card.socialLinks.filter(l => l.url).map((social, idx) => {
-                            const Icon = getSocialIcon(social.platform);
-                            return (
-                                 <a 
-                                      key={idx} 
-                                      href={social.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="text-slate-900 hover:text-indigo-600 hover:scale-[1.4] transition-all cursor-pointer"
-                                 >
-                                      <Icon size={24} strokeWidth={1.5} />
-                                 </a>
-                            );
-                       })}
-                  </div>
-             )}
+              <div className="flex justify-center mb-16">
+                  <VCardSocialLinks 
+                      card={card} 
+                      layout="vertical" 
+                      variant="circular" 
+                      iconSize={20}
+                      itemClassName="bg-white border border-slate-100 rounded-2xl p-4 w-full max-w-[400px] hover:bg-slate-50 transition-all shadow-sm"
+                  />
+              </div>
 
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-2">
                   <MedicalContactGridItem icon={Mail} label="Official Email" value={card.email || "jackie@gmail.com"} />
@@ -653,24 +645,14 @@ export function Temp29VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                        <rect width="100%" height="100%" fill="url(#hex-footer)" />
                   </svg>
              </div>
-             {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
-                  <div className="relative z-10 flex justify-center gap-14">
-                       {card.socialLinks.filter(l => l.url).map((social, idx) => {
-                            const Icon = getSocialIcon(social.platform);
-                            return (
-                                 <a 
-                                      key={idx} 
-                                      href={social.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="text-white/20 hover:text-indigo-400 hover:scale-125 transition-all cursor-pointer"
-                                 >
-                                      <Icon size={30} strokeWidth={1.5} />
-                                 </a>
-                            );
-                       })}
-                  </div>
-             )}
+             <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={24}
+                itemClassName="hover:scale-125 transition-all text-white/20 hover:text-indigo-400"
+                containerClassName="relative z-10 flex justify-center gap-14"
+             />
              <div className="relative z-10 space-y-6">
                   <p className="text-[11px] font-black text-white/20 uppercase tracking-[1em]">SYSTEM NODES ACTIVE</p>
                   <p className="text-[12px] font-bold text-indigo-400 uppercase tracking-[0.4em] leading-none">{company} © 2026</p>

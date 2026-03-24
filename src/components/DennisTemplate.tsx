@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { SocialCircleIcon } from "./SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import {
   Monitor,
   Square,
@@ -250,13 +250,20 @@ export function DennisTemplate({ card, slug, baseUrl = "", onDownloadVCard }: Pr
               {heroDesc}
             </p>
 
-            {/* Social media icons row – moved above action button as requested */}
+            {/* Social media icons row â€“ moved above action button as requested */}
             {card?.socialLinks && card.socialLinks.length > 0 && (
               <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
                 {card.socialLinks
                   .filter((link) => link.url && link.url.trim() !== "")
                   .map((link) => (
-                    <SocialCircleIcon key={`${link.platform}-${link.url}`} platform={link.platform} url={link.url} size={36} />
+                <VCardSocialLinks 
+                  card={card} 
+                  layout="horizontal" 
+                  variant="circular" 
+                  iconSize={18}
+                  itemClassName="hover:scale-110 active:scale-95 transition-all"
+                  containerClassName="flex flex-wrap items-center justify-center gap-3"
+                />
                   ))}
               </div>
             )}
@@ -310,7 +317,7 @@ export function DennisTemplate({ card, slug, baseUrl = "", onDownloadVCard }: Pr
                 {card?.title || "Your Name"}
               </h3>
               <p className="mt-1 text-sm text-slate-600">
-                {card?.occupation || "Digital Marketer · Founder & CEO"}
+                {card?.occupation || "Digital Marketer Â· Founder & CEO"}
               </p>
               {card?.company && (
                 <p className="text-xs text-slate-500 mt-0.5">{card.company}</p>
@@ -597,7 +604,7 @@ export function DennisTemplate({ card, slug, baseUrl = "", onDownloadVCard }: Pr
         </div>
       </section>
 
-      {/* Blog – use vCard blogs from dashboard if present */}
+      {/* Blog â€“ use vCard blogs from dashboard if present */}
       <section className="relative md:py-24 py-16" id="blog">
         <div className="container w-full mx-auto px-4">
           <div className="grid grid-cols-1 pb-8 text-center">
@@ -646,7 +653,7 @@ export function DennisTemplate({ card, slug, baseUrl = "", onDownloadVCard }: Pr
         </div>
       </section>
 
-      {/* Products – use vCard products from dashboard, below Blogs */}
+      {/* Products â€“ use vCard products from dashboard, below Blogs */}
       {card?.products && card.products.length > 0 && (
         <section className="relative md:py-10 py-8 bg-gray-50">
           <div className="container w-full mx-auto px-4">
@@ -881,7 +888,7 @@ export function DennisTemplate({ card, slug, baseUrl = "", onDownloadVCard }: Pr
               {brandName}.
             </p>
             <p className="mt-1 text-xs">
-              © {new Date().getFullYear()} {brandName}. Design with{" "}
+              Â© {new Date().getFullYear()} {brandName}. Design with{" "}
               <Heart className="inline size-3 text-red-500 fill-red-500 align-text-bottom" /> by Shreethemes.
             </p>
           </div>

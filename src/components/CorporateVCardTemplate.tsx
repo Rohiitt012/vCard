@@ -1,11 +1,13 @@
 "use client";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles, ChevronDown, Globe, Instagram, Youtube, Linkedin, Maximize, ArrowRight, Wifi, Clock, ArrowLeft, Cpu } from "lucide-react";
 import { getSocialIcon } from "@/lib/social-icons";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
+import { downloadQrPng } from "@/lib/qr";
 
 type Props = {
   card: VCardItem;
@@ -141,6 +143,8 @@ const DEFAULT_BLOGS_LIST = [
 ];
 
 export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownloadVCard }: Props) {
+  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
   const name = card.title || "Corporate Profile";
   const role = card.occupation || card.tagline || "Founder · CXO · Advisor";
   const description =
@@ -182,24 +186,86 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
       ? card.galleries
       : DEFAULT_GALLERY;
 
-  const testimonials =
-    card.testimonials && card.testimonials.length > 0
-      ? card.testimonials
-      : DEFAULT_TESTIMONIALS;
+  const addedTestimonials =
+    card.testimonials && card.testimonials.length > 0 ? card.testimonials : [];
+  const testimonials = addedTestimonials.length > 0 ? addedTestimonials : [DEFAULT_TESTIMONIALS[0]];
+  const activeTestimonial =
+    testimonials[(activeTestimonialIndex + testimonials.length) % testimonials.length];
 
   const products =
     card.products && card.products.length > 0
       ? card.products
       : DEFAULT_PRODUCTS_LIST;
+  const activeProduct = products[(activeProductIndex + products.length) % products.length];
 
   const blogs =
     card.blogs && card.blogs.length > 0
       ? card.blogs
       : DEFAULT_BLOGS_LIST;
+  const addedBlogs = card.blogs && card.blogs.length > 0 ? card.blogs : [];
+  const addedEmbedTags = (card.embedTags || []).filter((e) => (e.value || "").trim().length > 0);
+  const getInstagramEmbedUrl = (raw: string): string | null => {
+    const text = raw || "";
+    const directUrlMatch = text.match(/https?:\/\/(www\.)?instagram\.com\/(p|reel)\/[A-Za-z0-9_-]+/i);
+    if (directUrlMatch?.[0]) return `${directUrlMatch[0].replace(/\/+$/, "")}/embed`;
+
+    const permalinkMatch = text.match(/data-instgrm-permalink=['"]([^'"]+)['"]/i);
+    if (permalinkMatch?.[1]) {
+      return `${permalinkMatch[1].replace(/\/+$/, "")}/embed`;
+    }
+    return null;
+  };
+  const getLinkedInEmbedUrl = (raw: string): string | null => {
+    const text = raw || "";
+    const iframeSrcMatch = text.match(/<iframe[^>]*src=['"]([^'"]+)['"]/i);
+    if (iframeSrcMatch?.[1] && /linkedin\.com\/embed\/feed\/update/i.test(iframeSrcMatch[1])) {
+      return iframeSrcMatch[1];
+    }
+    const directUrlMatch = text.match(/https?:\/\/(www\.)?linkedin\.com\/embed\/feed\/update\/[^\s"'<>]+/i);
+    if (directUrlMatch?.[0]) return directUrlMatch[0];
+    return null;
+  };
+  const addedInstagramEmbeds = addedEmbedTags
+    .map((embed) => ({ ...embed, embedUrl: getInstagramEmbedUrl(embed.value) }))
+    .filter((embed) => !!embed.embedUrl);
+  const addedLinkedInEmbeds = addedEmbedTags
+    .filter((embed) => (embed.section ?? "") === "linkedin")
+    .map((embed) => ({ ...embed, embedUrl: getLinkedInEmbedUrl(embed.value) }))
+    .filter((embed) => !!embed.embedUrl);
+  const hasAnyEmbeddedPosts =
+    addedInstagramEmbeds.length > 0 || addedLinkedInEmbeds.length > 0;
 
   const email = card.email;
   const phone = card.phone;
   const address = card.address;
+  const hasRenderableHtml = (html?: string) =>
+    !!html && html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim().length > 0;
+  const showTerms = hasRenderableHtml(card.termsHtml);
+  const showPrivacy = hasRenderableHtml(card.privacyHtml);
+  const businessHourRows = ((): { day: string; time: string }[] => {
+    const source = card.businessHours;
+    if (source) {
+      return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => {
+        const item = source[day];
+        if (!item || !item.enabled) return { day, time: "Closed" };
+        return { day, time: `${item.start} - ${item.end}` };
+      });
+    }
+    return [
+      { day: "Monday", time: "12:00 AM - 12:00 AM" },
+      { day: "Tuesday", time: "12:00 AM - 12:00 AM" },
+      { day: "Wednesday", time: "12:00 AM - 12:00 AM" },
+      { day: "Thursday", time: "12:00 AM - 12:00 AM" },
+      { day: "Friday", time: "12:00 AM - 12:00 AM" },
+      { day: "Saturday", time: "12:00 AM - 12:00 AM" },
+      { day: "Sunday", time: "Closed" },
+    ];
+  })();
+  const appointmentTypeLabel = card.appointmentType === "paid" ? "Paid" : "Free";
+  const appointmentRows =
+    (card.appointmentServices || []).filter(
+      (svc) => (svc.serviceName || "").trim().length > 0 || (svc.amount || "").trim().length > 0
+    );
 
   const websiteUrl =
     card.website && card.website.trim()
@@ -210,6 +276,32 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
 
   const primaryColor = card.templatePrimaryColor || "#3B82F6"; // Vibrant blue
   const accentColor = "#FF8933"; // Orange from social icons in image 1
+
+  useEffect(() => {
+    setActiveTestimonialIndex(0);
+  }, [card.id, testimonials.length]);
+
+  useEffect(() => {
+    if (hasAnyEmbeddedPosts) return;
+    if (addedTestimonials.length <= 1) return;
+    const timer = setInterval(() => {
+      setActiveTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [addedTestimonials.length, testimonials.length, hasAnyEmbeddedPosts]);
+
+  useEffect(() => {
+    setActiveProductIndex(0);
+  }, [card.id, products.length]);
+
+  useEffect(() => {
+    if (hasAnyEmbeddedPosts) return;
+    if (products.length <= 1) return;
+    const timer = setInterval(() => {
+      setActiveProductIndex((prev) => (prev + 1) % products.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [products.length, hasAnyEmbeddedPosts]);
 
   return (
     <div className="min-h-screen bg-[#F0F2F5] text-[#0F172A] font-sans flex justify-center px-0 py-0 overflow-x-hidden">
@@ -1108,27 +1200,16 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                 </div>
             </div>
 
-            {/* Social Icons row (Target Style: single white pill) */}
-            {(() => {
-                const availableSocials = card.socialLinks?.filter(l => l.url).map(l => ({ p: l.platform, url: l.url, Icon: getSocialIcon(l.platform) })) || [];
-                if (availableSocials.length === 0) return null;
-
-                return (
-                    <div className="w-full max-w-[460px] bg-white rounded-2xl py-4 flex items-center justify-center gap-7 mb-8 shadow-sm">
-                        {availableSocials.map((item) => (
-                            <a 
-                              key={item.p} 
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="cursor-pointer hover:scale-110 transition-transform hover:opacity-80"
-                            >
-                                <item.Icon size={40} />
-                            </a>
-                        ))}
-                    </div>
-                );
-            })()}
+            {/* Social Icons row (Target Style: circular brand icons) */}
+            <div className="mt-8 flex flex-col items-center w-full max-w-[460px] pb-6">
+                <VCardSocialLinks 
+                    card={card} 
+                    layout="vertical" 
+                    variant="circular" 
+                    iconSize={20}
+                    itemClassName="bg-white border border-slate-100 rounded-2xl p-4 w-full hover:bg-slate-50 transition-all shadow-sm"
+                />
+            </div>
 
             {/* CONTACT CARDS GRID (Target Style: 2x2 white cards) */}
             {(email || phone || address || card.birthDate) && (
@@ -1193,6 +1274,160 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                 </div>
             </section>
 
+            {/* PRODUCTS SECTION (Show added products after services) */}
+            <section className="px-6 pb-14 bg-gradient-to-b from-[#c2eaef] to-[#bfe7ec] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Products</h2>
+
+                <div className="w-full max-w-[420px] relative">
+                    <div className="border border-[#b4bbd4] rounded-3xl p-2.5 flex flex-col gap-2.5 bg-white/20 backdrop-blur-md shadow-[0_10px_20px_rgba(0,0,0,0.02)] transition-all">
+                        <div className="w-full aspect-[3/2] rounded-2xl overflow-hidden relative border border-white/50 shadow-sm bg-white/50">
+                            {activeProduct?.icon ? (
+                                <Image src={activeProduct.icon} alt={activeProduct.name || "Product"} fill className="object-cover" />
+                            ) : (
+                                <div className="w-full h-full flex flex-col items-center justify-center text-[#51437c] gap-2">
+                                    <Presentation className="w-8 h-8 opacity-50" />
+                                </div>
+                            )}
+                        </div>
+                        <div className="px-1 pb-1">
+                            <h3 className="text-[14px] sm:text-[16px] font-black text-[#4b3f7a] mb-1 leading-tight">
+                                {activeProduct?.name || "Product"}
+                            </h3>
+                            <p className="text-[11px] sm:text-[12px] font-medium text-[#686d8a] leading-relaxed line-clamp-3">
+                                {activeProduct?.description || "Product description"}
+                            </p>
+                            {(activeProduct?.price || activeProduct?.currency) && (
+                                <p className="mt-1.5 text-[14px] font-black text-[#372b61]">
+                                    {activeProduct?.currency || "INR"} {activeProduct?.price || ""}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+
+                    {products.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setActiveProductIndex((prev) => (prev - 1 + products.length) % products.length)}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 text-[#4b3f7a] shadow-md hover:bg-white"
+                          aria-label="Previous product"
+                        >
+                          ‹
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveProductIndex((prev) => (prev + 1) % products.length)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 text-[#4b3f7a] shadow-md hover:bg-white"
+                          aria-label="Next product"
+                        >
+                          ›
+                        </button>
+                      </>
+                    )}
+                </div>
+
+                {products.length > 1 && (
+                  <div className="flex justify-center gap-2.5 mt-6 mb-2">
+                    {products.map((_, idx) => (
+                      <button
+                        key={`product-dot-${idx}`}
+                        type="button"
+                        onClick={() => setActiveProductIndex(idx)}
+                        className={`w-2 h-2 rounded-full transition-colors ${
+                          idx === activeProductIndex ? "bg-[#8271aa]" : "bg-[#d6d8eb] hover:bg-[#bfc4df]"
+                        }`}
+                        aria-label={`Show product ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
+            </section>
+
+            {/* EMBED TAGS SECTION (Show added embed tags after products) */}
+            {addedInstagramEmbeds.length > 0 && (
+              <section className="px-6 pb-14 bg-gradient-to-b from-[#bfe7ec] to-[#c2eaef] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Insta Embedded Posts</h2>
+                <div className="w-full max-w-[460px] space-y-4">
+                  {addedInstagramEmbeds.map((embed) => (
+                    <div
+                      key={embed.id}
+                      className="rounded-2xl border border-[#d5dcec] bg-white p-4 shadow-sm"
+                    >
+                      <p className="mb-3 text-[12px] font-bold uppercase tracking-wide text-[#6f78a0]">
+                        {embed.type}
+                      </p>
+                      <iframe
+                        src={embed.embedUrl!}
+                        title={`${embed.type} embed`}
+                        className="w-full min-h-[520px] rounded-xl border border-gray-200"
+                        loading="lazy"
+                        allow="encrypted-media"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* LINKEDIN EMBED TAGS SECTION (Show after InstaEmbed) */}
+            {addedLinkedInEmbeds.length > 0 && (
+              <section className="px-6 pb-14 bg-gradient-to-b from-[#bfe7ec] to-[#c2eaef] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">LinkedIn Embedded Posts</h2>
+                <div className="w-full max-w-[460px] space-y-4">
+                  {addedLinkedInEmbeds.map((embed) => (
+                    <div
+                      key={embed.id}
+                      className="rounded-2xl border border-[#d5dcec] bg-white p-4 shadow-sm"
+                    >
+                      <p className="mb-3 text-[12px] font-bold uppercase tracking-wide text-[#6f78a0]">
+                        {embed.type}
+                      </p>
+                      <iframe
+                        src={embed.embedUrl!}
+                        title={`${embed.type} linkedin embed`}
+                        className="w-full min-h-[520px] rounded-xl border border-gray-200"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* BLOG SECTION (Show added blogs just below products) */}
+            {addedBlogs.length > 0 && (
+              <section className="px-6 pb-14 bg-gradient-to-b from-[#bfe7ec] to-[#c2eaef] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Blogs</h2>
+
+                <div className="w-full max-w-[460px] grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {addedBlogs.map((blog) => (
+                    <article
+                      key={blog.id}
+                      className="border border-[#b4bbd4] rounded-3xl p-2.5 flex flex-col gap-2.5 bg-white/20 backdrop-blur-md shadow-[0_10px_20px_rgba(0,0,0,0.02)]"
+                    >
+                      <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden relative border border-white/50 shadow-sm bg-white/50">
+                        {blog.icon ? (
+                          <Image src={blog.icon} alt={blog.title || "Blog"} fill className="object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-[#51437c]">
+                            <Presentation className="w-8 h-8 opacity-50" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="px-1 pb-1">
+                        <h3 className="text-[14px] sm:text-[15px] font-black text-[#4b3f7a] mb-1 leading-tight line-clamp-2">
+                          {blog.title || "Blog"}
+                        </h3>
+                        <p className="text-[11px] sm:text-[12px] font-medium text-[#686d8a] leading-relaxed line-clamp-4">
+                          {blog.description || ""}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+
             {/* TESTIMONIALS SECTION (Requested Design) */}
             <section className="px-6 py-10 bg-gradient-to-b from-[#c2eaef] to-[#edf3f7] relative z-10 flex flex-col items-center">
                 <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Testimonial</h2>
@@ -1200,22 +1435,22 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                 <div className="w-full max-w-[460px] relative mt-2">
                     <div className="bg-white rounded-[24px] p-6 sm:p-8 shadow-sm relative z-20">
                         <p className="text-[13px] sm:text-[14px] leading-relaxed font-bold text-[#867ba9] mb-8">
-                            &ldquo;{testimonials[0]?.quote || "Designing systems useful for the user is the most interesting element in the entire field of design, which makes it goosebumps with each completed project."}&rdquo;
+                            &ldquo;{activeTestimonial?.quote || "Designing systems useful for the user is the most interesting element in the entire field of design, which makes it goosebumps with each completed project."}&rdquo;
                         </p>
                         
                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-slate-100 bg-slate-50">
                                 <Image 
-                                    src={testimonials[0]?.image || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200"} 
-                                    alt={testimonials[0]?.name || "Scarlett Aria"} 
+                                    src={activeTestimonial?.image || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200"} 
+                                    alt={activeTestimonial?.name || "Scarlett Aria"} 
                                     width={48} 
                                     height={48} 
                                     className="object-cover w-full h-full" 
                                 />
                             </div>
                             <div className="flex-1">
-                                <h4 className="text-[15px] font-black text-[#372b61] tracking-tight mb-0.5">{testimonials[0]?.name || "Scarlett Aria"}</h4>
-                                <p className="text-[12px] font-medium text-[#aba6c9]">{testimonials[0]?.role || "CEO General Electric"}</p>
+                                <h4 className="text-[15px] font-black text-[#372b61] tracking-tight mb-0.5">{activeTestimonial?.name || "Scarlett Aria"}</h4>
+                                <p className="text-[12px] font-medium text-[#aba6c9]">{activeTestimonial?.role || "CEO General Electric"}</p>
                             </div>
                         </div>
                     </div>
@@ -1223,13 +1458,23 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                     {/* Floating Elements mimicking the screenshot layout */}
                     <div className="absolute right-0 bottom-0 pointer-events-none w-full h-full z-30">
                         {/* WhatsApp Button */}
-                        <div className="absolute right-14 sm:right-16 bottom-[82px] sm:bottom-[86px] w-[42px] h-[42px] bg-white rounded-full border-[1.5px] border-[#eff5fc] flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.06)] pointer-events-auto hover:-translate-y-1 transition-transform">
+                        <button
+                            type="button"
+                            onClick={() => setActiveTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                            className="absolute right-14 sm:right-16 bottom-[82px] sm:bottom-[86px] w-[42px] h-[42px] bg-white rounded-full border-[1.5px] border-[#eff5fc] flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.06)] pointer-events-auto hover:-translate-y-1 transition-transform"
+                            aria-label="Previous testimonial"
+                        >
                             <MessageCircle className="w-5 h-5 text-[#8dbce7]" strokeWidth={2.5} />
-                        </div>
+                        </button>
                         {/* Share Button */}
-                        <div className="absolute right-16 -bottom-5 w-[42px] h-[42px] bg-white rounded-full border-[1.5px] border-[#eff5fc] flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.06)] pointer-events-auto hover:-translate-y-1 transition-transform">
+                        <button
+                            type="button"
+                            onClick={() => setActiveTestimonialIndex((prev) => (prev + 1) % testimonials.length)}
+                            className="absolute right-16 -bottom-5 w-[42px] h-[42px] bg-white rounded-full border-[1.5px] border-[#eff5fc] flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.06)] pointer-events-auto hover:-translate-y-1 transition-transform"
+                            aria-label="Next testimonial"
+                        >
                             <Share2 className="w-5 h-5 text-[#8dbce7]" strokeWidth={2.5} />
-                        </div>
+                        </button>
                         {/* Main Grid Button */}
                         <div className="absolute right-1 lg:-right-4 bottom-5 w-14 h-14 bg-gradient-to-br from-[#9ac7f4] to-[#8dbce7] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/20 pointer-events-auto hover:scale-105 transition-transform cursor-pointer">
                             <LayoutGrid className="w-[22px] h-[22px] text-white" strokeWidth={2.5} />
@@ -1243,9 +1488,17 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
 
                 {/* Pagination Dots */}
                 <div className="flex justify-center gap-2.5 mt-16 mb-6">
-                    <div className="w-2 h-2 rounded-full bg-[#8271aa]"></div>
-                    <div className="w-2 h-2 rounded-full bg-[#d6d8eb]"></div>
-                    <div className="w-2 h-2 rounded-full bg-[#d6d8eb]"></div>
+                    {(addedTestimonials.length > 0 ? addedTestimonials : [DEFAULT_TESTIMONIALS[0]]).map((_, idx) => (
+                      <button
+                        key={`testimonial-dot-${idx}`}
+                        type="button"
+                        onClick={() => setActiveTestimonialIndex(idx)}
+                        className={`w-2 h-2 rounded-full transition-colors ${
+                          idx === activeTestimonialIndex ? "bg-[#8271aa]" : "bg-[#d6d8eb] hover:bg-[#bfc4df]"
+                        }`}
+                        aria-label={`Show testimonial ${idx + 1}`}
+                      />
+                    ))}
                 </div>
             </section>
 
@@ -1283,7 +1536,19 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                         </div>
                         
                         {/* Dark Purple Button */}
-                        <button onClick={onDownloadVCard} className="bg-[#3b326b] text-white text-[11px] sm:text-[12px] font-bold tracking-wide px-5 py-3 rounded-lg hover:bg-[#2b254a] transition-colors shadow-md">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (typeof window === "undefined") return;
+                            downloadQrPng(`${window.location.origin}/${slug}`, "vcard-qr.png", {
+                              fgColor: card.qrCodeColor || "#000000",
+                              bgColor: card.qrBgColor || "#ffffff",
+                              dotStyle: card.qrDotStyle || "square",
+                              eyeStyle: card.qrEyeStyle || "square",
+                            });
+                          }}
+                          className="bg-[#3b326b] text-white text-[11px] sm:text-[12px] font-bold tracking-wide px-5 py-3 rounded-lg hover:bg-[#2b254a] transition-colors shadow-md"
+                        >
                             Download My QR Code
                         </button>
                     </div>
@@ -1293,17 +1558,33 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
             {/* BUSINESS HOURS SECTION (Requested Design) */}
             <section className="px-6 py-16 bg-gradient-to-br from-[#dfdcf2] to-[#d1eaf0] relative z-10 flex flex-col items-center">
                 <h2 className="text-[28px] font-black text-[#372b61] mb-10 tracking-tight">Business Hours</h2>
-                
+
+                {appointmentRows.length > 0 && (
+                  <div className="w-full max-w-[460px] mb-6 rounded-2xl border border-[#d9d3ef] bg-white p-4 shadow-sm">
+                    <div className="mb-2 flex items-center justify-between">
+                      <h3 className="text-[16px] font-black text-[#372b61]">Appointment Services</h3>
+                      <span className="rounded-full bg-[#ece8fb] px-3 py-1 text-[11px] font-bold text-[#4b3f7a]">
+                        {appointmentTypeLabel}
+                      </span>
+                    </div>
+                    <div className="space-y-2">
+                      {appointmentRows.map((svc) => (
+                        <div
+                          key={svc.id}
+                          className="flex items-center justify-between rounded-xl border border-[#ece8fb] bg-[#faf9ff] px-3 py-2"
+                        >
+                          <span className="text-[13px] font-semibold text-[#4b3f7a]">{svc.serviceName || "Service"}</span>
+                          <span className="text-[12px] font-black text-[#372b61]">
+                            {card.appointmentType === "paid" ? `INR ${svc.amount || "0"}` : "Free"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="w-full max-w-[460px] flex flex-col gap-4">
-                    {((card as any).businessHours && Array.isArray((card as any).businessHours) && (card as any).businessHours.length > 0 ? (card as any).businessHours : [
-                        { day: 'Monday', time: '12:00 AM - 12:00 AM' },
-                        { day: 'Tuesday', time: '12:00 AM - 12:00 AM' },
-                        { day: 'Wednesday', time: '12:00 AM - 12:00 AM' },
-                        { day: 'Thursday', time: '12:00 AM - 12:00 AM' },
-                        { day: 'Friday', time: '12:00 AM - 12:00 AM' },
-                        { day: 'Saturday', time: '12:00 AM - 12:00 AM' },
-                        { day: 'Sunday', time: 'Closed' },
-                    ]).map((item: any, idx: number) => (
+                    {businessHourRows.map((item, idx) => (
                         <div key={idx} className="bg-white rounded-2xl p-3 flex flex-row items-center gap-5 shadow-sm hover:shadow-md transition-shadow">
                             <div className="w-14 h-14 shrink-0 bg-[#352a5f] rounded-xl flex items-center justify-center text-white shadow-inner">
                                 <Calendar className="w-6 h-6 text-[#efebf8]" strokeWidth={2.5} />
@@ -1313,7 +1594,7 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                                     {item.day}
                                 </span>
                                 <span className="text-[14px] md:text-[15px] font-black text-[#372b61]">
-                                    {item.time || item.value || "12:00 AM - 12:00 AM"}
+                                    {item.time}
                                 </span>
                             </div>
                         </div>
@@ -1380,6 +1661,31 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                     </div>
                 </div>
             </section>
+
+            {(showTerms || showPrivacy) && (
+              <section className="px-5 py-10 bg-gradient-to-b from-[#dfdcf2] to-[#dfdcf2] relative z-10 flex flex-col items-center">
+                <div className="w-full max-w-[460px] space-y-6">
+                  {showTerms && (
+                    <div className="bg-white rounded-2xl p-6 md:p-7 border border-[#e7e3f7] shadow-[0_10px_20px_rgba(0,0,0,0.03)]">
+                      <h3 className="text-[22px] font-black text-[#372b61] mb-3 tracking-tight">Terms &amp; Conditions</h3>
+                      <div
+                        className="prose prose-sm max-w-none text-[#45396f]"
+                        dangerouslySetInnerHTML={{ __html: card.termsHtml ?? "" }}
+                      />
+                    </div>
+                  )}
+                  {showPrivacy && (
+                    <div className="bg-white rounded-2xl p-6 md:p-7 border border-[#e7e3f7] shadow-[0_10px_20px_rgba(0,0,0,0.03)]">
+                      <h3 className="text-[22px] font-black text-[#372b61] mb-3 tracking-tight">Privacy Policy</h3>
+                      <div
+                        className="prose prose-sm max-w-none text-[#45396f]"
+                        dangerouslySetInnerHTML={{ __html: card.privacyHtml ?? "" }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
 
             {/* CREATE YOUR VCARD SECTION (Requested Design) */}
             <section className="px-6 py-12 pb-20 bg-gradient-to-b from-[#dfdcf2] to-[#c2eaef] relative z-10 flex flex-col items-center">

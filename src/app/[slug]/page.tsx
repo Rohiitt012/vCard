@@ -214,6 +214,8 @@ export default function PublicVCardPage() {
     generateQrDataUrl(url, {
       fgColor: card.qrCodeColor || "#000000",
       bgColor: card.qrBgColor || "#ffffff",
+      dotStyle: card.qrDotStyle || "square",
+      eyeStyle: card.qrEyeStyle || "square",
     }).then(setQrDataUrl);
   }, [card]);
 
@@ -341,10 +343,44 @@ export default function PublicVCardPage() {
   const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
   const termsHtml = card.termsHtml;
   const privacyHtml = card.privacyHtml;
+  const hasRenderableHtml = (html?: string) =>
+    !!html && html.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim().length > 0;
+  const showTerms = hasRenderableHtml(termsHtml);
+  const showPrivacy = hasRenderableHtml(privacyHtml);
+  const shouldUseInlineLegalPlacement =
+    /corporate|cooporate/i.test(`${card.templateName || ""} ${card.title || ""}`) ||
+    [7, 13, 14, 15, 16, 17, 18, 19, 20, 21].includes(card.selectedTemplateId || 0);
+
+  const VCardLegalSections = () =>
+    showTerms || showPrivacy ? (
+      <div className="w-full max-w-[540px] mt-4 rounded-3xl border border-gray-200 bg-white px-4 py-5 sm:px-5 sm:py-6 shadow-sm">
+        {showTerms && (
+          <section className="rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5">
+            <h2 className="text-sm font-semibold text-gray-900 mb-3">Terms &amp; Conditions</h2>
+            <div
+              className="prose prose-sm max-w-none text-gray-700"
+              dangerouslySetInnerHTML={{ __html: termsHtml ?? "" }}
+            />
+          </section>
+        )}
+        {showPrivacy && (
+          <section className={`${showTerms ? "mt-4" : ""} rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5`}>
+            <h2 className="text-sm font-semibold text-gray-900 mb-3">Privacy Policy</h2>
+            <div
+              className="prose prose-sm max-w-none text-gray-700"
+              dangerouslySetInnerHTML={{ __html: privacyHtml ?? "" }}
+            />
+          </section>
+        )}
+      </div>
+    ) : null;
 
   const VCardWidthShell = ({ children }: { children: React.ReactNode }) => (
     <div className="min-h-screen bg-gray-100 flex justify-center px-0 sm:px-4 py-0 sm:py-8 no-scrollbar overflow-x-hidden">
-      <div className="w-full max-w-[540px] no-scrollbar">{children}</div>
+      <div className="w-full max-w-[540px] no-scrollbar">
+        {children}
+        {!shouldUseInlineLegalPlacement && <VCardLegalSections />}
+      </div>
     </div>
   );
 
@@ -1550,6 +1586,8 @@ export default function PublicVCardPage() {
                       {
                         fgColor: card.qrCodeColor || "#000000",
                         bgColor: card.qrBgColor || "#ffffff",
+                        dotStyle: card.qrDotStyle || "square",
+                        eyeStyle: card.qrEyeStyle || "square",
                       }
                     );
                   }}

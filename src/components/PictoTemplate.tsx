@@ -1,6 +1,6 @@
 "use client";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import React from "react";
 import Image from "next/image";
 import { Mail, MapPin, Phone, ArrowRight, Download, FileText } from "lucide-react";
@@ -335,16 +335,14 @@ export function PictoTemplate({
                 </div>
               </div>
             </div>
-            {card?.socialLinks &&
-              card.socialLinks.filter((l) => l.url?.trim()).length > 0 && (
-                <div className="mt-6 pt-6 border-t border-gray-100 flex flex-wrap justify-center gap-3">
-                  {card.socialLinks
-                    .filter((l) => l.url?.trim())
-                    .map((link) => (
-                      <SocialCircleIcon key={link.platform} platform={link.platform} url={link.url} size={40} />
-                    ))}
-                </div>
-              )}
+            <VCardSocialLinks 
+                card={card as any} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={18}
+                itemClassName="w-10 h-10 rounded-full bg-[#f0f1f3] flex items-center justify-center hover:bg-[#9929fb] hover:text-white transition-all shadow-sm"
+                containerClassName="mt-6 pt-6 border-t border-gray-100 flex flex-wrap justify-center gap-3"
+            />
           </div>
         </section>
 
@@ -722,16 +720,14 @@ export function PictoTemplate({
                 </a>
               </div>
             )}
-            {card?.socialLinks &&
-              card.socialLinks.filter((l) => l.url?.trim()).length > 0 && (
-                <div className="mt-6 pt-6 border-t border-gray-100 flex flex-wrap justify-center gap-3">
-                  {card.socialLinks
-                    .filter((l) => l.url?.trim())
-                    .map((link) => (
-                      <SocialCircleIcon key={link.platform} platform={link.platform} url={link.url} size={40} />
-                    ))}
-                </div>
-              )}
+            <VCardSocialLinks 
+                card={card as any} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={18}
+                itemClassName="w-10 h-10 rounded-full bg-[#f0f1f3] flex items-center justify-center hover:bg-[#9929fb] hover:text-white transition-all shadow-sm"
+                containerClassName="mt-6 pt-6 border-t border-gray-100 flex flex-wrap justify-center gap-3"
+            />
           </div>
         </section>
       

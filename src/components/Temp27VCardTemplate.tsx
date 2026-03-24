@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { getSocialIcon } from "@/lib/social-icons";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
      card: VCardItem;
@@ -100,19 +101,14 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                          </div>
 
                          {/* Social Media Icons (Tan rounded squares) */}
-                         <div className="flex justify-center gap-4 mb-20 flex-wrap relative z-10">
-                              {[
-                                   ...(card.website ? [{ Icon: Globe, url: card.website }] : []),
-                                   ...(card.socialLinks?.filter(l => l.url).map(l => ({
-                                        Icon: getSocialIcon(l.platform),
-                                        url: l.url
-                                   })) || [])
-                              ].map((social, idx) => (
-                                   <a key={idx} href={social.url} target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-[#A3A375] rounded-[24px] flex items-center justify-center text-white hover:bg-[#0F172A] hover:scale-110 transition-all duration-500 shadow-xl ring-4 ring-white">
-                                        <social.Icon size={26} />
-                                   </a>
-                              ))}
-                         </div>
+                         <VCardSocialLinks 
+                            card={card} 
+                            layout="horizontal" 
+                            variant="circular" 
+                            iconSize={24}
+                            itemClassName="bg-[#A3A375] rounded-[24px] shadow-xl ring-4 ring-white hover:bg-[#0F172A] hover:scale-110 transition-all duration-500"
+                            containerClassName="flex justify-center gap-4 mb-20 flex-wrap relative z-10"
+                         />
 
                          {/* Decorative Plane Icon (Floating Right) */}
                          <div className="absolute right-[-20px] top-1/2 -translate-y-1/2 opacity-10 pointer-events-none transform rotate-12 scale-150">
@@ -484,16 +480,14 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                     {/* FOOTER INTERFACE */}
                     <footer className="py-24 text-center space-y-16 bg-[#0F172A] text-white relative overflow-hidden">
                          <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
-                         <div className="flex justify-center gap-12 relative z-10">
-                              {(card.socialLinks?.filter(l => l.url).map((l, idx) => {
-                                   const Icon = getSocialIcon(l.platform);
-                                   return (
-                                        <a key={idx} href={l.url} target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-[#A3A375] hover:scale-125 transition-all duration-500">
-                                             <Icon size={28} strokeWidth={1.2} />
-                                        </a>
-                                   );
-                              }) || [])}
-                         </div>
+                         <VCardSocialLinks 
+                            card={card} 
+                            layout="horizontal" 
+                            variant="circular" 
+                            iconSize={24}
+                            itemClassName="text-white/30 hover:text-[#A3A375] hover:scale-125 transition-all duration-500"
+                            containerClassName="flex justify-center gap-12 relative z-10"
+                         />
                          <div className="pt-12 border-t border-white/5 relative z-10 px-10">
                               <p className="text-[11px] font-black uppercase tracking-[0.8em] text-[#A3A375]/60 mb-3">Transmission Origin</p>
                               <p className="text-[14px] font-serif italic text-white/90 mb-6">{card.title || "Desi Miles"} International</p>

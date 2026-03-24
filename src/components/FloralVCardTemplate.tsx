@@ -1,8 +1,8 @@
 "use client";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { SocialCircleIcon } from "./SocialCircleIcon";
 
 type Props = {
   card: VCardItem;
@@ -11,10 +11,10 @@ type Props = {
   onDownloadVCard?: () => void;
 };
 
-// Dennis Tailwind CSS Personal Portfolio – full template with Dennis classes (container, btn, navbar, etc.)
+// Dennis Tailwind CSS Personal Portfolio â€“ full template with Dennis classes (container, btn, navbar, etc.)
 export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
   const name = card.title || "Dennis Scott";
-  const role = card.occupation || card.tagline || "Website Designer · Web Developer";
+  const role = card.occupation || card.tagline || "Website Designer Â· Web Developer";
   const description =
     card.description ||
     "Obviously I'm a Web Designer. Web Developer with over 7 years of experience. Experienced with all stages of the development.";
@@ -56,7 +56,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
   return (
     <div className="dennis-floral-template w-full max-w-[540px] mx-auto sm:my-8 overflow-hidden min-h-screen text-base text-slate-900 bg-[#FCF8F5] sm:rounded-[44px] sm:shadow-[0_40px_100px_rgba(43,27,20,0.15)] relative">
 
-      {/* Hero – The distinctive Makeup/Flower card from Image 1 & 2 */}
+      {/* Hero â€“ The distinctive Makeup/Flower card from Image 1 & 2 */}
       <section className="relative overflow-hidden" id="home">
         {/* Cover Image background */}
         <div className="relative h-[250px] w-full overflow-hidden">
@@ -159,7 +159,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
       {/* Existing Sections Follow (About, Services, etc.) */}
 
 
-      {/* About – Dennis: .container, grid, rounded-full, .      {/* About Section – Elegant & Premium */}
+      {/* About â€“ Dennis: .container, grid, rounded-full, .      {/* About Section â€“ Elegant & Premium */}
       <section className="relative px-6 py-20 bg-white" id="about">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row items-center gap-12">
@@ -205,7 +205,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         </div>
       </section>
 
-      {/* Services Section – Redesigned Premium Boutique Grid */}
+      {/* Services Section â€“ Redesigned Premium Boutique Grid */}
       <section className="relative px-6 py-24 bg-[#FCF8F5]" id="service">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
@@ -243,7 +243,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   {s.icon ? (
                     <img src={s.icon} alt={s.name} className="h-full w-full object-cover rounded-xl" />
                   ) : (
-                    "✦"
+                    "âœ¦"
                   )}
                 </div>
 
@@ -284,7 +284,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
       </section>
 
 
-      {/* Projects Section – Portfolio Showcase */}
+      {/* Projects Section â€“ Portfolio Showcase */}
       <section className="relative px-6 py-24 bg-[#FCF8F5]" id="project">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
@@ -317,7 +317,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         </div>
       </section>
 
-      {/* Blogs Section – Redesigned 2x2 Grid */}
+      {/* Blogs Section â€“ Redesigned 2x2 Grid */}
       <section className="relative px-6 py-24 bg-[#FCF8F5]" id="blog">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
@@ -364,7 +364,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </p>
                   <div className="flex items-center gap-2 text-[#12B488] font-bold text-sm group/btn cursor-pointer">
                     Read Full Article 
-                    <span className="transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                    <span className="transition-transform duration-300 group-hover/btn:translate-x-1">â†’</span>
                   </div>
                 </div>
               </article>
@@ -383,7 +383,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
               
               <div className="space-y-10">
                 <div className="flex items-start gap-6">
-                  <div className="w-14 h-14 rounded-2xl bg-[#FCF8F5] text-[#12B488] flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">📞</div>
+                  <div className="w-14 h-14 rounded-2xl bg-[#FCF8F5] text-[#12B488] flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">ðŸ“ž</div>
                   <div>
                     <h5 className="text-[12px] font-bold text-slate-400 uppercase tracking-widest mb-1">Inquiries</h5>
                     <a href={`tel:${phone.replace(/\s/g, "")}`} className="text-xl font-bold text-slate-800 hover:text-[#12B488] transition-colors">{phone}</a>
@@ -391,7 +391,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                 </div>
                 
                 <div className="flex items-start gap-6">
-                  <div className="w-14 h-14 rounded-2xl bg-[#FCF8F5] text-[#12B488] flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">✉</div>
+                  <div className="w-14 h-14 rounded-2xl bg-[#FCF8F5] text-[#12B488] flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">âœ‰</div>
                   <div>
                     <h5 className="text-[12px] font-bold text-slate-400 uppercase tracking-widest mb-1">Direct Email</h5>
                     <a href={`mailto:${email}`} className="text-xl font-bold text-slate-800 hover:text-[#12B488] transition-colors">{email}</a>
@@ -399,7 +399,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                 </div>
                 
                 <div className="flex items-start gap-6">
-                  <div className="w-14 h-14 rounded-2xl bg-[#FCF8F5] text-[#12B488] flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">📍</div>
+                  <div className="w-14 h-14 rounded-2xl bg-[#FCF8F5] text-[#12B488] flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">ðŸ“</div>
                   <div>
                     <h5 className="text-[12px] font-bold text-slate-400 uppercase tracking-widest mb-1">Studio</h5>
                     <p className="text-xl font-bold text-slate-800 leading-relaxed">{address}</p>
@@ -437,19 +437,14 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
         <div className="container relative">
           {/* Social icons row (brown) */}
-          {card.socialLinks && card.socialLinks.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
-              {card.socialLinks.slice(0, 6).map((link) => (
-                <SocialCircleIcon
-                  key={link.platform}
-                  platform={link.platform}
-                  url={link.url}
-                  size={44}
-                  bgColor="#6B3F2A"
-                />
-              ))}
-            </div>
-          )}
+          <VCardSocialLinks 
+              card={card} 
+              layout="horizontal" 
+              variant="circular" 
+              iconSize={20}
+              itemClassName="w-11 h-11 rounded-full bg-[#6B3F2A] flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform"
+              containerClassName="flex flex-wrap items-center justify-center gap-4 mb-8"
+          />
 
           {/* Gallery heading */}
           <div className="text-center mb-7">
@@ -486,7 +481,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                     className="absolute top-3 right-3 h-9 w-9 rounded-full bg-[#6B3F2A] text-white shadow-md flex items-center justify-center"
                     aria-label="Open image"
                   >
-                    ⤢
+                    â¤¢
                   </button>
                 </div>
               </div>
@@ -502,7 +497,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         </div>
       </section>
 
-      {/* Products – makeup style cards (requested) */}
+      {/* Products â€“ makeup style cards (requested) */}
       <section className="relative py-14 bg-white overflow-hidden" id="products">
         {/* subtle decor */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.08]">
@@ -596,7 +591,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
           {/* Service cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-14">
             {(card.services && card.services.length > 0
-              ? card.services.slice(0, 2)
+              ? card.services
               : [
                   {
                     name: "Makeup",
@@ -619,7 +614,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                 <div className="absolute -top-6 left-1/2 -translate-x-1/2">
                   <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center">
                     <div className="h-10 w-10 rounded-full border-2 border-[#12B488] flex items-center justify-center text-[#12B488] text-lg">
-                      ✦
+                      âœ¦
                     </div>
                   </div>
                 </div>
@@ -654,7 +649,7 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                 className="w-full h-12 rounded-[12px] border border-[#E7D7CE] bg-white px-4 pr-12 outline-none"
               />
               <div className="absolute top-1/2 -translate-y-1/2 right-4 h-8 w-8 rounded-[10px] border border-[#E7D7CE] bg-white flex items-center justify-center text-[#6B3F2A]">
-                📅
+                ðŸ“…
               </div>
             </div>
 
@@ -694,21 +689,21 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
               className="h-11 w-11 rounded-full border border-[#E7D7CE] bg-white text-[#6B3F2A] shadow-sm flex items-center justify-center"
               aria-label="WhatsApp"
             >
-              ☎
+              â˜Ž
             </button>
             <button
               type="button"
               className="h-11 w-11 rounded-full border border-[#E7D7CE] bg-white text-[#6B3F2A] shadow-sm flex items-center justify-center"
               aria-label="Share"
             >
-              ⤴
+              â¤´
             </button>
             <button
               type="button"
               className="h-14 w-14 rounded-full bg-[#12B488] text-white shadow-2xl flex items-center justify-center"
               aria-label="Menu"
             >
-              ▦
+              â–¦
             </button>
           </div>
         </div>
@@ -748,14 +743,14 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
               className="absolute left-[-34px] top-1/2 -translate-y-1/2 text-[#12B488] text-2xl font-semibold hidden sm:block"
               aria-label="Previous"
             >
-              ←
+              â†
             </button>
             <button
               type="button"
               className="absolute right-[-34px] top-1/2 -translate-y-1/2 text-[#12B488] text-2xl font-semibold hidden sm:block"
               aria-label="Next"
             >
-              →
+              â†’
             </button>
 
             <article className="rounded-[22px] border border-[#E7D7CE] bg-white overflow-hidden shadow-[0_18px_55px_rgba(15,23,42,0.10)]">
@@ -959,14 +954,22 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
             <a href="#home" className="text-2xl font-bold text-white tracking-widest mb-4 block">
               {name.toUpperCase()}
             </a>
-            <p className="text-slate-400 font-medium">© {new Date().getFullYear()} Luxury Artistry & Design</p>
+            <p className="text-slate-400 font-medium">Â© {new Date().getFullYear()} Luxury Artistry & Design</p>
           </div>
           
           <div className="flex flex-col items-center md:items-end gap-6 text-center md:text-right">
              <div className="flex gap-4">
-                {card.socialLinks?.slice(0, 4).map((link) => (
-                  <SocialCircleIcon key={link.platform} platform={link.platform} url={link.url} size={40} />
-                ))}
+                <VCardSocialLinks
+                  card={{
+                    socialLinks: card.socialLinks?.slice(0, 4),
+                    website: card.website,
+                  }}
+                  layout="horizontal"
+                  variant="circular"
+                  iconSize={22}
+                  itemClassName="hover:scale-110 transition-transform"
+                  containerClassName="flex gap-4"
+                />
              </div>
              <p className="text-slate-500 text-[13px]">
                Created with passion by <span className="text-[#12B488] font-bold">VCard Luxury</span>
@@ -976,13 +979,13 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         <VCardDynamicSections card={card} />
       </footer>
 
-      {/* Back to top – Dennis .back-to-top */}
+      {/* Back to top â€“ Dennis .back-to-top */}
       <a
         href="#home"
         className="back-to-top fixed text-lg rounded-full z-10 bottom-5 right-5 size-9 text-center text-white leading-9 items-center justify-center hidden md:flex"
         style={{ backgroundColor: primaryColor }}
       >
-        ↑
+        â†‘
       </a>
     </div>
   );

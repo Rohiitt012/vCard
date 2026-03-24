@@ -1,5 +1,5 @@
 "use client";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
@@ -63,13 +63,14 @@ export function DennisPortfolioVCardTemplate({ card, slug, baseUrl, onDownloadVC
                 </span>
               </h1>
         
-          {card.socialLinks && card.socialLinks.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2">
-              {card.socialLinks.map((link, idx) => (
-                <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
-              ))}
-            </div>
-          )}
+          <VCardSocialLinks 
+              card={card} 
+              layout="horizontal" 
+              variant="circular" 
+              iconSize={20}
+              itemClassName="hover:scale-110 active:scale-95 transition-all"
+              containerClassName="flex flex-wrap items-center justify-center gap-3 mt-8 no-print w-full relative z-10 py-2"
+          />
               <p className="text-sm sm:text-[15px] text-slate-600">
                 {description}
               </p>

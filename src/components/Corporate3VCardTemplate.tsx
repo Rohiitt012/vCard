@@ -4,6 +4,7 @@ import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { Mail, Phone, MapPin, Cake, Star, Download, Calendar, ExternalLink, Sparkles, MessageCircle, LayoutGrid, Share2 } from "lucide-react";
 import { generateQrDataUrl, downloadQrPng } from "@/lib/qr";
 
@@ -69,6 +70,7 @@ const DEFAULT_BUSINESS_HOURS = {
 
 export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
   const [qrCode, setQrCode] = useState<string>("");
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   useEffect(() => {
     const url = `${baseUrl}/${slug}`;
@@ -77,6 +79,22 @@ export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
   const name = card.title || "cooporate 3";
   const role = card.occupation || card.tagline || "A Freelancer UI/UX Designer";
+  const testimonials =
+    card.testimonials && card.testimonials.length > 0 ? card.testimonials : DEFAULT_TESTIMONIALS;
+  const activeTestimonial =
+    testimonials[(testimonialIndex + testimonials.length) % testimonials.length];
+
+  useEffect(() => {
+    setTestimonialIndex(0);
+  }, [card.id, testimonials.length]);
+
+  useEffect(() => {
+    if (testimonials.length <= 1) return;
+    const timer = setInterval(() => {
+      setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
 
   return (
     <div className="min-h-screen bg-[#0A0C14] text-white font-sans flex justify-center px-0 py-0 overflow-x-hidden text-center">
@@ -140,26 +158,14 @@ export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
               {/* Premium Social Icons row (Custom Gloss Style) */}
               <div className="flex justify-center flex-wrap gap-7 items-center relative z-10">
-                  {card.socialLinks?.filter(link => link.url).map((link) => {
-                      const p = link.platform.toLowerCase();
-                      const isInstagram = p === 'instagram';
-                      return (
-                         <div key={p} className="relative group cursor-pointer">
-                            {/* Active Glow for Instagram as per screenshot */}
-                            {isInstagram && (
-                               <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-purple-600 via-pink-500 to-yellow-500 blur-[8px] opacity-40 group-hover:opacity-70 transition-opacity"></div>
-                            )}
-                            
-                            <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${
-                               isInstagram 
-                               ? 'bg-gradient-to-tr from-[#515BD4] via-[#DD2A7B] to-[#FEDA78] text-white' 
-                               : 'bg-[#151B29] border border-white/5 text-slate-600 group-hover:text-slate-200 group-hover:border-white/20'
-                            }`}>
-                               <SocialCircleIcon platform={p} url={link.url} size={30} className="bg-transparent border-none shadow-none ring-0 p-0" />
-                            </div>
-                         </div>
-                      );
-                  })}
+                  <VCardSocialLinks
+                    card={card}
+                    layout="horizontal"
+                    variant="circular"
+                    iconSize={20}
+                    // Keep all icons inside one premium container.
+                    containerClassName="flex"
+                  />
               </div>
            </div>
         </section>
@@ -261,24 +267,47 @@ export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                  </div>
               </div>
 
-              {(card.testimonials && card.testimonials.length > 0 ? card.testimonials : DEFAULT_TESTIMONIALS).map((t, idx) => (
-                 <div key={idx} className="bg-white rounded-3xl p-8 flex gap-6 items-start shadow-xl text-left border border-slate-50">
-                    <div className="w-24 h-24 rounded-full overflow-hidden shrink-0 border-4 border-slate-50">
-                       <Image src={t.image || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=40"} alt={t.name} width={96} height={96} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 space-y-3">
-                       <p className="text-[14px] text-slate-500 leading-relaxed font-medium">
-                          {t.quote}
-                       </p>
-                       <div className="flex gap-1">
-                          {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
-                       </div>
-                       <p className="text-[14px] font-bold text-slate-800">
-                          - {t.name} - <span className="text-slate-400 font-medium">{t.role}</span>
-                       </p>
-                    </div>
-                 </div>
-              ))}
+              <div className="bg-white rounded-3xl p-8 flex gap-6 items-start shadow-xl text-left border border-slate-50">
+                <div className="w-24 h-24 rounded-full overflow-hidden shrink-0 border-4 border-slate-50">
+                  <Image
+                    src={activeTestimonial.image || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=40"}
+                    alt={activeTestimonial.name}
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1 space-y-3">
+                  <p className="text-[14px] text-slate-500 leading-relaxed font-medium">
+                    {activeTestimonial.quote}
+                  </p>
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-[14px] font-bold text-slate-800">
+                    - {activeTestimonial.name} -{" "}
+                    <span className="text-slate-400 font-medium">{activeTestimonial.role}</span>
+                  </p>
+                </div>
+              </div>
+
+              {testimonials.length > 1 && (
+                <div className="flex items-center justify-center gap-2">
+                  {testimonials.map((_, idx) => (
+                    <button
+                      key={`testimonial-dot-${idx}`}
+                      type="button"
+                      onClick={() => setTestimonialIndex(idx)}
+                      className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                        idx === testimonialIndex ? "bg-blue-400" : "bg-white/35 hover:bg-white/60"
+                      }`}
+                      aria-label={`Show testimonial ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
            </div>
         </section>
 
@@ -467,13 +496,13 @@ export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                 {/* Copyright Line */}
                 <div className="space-y-3">
                     <p className="text-[12px] font-bold text-slate-500 uppercase tracking-[0.5em] leading-relaxed">
-                       &copy; {new Date().getFullYear()} · Corporate Elite Edition
+                       &copy; {new Date().getFullYear()} Â· Corporate Elite Edition
                     </p>
                     <div className="flex justify-center flex-wrap gap-2 text-[10px] font-black text-slate-700 uppercase tracking-widest">
                        <span>Secure</span>
-                       <span>·</span>
+                       <span>Â·</span>
                        <span>Verified</span>
-                       <span>·</span>
+                       <span>Â·</span>
                        <span>Premium</span>
                     </div>
                 </div>

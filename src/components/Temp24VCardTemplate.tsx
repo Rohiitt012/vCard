@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { getSocialIcon } from "@/lib/social-icons";
 import { generateQrDataUrl } from "@/lib/qr";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -139,11 +139,14 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   <p className="text-[#4C0519]/80 text-xl leading-relaxed font-medium">
                        At <span className="font-black text-[#881337]">Life Partner Bureau</span>, we believe marriage is an art. We combine modern analytics with traditional values to find you a partner who doesn't just match your profile, but mirrors your soul.
                   </p>
-                  <div className="flex justify-center gap-6">
-                       {card.socialLinks && card.socialLinks.filter(l => l.url).map((social, idx) => (
-                           <SocialCircleIcon key={idx} platform={social.platform} url={social.url} size={56} className="shadow-lg hover:scale-110 transition-transform" />
-                       ))}
-                  </div>
+                  <VCardSocialLinks 
+                    card={card} 
+                    layout="horizontal" 
+                    variant="circular" 
+                    iconSize={20}
+                    itemClassName="shadow-lg hover:scale-110 transition-transform"
+                    containerClassName="flex justify-center gap-6"
+                  />
              </div>
         </section>
 
@@ -388,11 +391,14 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         <footer className="py-32 text-center bg-rose-50/50 relative overflow-hidden">
              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-rose-200 to-transparent" />
              
-             <div className="flex justify-center gap-6 mb-24 flex-wrap">
-                  {card.socialLinks && card.socialLinks.filter(l => l.url).map((social, idx) => (
-                      <SocialCircleIcon key={idx} platform={social.platform} url={social.url} size={56} className="shadow-lg hover:scale-110 transition-transform" />
-                  ))}
-             </div>
+             <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={20}
+                itemClassName="shadow-lg hover:scale-110 transition-transform"
+                containerClassName="flex justify-center gap-6 mb-24 flex-wrap"
+             />
              <div className="space-y-6">
                   <div className="flex items-center justify-center gap-6">
                         <div className="h-[1px] w-12 bg-rose-200" />

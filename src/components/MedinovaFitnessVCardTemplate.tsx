@@ -1,9 +1,10 @@
-"use client";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+﻿"use client";
+
 /* Medinova-style fitness vCard single-page layout (Tailwind CSS, narrow card) */
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -185,20 +186,14 @@ export function MedinovaFitnessVCardTemplate({ card, slug, baseUrl, onDownloadVC
             </div>
 
             {/* Centered Yellow Social Icons */}
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
-              {card.socialLinks && card.socialLinks.length > 0 && (
-                card.socialLinks.slice(0, 5).map((link, idx) => (
-                  <SocialCircleIcon 
-                    key={idx} 
-                    platform={link.platform} 
-                    url={link.url} 
-                    size={48} 
-                    bgColor="#facc15"
-                    iconColor="#000000"
-                  />
-                ))
-              )}
-            </div>
+            <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={24}
+                itemClassName="w-12 h-12 rounded-full bg-[#facc15] flex items-center justify-center text-black shadow-lg shadow-[#facc15]/20 hover:scale-110 transition-transform"
+                containerClassName="flex flex-wrap items-center justify-center gap-4 mb-14"
+            />
 
             {/* Contact Heading with Separator Lines */}
             <div className="flex items-center justify-center gap-6 mb-12">

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { getSocialIcon } from "@/lib/social-icons";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -272,24 +273,14 @@ export function Temp26VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
         {/* FOOTER INTERFACE */}
         <footer className="py-24 bg-white/5 border-t border-white/10 text-center space-y-16">
-             {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
-                  <div className="flex justify-center gap-6">
-                       {card.socialLinks.filter(l => l.url).map((social, idx) => {
-                            const Icon = getSocialIcon(social.platform);
-                            return (
-                                 <a 
-                                      key={idx} 
-                                      href={social.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="w-16 h-16 rounded-[24px] bg-[#0F172A] border border-white/10 flex items-center justify-center text-[#EAB308] hover:bg-[#EAB308] hover:text-[#0F172A] hover:-translate-y-2 transition-all cursor-pointer shadow-xl"
-                                 >
-                                      <Icon size={24} strokeWidth={1.5} />
-                                 </a>
-                            );
-                       })}
-                  </div>
-             )}
+             <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={20}
+                itemClassName="w-16 h-16 rounded-[24px] bg-[#0F172A] border border-white/10 flex items-center justify-center text-[#EAB308] hover:bg-[#EAB308] hover:text-[#0F172A] hover:-translate-y-2 transition-all shadow-xl"
+                containerClassName="flex justify-center gap-6"
+             />
              <div className="space-y-6">
                   <div className="inline-block px-10 py-4 border border-white/10 rounded-full bg-white/5">
                        <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.8em]">Julian Vane Global Identity Node</p>

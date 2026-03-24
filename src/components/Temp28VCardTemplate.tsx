@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { getSocialIcon } from "@/lib/social-icons";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -84,23 +85,15 @@ export function Temp28VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </p>
              </div>
 
-             {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
-                  <div className="relative z-10 flex justify-center gap-8 text-[#F97316] pb-4 border-b border-white/10 mx-10">
-                       {card.socialLinks.filter(l => l.url).map((social, idx) => {
-                            const Icon = getSocialIcon(social.platform);
-                            return (
-                                 <a 
-                                      key={idx} 
-                                      href={social.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                 >
-                                      <Icon size={28} className="hover:scale-125 transition-all duration-300 cursor-pointer drop-shadow-[0_0_8px_rgba(249,115,22,0.4)]" />
-                                 </a>
-                            );
-                       })}
-                  </div>
-             )}
+             <div className="relative z-10 px-10 pb-6">
+                  <VCardSocialLinks 
+                      card={card} 
+                      layout="vertical" 
+                      variant="circular" 
+                      iconSize={20}
+                      itemClassName="bg-white/5 border border-white/10 rounded-2xl p-4 w-full hover:bg-white/10 transition-all shadow-lg"
+                  />
+             </div>
         </section>
 
         {/* REFINED CONTACT SECTION */}
@@ -548,24 +541,14 @@ export function Temp28VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
         {/* REFINED FOOTER */}
         <footer className="py-24 bg-[#0A0A0A] text-center space-y-12 border-t border-white/5">
-             {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
-                  <div className="flex justify-center gap-10">
-                       {card.socialLinks.filter(l => l.url).map((social, idx) => {
-                            const Icon = getSocialIcon(social.platform);
-                            return (
-                                 <a 
-                                      key={idx} 
-                                      href={social.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="w-16 h-16 rounded-[24px] bg-[#1A1A1A] flex items-center justify-center text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all cursor-pointer shadow-2xl hover:-translate-y-2 border border-white/5"
-                                 >
-                                      <Icon size={28} strokeWidth={1.5} />
-                                 </a>
-                            );
-                       })}
-                  </div>
-             )}
+             <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={24}
+                itemClassName="hover:-translate-y-2 shadow-2xl transition-transform"
+                containerClassName="flex justify-center gap-10 px-10"
+             />
              <div className="space-y-4 px-10">
                   <p className="text-[11px] font-black text-white/30 uppercase tracking-[0.8em]">Event Identity Node</p>
                   <p className="text-[12px] font-bold text-[#F97316] uppercase tracking-widest">{organization} © 2026</p>

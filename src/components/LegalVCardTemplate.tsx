@@ -1,6 +1,7 @@
-"use client";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+﻿"use client";
+
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { useLanguage } from "@/context/LanguageContext";
@@ -171,13 +172,14 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
           </div>
 
           {/* Social icons row (kept) */}
-          {card.socialLinks && card.socialLinks.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-3 mt-6 no-print w-full relative z-10 py-2">
-              {card.socialLinks.map((link, idx) => (
-                <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={40} />
-              ))}
-            </div>
-          )}
+          <VCardSocialLinks 
+              card={card} 
+              layout="horizontal" 
+              variant="circular" 
+              iconSize={18}
+              itemClassName="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[#0B1F3A] hover:text-white transition-all duration-300"
+              containerClassName="flex flex-wrap items-center justify-center gap-3 mt-6 no-print w-full relative z-10 py-2"
+          />
         </div>
       </section>
 
@@ -534,19 +536,14 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
       <section id="contact" className="section-contact 2xl:py-[80px] py-[70px] bg-white">
         <div className="mx-auto bx-container px-6 max-[320px]:px-[12px]">
           {/* Social icons row */}
-          {card.socialLinks && card.socialLinks.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
-              {card.socialLinks.map((link, idx) => (
-                <SocialCircleIcon
-                  key={idx}
-                  platform={link.platform}
-                  url={link.url}
-                  size={44}
-                  bgColor="#0B2B5B"
-                />
-              ))}
-            </div>
-          )}
+          <VCardSocialLinks 
+              card={card} 
+              layout="horizontal" 
+              variant="circular" 
+              iconSize={20}
+              itemClassName="w-11 h-11 rounded-full bg-[#0B2B5B] flex items-center justify-center text-white shadow-lg shadow-[#0B2B5B]/20 hover:scale-110 transition-transform"
+              containerClassName="flex flex-wrap items-center justify-center gap-4 mb-10"
+          />
 
           {/* Contact label ribbon */}
           <div className="flex items-center justify-center mb-10">

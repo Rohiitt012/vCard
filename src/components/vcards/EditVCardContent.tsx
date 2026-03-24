@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useVCards } from "@/context/VCardsContext";
+import { getSocialColor, getSocialIcon } from "@/lib/social-icons";
 
 const HelpIcon = () => (
   <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -311,123 +312,22 @@ const SOCIAL_LINKS = [
 
 const SocialIcon = ({ id }: { id: string }) => {
   const base =
-    "flex h-9 w-9 items-center justify-center rounded-full text-white shrink-0 shadow-md ring-1 ring-black/10 overflow-hidden";
+    "flex h-9 w-9 items-center justify-center rounded-full shrink-0 shadow-md ring-1 ring-black/10 overflow-hidden";
+  const Icon = getSocialIcon(id);
+  const iconBg = getSocialColor(id);
+  const iconColor = id === "snapchat" ? "text-black" : "text-white";
 
-  switch (id) {
-    case "website":
-      return (
-        <div className={`${base} bg-blue-500`}>
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-          </svg>
-        </div>
-      );
-    case "facebook":
-      return (
-        <div className={`${base} bg-[#1877F2]`}>
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-          </svg>
-        </div>
-      );
-    case "reddit":
-      return (
-        <div className={`${base} bg-[#FF4500]`}>
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.88-7.004 4.88-3.874 0-7.004-2.186-7.004-4.88 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484 1.05 3.64 1.05 1.157 0 2.798-.208 3.64-1.05a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.205.73-1.038 0-2.107-.286-2.805-.73a.326.326 0 0 0-.232-.094z" />
-          </svg>
-        </div>
-      );
-    case "youtube":
-      return (
-        <div className={`${base} bg-[#FF0000]`}>
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-          </svg>
-        </div>
-      );
-    case "whatsapp":
-      return (
-        <div className={`${base} bg-[#25D366]`}>
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-          </svg>
-        </div>
-      );
-    case "tiktok":
-      return (
-        <div className={`${base} bg-black`}>
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
-          </svg>
-        </div>
-      );
-    case "twitter":
-      return (
-        <div className={`${base} bg-black`}>
-          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-          </svg>
-        </div>
-      );
-    case "instagram":
-      return (
-        <div className={`${base} bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737]`}>
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <rect x="2" y="2" width="20" height="20" rx="5" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17.5 6.5h.01" />
-          </svg>
-        </div>
-      );
-    case "tumblr":
-      return (
-        <div className={`${base} bg-[#36465D]`}>
-          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-5.411V9.747H5.909V6.648c3.63-1.31 4.512-4.596 4.71-6.469C10.63.051 11.183 0 12.009 0h3.359v6.114h4.69v3.633h-4.69v8.755c.149 1.125.479 2.676 2.924 2.676 1.383 0 2.443-.093 2.765-.134v3.861c-.455.062-2.008.204-3.494.204z" />
-          </svg>
-        </div>
-      );
-    case "linkedin":
-      return (
-        <div className={`${base} bg-[#0A66C2]`}>
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-          </svg>
-        </div>
-      );
-    case "pinterest":
-      return (
-        <div className={`${base} bg-[#E60023]`}>
-          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.012-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z" />
-          </svg>
-        </div>
-      );
-    case "snapchat":
-      return (
-        <div className={`${base} bg-[#FFFC00]`}>
-          <svg className="h-5 w-5 text-black" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12 1.033-.301.165-.088.344-.104.464-.104.182 0 .359.029.509.09.45.149.734.479.734.838.015.449-.39.839-1.213 1.168-.089.029-.209.075-.344.119-.45.135-1.139.36-1.333.81-.09.224-.061.524.12.868l.015.015c.06.136 1.526 3.475 4.791 4.014.255.044.435.27.42.509 0 .075-.015.149-.045.225-.24.569-1.273.988-3.146 1.271-.059.091-.12 1.508-.149 2.629-.03 1.139-.09 2.294-.149 2.479-.06.24-.255.39-.465.39h-2.429c-.27 0-.509-.165-.629-.42-.075-.149-.12-.36-.149-.629-.06-.479-.12-1.569-.149-2.279-.03-.72-.09-1.95-.149-2.699-.045-.27-.24-.42-.465-.42H5.913c-.27 0-.509.165-.629.42-.075.149-.12.36-.149.629-.06.479-.12 1.569-.149 2.279-.03.72-.09 1.95-.149 2.699-.045.27-.24.42-.465.42H2.063c-.27 0-.509-.165-.629-.42-.075-.149-.12-.36-.149-.629-.06-.479-.12-1.569-.149-2.279-.03-.72-.09-1.95-.149-2.699-.045-.27-.24-.42-.465-.42-.225 0-.42.15-.465.42-.06.749-.12 1.979-.149 2.699-.03.71-.09 1.8-.149 2.279-.03.269-.075.48-.149.629-.12.255-.36.42-.629.42H.988c-.225 0-.42-.15-.465-.39-.06-.185-.12-1.34-.149-2.479-.03-1.121-.09-2.538-.149-2.629-1.872-.283-2.906-.702-3.146-1.271-.03-.076-.045-.15-.045-.225-.015-.239.165-.465.42-.509 3.264-.54 4.73-3.879 4.791-4.014l.015-.015c.18-.344.21-.644.12-.868-.195-.45-.884-.675-1.333-.81-.135-.044-.255-.09-.344-.119-.824-.329-1.214-.719-1.214-1.168 0-.359.285-.689.734-.838.15-.06.33-.09.509-.09.12 0 .299.015.464.104.374.181.733.285 1.033.301.198 0 .326-.045.401-.09-.008-.165-.018-.33-.03-.51l-.003-.06c-.104-1.628-.23-3.654.299-4.847 1.583-3.545 4.94-3.821 5.93-3.821z" />
-          </svg>
-        </div>
-      );
-    default:
-      return (
-        <div className={`${base} bg-gray-400`}>
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-          </svg>
-        </div>
-      );
-  }
+  return (
+    <div className={base} style={{ backgroundColor: iconBg }}>
+      <Icon size={18} className={iconColor} strokeWidth={2} />
+    </div>
+  );
 };
 
 const editNavItems = [
   { id: "basic", label: "Basic Details" },
   { id: "templates", label: "vCard Templates" },
   { id: "dynamic", label: "Dynamic vCard" },
-  { id: "hours", label: "Business Hours" },
   { id: "qr", label: "Customize QR Code" },
   { id: "services", label: "Services" },
   { id: "products", label: "Products" },
@@ -440,7 +340,6 @@ const editNavItems = [
   { id: "appointments", label: "Appointments" },
   { id: "social-links", label: "Social links - Website" },
   { id: "custom-links", label: "Custom Links" },
-  { id: "banner", label: "Banner" },
   { id: "advanced", label: "Advanced" },
   { id: "fonts", label: "Fonts" },
   { id: "seo", label: "SEO" },
@@ -774,6 +673,41 @@ function getInitialAppointmentSchedule(): Record<
   return o;
 }
 
+function mapBusinessHoursToAppointmentSchedule(
+  hours?: Record<string, { enabled: boolean; start: string; end: string }>
+): Record<string, { enabled: boolean; slots: { id: string; start: string; end: string }[] }> {
+  const base = getInitialAppointmentSchedule();
+  if (!hours) return base;
+
+  APPOINTMENT_DAYS.forEach((appointmentDay, i) => {
+    const dayTitle = `${appointmentDay.slice(0, 1)}${appointmentDay.slice(1).toLowerCase()}`;
+    const source = hours[dayTitle];
+    if (!source) return;
+    base[appointmentDay] = {
+      enabled: !!source.enabled,
+      slots: [{ id: `slot-${i}-0`, start: source.start || "12:00 AM", end: source.end || "12:15 AM" }],
+    };
+  });
+
+  return base;
+}
+
+function mapAppointmentScheduleToBusinessHours(
+  schedule: Record<string, { enabled: boolean; slots: { id: string; start: string; end: string }[] }>
+): Record<BusinessHoursDay, { enabled: boolean; start: string; end: string }> {
+  const mapped = getInitialBusinessHours();
+  BUSINESS_HOURS_DAYS.forEach((day) => {
+    const source = schedule[day.toUpperCase()];
+    const firstSlot = source?.slots?.[0];
+    mapped[day] = {
+      enabled: !!source?.enabled,
+      start: firstSlot?.start || "12:00 AM",
+      end: firstSlot?.end || "12:15 AM",
+    };
+  });
+  return mapped;
+}
+
 type EditVCardContentProps = {
   vcardId?: string;
 };
@@ -837,6 +771,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [productsShowPerPage, setProductsShowPerPage] = useState(10);
   const [instaSearch, setInstaSearch] = useState("");
   const [showAddEmbedTagModal, setShowAddEmbedTagModal] = useState(false);
+  const [embedTagTargetSection, setEmbedTagTargetSection] = useState<"insta" | "linkedin" | "iframes">("insta");
   const [showEmbedGuideModal, setShowEmbedGuideModal] = useState(false);
   const [embedGuideType, setEmbedGuideType] = useState<"instagram" | "linkedin">("instagram");
   const [addEmbedTagType, setAddEmbedTagType] = useState("");
@@ -1065,6 +1000,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [useQrConfiguration, setUseQrConfiguration] = useState(false);
   const [qrCodeColor, setQrCodeColor] = useState("#000000");
   const [qrBgColor, setQrBgColor] = useState("#ffffff");
+  const [qrDotStyle, setQrDotStyle] = useState<"square" | "rounded">("square");
+  const [qrEyeStyle, setQrEyeStyle] = useState<"square" | "rounded">("square");
   const [qrCreateSuccess, setQrCreateSuccess] = useState(false);
   const [templateSaveSuccess, setTemplateSaveSuccess] = useState(false);
   const [termsSaveSuccess, setTermsSaveSuccess] = useState(false);
@@ -1075,10 +1012,29 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const profileImageInputRef = useRef<HTMLInputElement>(null);
   const [basicAlias, setBasicAlias] = useState("");
   const [basicAliasError, setBasicAliasError] = useState<string | null>(null);
+  const getEmbedRowsForSection = (section: "insta" | "linkedin" | "iframes") => {
+    const all = (currentCard?.embedTags ?? []) as { id: string; type: string; value: string; section?: string }[];
+    const bySection = all.filter((e) => (e.section ?? "insta") === section);
+    const search =
+      section === "insta"
+        ? instaSearch
+        : section === "linkedin"
+          ? linkedinSearch
+          : iframesSearch;
+    const q = (search ?? "").trim().toLowerCase();
+    if (!q) return bySection;
+    return bySection.filter(
+      (e) =>
+        e.type.toLowerCase().includes(q) ||
+        e.value.toLowerCase().includes(q)
+    );
+  };
   useEffect(() => {
     if (currentCard) {
       setQrCodeColor(currentCard.qrCodeColor ?? "#000000");
       setQrBgColor(currentCard.qrBgColor ?? "#ffffff");
+      setQrDotStyle(currentCard.qrDotStyle ?? "square");
+      setQrEyeStyle(currentCard.qrEyeStyle ?? "square");
       if (currentCard.selectedTemplateId != null) {
         setSelectedTemplateId(currentCard.selectedTemplateId);
       }
@@ -1105,14 +1061,35 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
         nextSocial[item.id] = match?.url ?? "";
       });
       setSocialLinksForm(nextSocial);
+      if (currentCard.businessHours) {
+        setBusinessHours(
+          currentCard.businessHours as Record<BusinessHoursDay, { enabled: boolean; start: string; end: string }>
+        );
+        setAppointmentSchedule(
+          mapBusinessHoursToAppointmentSchedule(
+            currentCard.businessHours as Record<string, { enabled: boolean; start: string; end: string }>
+          )
+        );
+      }
+      setAppointmentType(currentCard.appointmentType ?? "free");
+      setAppointmentServices(
+        currentCard.appointmentServices && currentCard.appointmentServices.length > 0
+          ? currentCard.appointmentServices
+          : [{ id: "svc-0", serviceName: "", amount: "" }]
+      );
     }
   }, [
     currentCard?.id,
     currentCard?.qrCodeColor,
     currentCard?.qrBgColor,
+    currentCard?.qrDotStyle,
+    currentCard?.qrEyeStyle,
     currentCard?.selectedTemplateId,
     currentCard?.termsHtml,
     currentCard?.privacyHtml,
+    currentCard?.businessHours,
+    currentCard?.appointmentType,
+    currentCard?.appointmentServices,
   ]);
   useEffect(() => {
     if (!qrCreateSuccess) return;
@@ -1166,7 +1143,6 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [showAdvancedPassword, setShowAdvancedPassword] = useState(false);
   const [advancedPassword, setAdvancedPassword] = useState("");
   const [removeBranding, setRemoveBranding] = useState(false);
-  const [showBanner, setShowBanner] = useState(true);
   const [manageSectionSections, setManageSectionSections] = useState({
     header: true,
     galleries: true,
@@ -1176,7 +1152,6 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     contact: true,
     products: true,
     businessHours: true,
-    banner: true,
     iframes: true,
     services: true,
     testimonials: true,
@@ -1260,6 +1235,26 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
   const setOtherToggle = (key: keyof typeof otherToggles) => {
     setOtherToggles((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleSaveAppointmentsToBusinessHours = () => {
+    if (!vcardId || !currentCard) return;
+    const nextBusinessHours = mapAppointmentScheduleToBusinessHours(appointmentSchedule);
+    setBusinessHours(nextBusinessHours);
+    setVCards((prev) =>
+      prev.map((c) =>
+        c.id === vcardId
+          ? {
+              ...c,
+              businessHours: nextBusinessHours,
+              appointmentType,
+              appointmentServices,
+            }
+          : c
+      )
+    );
+    setServicesSuccessMessage("Appointments and rates saved successfully.");
+    setShowServicesSuccessToast(true);
   };
 
   const handlePreviewClick = () => {
@@ -3553,7 +3548,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         if (!useQrConfiguration || !vcardId || !currentCard) return;
                         setVCards((prev) =>
                           prev.map((c) =>
-                            c.id === vcardId ? { ...c, qrCodeColor, qrBgColor } : c
+                            c.id === vcardId
+                              ? { ...c, qrCodeColor, qrBgColor, qrDotStyle, qrEyeStyle }
+                              : c
                           )
                         );
                         setQrCreateSuccess(true);
@@ -3587,18 +3584,40 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <div className="space-y-4">
                         <div>
                           <label className={labelClass}>Select Style</label>
-                          <select className={`${inputClass} h-11`}>
+                          <select
+                            className={`${inputClass} h-11`}
+                            value={qrDotStyle}
+                            onChange={(e) => setQrDotStyle(e.target.value as "square" | "rounded")}
+                          >
                             <option>square</option>
                             <option>rounded</option>
                           </select>
                         </div>
                         <div>
                           <label className={labelClass}>Select Eye Style</label>
-                          <select className={`${inputClass} h-11`}>
+                          <select
+                            className={`${inputClass} h-11`}
+                            value={qrEyeStyle}
+                            onChange={(e) => setQrEyeStyle(e.target.value as "square" | "rounded")}
+                          >
                             <option>square</option>
                             <option>rounded</option>
                           </select>
                         </div>
+                      </div>
+
+                      <div>
+                        <label className={labelClass}>QR Link (auto-generated)</label>
+                        <input
+                          type="text"
+                          readOnly
+                          value={
+                            typeof window !== "undefined"
+                              ? `${window.location.origin}/${basicAlias || currentCard?.slug || ""}`.replace(/\/+$/, "").replace(/([^:]\/)\/+/g, "$1")
+                              : `/${basicAlias || currentCard?.slug || ""}`
+                          }
+                          className={`${inputClass} h-11 bg-gray-50 dark:bg-gray-900`}
+                        />
                       </div>
 
                       <div className="flex items-center gap-3 pt-1">
@@ -3628,6 +3647,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </button>
                         <button
                           type="button"
+                          onClick={() => {
+                            setQrCodeColor(currentCard?.qrCodeColor ?? "#000000");
+                            setQrBgColor(currentCard?.qrBgColor ?? "#ffffff");
+                            setQrDotStyle(currentCard?.qrDotStyle ?? "square");
+                            setQrEyeStyle(currentCard?.qrEyeStyle ?? "square");
+                          }}
                           className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                         >
                           Discard
@@ -4228,38 +4253,6 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     />
                   </div>
                   <div className="flex flex-wrap items-center gap-4">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
-                        Display Product Enquiry Button
-                      </span>
-                      <button
-                        type="button"
-                        role="switch"
-                        aria-checked={displayProductEnquiryButton}
-                        onClick={() => {
-                          if (!vcardId) {
-                            setDisplayProductEnquiryButton((prev) => !prev);
-                            return;
-                          }
-                          setDisplayProductEnquiryButton((prev) => {
-                            const next = !prev;
-                            setVCards((cards) =>
-                              cards.map((c) =>
-                                c.id === vcardId ? { ...c, displayProductEnquiryButton: next } : c,
-                              ),
-                            );
-                            return next;
-                          });
-                        }}
-                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${displayProductEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
-                          }`}
-                      >
-                        <span
-                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${displayProductEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
-                            }`}
-                        />
-                      </button>
-                    </label>
                     <button
                       type="button"
                       onClick={() => setShowNewProductModal(true)}
@@ -4720,7 +4713,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setShowAddEmbedTagModal(true)}
+                      onClick={() => { setEmbedTagTargetSection("insta"); setShowAddEmbedTagModal(true); }}
                       className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
                     >
                       Add Embed-Tag
@@ -4738,11 +4731,45 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const rows = getEmbedRowsForSection("insta");
+                          if (!rows.length) {
+                            return (
+                              <tr>
+                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return rows.map((row) => (
+                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                              <td className="px-4 py-3 capitalize">{row.type}</td>
+                              <td className="px-4 py-3">
+                                <div className="max-w-[520px] truncate">{row.value}</div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <button
+                                  type="button"
+                                  className="text-red-500 hover:text-red-600 text-lg"
+                                  onClick={() => {
+                                    if (!vcardId) return;
+                                    setVCards((prev) =>
+                                      prev.map((c) =>
+                                        c.id === vcardId
+                                          ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
+                                          : c
+                                      )
+                                    );
+                                  }}
+                                  aria-label="Delete embed tag"
+                                >
+                                  🗑
+                                </button>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
@@ -4756,9 +4783,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       </select>
                       <span className="text-sm text-gray-600 dark:text-gray-400">
                         Showing{" "}
-                        <span className="font-semibold text-gray-900 dark:text-gray-100">
-                          {(((currentCard as any)?.services ?? []) as any[]).length}
-                        </span>{" "}
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">{getEmbedRowsForSection("insta").length}</span>{" "}
                         results
                       </span>
                     </div>
@@ -4794,7 +4819,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </button>
                     <button
                       type="button"
-                      onClick={() => setShowAddEmbedTagModal(true)}
+                      onClick={() => { setEmbedTagTargetSection("linkedin"); setShowAddEmbedTagModal(true); }}
                       className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
                     >
                       Add Embed-Tag
@@ -4812,11 +4837,43 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const rows = getEmbedRowsForSection("linkedin");
+                          if (!rows.length) {
+                            return (
+                              <tr>
+                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return rows.map((row) => (
+                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                              <td className="px-4 py-3 capitalize">{row.type}</td>
+                              <td className="px-4 py-3"><div className="max-w-[520px] truncate">{row.value}</div></td>
+                              <td className="px-4 py-3">
+                                <button
+                                  type="button"
+                                  className="text-red-500 hover:text-red-600 text-lg"
+                                  onClick={() => {
+                                    if (!vcardId) return;
+                                    setVCards((prev) =>
+                                      prev.map((c) =>
+                                        c.id === vcardId
+                                          ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
+                                          : c
+                                      )
+                                    );
+                                  }}
+                                  aria-label="Delete embed tag"
+                                >
+                                  🗑
+                                </button>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
@@ -4828,7 +4885,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing {getEmbedRowsForSection("linkedin").length} results</span>
                     </div>
                   </div>
                 </div>
@@ -5778,12 +5835,26 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                 <div className="flex gap-3 pt-2">
                   <button
                     type="button"
+                    onClick={() => {
+                      setAppointmentSchedule(
+                        mapBusinessHoursToAppointmentSchedule(
+                          (currentCard?.businessHours as Record<string, { enabled: boolean; start: string; end: string }>) || undefined
+                        )
+                      );
+                      setAppointmentType(currentCard?.appointmentType ?? "free");
+                      setAppointmentServices(
+                        currentCard?.appointmentServices && currentCard.appointmentServices.length > 0
+                          ? currentCard.appointmentServices
+                          : [{ id: "svc-0", serviceName: "", amount: "" }]
+                      );
+                    }}
                     className="btn-secondary-premium inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold"
                   >
                     Discard
                   </button>
                   <button
                     type="button"
+                    onClick={handleSaveAppointmentsToBusinessHours}
                     className="btn-primary-premium inline-flex items-center justify-center rounded-lg bg-[#4E38EE] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#4330d4]"
                   >
                     Save
@@ -5915,7 +5986,6 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       { key: "businessHours" as const, label: "Business Hours" },
                       { key: "appointments" as const, label: "Appointments" },
                       { key: "map" as const, label: "Map" },
-                      { key: "banner" as const, label: "Banner" },
                       { key: "instagramFeed" as const, label: "Instagram Feed" },
                       { key: "linkedinFeed" as const, label: "LinkedIn Feed" },
                       { key: "iframes" as const, label: "Iframes" },
@@ -6164,59 +6234,6 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* Banner – Title, Description, URL, Banner Button, Show Banner */}
-            {activeSection === "banner" && (
-              <div className="space-y-5 max-w-3xl">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-4">
-                    <div>
-                      <label className={labelClass}>
-                        Title: <span className="text-red-500">*</span>
-                      </label>
-                      <input type="text" className={inputClass} placeholder="Title" />
-                    </div>
-                    <div>
-                      <label className={labelClass}>
-                        Description: <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        className={`${inputClass} min-h-[100px] resize-y`}
-                        placeholder="Enter Short Description"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <div>
-                      <label className={labelClass}>
-                        URL: <span className="text-red-500">*</span>
-                      </label>
-                      <input type="url" className={inputClass} placeholder="URL" />
-                    </div>
-                    <div>
-                      <label className={labelClass}>
-                        Banner Button: <span className="text-red-500">*</span>
-                      </label>
-                      <input type="text" className={inputClass} placeholder="Banner Button" />
-                    </div>
-                    <label className="flex items-center gap-2.5 cursor-pointer mt-4">
-                      <input
-                        type="checkbox"
-                        checked={showBanner}
-                        onChange={(e) => setShowBanner(e.target.checked)}
-                        className="h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-brand-500 focus:ring-2 focus:ring-brand-500/20 cursor-pointer checked:bg-brand-500 checked:border-brand-500"
-                      />
-                      <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Show Banner</span>
-                    </label>
-                  </div>
-                </div>
-                <div className="flex justify-start gap-2.5 pt-2">
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center">
-                    Save
-                  </button>
                 </div>
               </div>
             )}
@@ -6479,7 +6496,6 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
               activeSection !== "seo" &&
               activeSection !== "fonts" &&
               activeSection !== "advanced" &&
-              activeSection !== "banner" &&
               activeSection !== "custom-links" && (
                 <p className="text-sm text-gray-500 dark:text-gray-400 py-8">Coming soon.</p>
               )}
@@ -6728,6 +6744,20 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
               className="p-6 pb-8 space-y-5"
               onSubmit={(e) => {
                 e.preventDefault();
+                if (!vcardId || !addEmbedTagType.trim() || !addEmbedTagValue.trim()) return;
+                const newRow = {
+                  id: `embed-${Date.now()}`,
+                  type: addEmbedTagType.trim().toLowerCase(),
+                  value: addEmbedTagValue.trim(),
+                  section: embedTagTargetSection,
+                };
+                setVCards((prev) =>
+                  prev.map((c) =>
+                    c.id === vcardId
+                      ? { ...c, embedTags: [...(c.embedTags ?? []), newRow] }
+                      : c
+                  )
+                );
                 setShowAddEmbedTagModal(false);
                 setAddEmbedTagType("");
                 setAddEmbedTagValue("");
@@ -6742,9 +6772,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   required
                 >
                   <option value="">Select Type</option>
-                  <option value="instagram">Instagram</option>
-                  <option value="video">Video</option>
                   <option value="post">Post</option>
+                  <option value="reel">Reel</option>
                 </select>
               </div>
               <div>

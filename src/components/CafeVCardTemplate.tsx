@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 import Image from "next/image";
 import { Mail, Phone, MapPin, Globe2, Cake, Calendar, ArrowLeft, ArrowRight, ExternalLink, UserPlus } from "lucide-react";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
+
 import type { VCardItem } from "@/context/VCardsContextTypes";
 
 type Props = {
@@ -161,13 +162,14 @@ export function CafeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Prop
               </div>
             </div>
 
-            {card.socialLinks && card.socialLinks.length > 0 && (
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-6 no-print w-full relative z-10">
-                {card.socialLinks.map((link, idx) => (
-                  <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={42} />
-                ))}
-              </div>
-            )}
+            <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={18}
+                itemClassName="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[#1a5f6e] hover:text-white transition-all duration-300"
+                containerClassName="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-6 no-print w-full relative z-10"
+            />
 
             <div className="mt-8 flex flex-wrap items-center gap-3 no-print">
               {['About', 'Work', 'Writing', 'Contact'].map((item) => (

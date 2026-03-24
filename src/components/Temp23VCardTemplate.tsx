@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter, MessageCircle, Star, Cake, Globe, ExternalLink, Clock, LayoutGrid } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -98,11 +98,14 @@ export function Temp23VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
              </div>
 
              {/* SOCIAL ICONS BAR */}
-             <div className="flex justify-center sm:justify-start gap-4 mb-12">
-                   {card.socialLinks?.filter(l => l.url).map((social, idx) => (
-                       <SocialCircleIcon key={idx} platform={social.platform} url={social.url} size={48} className="shadow-lg hover:scale-110 transition-transform" />
-                   ))}
-             </div>
+              <VCardSocialLinks 
+                   card={card} 
+                   layout="horizontal" 
+                   variant="circular" 
+                   iconSize={24}
+                   itemClassName="shadow-lg hover:scale-110 transition-transform"
+                   containerClassName="flex justify-center sm:justify-start gap-4 mb-12"
+              />
 
              {/* INFO GRID CARD */}
              <div className="bg-[#1A1C35] rounded-[32px] p-8 grid grid-cols-2 gap-y-10 mb-12 border border-white/5">
@@ -178,7 +181,7 @@ export function Temp23VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                        </div>
                        <h4 className="text-white font-bold text-[20px] mb-4">{(card.testimonials && card.testimonials[0]?.name) || "Janni Lopez"}</h4>
                        <p className="text-white/40 text-[15px] leading-[1.8] italic font-medium">
-                            “{(card.testimonials && card.testimonials[0]?.quote) || "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration."}”
+                            â€œ{(card.testimonials && card.testimonials[0]?.quote) || "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration."}â€
                        </p>
                        {/* Pagination dots */}
                        <div className="flex gap-2 mt-8">
@@ -328,7 +331,7 @@ export function Temp23VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         {/* FOOTER */}
         <div className="py-10 text-center bg-black/40 border-t border-white/5 mt-auto">
              <p className="text-[11px] font-bold text-white/30 uppercase tracking-[0.5em]">
-                &copy; {new Date().getFullYear()} · Digital Profile Luxe
+                &copy; {new Date().getFullYear()} Â· Digital Profile Luxe
              </p>
         </div>
 

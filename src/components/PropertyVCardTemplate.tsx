@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { 
   Mail, Phone, MapPin, Globe2, Cake, Calendar, Quote,
@@ -8,7 +8,7 @@ import {
   Gem, Award, Sparkles, Building2
 } from "lucide-react";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+
 import { generateQrDataUrl } from "@/lib/qr";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 

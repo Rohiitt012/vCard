@@ -1,11 +1,12 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState } from "react";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Star, Download, Calendar, ExternalLink, Sparkles } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 const DEFAULT_SERVICES = [
   {
@@ -152,11 +153,14 @@ export function Corporate4VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                     </div>
 
                     {/* Minimal Border Social Icons (Manual SVGs for exact match) */}
-                    <div className="flex items-center gap-3">
-                        {card.socialLinks?.filter(link => link.url).map((link) => (
-                            <SocialCircleIcon key={link.platform} platform={link.platform} url={link.url} size={48} className="w-12 h-12 rounded-full border border-[#2C5F56]/60 flex items-center justify-center text-[#2C5F56] hover:bg-[#2C5F56] hover:text-white transition-all duration-300 cursor-pointer group p-0 bg-transparent shadow-none ring-0" />
-                        ))}
-                    </div>
+                    <VCardSocialLinks 
+                        card={card} 
+                        layout="horizontal" 
+                        variant="circular" 
+                        iconSize={20}
+                        itemClassName="w-12 h-12 rounded-full border border-[#2C5F56]/60 flex items-center justify-center text-[#2C5F56] hover:bg-[#2C5F56] hover:text-white transition-all duration-300 shadow-none ring-0"
+                        containerClassName="flex items-center gap-3"
+                    />
                 </div>
             </div>
         </section>

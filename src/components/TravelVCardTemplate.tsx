@@ -7,7 +7,7 @@ import {
   Plane, Camera, Facebook, Linkedin, Instagram, Twitter
 } from "lucide-react";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 
 type Props = {
@@ -121,11 +121,14 @@ export function TravelVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
           </div>
 
           {/* Social Icons Container */}
-          <div className="mt-8 flex flex-wrap gap-3">
-            {card.socialLinks?.map((link, idx) => (
-              <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={42} />
-            ))}
-          </div>
+          <VCardSocialLinks 
+              card={card} 
+              layout="horizontal" 
+              variant="circular" 
+              iconSize={21}
+              itemClassName="hover:scale-110 active:scale-95 transition-all"
+              containerClassName="mt-8 flex flex-wrap gap-3"
+          />
 
           {/* Contact Details List - Refined as per user image */}
           <div className="mt-12 relative">

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from "react";
 import Image from "next/image";
 import { 
@@ -7,7 +7,7 @@ import {
   Instagram, Facebook, Linkedin, Twitter, Youtube, MessageCircle,
   Gem, Sparkles, LayoutGrid, Music, Mic2, Star
 } from "lucide-react";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import type { VCardItem } from "@/context/VCardsContextTypes";

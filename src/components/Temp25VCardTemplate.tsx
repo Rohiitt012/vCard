@@ -9,8 +9,8 @@ import {
   ArrowRight, Clock, Zap, Activity, Cpu, Heart, Download, Share2, Languages, Maximize, Baby, Calendar
 } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import { getSocialIcon } from "@/lib/social-icons";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 const XIcon = ({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -134,26 +134,14 @@ export function Temp25VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                        {mission}
                   </p>
 
-                  {(() => {
-                        const available = [
-                          ...(card.website || (card as any).websiteUrl ? [{ icon: Globe, platform: 'website', url: card.website || (card as any).websiteUrl }] : []),
-                          ...(card.socialLinks?.filter(s => s.url).map(s => ({
-                              icon: getSocialIcon(s.platform),
-                              platform: s.platform,
-                              url: s.url
-                          })) || [])
-                        ];
-
-                        if (available.length === 0) return null;
-
-                        return (
-                          <div className="flex flex-wrap justify-center gap-4 py-10">
-                               {available.map((item, idx) => (
-                                   <SocialCircleIcon key={idx} platform={item.platform} url={item.url} size={64} className="hover:scale-110 shadow-lg" />
-                               ))}
-                          </div>
-                        );
-                   })()}
+                  <VCardSocialLinks 
+                    card={card} 
+                    layout="horizontal" 
+                    variant="circular" 
+                    iconSize={24}
+                    itemClassName="hover:scale-110 shadow-lg transition-transform"
+                    containerClassName="flex py-10 justify-center"
+                  />
 
                   <div className="pt-6">
                        <div className="inline-block relative group cursor-pointer transition-transform hover:-translate-y-1">
@@ -427,23 +415,14 @@ export function Temp25VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
         {/* FOOTER */}
         <footer className="py-24 text-center bg-[#022C22]/5 relative">
-             {(() => {
-                  const available = card.socialLinks?.filter(s => s.url).map(s => ({
-                      icon: getSocialIcon(s.platform),
-                      platform: s.platform,
-                      url: s.url
-                  })) || [];
-
-                  if (available.length === 0) return null;
-
-                  return (
-                    <div className="flex justify-center gap-4 mb-14 px-8">
-                         {available.map((item, idx) => (
-                             <SocialCircleIcon key={idx} platform={item.platform} url={item.url} size={56} className="shadow-lg hover:-translate-y-1 transition-transform" />
-                         ))}
-                    </div>
-                  );
-             })()}
+             <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={20}
+                itemClassName="hover:-translate-y-1 shadow-lg transition-transform"
+                containerClassName="flex justify-center mb-14 px-8"
+             />
              <div className="space-y-4">
                   <p className="text-[11px] font-black text-[#022C22]/40 uppercase tracking-[0.4em]">Designed for Impact Leaders</p>
                   <p className="text-[10px] font-bold text-[#022C22]/30">Umeed Bal Kendra © 2026. All rights reserved.</p>

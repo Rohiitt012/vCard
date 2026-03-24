@@ -24,7 +24,6 @@ import {
 } from "lucide-react";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 
 type Props = {
@@ -850,13 +849,14 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
 
         {/* Footer */}
         <footer className="mt-20 pt-10 border-t flex flex-col items-center gap-6" style={{ borderColor: `${primaryColor}20` }}>
-          <div className="flex gap-6">
-             {socialLinks.slice(0, 4).map((link) => (
-                <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity">
-                   <SocialCircleIcon platform={link.platform} size={24} />
-                </a>
-             ))}
-          </div>
+          <VCardSocialLinks 
+              card={card} 
+              layout="horizontal" 
+              variant="circular" 
+              iconSize={20}
+              itemClassName="opacity-60 hover:opacity-100 transition-opacity"
+              containerClassName="flex gap-6"
+          />
           <div className="text-center">
             <p className="text-[10px] font-bold tracking-[0.4em] uppercase opacity-40 mb-2">Designed by Antigravity</p>
             <p className="text-xs opacity-60">© {new Date().getFullYear()} {card.title}. All rights reserved.</p>

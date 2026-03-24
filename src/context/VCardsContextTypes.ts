@@ -21,6 +21,13 @@ export type VCardSocialLink = {
   url: string;
 };
 
+export type VCardEmbedTag = {
+  id: string;
+  type: string;
+  value: string;
+  section?: "insta" | "linkedin" | "iframes";
+};
+
 export type VCardGallery = {
   id: string;
   type: string;
@@ -48,6 +55,12 @@ export type VCardService = {
   url?: string;
 };
 
+export type VCardAppointmentService = {
+  id: string;
+  serviceName: string;
+  amount: string;
+};
+
 export type VCardTestimonial = {
   id: string;
   name: string;
@@ -67,6 +80,8 @@ export type VCardItem = {
   status: boolean;
   qrCodeColor?: string;
   qrBgColor?: string;
+  qrDotStyle?: "square" | "rounded";
+  qrEyeStyle?: "square" | "rounded";
   selectedTemplateId?: number;
   templateName?: string;
   templatePrimaryColor?: string;
@@ -92,6 +107,9 @@ export type VCardItem = {
   birthDate?: string;
   businessHours?: VCardBusinessHours;
   displayProductEnquiryButton?: boolean;
+  appointmentType?: "free" | "paid";
+  appointmentServices?: VCardAppointmentService[];
+  embedTags?: VCardEmbedTag[];
   socialLinks?: VCardSocialLink[];
   metaTitle?: string;
   metaDescription?: string;

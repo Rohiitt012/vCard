@@ -5,7 +5,7 @@ import type { VCardItem } from "@/context/VCardsContextTypes";
 import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, MessageCircle, Cake, ExternalLink, Calendar, Star, Clock, User } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -87,9 +87,15 @@ export function Temp22VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
              </div>
 
              <div className="flex justify-center sm:justify-start gap-4 mb-12">
-                   {card.socialLinks?.filter(l => l.url).map((social, idx) => (
-                        <SocialCircleIcon key={idx} platform={social.platform} url={social.url} size={56} className="shadow-lg hover:scale-110 transition-transform" />
-                   ))}
+                   <VCardSocialLinks 
+                        card={card} 
+                        layout="horizontal" 
+                        variant="circular" 
+                        iconSize={28}
+                        itemClassName="shadow-lg hover:scale-110 transition-transform"
+                        containerClassName="flex gap-4"
+                   />
+
              </div>
 
              {/* CONTACT INFO GRID */}
@@ -162,6 +168,7 @@ export function Temp22VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                                      </p>
                                 </div>
                            </div>
+
                        ))}
                   </div>
              </section>
@@ -194,13 +201,14 @@ export function Temp22VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                                      {[1, 2, 3, 4, 5].map(s => <Star key={s} size={18} className="fill-yellow-400 text-yellow-400" />)}
                                 </div>
                                 <p className="text-[14px] font-medium text-white leading-relaxed mb-6 italic">
-                                     “{t.quote || t.review}”
+                                     â€œ{t.quote || t.review}â€
                                 </p>
                                 <div className="space-y-1">
                                      <h4 className="text-[18px] font-black text-white drop-shadow-sm">{t.name}</h4>
                                      <p className="text-[12px] font-bold text-white/50 uppercase tracking-widest">{t.role}</p>
                                 </div>
                            </div>
+
                        ))}
                   </div>
              </section>
@@ -236,6 +244,7 @@ export function Temp22VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                                      <span className="text-[20px] font-black text-white tracking-tight leading-none">{bh.hours}</span>
                                 </div>
                            </div>
+
                        ))}
                   </div>
              </section>
@@ -412,7 +421,7 @@ export function Temp22VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         {/* FOOTER */}
         <div className="py-10 text-center bg-black/5 border-t border-white/10 mt-auto">
              <p className="text-[12px] font-black text-white/50 uppercase tracking-[0.4em]">
-                &copy; {new Date().getFullYear()} · Digital Profile Elito
+                &copy; {new Date().getFullYear()} Â· Digital Profile Elito
              </p>
         </div>
 

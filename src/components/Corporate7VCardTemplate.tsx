@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
@@ -6,7 +6,8 @@ import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Calendar, ExternalLink, Facebook, Instagram, Linkedin, Twitter, MessageCircle, Monitor, PenTool, Layout, Code, User } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { getSocialIcon, getSocialColor } from "@/lib/social-icons";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {
   card: VCardItem;
@@ -118,11 +119,14 @@ export function Corporate7VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
         <section className="px-6 mb-16 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150">
             <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-orange-500/5 rounded-[32px] blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative bg-white/40 backdrop-blur-3xl rounded-[32px] py-8 px-8 shadow-[0_20px_50px_-20px_rgba(30,27,75,0.1)] border border-white flex items-center justify-center gap-6 sm:gap-10 transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(30,27,75,0.15)] group-hover:-translate-y-1">
-                    {card.socialLinks?.filter(link => link.url).map((link, idx) => (
-                        <SocialCircleIcon key={idx} platform={link.platform} url={link.url} size={44} />
-                    ))}
-                </div>
+                <VCardSocialLinks 
+                    card={card} 
+                    layout="horizontal" 
+                    variant="circular" 
+                    iconSize={20}
+                    itemClassName="transition-all duration-500"
+                    containerClassName="relative bg-white/40 backdrop-blur-3xl rounded-[32px] py-8 px-8 shadow-[0_20px_50px_-20px_rgba(30,27,75,0.1)] border border-white flex items-center justify-center gap-6 sm:gap-10 hover:shadow-[0_30px_60px_-15px_rgba(30,27,75,0.15)] group-hover:-translate-y-1"
+                />
             </div>
         </section>
 

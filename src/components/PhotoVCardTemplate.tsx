@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from "react";
 import Image from "next/image";
 import { 
@@ -7,7 +7,8 @@ import {
   Instagram, Facebook, Linkedin, Twitter, Youtube, MessageCircle,
   Heart, Sparkles
 } from "lucide-react";
-import { SocialCircleIcon } from "@/components/SocialCircleIcon";
+
+import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { getSocialIcon } from "@/lib/social-icons";
 
@@ -78,19 +79,14 @@ export function PhotoVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
            </div>
 
            {/* Social Icons (Hollow Minimalist Style) */}
-            <div className="flex flex-wrap items-center gap-4 mb-14">
-               {card.socialLinks?.map((social, idx) => (
-                  <a 
-                    key={idx} 
-                    href={social.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-14 h-14 rounded-full border border-slate-300 flex items-center justify-center text-slate-800 bg-white shadow-sm transition-all hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:scale-110 cursor-pointer"
-                  >
-                     <SocialIcon platform={social.platform} />
-                  </a>
-               ))}
-            </div>
+            <VCardSocialLinks 
+                card={card} 
+                layout="horizontal" 
+                variant="circular" 
+                iconSize={20}
+                itemClassName="w-14 h-14 rounded-full border border-slate-300 flex items-center justify-center text-slate-800 bg-white shadow-sm transition-all hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:scale-110"
+                containerClassName="flex flex-wrap items-center gap-4 mb-14"
+            />
 
            {/* Description Text */}
            <div className="mb-14 px-2">
