@@ -225,6 +225,14 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
     if (directUrlMatch?.[0]) return directUrlMatch[0];
     return null;
   };
+  const getIframeUrl = (raw: string): string | null => {
+    const text = raw || "";
+    const iframeSrcMatch = text.match(/<iframe[^>]*src=['"]([^'"]+)['"]/i);
+    if (iframeSrcMatch?.[1]) return iframeSrcMatch[1];
+    const directUrlMatch = text.match(/https?:\/\/[^\s"'<>]+/i);
+    if (directUrlMatch?.[0]) return directUrlMatch[0];
+    return null;
+  };
   const addedInstagramEmbeds = addedEmbedTags
     .map((embed) => ({ ...embed, embedUrl: getInstagramEmbedUrl(embed.value) }))
     .filter((embed) => !!embed.embedUrl);
@@ -232,6 +240,22 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
     .filter((embed) => (embed.section ?? "") === "linkedin")
     .map((embed) => ({ ...embed, embedUrl: getLinkedInEmbedUrl(embed.value) }))
     .filter((embed) => !!embed.embedUrl);
+  const addedIframes = addedEmbedTags
+    .filter((embed) => (embed.section ?? "") === "iframes")
+    .map((embed) => ({ ...embed, embedUrl: getIframeUrl(embed.value) }))
+    .filter((embed) => !!embed.embedUrl);
+
+  const normalizeCustomLinkUrl = (raw: string) => {
+    const text = (raw || "").trim();
+    if (!text) return "";
+    if (/^https?:\/\//i.test(text)) return text;
+    return `https://${text}`;
+  };
+
+  const addedCustomLinks = (card.customLinks || []).filter(
+    (l) => (l.name || "").trim().length > 0 && (l.url || "").trim().length > 0
+  );
+
   const hasAnyEmbeddedPosts =
     addedInstagramEmbeds.length > 0 || addedLinkedInEmbeds.length > 0;
 
@@ -566,12 +590,26 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                  {/* Title */}
                  <div className="relative z-10 text-center mb-12 flex items-center justify-center gap-2">
                      <ChevronLeft className="w-7 h-7 text-white/80" strokeWidth={1} />
-                     <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">Our Services</h2>
+                    <h2 className="text-[26px] font-black text-[#f06100] tracking-wide">
+                      {card.serviceTitleSmall || "Our Services"}
+                    </h2>
                      <ChevronRight className="w-7 h-7 text-white/80" strokeWidth={1} />
                  </div>
 
+                {card.serviceTitle && (
+                  <p className="text-[16px] font-black text-white/90 tracking-tight mb-8 text-center">
+                    {card.serviceTitle}
+                  </p>
+                )}
+
                  {/* Grid for Service Cards */}
-                 <div className="w-full max-w-[500px] grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-5">
+                <div
+                  className={`w-full max-w-[500px] ${
+                    card.displayImagesWithSlider
+                      ? "flex overflow-x-auto gap-6 snap-x snap-mandatory pb-4"
+                      : "grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-5"
+                  }`}
+                >
                      {(services?.length > 0 ? services : [
                          { title: "Custom Software Development", desc: "Building tailored desktop, web, or mobile applications to meet specific business needs." },
                          { title: "Website & Web Application Development", desc: "Creating responsive, user-friendly websites and online platforms." },
@@ -579,8 +617,13 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                          { title: "Database Design & Management", desc: "Creating, optimizing, and maintaining databases for storing and managing data." },
                          { title: "Software Maintenance & Bug Fixing", desc: "Updating existing applications, fixing errors, and improving performance." },
                          { title: "Automation & Scripting Solutions", desc: "Writing scripts to automate repetitive tasks and improve efficiency." }
-                     ]).map((s: any, idx: number) => (
-                         <div key={idx} className="relative bg-[#1a1a1c] border border-white/5 rounded-[12px] overflow-hidden shadow-2xl flex flex-col group transition-all hover:bg-[#1d1d1f]">
+                    ]).map((s: any, idx: number) => (
+                        <div
+                          key={idx}
+                          className={`relative bg-[#1a1a1c] border border-white/5 rounded-[12px] overflow-hidden shadow-2xl flex flex-col group transition-all hover:bg-[#1d1d1f] ${
+                            card.displayImagesWithSlider ? "min-w-[260px] snap-start" : ""
+                          }`}
+                        >
                              {/* The Image Section with Slanted Clip Path cutting the bottom edge */}
                              <div className="relative w-full h-[155px] sm:h-[140px] z-10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 88%, 0 100%)' }}>
                                  {s.icon || s.image ? (
@@ -1247,11 +1290,27 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
           <>
             {/* OUR SERVICES SECTION (Requested Design) */}
             <section className="px-6 pb-16 bg-gradient-to-b from-[#d6f0f5] to-[#c2eaef] relative z-10 flex flex-col items-center">
-                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Our Services</h2>
-                
-                <div className="grid grid-cols-2 gap-4 w-full max-w-[460px]">
+                <p className="text-[12px] font-black text-[#372b61] uppercase tracking-[0.12em] mb-2 text-center">
+                  {card.serviceTitleSmall || "Our Services"}
+                </p>
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">
+                  {card.serviceTitle || "Explore Our Services"}
+                </h2>
+
+                <div
+                  className={`w-full max-w-[460px] ${
+                    card.displayImagesWithSlider
+                      ? "flex overflow-x-auto gap-4 snap-x snap-mandatory pb-4"
+                      : "grid grid-cols-2 gap-4"
+                  }`}
+                >
                     {services.map((s: any, idx: number) => (
-                        <div key={idx} className="border border-[#b4bbd4] rounded-3xl p-3.5 flex flex-col gap-3 bg-white/20 backdrop-blur-md shadow-[0_10px_20px_rgba(0,0,0,0.02)] transition-all hover:bg-white/40 hover:-translate-y-1">
+                        <div
+                          key={idx}
+                          className={`border border-[#b4bbd4] rounded-3xl p-3.5 flex flex-col gap-3 bg-white/20 backdrop-blur-md shadow-[0_10px_20px_rgba(0,0,0,0.02)] transition-all hover:bg-white/40 hover:-translate-y-1 ${
+                            card.displayImagesWithSlider ? "min-w-[220px] snap-start flex-shrink-0" : ""
+                          }`}
+                        >
                             <div className="w-full aspect-square rounded-2xl overflow-hidden relative border border-white/50 shadow-sm bg-white/50">
                                 {s.icon ? (
                                     <Image src={s.icon} alt={s.name || s.title} fill className="object-cover" />
@@ -1272,6 +1331,18 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                         </div>
                     ))}
                 </div>
+
+                {card.displayServiceEnquiryButton && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })
+                    }
+                    className="mt-10 inline-flex items-center justify-center rounded-lg bg-white/10 border border-white/20 px-6 py-3.5 text-white text-[13px] font-bold tracking-wide hover:bg-white/20 transition-colors shadow-sm"
+                  >
+                    Service Enquiry
+                  </button>
+                )}
             </section>
 
             {/* PRODUCTS SECTION (Show added products after services) */}
@@ -1600,11 +1671,23 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                         </div>
                     ))}
                 </div>
+
+                {card.displayServiceEnquiryButton && (
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                    className="mt-10 inline-flex items-center justify-center rounded-lg bg-white/10 border border-white/20 px-6 py-3.5 text-white text-[13px] font-bold tracking-wide hover:bg-white/20 transition-colors shadow-sm"
+                  >
+                    Service Enquiry
+                  </button>
+                )}
             </section>
 
             {/* CONTACT US SECTION (Requested Design) */}
             <section className="px-5 py-16 bg-gradient-to-b from-[#d1eaf0] to-[#dfdcf2] relative z-10 flex flex-col items-center">
-                <h2 className="text-[28px] font-black text-[#372b61] mb-10 tracking-tight">Contact Us</h2>
+                <h2 id="contact" className="text-[28px] font-black text-[#372b61] mb-10 tracking-tight">
+                  Contact Us
+                </h2>
                 
                 <div className="w-full max-w-[460px] bg-white rounded-2xl p-6 md:p-8 shadow-[0_10px_20px_rgba(0,0,0,0.03)] border border-white">
                     <form className="flex flex-col md:flex-row gap-5">
@@ -1683,6 +1766,62 @@ export function CorporateVCardTemplate({ card, slug, baseUrl, qrDataUrl, onDownl
                       />
                     </div>
                   )}
+                </div>
+              </section>
+            )}
+
+            {/* IFRAMES SECTION (Show at the end, before Create Your VCard) */}
+            {addedIframes.length > 0 && (
+              <section className="px-6 pb-14 bg-gradient-to-b from-[#dfdcf2] to-[#dfdcf2] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Iframes</h2>
+                <div className="w-full max-w-[460px] space-y-4">
+                  {addedIframes.map((frame) => (
+                    <div key={frame.id} className="rounded-2xl border border-[#d5dcec] bg-white p-4 shadow-sm">
+                      <p className="mb-3 text-[12px] font-bold uppercase tracking-wide text-[#6f78a0]">URL</p>
+                      <iframe
+                        src={frame.embedUrl!}
+                        title={`iframe ${frame.id}`}
+                        className="w-full min-h-[420px] rounded-xl border border-gray-200"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* CUSTOM LINKS SECTION (Show after Iframes) */}
+            {addedCustomLinks.length > 0 && (
+              <section className="px-6 pb-14 bg-gradient-to-b from-[#dfdcf2] to-[#dfdcf2] relative z-10 flex flex-col items-center">
+                <h2 className="text-[28px] font-black text-[#372b61] mb-8 tracking-tight">Custom Links</h2>
+                <div className="w-full max-w-[460px] space-y-3.5">
+                  {addedCustomLinks.map((link) => {
+                    const href = normalizeCustomLinkUrl(link.url);
+                    const asButton = !!link.showAsButton;
+                    const isRounded = (link.buttonType ?? "square") === "rounded";
+                    const tone = link.color || "#4E5CF1";
+                    return (
+                      <a
+                        key={link.id}
+                        href={href}
+                        target={link.openInNewTab ? "_blank" : "_self"}
+                        rel={link.openInNewTab ? "noopener noreferrer" : undefined}
+                        className={
+                          asButton
+                            ? `w-full inline-flex items-center justify-between gap-3 px-5 py-3.5 text-white font-bold tracking-wide shadow-sm hover:shadow-md transition-all ${
+                                isRounded ? "rounded-full" : "rounded-xl"
+                              }`
+                            : "w-full inline-flex items-center justify-between gap-3 px-5 py-3.5 rounded-xl border border-[#d5dcec] bg-white hover:bg-[#f8f7ff] transition-colors"
+                        }
+                        style={asButton ? { backgroundColor: tone } : undefined}
+                      >
+                        <span className={asButton ? "text-[14px] text-white truncate" : "text-[14px] text-[#45396f] font-semibold truncate"}>
+                          {link.name}
+                        </span>
+                        <ArrowRight className={asButton ? "w-4 h-4 text-white shrink-0" : "w-4 h-4 text-[#6b61a0] shrink-0"} />
+                      </a>
+                    );
+                  })}
                 </div>
               </section>
             )}

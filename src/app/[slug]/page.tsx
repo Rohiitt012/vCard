@@ -908,52 +908,112 @@ export default function PublicVCardPage() {
                 {card.serviceTitle || "What I can do for you"}
               </h2>
             </div>
-            <div className="grid gap-6 md:grid-cols-3 text-sm">
-              {(card.services && card.services.length > 0
-                ? card.services
-                : [
-                  {
-                    name: "Product Design",
-                    description: "From idea to clickable prototypes and final UI deliverables.",
-                  },
-                  {
-                    name: "Web Experience",
-                    description: "Modern responsive websites built with Tailwind and React.",
-                  },
-                  {
-                    name: "Brand Support",
-                    description: "Visual systems, design systems and ongoing design support.",
-                  },
-                ]
-              ).map((item: any, idx: number) => (
-                <div
-                  key={item.id || idx}
-                  className="rounded-2xl bg-[#181818] border border-white/10 px-5 py-5 flex flex-col gap-2"
+            {card.displayServiceEnquiryButton && (
+              <div className="mb-8 md:mb-10">
+                <button
+                  type="button"
+                  className="w-full rounded-xl bg-[#FFE600] text-[#131313] px-5 py-3 text-sm font-bold hover:opacity-90 transition-opacity shadow-sm"
+                  onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" })}
                 >
-                  <div className="h-9 w-9 rounded-xl bg-[#FFE600]/10 border border-[#FFE600]/40 flex items-center justify-center text-xs font-semibold text-[#FFE600] mb-1 overflow-hidden">
-                    {item.icon ? (
-                      <img src={item.icon} alt={item.name} className="h-full w-full object-cover" />
-                    ) : (
-                      <span>✦</span>
+                  Service Enquiry
+                </button>
+              </div>
+            )}
+            {card.displayImagesWithSlider ? (
+              <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory text-sm">
+                {(card.services && card.services.length > 0
+                  ? card.services
+                  : [
+                    {
+                      name: "Product Design",
+                      description: "From idea to clickable prototypes and final UI deliverables.",
+                    },
+                    {
+                      name: "Web Experience",
+                      description: "Modern responsive websites built with Tailwind and React.",
+                    },
+                    {
+                      name: "Brand Support",
+                      description: "Visual systems, design systems and ongoing design support.",
+                    },
+                  ]
+                ).map((item: any, idx: number) => (
+                  <div
+                    key={item.id || idx}
+                    className="snap-start min-w-[260px] rounded-2xl bg-[#181818] border border-white/10 px-5 py-5 flex flex-col gap-2"
+                  >
+                    <div className="h-9 w-9 rounded-xl bg-[#FFE600]/10 border border-[#FFE600]/40 flex items-center justify-center text-xs font-semibold text-[#FFE600] mb-1 overflow-hidden">
+                      {item.icon ? (
+                        <img src={item.icon} alt={item.name} className="h-full w-full object-cover" />
+                      ) : (
+                        <span>✦</span>
+                      )}
+                    </div>
+                    <p className="font-semibold text-[15px]">{item.name}</p>
+                    <p className="text-xs text-slate-200 leading-relaxed">
+                      {item.description}
+                    </p>
+                    {item.url && (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block text-[11px] font-semibold text-[#FFE600] hover:underline"
+                      >
+                        Explore →
+                      </a>
                     )}
                   </div>
-                  <p className="font-semibold text-[15px]">{item.name}</p>
-                  <p className="text-xs text-slate-200 leading-relaxed">
-                    {item.description}
-                  </p>
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-block text-[11px] font-semibold text-[#FFE600] hover:underline"
-                    >
-                      Explore →
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-3 text-sm">
+                {(card.services && card.services.length > 0
+                  ? card.services
+                  : [
+                    {
+                      name: "Product Design",
+                      description: "From idea to clickable prototypes and final UI deliverables.",
+                    },
+                    {
+                      name: "Web Experience",
+                      description: "Modern responsive websites built with Tailwind and React.",
+                    },
+                    {
+                      name: "Brand Support",
+                      description: "Visual systems, design systems and ongoing design support.",
+                    },
+                  ]
+                ).map((item: any, idx: number) => (
+                  <div
+                    key={item.id || idx}
+                    className="rounded-2xl bg-[#181818] border border-white/10 px-5 py-5 flex flex-col gap-2"
+                  >
+                    <div className="h-9 w-9 rounded-xl bg-[#FFE600]/10 border border-[#FFE600]/40 flex items-center justify-center text-xs font-semibold text-[#FFE600] mb-1 overflow-hidden">
+                      {item.icon ? (
+                        <img src={item.icon} alt={item.name} className="h-full w-full object-cover" />
+                      ) : (
+                        <span>✦</span>
+                      )}
+                    </div>
+                    <p className="font-semibold text-[15px]">{item.name}</p>
+                    <p className="text-xs text-slate-200 leading-relaxed">
+                      {item.description}
+                    </p>
+                    {item.url && (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block text-[11px] font-semibold text-[#FFE600] hover:underline"
+                      >
+                        Explore →
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

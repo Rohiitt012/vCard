@@ -806,8 +806,18 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     image?: string;
   }>({});
   const [iframesSearch, setIframesSearch] = useState("");
+  const [iframesShowPerPage, setIframesShowPerPage] = useState(10);
+  const [showNewIframeModal, setShowNewIframeModal] = useState(false);
+  const [newIframeUrl, setNewIframeUrl] = useState("");
   const [customLinksSearch, setCustomLinksSearch] = useState("");
   const [customLinksShowPerPage, setCustomLinksShowPerPage] = useState(10);
+  const [showNewCustomLinkModal, setShowNewCustomLinkModal] = useState(false);
+  const [newCustomLinkName, setNewCustomLinkName] = useState("");
+  const [newCustomLinkUrl, setNewCustomLinkUrl] = useState("");
+  const [newCustomLinkColor, setNewCustomLinkColor] = useState("#4E5CF1");
+  const [newCustomLinkButtonType, setNewCustomLinkButtonType] = useState<"square" | "rounded">("square");
+  const [newCustomLinkShowAsButton, setNewCustomLinkShowAsButton] = useState(false);
+  const [newCustomLinkOpenInNewTab, setNewCustomLinkOpenInNewTab] = useState(false);
   const [termsContent, setTermsContent] = useState("");
   const [privacyContent, setPrivacyContent] = useState("");
   const [qrDownloadSize, setQrDownloadSize] = useState(200);
@@ -854,6 +864,21 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
       prev.map((c) => (c.id === vcardId ? { ...c, privacyHtml: privacyContent } : c))
     );
     setPrivacySaveSuccess(true);
+  };
+
+  const normalizeCustomLinkUrl = (url: string) => {
+    const trimmed = (url || "").trim();
+    if (!trimmed) return "";
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+  };
+  const resetNewCustomLinkForm = () => {
+    setNewCustomLinkName("");
+    setNewCustomLinkUrl("");
+    setNewCustomLinkColor("#4E5CF1");
+    setNewCustomLinkButtonType("square");
+    setNewCustomLinkShowAsButton(false);
+    setNewCustomLinkOpenInNewTab(false);
   };
 
   const handleNewBlogSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -1046,6 +1071,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
       setTermsContent(currentCard.termsHtml ?? "");
       setPrivacyContent(currentCard.privacyHtml ?? "");
       setDisplayProductEnquiryButton(currentCard.displayProductEnquiryButton ?? false);
+      setDisplayServiceEnquiryButton(currentCard.displayServiceEnquiryButton ?? true);
+      setDisplayImagesWithSlider(currentCard.displayImagesWithSlider ?? false);
       if (termsEditorRef.current) {
         termsEditorRef.current.innerHTML = currentCard.termsHtml ?? "";
       }
@@ -1087,6 +1114,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     currentCard?.selectedTemplateId,
     currentCard?.termsHtml,
     currentCard?.privacyHtml,
+    currentCard?.displayServiceEnquiryButton,
+    currentCard?.displayImagesWithSlider,
     currentCard?.businessHours,
     currentCard?.appointmentType,
     currentCard?.appointmentServices,
@@ -1266,7 +1295,9 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
       : `${window.location.origin}${pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`
       }`;
 
-    window.open(absoluteUrl, "_blank", "noopener,noreferrer");
+    const bust = `__v=${Date.now()}`;
+    const withBust = absoluteUrl.includes("?") ? `${absoluteUrl}&${bust}` : `${absoluteUrl}?${bust}`;
+    window.open(withBust, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -3723,12 +3754,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         role="switch"
                         aria-checked={displayServiceEnquiryButton}
                         onClick={() => {
-                          setDisplayServiceEnquiryButton((prev) => !prev);
+                          const next = !displayServiceEnquiryButton;
+                          setDisplayServiceEnquiryButton(next);
                           if (vcardId) {
                             setVCards((prev) =>
-                              prev.map((c) =>
-                                c.id === vcardId ? { ...c, displayServiceEnquiryButton: !displayServiceEnquiryButton } : c
-                              )
+                              prev.map((c) => (c.id === vcardId ? { ...c, displayServiceEnquiryButton: next } : c))
                             );
                           }
                           setServicesSuccessMessage("Service Section Enquiry Button updated successfully.");
@@ -3752,8 +3782,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         role="switch"
                         aria-checked={displayImagesWithSlider}
                         onClick={() => {
-                          setDisplayImagesWithSlider((prev) => !prev);
-                          // Here you could also update the vcard data if there's a property for this
+                          const next = !displayImagesWithSlider;
+                          setDisplayImagesWithSlider(next);
+                          if (vcardId) {
+                            setVCards((prev) =>
+                              prev.map((c) => (c.id === vcardId ? { ...c, displayImagesWithSlider: next } : c))
+                            );
+                          }
                           setServicesSuccessMessage("Display Images with Slider updated successfully.");
                           setShowServicesSuccessToast(true);
                         }}
@@ -5634,6 +5669,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   </div>
                   <button
                     type="button"
+                    onClick={() => setShowNewIframeModal(true)}
                     className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
                   >
                     Add Iframe
@@ -5649,23 +5685,86 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={2} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const all = (currentCard?.embedTags ?? []).filter(
+                            (e) => (e.section ?? "") === "iframes"
+                          );
+                          const q = iframesSearch.trim().toLowerCase();
+                          const filtered = !q
+                            ? all
+                            : all.filter(
+                                (row) =>
+                                  (row.type ?? "").toLowerCase().includes(q) ||
+                                  (row.value ?? "").toLowerCase().includes(q)
+                              );
+                          const rows = filtered.slice(0, iframesShowPerPage);
+                          if (!rows.length) {
+                            return (
+                              <tr>
+                                <td colSpan={2} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return rows.map((row) => (
+                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                              <td className="px-4 py-3">
+                                <div className="max-w-[520px] truncate">{row.value}</div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <button
+                                  type="button"
+                                  className="text-red-500 hover:text-red-600 text-lg"
+                                  onClick={() => {
+                                    if (!vcardId) return;
+                                    setVCards((prev) =>
+                                      prev.map((c) =>
+                                        c.id === vcardId
+                                          ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
+                                          : c
+                                      )
+                                    );
+                                  }}
+                                  aria-label="Delete iframe"
+                                >
+                                  🗑
+                                </button>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
+                      <select
+                        value={iframesShowPerPage}
+                        onChange={(e) => setIframesShowPerPage(Number(e.target.value))}
+                        className={`${inputClass} h-9 py-1 pr-8 w-20`}
+                      >
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Showing{" "}
+                        {(() => {
+                          const all = (currentCard?.embedTags ?? []).filter((e) => (e.section ?? "") === "iframes");
+                          const q = iframesSearch.trim().toLowerCase();
+                          const count = !q
+                            ? all.length
+                            : all.filter(
+                                (row) =>
+                                  (row.type ?? "").toLowerCase().includes(q) ||
+                                  (row.value ?? "").toLowerCase().includes(q)
+                              ).length;
+                          return count;
+                        })()}{" "}
+                        results
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -6166,9 +6265,19 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                       </svg>
                     </span>
-                    <input type="text" placeholder="Search" className={`${inputClass} pl-10`} />
+                    <input
+                      type="text"
+                      value={customLinksSearch}
+                      onChange={(e) => setCustomLinksSearch(e.target.value)}
+                      placeholder="Search"
+                      className={`${inputClass} pl-10`}
+                    />
                   </div>
-                  <button type="button" className="btn-primary-premium inline-flex items-center justify-center shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setShowNewCustomLinkModal(true)}
+                    className="btn-primary-premium inline-flex items-center justify-center shrink-0"
+                  >
                     Add Custom Link
                   </button>
                 </div>
@@ -6215,23 +6324,92 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td colSpan={5} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                            No Data Available
-                          </td>
-                        </tr>
+                        {(() => {
+                          const all = currentCard?.customLinks ?? [];
+                          const q = customLinksSearch.trim().toLowerCase();
+                          const filtered = !q
+                            ? all
+                            : all.filter(
+                                (row) =>
+                                  (row.name ?? "").toLowerCase().includes(q) || (row.url ?? "").toLowerCase().includes(q)
+                              );
+                          const rows = filtered.slice(0, customLinksShowPerPage);
+                          if (!rows.length) {
+                            return (
+                              <tr>
+                                <td colSpan={5} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                  No Data Available
+                                </td>
+                              </tr>
+                            );
+                          }
+                          return rows.map((row) => (
+                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                              <td className="px-4 py-3">{row.name}</td>
+                              <td className="px-4 py-3">
+                                <a
+                                  href={normalizeCustomLinkUrl(row.url)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="max-w-[360px] block truncate text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+                                >
+                                  {row.url}
+                                </a>
+                              </td>
+                              <td className="px-4 py-3">{row.showAsButton ? "Yes" : "No"}</td>
+                              <td className="px-4 py-3">{row.openInNewTab ? "Yes" : "No"}</td>
+                              <td className="px-4 py-3">
+                                <button
+                                  type="button"
+                                  className="text-red-500 hover:text-red-600 text-lg"
+                                  onClick={() => {
+                                    if (!vcardId) return;
+                                    setVCards((prev) =>
+                                      prev.map((c) =>
+                                        c.id === vcardId
+                                          ? { ...c, customLinks: (c.customLinks ?? []).filter((x) => x.id !== row.id) }
+                                          : c
+                                      )
+                                    );
+                                  }}
+                                  aria-label="Delete custom link"
+                                >
+                                  🗑
+                                </button>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
                       </tbody>
                     </table>
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`} defaultValue={10}>
+                      <select
+                        value={customLinksShowPerPage}
+                        onChange={(e) => setCustomLinksShowPerPage(Number(e.target.value))}
+                        className={`${inputClass} h-9 py-1 pr-8 w-20`}
+                      >
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        Showing{" "}
+                        {(() => {
+                          const all = currentCard?.customLinks ?? [];
+                          const q = customLinksSearch.trim().toLowerCase();
+                          const filtered = !q
+                            ? all
+                            : all.filter(
+                                (row) =>
+                                  (row.name ?? "").toLowerCase().includes(q) || (row.url ?? "").toLowerCase().includes(q)
+                              );
+                          return filtered.length;
+                        })()}{" "}
+                        results
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -6705,6 +6883,257 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
                 >
                   Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* New Iframe modal */}
+      {showNewIframeModal && (
+        <div
+          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="new-iframe-title"
+        >
+          <div className="relative w-full max-w-lg rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
+              <h2 id="new-iframe-title" className="text-lg font-semibold text-gray-900 dark:text-white">
+                New Iframe
+              </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNewIframeModal(false);
+                  setNewIframeUrl("");
+                }}
+                className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                aria-label="Close"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <form
+              className="p-6 pb-8 space-y-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!vcardId) return;
+                if (!newIframeUrl.trim()) return;
+                const newRow = {
+                  id: `iframe-${Date.now()}`,
+                  type: "iframe",
+                  value: newIframeUrl.trim(),
+                  section: "iframes" as const,
+                };
+                setVCards((prev) =>
+                  prev.map((c) =>
+                    c.id === vcardId ? { ...c, embedTags: [...(c.embedTags ?? []), newRow] } : c
+                  )
+                );
+                setShowNewIframeModal(false);
+                setNewIframeUrl("");
+              }}
+            >
+              <div>
+                <label className={labelClass}>
+                  Iframe URL (or full &lt;iframe&gt; code): <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  value={newIframeUrl}
+                  onChange={(e) => setNewIframeUrl(e.target.value)}
+                  className={`${inputClass} min-h-[160px] resize-y mt-1`}
+                  placeholder="<iframe src='https://...' ...></iframe>  OR  https://example.com/embed"
+                  required
+                />
+              </div>
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="submit"
+                  className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowNewIframeModal(false);
+                    setNewIframeUrl("");
+                  }}
+                  className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                >
+                  Discard
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* New Custom Link modal */}
+      {showNewCustomLinkModal && (
+        <div
+          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="new-custom-link-title"
+        >
+          <div className="relative w-full max-w-3xl rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
+              <h2 id="new-custom-link-title" className="text-3xl font-semibold text-gray-900 dark:text-white">
+                New Custom Link
+              </h2>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNewCustomLinkModal(false);
+                  resetNewCustomLinkForm();
+                }}
+                className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                aria-label="Close"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <form
+              className="p-6 pb-8 space-y-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!vcardId) return;
+                if (!newCustomLinkName.trim() || !newCustomLinkUrl.trim()) return;
+                const newRow = {
+                  id: `custom-link-${Date.now()}`,
+                  name: newCustomLinkName.trim(),
+                  url: newCustomLinkUrl.trim(),
+                  color: newCustomLinkColor,
+                  buttonType: newCustomLinkButtonType,
+                  showAsButton: newCustomLinkShowAsButton,
+                  openInNewTab: newCustomLinkOpenInNewTab,
+                };
+                setVCards((prev) =>
+                  prev.map((c) =>
+                    c.id === vcardId ? { ...c, customLinks: [...(c.customLinks ?? []), newRow] } : c
+                  )
+                );
+                setShowNewCustomLinkModal(false);
+                resetNewCustomLinkForm();
+              }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>
+                    Link Name: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newCustomLinkName}
+                    onChange={(e) => setNewCustomLinkName(e.target.value)}
+                    placeholder="Link Name"
+                    className={`${inputClass} mt-1`}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>
+                    Link: <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={newCustomLinkUrl}
+                    onChange={(e) => setNewCustomLinkUrl(e.target.value)}
+                    placeholder="https://..."
+                    className={`${inputClass} mt-1`}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>Button Color:</label>
+                  <div className="w-full h-11 rounded-lg border border-gray-300 bg-white dark:bg-gray-800 overflow-hidden">
+                    <input
+                      type="color"
+                      value={newCustomLinkColor}
+                      onChange={(e) => setNewCustomLinkColor(e.target.value)}
+                      className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[5px]"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className={labelClass}>Button Type</label>
+                  <select
+                    value={newCustomLinkButtonType}
+                    onChange={(e) => setNewCustomLinkButtonType(e.target.value as "square" | "rounded")}
+                    className={`${inputClass} mt-1`}
+                  >
+                    <option value="square">square</option>
+                    <option value="rounded">rounded</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="flex items-center gap-3 pt-1">
+                  <span className="text-sm text-gray-700 dark:text-gray-300">Show as Button:</span>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={newCustomLinkShowAsButton}
+                    onClick={() => setNewCustomLinkShowAsButton((prev) => !prev)}
+                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
+                      newCustomLinkShowAsButton ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                    }`}
+                  >
+                    <span
+                      className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                        newCustomLinkShowAsButton ? "translate-x-5" : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </label>
+
+                <label className="flex items-center gap-3 pt-1">
+                  <span className="text-sm text-gray-700 dark:text-gray-300">Open in new tab:</span>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={newCustomLinkOpenInNewTab}
+                    onClick={() => setNewCustomLinkOpenInNewTab((prev) => !prev)}
+                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
+                      newCustomLinkOpenInNewTab ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                    }`}
+                  >
+                    <span
+                      className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                        newCustomLinkOpenInNewTab ? "translate-x-5" : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="submit"
+                  className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowNewCustomLinkModal(false);
+                    resetNewCustomLinkForm();
+                  }}
+                  className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                >
+                  Discard
                 </button>
               </div>
             </form>

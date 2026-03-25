@@ -28,6 +28,16 @@ export type VCardEmbedTag = {
   section?: "insta" | "linkedin" | "iframes";
 };
 
+export type VCardCustomLink = {
+  id: string;
+  name: string;
+  url: string;
+  color?: string;
+  buttonType?: "square" | "rounded";
+  showAsButton?: boolean;
+  openInNewTab?: boolean;
+};
+
 export type VCardGallery = {
   id: string;
   type: string;
@@ -107,9 +117,12 @@ export type VCardItem = {
   birthDate?: string;
   businessHours?: VCardBusinessHours;
   displayProductEnquiryButton?: boolean;
+  displayServiceEnquiryButton?: boolean;
+  displayImagesWithSlider?: boolean;
   appointmentType?: "free" | "paid";
   appointmentServices?: VCardAppointmentService[];
   embedTags?: VCardEmbedTag[];
+  customLinks?: VCardCustomLink[];
   socialLinks?: VCardSocialLink[];
   metaTitle?: string;
   metaDescription?: string;
