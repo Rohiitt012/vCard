@@ -1032,6 +1032,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [termsSaveSuccess, setTermsSaveSuccess] = useState(false);
   const [privacySaveSuccess, setPrivacySaveSuccess] = useState(false);
   const [seoSaveSuccess, setSeoSaveSuccess] = useState(false);
+
+  const [seoSiteTitle, setSeoSiteTitle] = useState("");
+  const [seoHomeTitle, setSeoHomeTitle] = useState("");
+  const [seoMetaKeyword, setSeoMetaKeyword] = useState("");
+  const [seoMetaDescription, setSeoMetaDescription] = useState("");
+  const [seoGoogleAnalytics, setSeoGoogleAnalytics] = useState("");
   const [fontFamily, setFontFamily] = useState<"default" | "outfit" | "inter" | "poppins" | "roboto">("default");
   const [fontSizePx, setFontSizePx] = useState(16);
   const profileImageInputRef = useRef<HTMLInputElement>(null);
@@ -1070,6 +1076,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
       setBasicAlias((aliasFromSlug || aliasFromPreview || "").toLowerCase());
       setTermsContent(currentCard.termsHtml ?? "");
       setPrivacyContent(currentCard.privacyHtml ?? "");
+      setSeoSiteTitle(currentCard.metaTitle ?? "");
+      setSeoHomeTitle(currentCard.homeTitle ?? "");
+      setSeoMetaKeyword(currentCard.metaKeywords ?? "");
+      setSeoMetaDescription(currentCard.metaDescription ?? "");
+      setSeoGoogleAnalytics(currentCard.googleAnalyticsCode ?? "");
       setDisplayProductEnquiryButton(currentCard.displayProductEnquiryButton ?? false);
       setDisplayServiceEnquiryButton(currentCard.displayServiceEnquiryButton ?? true);
       setDisplayImagesWithSlider(currentCard.displayImagesWithSlider ?? false);
@@ -1114,6 +1125,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     currentCard?.selectedTemplateId,
     currentCard?.termsHtml,
     currentCard?.privacyHtml,
+    currentCard?.metaTitle,
+    currentCard?.homeTitle,
+    currentCard?.metaKeywords,
+    currentCard?.metaDescription,
+    currentCard?.googleAnalyticsCode,
     currentCard?.displayServiceEnquiryButton,
     currentCard?.displayImagesWithSlider,
     currentCard?.businessHours,
@@ -6597,6 +6613,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <input
                       type="text"
                       className={inputClass}
+                      value={seoSiteTitle}
+                      onChange={(e) => setSeoSiteTitle(e.target.value)}
                       placeholder="Enter Site Title"
                     />
                   </div>
@@ -6605,6 +6623,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <input
                       type="text"
                       className={inputClass}
+                      value={seoHomeTitle}
+                      onChange={(e) => setSeoHomeTitle(e.target.value)}
                       placeholder="Enter Home Title"
                     />
                   </div>
@@ -6615,6 +6635,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <input
                       type="text"
                       className={inputClass}
+                      value={seoMetaKeyword}
+                      onChange={(e) => setSeoMetaKeyword(e.target.value)}
                       placeholder="Enter Meta Keyword"
                     />
                   </div>
@@ -6623,6 +6645,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     <input
                       type="text"
                       className={inputClass}
+                      value={seoMetaDescription}
+                      onChange={(e) => setSeoMetaDescription(e.target.value)}
                       placeholder="Enter Meta Description"
                     />
                   </div>
@@ -6630,6 +6654,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                 <div>
                   <label className={labelClass}>Google Analytics:</label>
                   <textarea
+                    value={seoGoogleAnalytics}
+                    onChange={(e) => setSeoGoogleAnalytics(e.target.value)}
                     className={`${inputClass} min-h-[140px] resize-y`}
                     placeholder="Google Analytics Code"
                   />
@@ -6637,13 +6663,39 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                 <div className="flex justify-start gap-2.5 pt-2">
                   <button
                     type="button"
-                    onClick={() => setSeoSaveSuccess(true)}
+                    onClick={() => {
+                      if (!vcardId) return;
+                      if (!currentCard) return;
+                      setVCards((prev) =>
+                        prev.map((c) =>
+                          c.id === vcardId
+                            ? {
+                                ...c,
+                                metaTitle: seoSiteTitle.trim(),
+                                homeTitle: seoHomeTitle.trim(),
+                                metaKeywords: seoMetaKeyword.trim(),
+                                metaDescription: seoMetaDescription.trim(),
+                                googleAnalyticsCode: seoGoogleAnalytics.trim(),
+                              }
+                            : c
+                        )
+                      );
+                      setSeoSaveSuccess(true);
+                    }}
                     className="btn-primary-premium inline-flex items-center justify-center"
                   >
                     Save
                   </button>
                   <button
                     type="button"
+                    onClick={() => {
+                      if (!currentCard) return;
+                      setSeoSiteTitle(currentCard.metaTitle ?? "");
+                      setSeoHomeTitle(currentCard.homeTitle ?? "");
+                      setSeoMetaKeyword(currentCard.metaKeywords ?? "");
+                      setSeoMetaDescription(currentCard.metaDescription ?? "");
+                      setSeoGoogleAnalytics(currentCard.googleAnalyticsCode ?? "");
+                    }}
                     className="btn-secondary-premium inline-flex items-center justify-center"
                   >
                     Discard

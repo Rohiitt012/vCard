@@ -125,7 +125,10 @@ export type VCardItem = {
   customLinks?: VCardCustomLink[];
   socialLinks?: VCardSocialLink[];
   metaTitle?: string;
+  homeTitle?: string;
+  metaKeywords?: string;
   metaDescription?: string;
+  googleAnalyticsCode?: string;
   ogImage?: string;
   inquiries?: VCardInquiry[];
   /** Typography customization for public vCard */

@@ -134,7 +134,7 @@ export default function PublicVCardPage() {
       document.title = "vCard | Open My Profile";
       return;
     }
-    const title = card.metaTitle || card.title || "vCard";
+    const title = card.homeTitle || card.metaTitle || card.title || "vCard";
     const desc = card.metaDescription || card.description || `${card.title} – Digital vCard`;
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const path = (card.slug || (card.previewUrl ?? "").replace(/^https?:\/\/[^/]+/, "").replace(/^\/+/, "")) || "";
@@ -148,6 +148,14 @@ export default function PublicVCardPage() {
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute("content", desc.slice(0, 160));
+
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement("meta");
+      metaKeywords.setAttribute("name", "keywords");
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.setAttribute("content", (card.metaKeywords || "").slice(0, 300));
 
     const setMeta = (name: string, content: string, isProp = false) => {
       const attr = isProp ? "property" : "name";
@@ -163,6 +171,60 @@ export default function PublicVCardPage() {
     setMeta("og:description", desc.slice(0, 200), true);
     setMeta("og:image", (card.ogImage && (card.ogImage.startsWith("http") ? card.ogImage : `${origin}${card.ogImage.startsWith("/") ? "" : "/"}${card.ogImage}`)) || `${origin}/images/user/owner.jpg`, true);
     setMeta("og:url", canonicalUrl, true);
+
+    // Google Analytics injection (optional)
+    // NOTE: Users may enter plain text by mistake; never inject unvalidated content.
+    const gaCode = (card.googleAnalyticsCode || "").trim();
+    const looksLikeGaSnippet = (value: string) => {
+      const c = value.trim();
+      if (!c) return false;
+      return (
+        /googletagmanager\.com\/gtag\/js/i.test(c) ||
+        /window\.dataLayer/i.test(c) ||
+        /\bgtag\s*\(/i.test(c) ||
+        /\bG-[A-Z0-9]+/i.test(c) ||
+        /\bUA-\d+-\d+/i.test(c) ||
+        /\bGTM-[A-Z0-9]+/i.test(c)
+      );
+    };
+
+    let gaRoot = document.getElementById("vcard-ga");
+    if (!gaRoot) {
+      gaRoot = document.createElement("div");
+      gaRoot.id = "vcard-ga";
+      document.head.appendChild(gaRoot);
+    }
+    gaRoot.innerHTML = "";
+
+    if (gaCode && looksLikeGaSnippet(gaCode)) {
+      try {
+        if (/<script[\s>]/i.test(gaCode)) {
+          gaRoot.innerHTML = gaCode;
+          gaRoot.querySelectorAll("script").forEach((oldScript) => {
+            const src = oldScript.getAttribute("src");
+            const newScript = document.createElement("script");
+            if (src) newScript.src = src;
+            newScript.type = oldScript.type || "text/javascript";
+            newScript.async = !!oldScript.async;
+            newScript.defer = !!oldScript.defer;
+            newScript.textContent = oldScript.textContent || "";
+            oldScript.replaceWith(newScript);
+          });
+        } else {
+          const script = document.createElement("script");
+          script.type = "text/javascript";
+          script.textContent = gaCode;
+          gaRoot.appendChild(script);
+        }
+      } catch (e) {
+        // Avoid breaking the whole public page due to GA misconfiguration.
+        // eslint-disable-next-line no-console
+        console.warn("[vCard] Google Analytics injection skipped/failed:", e);
+      }
+    } else if (gaCode) {
+      // eslint-disable-next-line no-console
+      console.warn("[vCard] Provided Google Analytics value did not look like a GA snippet. Skipping injection.");
+    }
 
     let linkCanonical = document.querySelector('link[rel="canonical"]');
     if (!linkCanonical) {
@@ -351,6 +413,14 @@ export default function PublicVCardPage() {
     /corporate|cooporate/i.test(`${card.templateName || ""} ${card.title || ""}`) ||
     [7, 13, 14, 15, 16, 17, 18, 19, 20, 21].includes(card.selectedTemplateId || 0);
 
+  const seoItems = [
+    { label: "Site Title", value: card.metaTitle },
+    { label: "Home Title", value: card.homeTitle },
+    { label: "Meta Keywords", value: card.metaKeywords },
+    { label: "Meta Description", value: card.metaDescription },
+    { label: "Google Analytics", value: card.googleAnalyticsCode },
+  ].filter((item) => (item.value || "").toString().trim().length > 0);
+
   const VCardLegalSections = () =>
     showTerms || showPrivacy ? (
       <div className="w-full max-w-[540px] mt-4 rounded-3xl border border-gray-200 bg-white px-4 py-5 sm:px-5 sm:py-6 shadow-sm">
@@ -375,10 +445,31 @@ export default function PublicVCardPage() {
       </div>
     ) : null;
 
+  const VCardSeoSections = () =>
+    seoItems.length > 0 ? (
+      <div className="w-full max-w-[540px] mt-4 rounded-3xl border border-gray-200 bg-white px-4 py-5 sm:px-5 sm:py-6 shadow-sm">
+        <h2 className="text-base font-semibold text-gray-900 mb-4">SEO Details</h2>
+        <div className="grid grid-cols-1 gap-3">
+          {seoItems.map((item) => (
+            <section
+              key={item.label}
+              className="rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5"
+            >
+              <p className="text-[11px] uppercase tracking-wide text-gray-500 mb-1">{item.label}</p>
+              <p className="text-sm text-gray-800 whitespace-pre-wrap break-words">
+                {(item.value || "").toString()}
+              </p>
+            </section>
+          ))}
+        </div>
+      </div>
+    ) : null;
+
   const VCardWidthShell = ({ children }: { children: React.ReactNode }) => (
     <div className="min-h-screen bg-gray-100 flex justify-center px-0 sm:px-4 py-0 sm:py-8 no-scrollbar overflow-x-hidden">
       <div className="w-full max-w-[540px] no-scrollbar">
         {children}
+        <VCardSeoSections />
         {!shouldUseInlineLegalPlacement && <VCardLegalSections />}
       </div>
     </div>
