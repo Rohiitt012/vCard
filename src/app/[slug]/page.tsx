@@ -254,6 +254,37 @@ export default function PublicVCardPage() {
     scriptLd.textContent = JSON.stringify(jsonLd);
   }, [card]);
 
+  // Typography: apply selected font family + size globally for this public page
+  // Tailwind text utilities use rem, so setting root font-size is the only way
+  // to make "font size" reflect across the whole template consistently.
+  useEffect(() => {
+    if (!card || typeof window === "undefined") return;
+    const root = document.documentElement;
+    const prevRootFontSize = root.style.fontSize;
+    const prevBodyFontFamily = document.body.style.fontFamily;
+
+    const size =
+      card.fontSizePx && card.fontSizePx >= 1 && card.fontSizePx <= 40 ? card.fontSizePx : null;
+    if (size) root.style.fontSize = `${size}px`;
+
+    const family =
+      card.fontFamily === "outfit"
+        ? "'Outfit', ui-sans-serif, system-ui, sans-serif"
+        : card.fontFamily === "inter"
+          ? "'Inter', ui-sans-serif, system-ui, sans-serif"
+          : card.fontFamily === "poppins"
+            ? "'Poppins', ui-sans-serif, system-ui, sans-serif"
+            : card.fontFamily === "roboto"
+              ? "'Roboto', ui-sans-serif, system-ui, sans-serif"
+              : "";
+    if (family) document.body.style.fontFamily = family;
+
+    return () => {
+      root.style.fontSize = prevRootFontSize;
+      document.body.style.fontFamily = prevBodyFontFamily;
+    };
+  }, [card]);
+
   // Increment view count once when this vCard page is viewed (API + optional local state)
   useEffect(() => {
     if (!card || viewCountIncremented.current) return;

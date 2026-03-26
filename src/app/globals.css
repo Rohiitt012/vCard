@@ -378,41 +378,43 @@
 
 /* Premium design tokens – professional look */
 @utility card-premium {
-  @apply rounded-2xl border border-gray-200/90 dark:border-gray-700/80 bg-white dark:bg-gray-900/90 transition-all duration-200;
-  box-shadow: var(--shadow-premium);
+  @apply rounded-3xl border border-white/60 dark:border-gray-700/50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-3xl transition-all duration-300;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
 }
 @utility card-premium-hover {
-  @apply hover:border-gray-300/80 dark:hover:border-gray-600;
-  box-shadow: var(--shadow-premium-md);
+  @apply hover:border-white/80 dark:hover:border-gray-600 hover:shadow-xl hover:-translate-y-1;
 }
 @utility page-title {
-  @apply inline-block text-base font-semibold tracking-tight text-gray-900 dark:text-white sm:text-xl md:text-2xl pb-1.5;
+  @apply inline-block text-base font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 sm:text-xl md:text-2xl pb-1.5;
   letter-spacing: -0.02em;
-  border-bottom: 2px solid var(--color-brand-500);
 }
 @utility input-premium {
-  @apply rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900/80 text-gray-900 dark:text-white placeholder-gray-400 transition-all duration-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20;
-  box-shadow: var(--shadow-premium-inner);
+  @apply rounded-[14px] border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 transition-all duration-300 outline-none focus:border-brand-500 focus:ring-[3px] focus:ring-brand-500/20 hover:border-gray-300 dark:hover:border-gray-600;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
 @utility btn-primary-premium {
-  @apply rounded-xl px-5 py-2.5 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-all duration-200;
-  background-color: var(--color-brand-500);
-  box-shadow: 0 1px 2px rgba(70, 95, 255, 0.2);
+  @apply rounded-[14px] px-5 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-[3px] focus:ring-brand-500/30 focus:ring-offset-0 transition-all duration-300 bg-gradient-to-r from-brand-600 to-brand-500;
+  box-shadow: 0 4px 14px rgba(70, 95, 255, 0.25);
   &:hover {
-    background-color: var(--color-brand-600);
-    box-shadow: 0 4px 12px rgba(70, 95, 255, 0.25);
+    @apply shadow-brand-500/40 -translate-y-0.5;
+    box-shadow: 0 6px 20px rgba(70, 95, 255, 0.4);
+  }
+  &:active {
+    @apply translate-y-0 scale-[0.98];
   }
 }
 @utility btn-secondary-premium {
-  @apply rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 transition-all duration-200;
-  box-shadow: var(--shadow-premium-sm);
+  @apply rounded-[14px] border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-5 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 transition-all duration-300 shadow-sm;
   &:hover {
-    @apply bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-500;
+    @apply bg-gray-50 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 -translate-y-0.5 hover:shadow-md;
+  }
+  &:active {
+    @apply translate-y-0 scale-[0.98];
   }
 }
 @utility surface-premium {
-  @apply rounded-2xl border border-gray-200/80 dark:border-gray-700/80 bg-white dark:bg-gray-900/90;
-  box-shadow: var(--shadow-premium);
+  @apply rounded-3xl border border-white/60 dark:border-white/5 bg-white/80 dark:bg-gray-900/60 backdrop-blur-2xl;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.04);
 }
 
 /* third-party libraries CSS */

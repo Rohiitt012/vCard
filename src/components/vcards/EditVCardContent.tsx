@@ -298,14 +298,16 @@ const EditNavIcon = ({ id, active }: { id: string; active: boolean }) => {
 const SOCIAL_LINKS = [
   { id: "website", label: "WebSite URL" },
   { id: "facebook", label: "Facebook URL" },
-  { id: "reddit", label: "Reddit URL" },
-  { id: "youtube", label: "Youtube URL" },
   { id: "whatsapp", label: "WhatsApp URL" },
-  { id: "tiktok", label: "Tiktok URL" },
-  { id: "twitter", label: "Twitter URL" },
   { id: "instagram", label: "Instagram URL" },
-  { id: "tumblr", label: "Tumblr URL" },
   { id: "linkedin", label: "LinkedIn URL" },
+  { id: "twitter", label: "Twitter URL" },
+  { id: "youtube", label: "Youtube URL" },
+  { id: "tiktok", label: "Tiktok URL" },
+  { id: "telegram", label: "Telegram URL" },
+  { id: "messenger", label: "Messenger URL" },
+  { id: "reddit", label: "Reddit URL" },
+  { id: "tumblr", label: "Tumblr URL" },
   { id: "pinterest", label: "Pinterest URL" },
   { id: "snapchat", label: "Snapchat" },
 ];
@@ -1317,22 +1319,31 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   };
 
   return (
-    <div className="p-4 sm:p-6 md:p-8">
+    <div className="p-4 sm:p-6 md:p-8 relative min-h-[calc(100vh-4rem)] bg-gradient-to-br from-gray-50/50 to-brand-50/30 dark:from-gray-900 dark:to-brand-900/10">
+      {/* Soft glowing animated background elements */}
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-brand-500/10 dark:bg-brand-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 left-10 w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+
       {/* Header: Edit vCard title + Back / Preview */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="page-title">Edit vCard</h1>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 glass-header border-b border-gray-200/50 dark:border-gray-800/50 pb-5">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 tracking-tight">
+            Edit vCard
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Customize your premium digital presence.</p>
+        </div>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={handlePreviewClick}
-            className="btn-primary-premium inline-flex items-center gap-2"
+            className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-700/80 hover:shadow-md hover:-translate-y-0.5"
           >
             <span className="hidden sm:inline">Preview</span>
           </button>
           <button
             type="button"
             onClick={() => router.back()}
-            className="btn-primary-premium inline-flex items-center gap-2"
+            className="rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-0.5"
           >
             <span className="hidden sm:inline">Back</span>
           </button>
@@ -1437,25 +1448,34 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
         </div>
       )}
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
         {/* Left sidebar */}
-        <nav className="lg:w-56 shrink-0">
-          <div className="surface-premium overflow-hidden">
+        <nav className="lg:w-64 shrink-0">
+          <div className="surface-premium overflow-hidden p-2.5 rounded-[24px] flex flex-col gap-1.5 backdrop-blur-2xl bg-white/80 dark:bg-gray-900/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/60 dark:border-white/5">
             {editNavItems.map((item) => {
               const isManageSection = item.id === "manage-section";
               const isCustomLinks = item.id === "custom-links";
               const isActive = activeSection === item.id;
-              const activeBg = (isManageSection || isCustomLinks) && isActive ? "bg-[#4E38EE]" : isActive ? "bg-brand-500" : "";
+              const activeBg = (isManageSection || isCustomLinks) && isActive
+                ? "bg-gradient-to-r from-purple-600 to-indigo-600 shadow-md shadow-purple-500/25"
+                : isActive
+                ? "bg-gradient-to-r from-brand-600 to-brand-500 shadow-md shadow-brand-500/25"
+                : "";
               return (
                 <button
                   key={item.id}
                   type="button"
                   onClick={() => setActiveSection(item.id)}
-                  className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-medium transition-colors rounded-lg ${isActive ? `${activeBg} text-white` : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                    }`}
+                  className={`group relative flex w-full items-center gap-3.5 px-4 py-3 text-left text-sm font-semibold transition-all duration-300 rounded-[14px] overflow-hidden ${
+                    isActive
+                      ? `${activeBg} text-white transform scale-[1.02]`
+                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100/80 dark:hover:bg-gray-800/80 hover:text-gray-900 dark:hover:text-white"
+                  }`}
                 >
-                  <EditNavIcon id={item.id} active={isActive} />
-                  <span>{item.label}</span>
+                  <div className={`transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`}>
+                    <EditNavIcon id={item.id} active={isActive} />
+                  </div>
+                  <span className="relative z-10">{item.label}</span>
                 </button>
               );
             })}
@@ -1463,31 +1483,28 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
         </nav>
 
         {/* Main content - single card, scrollable on hover */}
-        <div className="flex-1 flex flex-col min-h-0 max-h-[calc(100vh-6rem)]">
-          <div className="surface-premium group/card p-6 md:p-8 flex-1 min-h-0 overflow-x-hidden overflow-y-auto rounded-2xl transition-shadow hover:shadow-lg [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 hover:[&::-webkit-scrollbar-thumb]:bg-gray-400 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-500">
+        <div className="flex-1 flex flex-col min-h-0 max-h-[calc(100vh-8rem)] relative">
+          <div className="group/card p-6 md:p-8 lg:p-10 flex-1 min-h-[600px] overflow-x-hidden overflow-y-auto rounded-[32px] transition-shadow duration-300 backdrop-blur-3xl bg-white/70 dark:bg-gray-900/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/80 dark:border-gray-700/50 hover:shadow-xl [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 hover:[&::-webkit-scrollbar-thumb]:bg-gray-400 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-500 relative z-10">
             {/* Basic section with tabs */}
             {activeSection === "basic" && (
-              <>
-                <div className="border-b border-gray-200 dark:border-gray-700 mb-6">
-                  <div className="flex gap-6">
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="mb-8">
+                  <div className="flex gap-2 bg-gray-100/60 dark:bg-gray-800/60 p-1.5 rounded-2xl w-fit backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-inner">
                     {[
                       { id: "basic", label: "Basic Details" },
                       { id: "personal", label: "Personal Details" },
-                      { id: "other", label: "Other Configurations" },
+                      { id: "other", label: "Other Configs" },
                     ].map((tab) => (
                       <button
                         key={tab.id}
                         type="button"
                         onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                        className={`relative -mb-px px-1 pb-3 text-sm font-medium transition-colors ${activeTab === tab.id
-                          ? "text-brand-600 dark:text-brand-400"
-                          : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                        className={`relative px-5 py-2.5 text-sm font-semibold transition-all duration-300 rounded-xl ${activeTab === tab.id
+                          ? "bg-white dark:bg-gray-900 text-brand-600 dark:text-brand-400 shadow-[0_2px_8px_rgb(0,0,0,0.08)] transform scale-[1.02]"
+                          : "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-white/40 dark:hover:bg-gray-800/40"
                           }`}
                       >
                         {tab.label}
-                        {activeTab === tab.id && (
-                          <span className="absolute inset-x-0 -bottom-[1px] h-0.5 rounded-full bg-brand-500" />
-                        )}
                       </button>
                     ))}
                   </div>
@@ -1968,7 +1985,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </div>
                   </div>
                 )}
-              </>
+              </div>
             )}
 
             {/* Templates – template grid + mobile view preview in phone frame */}
@@ -5999,7 +6016,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    {SOCIAL_LINKS.slice(0, 6).map((item) => (
+                    {SOCIAL_LINKS.slice(0, Math.ceil(SOCIAL_LINKS.length / 2)).map((item) => (
                       <div key={item.id} className="flex items-center gap-3">
                         <SocialIcon id={item.id} />
                         <input
@@ -6018,7 +6035,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     ))}
                   </div>
                   <div className="space-y-4">
-                    {SOCIAL_LINKS.slice(6).map((item) => (
+                    {SOCIAL_LINKS.slice(Math.ceil(SOCIAL_LINKS.length / 2)).map((item) => (
                       <div key={item.id} className="flex items-center gap-3">
                         <SocialIcon id={item.id} />
                         <input
