@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { downloadQrPng } from "@/lib/qr";
+import { downloadQrPng, generateQrDataUrl } from "@/lib/qr";
 import { 
   Mail,
   Phone,
@@ -36,6 +36,7 @@ type Props = {
 export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Props) {
   const [activeTab, setActiveTab] = useState("services");
   const [scrolled, setScrolled] = useState(false);
+  const [qrCode, setQrCode] = useState<string>("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +45,16 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const url = `${baseUrl}/${slug}`;
+    generateQrDataUrl(url, {
+      fgColor: card.qrCodeColor || "#000000",
+      bgColor: card.qrBgColor || "#ffffff",
+      dotStyle: card.qrDotStyle || "square",
+      eyeStyle: card.qrEyeStyle || "square",
+    }).then(setQrCode);
+  }, [baseUrl, slug, card.qrCodeColor, card.qrBgColor, card.qrDotStyle, card.qrEyeStyle]);
 
   const name = card.title || "Creative Professional";
   const occupation = card.occupation || card.tagline || "Art Director & Interior Designer";
@@ -56,9 +67,9 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
   const services = (card.services && card.services.length > 0)
     ? card.services
     : [
-        { name: "Interior Design", description: "Bespoke interior solutions for modern homes." },
-        { name: "Space Planning", description: "Optimizing layout for maximum functionality." },
-        { name: "Styling", description: "Curating furniture and decor to match your vibe." }
+        { id: "d1", name: "Interior Design", description: "Bespoke interior solutions for modern homes.", icon: "" },
+        { id: "d2", name: "Space Planning", description: "Optimizing layout for maximum functionality.", icon: "" },
+        { id: "d3", name: "Styling", description: "Curating furniture and decor to match your vibe.", icon: "" },
       ];
 
   const socialLinks = card.socialLinks || [];
@@ -183,23 +194,67 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
           <div className="space-y-6 relative z-10 pl-6 border-l-2" style={{ borderColor: `${primaryColor}20` }}>
             <h2 className="text-3xl font-bold mb-8">What I Do</h2>
             
-            {services.map((service, idx) => (
-              <div 
-                key={idx} 
-                className="group p-6 rounded-3xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
-                style={{ backgroundColor: `${bgColor}aa`, borderColor: `${primaryColor}15` }}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold" style={{ color: primaryColor }}>{service.name}</h3>
-                  <div className="h-8 w-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: primaryColor, color: bgColor }}>
-                    <ChevronRight className="w-4 h-4" />
+            {services.map((service, idx) => {
+              const icon = (service as { icon?: string }).icon?.trim() ?? "";
+              const showIcon =
+                icon &&
+                (icon.startsWith("data:image") ||
+                  icon.startsWith("http://") ||
+                  icon.startsWith("https://"));
+              const url = (service as { url?: string }).url?.trim();
+              const href =
+                url && (url.startsWith("http://") || url.startsWith("https://")) ? url : url ? `https://${url}` : "";
+
+              return (
+                <div
+                  key={(service as { id?: string }).id || idx}
+                  className="group p-6 rounded-3xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
+                  style={{ backgroundColor: `${bgColor}aa`, borderColor: `${primaryColor}15` }}
+                >
+                  <div className={`flex gap-4 ${showIcon ? "items-start" : ""}`}>
+                    {showIcon ? (
+                      <div
+                        className="shrink-0 w-[88px] h-[88px] sm:w-24 sm:h-24 rounded-2xl overflow-hidden border shadow-md"
+                        style={{ borderColor: `${primaryColor}25` }}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={icon}
+                          alt={service.name || "Service"}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    ) : null}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex justify-between items-start gap-2 mb-2">
+                        <h3 className="text-xl font-bold" style={{ color: primaryColor }}>
+                          {service.name}
+                        </h3>
+                        <div
+                          className="h-8 w-8 shrink-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ backgroundColor: primaryColor, color: bgColor }}
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                      <p className="text-sm leading-relaxed opacity-70">{service.description}</p>
+                      {href ? (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold opacity-80 hover:opacity-100 underline underline-offset-2"
+                          style={{ color: primaryColor }}
+                        >
+                          Service link
+                          <ExternalLink className="w-3 h-3 shrink-0" />
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
-                <p className="text-sm leading-relaxed opacity-70">
-                  {service.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -685,12 +740,12 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
                        <Image src={card.image} alt={card.title} width={128} height={128} className="w-full h-full object-cover grayscale" />
                     </div>
                     {/* QR on the right */}
-                    <div className="w-32 h-32 flex items-center justify-center p-2 bg-white rounded-xl">
-                       <img 
-                         src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : card.previewUrl)}`} 
-                         alt="QR Code" 
-                         className="w-full h-full"
-                       />
+                    <div className="relative w-32 h-32 flex items-center justify-center p-2 bg-white rounded-xl">
+                       {qrCode ? (
+                         <Image src={qrCode} alt="QR Code" fill className="object-contain p-1" unoptimized />
+                       ) : (
+                         <div className="h-full w-full animate-pulse rounded bg-gray-100" aria-hidden />
+                       )}
                     </div>
                  </div>
                  {/* Screen Stand Handle (Simulated bottom bar) */}
@@ -707,7 +762,14 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
               </div>
 
               <button 
-                onClick={() => downloadQrPng(typeof window !== 'undefined' ? window.location.href : card.previewUrl, `vcard-${card.title}.png`)}
+                onClick={() =>
+                  downloadQrPng(`${baseUrl}/${slug}`, `vcard-${card.title}.png`, {
+                    fgColor: card.qrCodeColor || "#000000",
+                    bgColor: card.qrBgColor || "#ffffff",
+                    dotStyle: card.qrDotStyle || "square",
+                    eyeStyle: card.qrEyeStyle || "square",
+                  })
+                }
                 className="mt-16 w-full max-w-sm py-5 rounded-[24px] bg-[#FFD572] hover:bg-[#ffcd57] text-black font-black text-sm tracking-widest uppercase shadow-xl transition-all hover:scale-[1.02] active:scale-95"
               >
                 Download My QR Code

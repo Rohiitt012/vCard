@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardDynamicSections, buildManageSectionDynamicExclude } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Star, Download, Calendar, ExternalLink, Sparkles } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
@@ -71,8 +71,13 @@ export function Corporate4VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
   useEffect(() => {
     const url = `${baseUrl}/${slug}`;
-    generateQrDataUrl(url).then(setQrCode);
-  }, [baseUrl, slug]);
+    generateQrDataUrl(url, {
+      fgColor: card.qrCodeColor || "#000000",
+      bgColor: card.qrBgColor || "#ffffff",
+      dotStyle: card.qrDotStyle || "square",
+      eyeStyle: card.qrEyeStyle || "square",
+    }).then(setQrCode);
+  }, [baseUrl, slug, card.qrCodeColor, card.qrBgColor, card.qrDotStyle, card.qrEyeStyle]);
 
   const name = card.title || "Alexa Nairobi";
   const role = card.occupation || card.tagline || "Frontend Developer";
@@ -490,16 +495,7 @@ export function Corporate4VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
         {/* DYNAMIC SECTIONS FALLBACK (Products, Galleries, etc) */}
         <div className="px-0 pb-12">
-            <VCardDynamicSections 
-                card={card} 
-                exclude={
-                  card.manageSection 
-                    ? Object.entries(card.manageSection)
-                        .filter(([_, value]) => value === false)
-                        .map(([key]) => key)
-                    : ['services', 'blogs', 'testimonials', 'businessHours', 'products']
-                } 
-            />
+            <VCardDynamicSections card={card} exclude={buildManageSectionDynamicExclude(card)} />
         </div>
 
 

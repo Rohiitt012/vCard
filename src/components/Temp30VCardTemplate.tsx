@@ -10,6 +10,7 @@ import {
      Activity, HeartPulse, Stethoscope, Microscope, Dna, Pill, Syringe, Plus, ArrowLeft, Play, Share2, Quote, Cake, FlaskConical, Heart, Thermometer
 } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
+import { contactMailto, contactTel, contactMapsQuery } from "@/lib/contact-href";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { getSocialIcon } from "@/lib/social-icons";
 
@@ -25,8 +26,13 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
      useEffect(() => {
           const url = `${baseUrl}/${slug}`;
-          generateQrDataUrl(url).then(setQrCode);
-     }, [baseUrl, slug]);
+          generateQrDataUrl(url, {
+               fgColor: card.qrCodeColor || "#000000",
+               bgColor: card.qrBgColor || "#ffffff",
+               dotStyle: card.qrDotStyle || "square",
+               eyeStyle: card.qrEyeStyle || "square",
+          }).then(setQrCode);
+     }, [baseUrl, slug, card.qrCodeColor, card.qrBgColor, card.qrDotStyle, card.qrEyeStyle]);
 
      const name = card.title || "Dr. Rishi Verma";
      const role = card.occupation || card.tagline || "Neurosurgical Specialist";
@@ -176,12 +182,27 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
 
                               <div className="grid grid-cols-1 gap-8">
-                                   <MedicalContactCard icon={Mail} label="Registry Portal" value={card.email || "info@cityhospital.in"} />
-                                   <MedicalContactCard icon={Mail} label="Alternate Inquiries" value="contact@cityhospital.org" />
-                                   <MedicalContactCard icon={Phone} label="Emergency Line" value={card.phone || "+91 9810245678"} />
-                                   <MedicalContactCard icon={Phone} label="General OPD" value="+91 9899011223" />
-                                   <MedicalContactCard icon={Cake} label="Physician Credential" value="12th June, 1985" />
-                                   <MedicalContactCard icon={MapPin} label="Medical District" value={card.address || "New Delhi, India"} />
+                                   <MedicalContactCard
+                                        icon={Mail}
+                                        label="Email"
+                                        value={card.email || "info@cityhospital.in"}
+                                        href={contactMailto(card.email || "info@cityhospital.in")}
+                                   />
+                                   <MedicalContactCard
+                                        icon={Phone}
+                                        label="Phone"
+                                        value={card.phone || "+91 9810245678"}
+                                        href={contactTel(card.phone || "+91 9810245678")}
+                                   />
+                                   {card.birthDate ? (
+                                        <MedicalContactCard icon={Cake} label="Birth date" value={card.birthDate} />
+                                   ) : null}
+                                   <MedicalContactCard
+                                        icon={MapPin}
+                                        label="Location"
+                                        value={card.address || "New Delhi, India"}
+                                        href={contactMapsQuery(card.address || "New Delhi, India")}
+                                   />
                               </div>
                          </div>
                     </section>
@@ -190,7 +211,18 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                     {/* CLINICAL ENDPOINTS - SIMPLIFIED */}
                     {(!card.manageSection || card.manageSection.contact) && (
                     <section className="px-12 pb-40 space-y-6">
-                         <ClinicalDetail icon={Globe} label="Registry Portal" value={card.website || "www.cityhospital.med/rishi"} />
+                         <ClinicalDetail
+                              icon={Globe}
+                              label="Website"
+                              value={card.website || "www.cityhospital.med/rishi"}
+                              href={
+                                   (card.website || "").trim()
+                                        ? /^https?:\/\//i.test(card.website!.trim())
+                                             ? card.website!.trim()
+                                             : `https://${card.website!.trim()}`
+                                        : undefined
+                              }
+                         />
                     </section>
                     )}
 
@@ -554,18 +586,21 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                     )}
 
                     <div className="px-12 pb-12 pt-8 relative z-10 border-t border-slate-100/50 text-slate-900">
-                         <VCardDynamicSections 
-                             card={card} 
-                             exclude={[
-                                 ...(!card.manageSection || card.manageSection.testimonials ? [] : ['testimonials'] as const),
-                                 ...(!card.manageSection || card.manageSection.galleries ? [] : ['galleries'] as const),
-                                 ...(!card.manageSection || card.manageSection.businessHours ? [] : ['businessHours'] as const),
-                                 ...(!card.manageSection || card.manageSection.services ? [] : ['services'] as const),
-                                 ...(!card.manageSection || card.manageSection.products ? [] : ['products'] as const),
-                                 ...(!card.manageSection || card.manageSection.blogs ? [] : ['blogs'] as const),
-                                 ...(!card.manageSection || card.manageSection.iframes ? [] : ['iframes'] as const),
-                                 ...(!card.manageSection || card.manageSection.map ? [] : ['map'] as const),
-                             ]}
+                         <VCardDynamicSections
+                              card={card}
+                              exclude={[
+                                   ...(!card.manageSection || card.manageSection.testimonials ? [] : ["testimonials" as const]),
+                                   ...(!card.manageSection || card.manageSection.galleries ? [] : ["galleries" as const]),
+                                   ...(!card.manageSection || card.manageSection.businessHours ? [] : ["businessHours" as const]),
+                                   ...(!card.manageSection || card.manageSection.services ? [] : ["services" as const]),
+                                   ...(!card.manageSection || card.manageSection.products ? [] : ["products" as const]),
+                                   ...(!card.manageSection || card.manageSection.blogs ? [] : ["blogs" as const]),
+                                   ...(!card.manageSection || card.manageSection.iframes ? [] : ["iframes" as const]),
+                                   ...(!card.manageSection || card.manageSection.map ? [] : ["map" as const]),
+                                   ...(!card.manageSection || card.manageSection.instagramFeed ? [] : ["insta" as const]),
+                                   ...(!card.manageSection || card.manageSection.linkedinFeed ? [] : ["linkedin" as const]),
+                                   ...(!card.manageSection || card.manageSection.appointments ? [] : ["appointments" as const]),
+                              ]}
                          />
                     </div>
 
@@ -697,9 +732,19 @@ function ServiceClinicalCard({ image, title, desc, priority, icon: Icon }: { ima
      );
 }
 
-function MedicalContactCard({ icon: Icon, label, value }: { icon: any, label: string, value: string }) {
-     return (
-          <div className="flex items-center gap-8 p-6 bg-white border border-slate-100 rounded-[32px] hover:shadow-[0_30px_60px_-15px_rgba(56,178,172,0.15)] hover:-translate-y-1 transition-all group ring-1 ring-slate-100/50 relative overflow-hidden">
+function MedicalContactCard({
+     icon: Icon,
+     label,
+     value,
+     href,
+}: {
+     icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+     label: string;
+     value: string;
+     href?: string;
+}) {
+     const inner = (
+          <>
                <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:rotate-12 transition-transform duration-700">
                     <Icon size={80} />
                </div>
@@ -710,8 +755,23 @@ function MedicalContactCard({ icon: Icon, label, value }: { icon: any, label: st
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1">{label}</p>
                     <p className="text-lg font-black text-slate-900 tracking-tight leading-none pt-1">{value}</p>
                </div>
-          </div>
+          </>
      );
+     const shellClass =
+          "flex items-center gap-8 p-6 bg-white border border-slate-100 rounded-[32px] hover:shadow-[0_30px_60px_-15px_rgba(56,178,172,0.15)] hover:-translate-y-1 transition-all group ring-1 ring-slate-100/50 relative overflow-hidden";
+     if (href) {
+          const ext = href.startsWith("http");
+          return (
+               <a
+                    href={href}
+                    className={`${shellClass} cursor-pointer`}
+                    {...(ext ? { target: "_blank" as const, rel: "noopener noreferrer" } : {})}
+               >
+                    {inner}
+               </a>
+          );
+     }
+     return <div className={shellClass}>{inner}</div>;
 }
 
 function ClinicalStatItem({ icon: Icon, label, value }: { icon: any, label: string, value: string }) {
@@ -728,9 +788,19 @@ function ClinicalStatItem({ icon: Icon, label, value }: { icon: any, label: stri
      );
 }
 
-function ClinicalDetail({ icon: Icon, label, value }: { icon: any, label: string, value: string }) {
-     return (
-          <div className="flex items-center gap-7 p-8 bg-white border border-slate-100 rounded-[32px] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] transition-all group">
+function ClinicalDetail({
+     icon: Icon,
+     label,
+     value,
+     href,
+}: {
+     icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+     label: string;
+     value: string;
+     href?: string;
+}) {
+     const body = (
+          <>
                <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center text-white shrink-0 group-hover:bg-[#38b2ac] group-hover:scale-110 transition-all shadow-xl">
                     <Icon size={30} strokeWidth={1.5} />
                </div>
@@ -738,7 +808,17 @@ function ClinicalDetail({ icon: Icon, label, value }: { icon: any, label: string
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none block">{label}</label>
                     <p className="text-base font-black text-slate-900 tracking-tight leading-none pt-2">{value}</p>
                </div>
-          </div>
+          </>
      );
+     const cls =
+          "flex items-center gap-7 p-8 bg-white border border-slate-100 rounded-[32px] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] transition-all group";
+     if (href) {
+          return (
+               <a href={href} className={cls} target="_blank" rel="noopener noreferrer">
+                    {body}
+               </a>
+          );
+     }
+     return <div className={cls}>{body}</div>;
 }
 

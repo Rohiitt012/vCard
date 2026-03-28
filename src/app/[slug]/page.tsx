@@ -8,7 +8,8 @@ import { downloadVCard } from "@/lib/vcard";
 import { generateQrDataUrl, downloadQrPng } from "@/lib/qr";
 import { apiIncrementView, apiSubmitInquiry, apiSubscribe } from "@/lib/vcards-api";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardDynamicSections, buildManageSectionDynamicExclude } from "@/components/VCardDynamicSections";
+import { contactMailto, contactTel, contactWhatsApp } from "@/lib/contact-href";
 import { CafeVCardTemplate } from "@/components/CafeVCardTemplate";
 import { CorporateVCardTemplate } from "@/components/CorporateVCardTemplate";
 import { Corporate1VCardTemplate } from "@/components/Corporate1VCardTemplate";
@@ -39,6 +40,12 @@ import { Temp29VCardTemplate } from "@/components/Temp29VCardTemplate";
 import { Temp30VCardTemplate } from "@/components/Temp30VCardTemplate";
 
 const BUSINESS_HOURS_DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+function isManageOn(card: VCardItem, key: keyof NonNullable<VCardItem["manageSection"]>): boolean {
+  const m = card.manageSection;
+  if (!m) return true;
+  return m[key] !== false;
+}
 
 export default function PublicVCardPage() {
   const params = useParams<{ slug: string }>();
@@ -284,6 +291,38 @@ export default function PublicVCardPage() {
       document.body.style.fontFamily = prevBodyFontFamily;
     };
   }, [card]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const elId = "vcard-custom-css";
+    let el = document.getElementById(elId) as HTMLStyleElement | null;
+    if (!el) {
+      el = document.createElement("style");
+      el.id = elId;
+      document.head.appendChild(el);
+    }
+    el.textContent = (card?.customCss ?? "").trim();
+    return () => {
+      el!.textContent = "";
+    };
+  }, [card?.id, card?.customCss]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const scriptId = "vcard-custom-js";
+    const existing = document.getElementById(scriptId);
+    if (existing) existing.remove();
+    const js = (card?.customJs ?? "").trim();
+    if (!js || !card) return;
+    const s = document.createElement("script");
+    s.id = scriptId;
+    s.text = js;
+    document.body.appendChild(s);
+    return () => {
+      const t = document.getElementById(scriptId);
+      if (t) t.remove();
+    };
+  }, [card?.id, card?.customJs]);
 
   // Increment view count once when this vCard page is viewed (API + optional local state)
   useEffect(() => {
@@ -1455,6 +1494,7 @@ export default function PublicVCardPage() {
         </section>
 
         {/* Contact section */}
+        {isManageOn(card, "inquiries") && (
         <section
           id="contact"
           className="bg-[#131313] border-t border-white/5 py-12 md:py-16 px-6 md:px-10"
@@ -1542,6 +1582,7 @@ export default function PublicVCardPage() {
             </div>
           </div>
         </section>
+        )}
 
         {/* Simple footer */}
         <footer className="bg-[#0b0b0b] border-t border-white/10 py-5 px-6 md:px-10">
@@ -1550,7 +1591,7 @@ export default function PublicVCardPage() {
               © {new Date().getFullYear()} {card.title || "Portfolio"}. All
               rights reserved.
             </p>
-            <p>Built with Elito‑style Tailwind layout.</p>
+            {!card.removeBranding && <p>Built with Elito‑style Tailwind layout.</p>}
           </div>
         </footer>
         {showScrollTop && (
@@ -1588,11 +1629,12 @@ export default function PublicVCardPage() {
       </VCardWidthShell>
     );
   }
-  const headerGradient = card.templatePrimaryColor
-    ? undefined
-    : "bg-gradient-to-r from-slate-800 via-slate-700 to-slate-900";
+  const primaryColor = card.dynamicTheme?.primaryColor ?? card.templatePrimaryColor ?? "#facc15";
 
-  const primaryColor = card.templatePrimaryColor ?? "#facc15"; // amber-400 fallback
+  const headerGradient =
+    card.templatePrimaryColor || card.dynamicTheme?.primaryColor
+      ? undefined
+      : "bg-gradient-to-r from-slate-800 via-slate-700 to-slate-900";
   const fontFamilyClass =
     card.fontFamily === "outfit"
       ? "font-[var(--font-outfit,theme(fontFamily.sans))]"
@@ -1623,39 +1665,100 @@ export default function PublicVCardPage() {
           />
 
           <div className="px-6 pb-8 pt-4 space-y-6 vcard-dynamic-text" style={textStyle}>
-            <div className="-mt-10 flex items-center gap-4">
-              <div className="h-20 w-20 rounded-full border-4 border-white/30 bg-gray-700 overflow-hidden flex items-center justify-center text-2xl text-gray-300">
-                {card.title.charAt(0).toUpperCase()}
+            {isManageOn(card, "header") && (
+              <div className="-mt-10 flex items-center gap-4">
+                <div className="h-20 w-20 rounded-full border-4 border-white/30 bg-gray-700 overflow-hidden flex items-center justify-center text-2xl text-gray-300">
+                  {card.title.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p className="text-lg font-semibold text-white leading-tight">
+                    {card.title}
+                  </p>
+                  <p className="text-xs text-slate-300 mt-1">
+                    {card.templateName ? `Template: ${card.templateName}` : "Digital Business Card"}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-lg font-semibold text-white leading-tight">
-                  {card.title}
-                </p>
-                <p className="text-xs text-slate-300 mt-1">
-                  {card.templateName ? `Template: ${card.templateName}` : "Digital Business Card"}
-                </p>
-              </div>
-            </div>
+            )}
 
-            {(card.description || card.email || card.phone) && (
+            {((isManageOn(card, "about") && card.description) ||
+              (isManageOn(card, "contact") && (card.email || card.phone))) && (
               <div className="mt-4 rounded-2xl bg-black/50 border border-white/10 px-4 py-3 space-y-1 text-[11px] text-slate-300">
-                {card.description && (
-                  <p className="leading-relaxed">
-                    {card.description}
+                {isManageOn(card, "about") && card.description && (
+                  <p className="leading-relaxed">{card.description}</p>
+                )}
+                {isManageOn(card, "contact") && card.email && contactMailto(card.email) && (
+                  <p className="truncate">
+                    <a
+                      href={contactMailto(card.email)}
+                      className="hover:text-white underline underline-offset-2"
+                    >
+                      ✉ {card.email}
+                    </a>
                   </p>
                 )}
-                {card.email && (
+                {isManageOn(card, "contact") && card.phone && contactTel(card.phone) && (
                   <p className="truncate">
-                    ✉ {card.email}
-                  </p>
-                )}
-                {card.phone && (
-                  <p className="truncate">
-                    ☎ {card.phone}
+                    <a
+                      href={contactTel(card.phone)}
+                      className="hover:text-white underline underline-offset-2"
+                    >
+                      ☎ {card.phone}
+                    </a>
                   </p>
                 )}
               </div>
             )}
+
+            {isManageOn(card, "contact") &&
+              (card.phone || card.email || card.whatsapp) && (
+                <div className="flex flex-wrap justify-center gap-3 mt-2">
+                  {card.phone && contactTel(card.phone) ? (
+                    <a
+                      href={contactTel(card.phone)!}
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-gray-900 shadow-md hover:opacity-90"
+                      style={{ backgroundColor: primaryColor }}
+                      aria-label="Call"
+                    >
+                      ☎
+                    </a>
+                  ) : null}
+                  {card.email && contactMailto(card.email) ? (
+                    <a
+                      href={contactMailto(card.email)!}
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-gray-900 shadow-md hover:opacity-90"
+                      style={{ backgroundColor: primaryColor }}
+                      aria-label="Email"
+                    >
+                      ✉
+                    </a>
+                  ) : null}
+                  {card.whatsapp && contactWhatsApp(card.whatsapp) ? (
+                    <a
+                      href={contactWhatsApp(card.whatsapp)!}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-gray-900 shadow-md hover:opacity-90"
+                      style={{ backgroundColor: primaryColor }}
+                      aria-label="WhatsApp"
+                    >
+                      💬
+                    </a>
+                  ) : null}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      downloadVCard(card, typeof window !== "undefined" ? window.location.origin : "")
+                    }
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-gray-900 shadow-md hover:opacity-90"
+                    style={{ backgroundColor: primaryColor }}
+                    aria-label="Download vCard"
+                  >
+                    ⬇
+                  </button>
+                </div>
+              )}
+
             <p className="mt-5 text-xs leading-relaxed text-slate-200/90">
               Tap the button below to save this contact to your phone. You can always come back at
               <span className="font-medium"> /{slug}</span>.
@@ -1727,6 +1830,7 @@ export default function PublicVCardPage() {
             )}
 
             {/* QR section for this template (uses saved colors) */}
+            {isManageOn(card, "qrCode") && (
             <section className="mt-4 rounded-2xl bg-black/70 border border-white/10 px-4 py-4 space-y-3">
               <h2 className="text-center text-xs font-semibold text-white tracking-wide">
                 QR Code
@@ -1779,8 +1883,9 @@ export default function PublicVCardPage() {
                 </button>
               </div>
             </section>
+            )}
 
-            {blogs.length > 0 && (
+            {blogs.length > 0 && isManageOn(card, "blogs") && (
               <div className="mt-4 rounded-2xl bg-black/70 border border-white/10 px-4 py-4 space-y-3">
                 <h2 className="text-center text-xs font-semibold text-white tracking-wide">
                   Blog
@@ -1833,7 +1938,7 @@ export default function PublicVCardPage() {
             )}
           </div>
         </div>
-        <VCardDynamicSections card={card} />
+        <VCardDynamicSections card={card} exclude={buildManageSectionDynamicExclude(card)} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
+import { VCardDynamicSections, buildManageSectionDynamicExclude } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Calendar, ExternalLink, Facebook, Instagram, Linkedin, Twitter, MessageCircle, ChevronDown, LayoutGrid, User, Sparkles, Globe, Maximize, ArrowRight, Quote, Clock, Upload } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
@@ -19,8 +19,13 @@ export function Corporate8VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
   useEffect(() => {
     const url = `${baseUrl}/${slug}`;
-    generateQrDataUrl(url).then(setQrCode);
-  }, [baseUrl, slug]);
+    generateQrDataUrl(url, {
+      fgColor: card.qrCodeColor || "#000000",
+      bgColor: card.qrBgColor || "#ffffff",
+      dotStyle: card.qrDotStyle || "square",
+      eyeStyle: card.qrEyeStyle || "square",
+    }).then(setQrCode);
+  }, [baseUrl, slug, card.qrCodeColor, card.qrBgColor, card.qrDotStyle, card.qrEyeStyle]);
 
   const name = card.title || "Kara Frederick";
   const role = card.occupation || card.tagline || "Make-up Artist";
@@ -503,16 +508,7 @@ export function Corporate8VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
 
         <div className="px-0 pb-16">
-            <VCardDynamicSections 
-                card={card} 
-                exclude={
-                  (card.manageSection 
-                    ? Object.entries(card.manageSection)
-                        .filter(([_, value]) => value === false)
-                        .map(([key]) => key === 'instagramFeed' ? 'iframes' : key)
-                    : []) as ("map" | "businessHours" | "galleries" | "blogs" | "products" | "iframes" | "services" | "testimonials")[]
-                } 
-            />
+            <VCardDynamicSections card={card} exclude={buildManageSectionDynamicExclude(card)} />
         </div>
 
 

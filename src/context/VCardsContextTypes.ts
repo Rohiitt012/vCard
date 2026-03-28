@@ -79,6 +79,20 @@ export type VCardTestimonial = {
   role?: string;
 };
 
+/** Saved from Dynamic vCard editor; drives public fallback layout colors when set. */
+export type VCardDynamicTheme = {
+  primaryColor: string;
+  bgSecondary: string;
+  bgColor: string;
+  buttonTextColor: string;
+  labelColor: string;
+  descriptionColor: string;
+  stickyButtonPosition: "left" | "right";
+  selectedButtonStyle: number;
+  cardsBg?: string;
+  socialIconColor?: string;
+};
+
 export type VCardItem = {
   id: string;
   title: string;
@@ -138,6 +152,12 @@ export type VCardItem = {
   password?: string;
   /** Set by API when card has password; client uses this to show unlock form. */
   requiresPassword?: boolean;
+  /** Optional theme from Dynamic vCard section (save to apply on public page). */
+  dynamicTheme?: VCardDynamicTheme;
+  /** Injected on public vCard only; use with care. */
+  customCss?: string;
+  customJs?: string;
+  removeBranding?: boolean;
   manageSection?: {
     header: boolean;
     about: boolean;

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useVCards } from "@/context/VCardsContext";
 import { getSocialColor, getSocialIcon } from "@/lib/social-icons";
+import { generateQrDataUrl } from "@/lib/qr";
 
 const HelpIcon = () => (
   <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,6 +15,98 @@ const HelpIcon = () => (
       strokeLinejoin="round"
       strokeWidth={2}
       d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+);
+
+/** Service / product URLs may omit protocol; opens safely in a new tab. */
+function normalizeOpenableUrl(raw: string | undefined | null): string | null {
+  const t = (raw ?? "").trim();
+  if (!t) return null;
+  if (/^https?:\/\//i.test(t)) return t;
+  return `https://${t}`;
+}
+
+/** Short label for table cells; full URL still available via `title` tooltip. */
+function formatUrlDisplay(raw: string | undefined | null): string {
+  const t = (raw ?? "").trim();
+  if (!t) return "—";
+  const openable = normalizeOpenableUrl(t);
+  if (!openable) return t.length > 40 ? `${t.slice(0, 40)}…` : t;
+  try {
+    const u = new URL(openable);
+    const path = u.pathname === "/" ? "" : u.pathname;
+    let s = u.hostname.replace(/^www\./i, "") + path;
+    if (u.search) s += "…";
+    if (s.length > 48) s = `${s.slice(0, 46)}…`;
+    return s;
+  } catch {
+    return t.length > 40 ? `${t.slice(0, 40)}…` : t;
+  }
+}
+
+function serviceIconIsRenderable(icon: string | undefined | null): boolean {
+  const s = (icon ?? "").trim();
+  return s.startsWith("data:image") || s.startsWith("http://") || s.startsWith("https://");
+}
+
+const OpenInNewTabArrowIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+    />
+  </svg>
+);
+
+const AdminTableIconButton = ({
+  className = "",
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button
+    type="button"
+    className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-transparent text-gray-500 transition-colors hover:border-gray-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-100 ${className}`}
+    {...props}
+  />
+);
+
+const PreviewEyeIcon = () => (
+  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+    />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+    />
+  </svg>
+);
+
+const PencilIcon = () => (
+  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+    />
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
     />
   </svg>
 );
@@ -320,6 +413,7 @@ const editNavItems = [
   { id: "testimonials", label: "Testimonials" },
   { id: "iframes", label: "Iframes" },
   { id: "appointments", label: "Appointments" },
+  { id: "hours", label: "Business Hours" },
   { id: "social-links", label: "Social links - Website" },
   { id: "custom-links", label: "Custom Links" },
   { id: "advanced", label: "Advanced" },
@@ -711,6 +805,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
   // simple placeholder states where needed
   const [servicesSearch, setServicesSearch] = useState("");
+  const [servicesShowPerPage, setServicesShowPerPage] = useState(10);
   const [displayServiceEnquiryButton, setDisplayServiceEnquiryButton] = useState(true);
   const [displayImagesWithSlider, setDisplayImagesWithSlider] = useState(false);
   const [showServicesSuccessToast, setShowServicesSuccessToast] = useState(false);
@@ -995,6 +1090,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   // Sync Dynamic vCard colors from selected vCard template (so selected template shows in Dynamic vCard)
   useEffect(() => {
     if (selectedTemplateId == null) return;
+    if (currentCard?.dynamicTheme) return;
     const template = VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId);
     if (!template) return;
     const primary = getAccentPrimaryColor(template.accent);
@@ -1004,12 +1100,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     setDynamicBgSecondary(getAccentBgSecondary(template.accent));
     setDynamicLabelColor(isLightTemplate(template.accent) ? "#1e293b" : "#f8fafc");
     setDynamicDescriptionColor(isLightTemplate(template.accent) ? "#64748b" : "#94a3b8");
-  }, [selectedTemplateId]);
+  }, [selectedTemplateId, currentCard?.id, currentCard?.dynamicTheme]);
   const [useQrConfiguration, setUseQrConfiguration] = useState(false);
   const [qrCodeColor, setQrCodeColor] = useState("#000000");
   const [qrBgColor, setQrBgColor] = useState("#ffffff");
   const [qrDotStyle, setQrDotStyle] = useState<"square" | "rounded">("square");
   const [qrEyeStyle, setQrEyeStyle] = useState<"square" | "rounded">("square");
+  const [qrEditorPreviewDataUrl, setQrEditorPreviewDataUrl] = useState("");
   const [qrCreateSuccess, setQrCreateSuccess] = useState(false);
   const [templateSaveSuccess, setTemplateSaveSuccess] = useState(false);
   const [termsSaveSuccess, setTermsSaveSuccess] = useState(false);
@@ -1026,6 +1123,48 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const profileImageInputRef = useRef<HTMLInputElement>(null);
   const [basicAlias, setBasicAlias] = useState("");
   const [basicAliasError, setBasicAliasError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || activeSection !== "qr") return;
+    const slugPart = (
+      basicAlias ||
+      currentCard?.slug ||
+      (currentCard?.previewUrl ?? "").replace(/^https?:\/\/[^/]+/, "").replace(/^\/+/, "") ||
+      ""
+    )
+      .replace(/^\/+/, "")
+      .replace(/\/+$/, "");
+    const base = window.location.origin.replace(/\/+$/, "");
+    const targetUrl = slugPart ? `${base}/${slugPart}`.replace(/([^:]\/)\/+/g, "$1") : base;
+
+    let cancelled = false;
+    generateQrDataUrl(targetUrl, {
+      fgColor: qrCodeColor || "#000000",
+      bgColor: qrBgColor || "#ffffff",
+      dotStyle: qrDotStyle,
+      eyeStyle: qrEyeStyle,
+      width: 280,
+    })
+      .then((dataUrl) => {
+        if (!cancelled) setQrEditorPreviewDataUrl(dataUrl);
+      })
+      .catch(() => {
+        if (!cancelled) setQrEditorPreviewDataUrl("");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    activeSection,
+    basicAlias,
+    currentCard?.id,
+    currentCard?.slug,
+    currentCard?.previewUrl,
+    qrCodeColor,
+    qrBgColor,
+    qrDotStyle,
+    qrEyeStyle,
+  ]);
 
   // Personal Details form state
   const [pdFirstName, setPdFirstName] = useState("");
@@ -1105,6 +1244,27 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
             currentCard.businessHours as Record<string, { enabled: boolean; start: string; end: string }>
           )
         );
+      } else {
+        setBusinessHours(getInitialBusinessHours());
+        setAppointmentSchedule(getInitialAppointmentSchedule());
+      }
+      setAdvancedPassword((currentCard as { password?: string }).password ?? "");
+      setCustomCssInput(currentCard.customCss ?? "");
+      setCustomJsInput(currentCard.customJs ?? "");
+      setRemoveBranding(!!currentCard.removeBranding);
+      if (currentCard.dynamicTheme) {
+        const t = currentCard.dynamicTheme;
+        setDynamicPrimaryColor(t.primaryColor);
+        setDynamicBgSecondary(t.bgSecondary);
+        setDynamicBgColor(t.bgColor);
+        setDynamicButtonTextColor(t.buttonTextColor);
+        setDynamicLabelColor(t.labelColor);
+        setDynamicDescriptionColor(t.descriptionColor);
+        setStickyButtonPosition(t.stickyButtonPosition ?? "right");
+        const bs = t.selectedButtonStyle;
+        if (typeof bs === "number" && bs >= 1 && bs <= 10) {
+          setSelectedButtonStyle(bs as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10);
+        }
       }
       setAppointmentType(currentCard.appointmentType ?? "free");
       setAppointmentServices(
@@ -1133,11 +1293,15 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     currentCard?.appointmentType,
     currentCard?.appointmentServices,
     currentCard?.manageSection,
+    currentCard?.dynamicTheme,
+    currentCard?.customCss,
+    currentCard?.customJs,
+    currentCard?.removeBranding,
   ]);
 
   useEffect(() => {
     if (currentCard?.manageSection) {
-      setManageSectionSections(currentCard.manageSection);
+      setManageSectionSections((prev) => ({ ...prev, ...currentCard.manageSection! }));
     }
   }, [currentCard?.id, currentCard?.manageSection]);
 
@@ -1160,6 +1324,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
   const [manageSectionSections, setManageSectionSections] = useState({
     header: true,
+    about: true,
     galleries: true,
     blogs: true,
     map: true,
@@ -1238,6 +1403,20 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   }, [showServicesSuccessToast]);
   const [showAdvancedPassword, setShowAdvancedPassword] = useState(false);
   const [advancedPassword, setAdvancedPassword] = useState("");
+  const [customCssInput, setCustomCssInput] = useState("");
+  const [customJsInput, setCustomJsInput] = useState("");
+  const [advancedSaveSuccess, setAdvancedSaveSuccess] = useState(false);
+  const [dynamicThemeSaveSuccess, setDynamicThemeSaveSuccess] = useState(false);
+  useEffect(() => {
+    if (!advancedSaveSuccess) return;
+    const t = setTimeout(() => setAdvancedSaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [advancedSaveSuccess]);
+  useEffect(() => {
+    if (!dynamicThemeSaveSuccess) return;
+    const t = setTimeout(() => setDynamicThemeSaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [dynamicThemeSaveSuccess]);
   const [removeBranding, setRemoveBranding] = useState(false);
   const [otherToggles, setOtherToggles] = useState({
     languageLocalization: true,
@@ -1438,6 +1617,22 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           role="alert"
         >
           Manage Section updated successfully.
+        </div>
+      )}
+      {advancedSaveSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          Advanced settings saved successfully.
+        </div>
+      )}
+      {dynamicThemeSaveSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          Dynamic vCard theme saved. It will apply on your public vCard page.
         </div>
       )}
 
@@ -3527,6 +3722,64 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </div>
                   </div>
 
+                  <div className="flex flex-wrap justify-start gap-2.5 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!vcardId || !currentCard) return;
+                        const dynamicTheme = {
+                          primaryColor: dynamicPrimaryColor,
+                          bgSecondary: dynamicBgSecondary,
+                          bgColor: dynamicBgColor,
+                          buttonTextColor: dynamicButtonTextColor,
+                          labelColor: dynamicLabelColor,
+                          descriptionColor: dynamicDescriptionColor,
+                          stickyButtonPosition,
+                          selectedButtonStyle,
+                        };
+                        setVCards((prev) =>
+                          prev.map((c) => (c.id === vcardId ? { ...c, dynamicTheme } : c))
+                        );
+                        setDynamicThemeSaveSuccess(true);
+                      }}
+                      className="btn-primary-premium inline-flex items-center justify-center"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (currentCard?.dynamicTheme) {
+                          const t = currentCard.dynamicTheme;
+                          setDynamicPrimaryColor(t.primaryColor);
+                          setDynamicBgSecondary(t.bgSecondary);
+                          setDynamicBgColor(t.bgColor);
+                          setDynamicButtonTextColor(t.buttonTextColor);
+                          setDynamicLabelColor(t.labelColor);
+                          setDynamicDescriptionColor(t.descriptionColor);
+                          setStickyButtonPosition(t.stickyButtonPosition ?? "right");
+                          const bs = t.selectedButtonStyle;
+                          if (typeof bs === "number" && bs >= 1 && bs <= 10) {
+                            setSelectedButtonStyle(bs as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10);
+                          }
+                        } else if (selectedTemplateId != null) {
+                          const template = VCARD_TEMPLATES.find((x) => x.id === selectedTemplateId);
+                          if (template) {
+                            setDynamicPrimaryColor(getAccentPrimaryColor(template.accent));
+                            setDynamicButtonTextColor(isLightTemplate(template.accent) ? "#332b2b" : "#ffffff");
+                            setDynamicBgColor(getAccentBgColor(template.accent));
+                            setDynamicBgSecondary(getAccentBgSecondary(template.accent));
+                            setDynamicLabelColor(isLightTemplate(template.accent) ? "#1e293b" : "#f8fafc");
+                            setDynamicDescriptionColor(isLightTemplate(template.accent) ? "#64748b" : "#94a3b8");
+                          }
+                        }
+                      }}
+                      className="btn-secondary-premium inline-flex items-center justify-center"
+                    >
+                      Discard
+                    </button>
+                  </div>
+
                 </div>
 
                 {/* Phone preview – uses Dynamic vCard colors + sticky button position */}
@@ -3625,7 +3878,18 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
 
             {/* Business Hours – screenshot: Week Format, toggle per day, Closed button with moon icon */}
             {activeSection === "hours" && (
-              <form className="space-y-6 max-w-xl">
+              <form
+                className="space-y-6 max-w-xl"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!vcardId || !currentCard) return;
+                  setVCards((prev) =>
+                    prev.map((c) => (c.id === vcardId ? { ...c, businessHours } : c))
+                  );
+                  setServicesSuccessMessage("Business hours saved successfully.");
+                  setShowServicesSuccessToast(true);
+                }}
+              >
                 <div>
                   <label className={labelClass}>Week Format Type:</label>
                   <div className="relative max-w-xs">
@@ -3690,6 +3954,18 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <button
                     type="button"
                     className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    onClick={() => {
+                      if (currentCard?.businessHours) {
+                        setBusinessHours(
+                          currentCard.businessHours as Record<
+                            BusinessHoursDay,
+                            { enabled: boolean; start: string; end: string }
+                          >
+                        );
+                      } else {
+                        setBusinessHours(getInitialBusinessHours());
+                      }
+                    }}
                   >
                     Discard
                   </button>
@@ -3703,10 +3979,38 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
               </form>
             )}
 
-            {/* QR section */}
+            {/* QR section — live preview updates with colors / styles; Save persists to vCard */}
             {activeSection === "qr" && (
-              <div className="flex justify-center items-center min-h-[320px]">
-                <div className="max-w-md w-full">
+              <div className="flex flex-col lg:flex-row lg:items-start justify-center gap-8 lg:gap-12 min-h-[320px] w-full max-w-5xl mx-auto">
+                <div className="flex flex-col items-center shrink-0 lg:sticky lg:top-24">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
+                    Live preview
+                  </p>
+                  <div
+                    className="rounded-2xl border border-gray-200 dark:border-gray-600 p-3 sm:p-4 shadow-lg bg-white dark:bg-gray-900"
+                    style={{
+                      backgroundColor: qrBgColor,
+                    }}
+                  >
+                    {qrEditorPreviewDataUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={qrEditorPreviewDataUrl}
+                        alt="QR code preview"
+                        className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] object-contain"
+                      />
+                    ) : (
+                      <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] flex items-center justify-center text-sm text-gray-400 dark:text-gray-500">
+                        Generating QR…
+                      </div>
+                    )}
+                  </div>
+                  <p className="mt-3 text-center text-[11px] text-gray-500 dark:text-gray-400 max-w-[260px] leading-relaxed">
+                    Color, dot style, and eye style update instantly. Use <span className="font-medium">Save</span> to apply on your public vCard.
+                  </p>
+                </div>
+
+                <div className="flex-1 w-full max-w-md mx-auto lg:mx-0">
                   <div className="rounded-3xl border border-gray-200 bg-white dark:bg-gray-800/50 p-6 shadow-lg">
                     <form
                       className="space-y-5"
@@ -4137,18 +4441,18 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </div>
                   </div>
                 )}
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                <div className="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm shadow-gray-200/40 dark:border-gray-700 dark:bg-gray-900 dark:shadow-none">
                   <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">ICON</th>
-                          <th className="px-4 py-3">NAME</th>
-                          <th className="px-4 py-3">SERVICE URL</th>
-                          <th className="px-4 py-3">ACTION</th>
+                    <table className="w-full min-w-[640px] text-left text-sm text-gray-700 dark:text-gray-300">
+                      <thead>
+                        <tr className="border-b border-gray-200 bg-slate-50/95 text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:border-gray-700 dark:bg-slate-900/60 dark:text-slate-400">
+                          <th className="w-14 px-5 py-3.5">Icon</th>
+                          <th className="min-w-[140px] px-5 py-3.5">Name</th>
+                          <th className="min-w-[200px] max-w-[min(40vw,320px)] px-5 py-3.5">Service URL</th>
+                          <th className="w-[140px] px-5 py-3.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                         {(() => {
                           const all = ((currentCard as any)?.services ?? []) as {
                             id?: string;
@@ -4167,112 +4471,157 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                               <tr>
                                 <td
                                   colSpan={4}
-                                  className="px-4 py-12 text-center text-gray-500 dark:text-gray-400"
+                                  className="px-5 py-14 text-center text-sm text-gray-500 dark:text-gray-400"
                                 >
-                                  No Data Available
+                                  {all.length === 0
+                                    ? "No services yet. Add one with the button above."
+                                    : "No services match your search."}
                                 </td>
                               </tr>
                             );
                           }
-                          return filtered.map((s) => (
-                            <tr
-                              key={s.id || s.name}
-                              className="border-t border-gray-100 dark:border-gray-800 hover:bg-gray-50/60 dark:hover:bg-gray-800/60"
-                            >
-                              <td className="px-4 py-3">
-                                <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img src={s.icon} alt={s.name} className="w-full h-full object-cover" />
-                                </div>
-                              </td>
-                              <td className="px-4 py-3">
-                                <p className="font-medium text-gray-900 dark:text-gray-100">{s.name}</p>
-                              </td>
-                              <td className="px-4 py-3 max-w-xs">
-                                <p className="truncate text-gray-600 dark:text-gray-300 text-xs">
-                                  {s.url || "-"}
-                                </p>
-                              </td>
-                              <td className="px-4 py-3">
-                                <div className="flex items-center gap-3 text-lg">
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="View service"
-                                    onClick={() =>
-                                      setPreviewService({
-                                        name: s.name,
-                                        description: s.description,
-                                        url: s.url,
-                                        icon: s.icon,
-                                      })
-                                    }
-                                  >
-                                    👁
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="Edit service"
-                                    onClick={() => {
-                                      setEditingServiceId(s.id ?? "");
-                                      setNewServiceName(s.name);
-                                      setNewServiceUrl(s.url || "");
-                                      setNewServiceDescription(s.description);
-                                      setNewServiceIconPreview(s.icon);
-                                      setShowNewServiceModal(true);
-                                    }}
-                                  >
-                                    ✏️
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-red-500 hover:text-red-600"
-                                    aria-label="Delete service"
-                                    onClick={() => {
-                                      if (!vcardId) return;
-                                      // eslint-disable-next-line no-alert
-                                      if (!confirm("Delete this service?")) return;
-                                      setVCards((prev) =>
-                                        prev.map((c) =>
-                                          c.id === vcardId
-                                            ? {
-                                              ...c,
-                                              services: ((c as any).services ?? []).filter(
-                                                (x: any) => x.id !== s.id,
-                                              ),
-                                            }
-                                            : c,
-                                        ),
-                                      );
-                                    }}
-                                  >
-                                    🗑
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ));
+                          const rows = filtered.slice(0, servicesShowPerPage);
+                          return rows.map((s) => {
+                            const urlFull = (s.url ?? "").trim();
+                            const openHref = normalizeOpenableUrl(s.url);
+                            return (
+                              <tr
+                                key={s.id || s.name}
+                                className="transition-colors hover:bg-slate-50/80 dark:hover:bg-gray-800/50"
+                              >
+                                <td className="px-5 py-4 align-middle">
+                                  <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200/90 bg-gradient-to-br from-slate-50 to-slate-100 ring-1 ring-black/[0.04] dark:border-gray-600 dark:from-gray-800 dark:to-gray-900 dark:ring-white/5">
+                                    {serviceIconIsRenderable(s.icon) ? (
+                                      // eslint-disable-next-line @next/next/no-img-element
+                                      <img
+                                        src={s.icon}
+                                        alt=""
+                                        className="h-full w-full object-cover"
+                                      />
+                                    ) : (
+                                      <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                                        {(s.name || "?").charAt(0).toUpperCase()}
+                                      </span>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 align-middle">
+                                  <p className="font-semibold text-gray-900 dark:text-gray-100">{s.name}</p>
+                                </td>
+                                <td className="max-w-[min(40vw,320px)] px-5 py-4 align-middle">
+                                  <div className="flex min-w-0 items-center gap-2">
+                                    <p
+                                      className="min-w-0 flex-1 truncate font-mono text-xs text-slate-600 dark:text-slate-300"
+                                      title={urlFull || undefined}
+                                    >
+                                      {formatUrlDisplay(s.url)}
+                                    </p>
+                                    {openHref ? (
+                                      <button
+                                        type="button"
+                                        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-blue-200 bg-blue-50/80 px-2 py-1 text-[11px] font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-800/80 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/40"
+                                        aria-label="Open service URL in new tab"
+                                        title={urlFull}
+                                        onClick={() => window.open(openHref, "_blank", "noopener,noreferrer")}
+                                      >
+                                        <OpenInNewTabArrowIcon className="h-3.5 w-3.5" />
+                                        Open
+                                      </button>
+                                    ) : null}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 align-middle">
+                                  <div className="flex items-center justify-end gap-1">
+                                    <AdminTableIconButton
+                                      aria-label="Preview service"
+                                      title="Preview"
+                                      onClick={() =>
+                                        setPreviewService({
+                                          name: s.name,
+                                          description: s.description,
+                                          url: s.url,
+                                          icon: s.icon,
+                                        })
+                                      }
+                                    >
+                                      <PreviewEyeIcon />
+                                    </AdminTableIconButton>
+                                    <AdminTableIconButton
+                                      aria-label="Edit service"
+                                      title="Edit"
+                                      onClick={() => {
+                                        setEditingServiceId(s.id ?? "");
+                                        setNewServiceName(s.name);
+                                        setNewServiceUrl(s.url || "");
+                                        setNewServiceDescription(s.description);
+                                        setNewServiceIconPreview(s.icon);
+                                        setShowNewServiceModal(true);
+                                      }}
+                                    >
+                                      <PencilIcon />
+                                    </AdminTableIconButton>
+                                    <AdminTableIconButton
+                                      className="hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900 dark:hover:bg-red-950/40 dark:hover:text-red-400"
+                                      aria-label="Delete service"
+                                      title="Delete"
+                                      onClick={() => {
+                                        if (!vcardId) return;
+                                        // eslint-disable-next-line no-alert
+                                        if (!confirm("Delete this service?")) return;
+                                        setVCards((prev) =>
+                                          prev.map((c) =>
+                                            c.id === vcardId
+                                              ? {
+                                                ...c,
+                                                services: ((c as any).services ?? []).filter(
+                                                  (x: any) => x.id !== s.id,
+                                                ),
+                                              }
+                                              : c,
+                                          ),
+                                        );
+                                      }}
+                                    >
+                                      <TrashIcon />
+                                    </AdminTableIconButton>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          });
                         })()}
                       </tbody>
                     </table>
                   </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
+                  <div className="flex flex-col gap-3 border-t border-gray-200 bg-slate-50/80 px-5 py-3.5 dark:border-gray-700 dark:bg-gray-800/40 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                      <span className="font-medium">Rows per page</span>
+                      <select
+                        value={servicesShowPerPage}
+                        onChange={(e) => setServicesShowPerPage(Number(e.target.value))}
+                        className={`${inputClass} h-9 w-[4.75rem] rounded-lg border border-gray-200 bg-white py-1 pr-8 text-sm font-medium shadow-sm dark:border-gray-600 dark:bg-gray-900`}
+                      >
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing{" "}
-                        <span className="font-semibold text-gray-900 dark:text-gray-100">
-                          {(((currentCard as any)?.services ?? []) as any[]).length}
-                        </span>{" "}
-                        results
-                      </span>
                     </div>
+                    {(() => {
+                      const all = ((currentCard as any)?.services ?? []) as { name: string }[];
+                      const filtered = servicesSearch.trim()
+                        ? all.filter((s) => s.name.toLowerCase().includes(servicesSearch.toLowerCase()))
+                        : all;
+                      const visible = Math.min(filtered.length, servicesShowPerPage);
+                      return (
+                        <p className="text-sm tabular-nums text-gray-600 dark:text-gray-400">
+                          Showing{" "}
+                          <span className="font-semibold text-gray-900 dark:text-gray-100">{visible}</span>
+                          {" of "}
+                          <span className="font-semibold text-gray-900 dark:text-gray-100">{filtered.length}</span>
+                          {" services"}
+                        </p>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
@@ -4318,19 +4667,17 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
                         {previewService.description}
                       </p>
-                      {previewService.url && (
+                      {normalizeOpenableUrl(previewService.url) ? (
                         <a
-                          href={previewService.url}
+                          href={normalizeOpenableUrl(previewService.url)!}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700"
+                          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
                         >
                           Open service link
-                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
-                          </svg>
+                          <OpenInNewTabArrowIcon className="w-4 h-4" />
                         </a>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -4387,19 +4734,17 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           {previewProduct.description}
                         </p>
                       )}
-                      {previewProduct.url && (
+                      {normalizeOpenableUrl(previewProduct.url) ? (
                         <a
-                          href={previewProduct.url}
+                          href={normalizeOpenableUrl(previewProduct.url)!}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700"
+                          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
                         >
                           Open product link
-                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
-                          </svg>
+                          <OpenInNewTabArrowIcon className="w-4 h-4" />
                         </a>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 </div>
@@ -4677,33 +5022,19 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     </div>
                   </div>
                 )}
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                <div className="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm shadow-gray-200/40 dark:border-gray-700 dark:bg-gray-900 dark:shadow-none">
                   <div className="overflow-x-auto overflow-y-visible">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3 font-semibold">ICON</th>
-                          <th className="px-4 py-3 font-semibold">
-                            <span className="inline-flex items-center gap-1">
-                              NAME
-                              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                              </svg>
-                            </span>
-                          </th>
-                          <th className="px-4 py-3 font-semibold">PRODUCT URL</th>
-                          <th className="px-4 py-3 font-semibold">
-                            <span className="inline-flex items-center gap-1">
-                              PRICE
-                              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                              </svg>
-                            </span>
-                          </th>
-                          <th className="px-4 py-3 font-semibold">ACTION</th>
+                    <table className="w-full min-w-[720px] text-left text-sm text-gray-700 dark:text-gray-300">
+                      <thead>
+                        <tr className="border-b border-gray-200 bg-slate-50/95 text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:border-gray-700 dark:bg-slate-900/60 dark:text-slate-400">
+                          <th className="w-14 px-5 py-3.5">Icon</th>
+                          <th className="min-w-[140px] px-5 py-3.5">Name</th>
+                          <th className="min-w-[200px] max-w-[min(40vw,320px)] px-5 py-3.5">Product URL</th>
+                          <th className="min-w-[100px] px-5 py-3.5">Price</th>
+                          <th className="w-[140px] px-5 py-3.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                         {(() => {
                           const all = (currentCard?.products ?? []) as {
                             id: string;
@@ -4719,139 +5050,171 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                             )
                             : all;
                           const rows = filtered.slice(0, productsShowPerPage);
-                          if (!rows.length) {
+                          if (!filtered.length) {
                             return (
                               <tr>
                                 <td
                                   colSpan={5}
-                                  className="px-4 py-12 text-center text-gray-600 dark:text-gray-400"
+                                  className="px-5 py-14 text-center text-sm text-gray-500 dark:text-gray-400"
                                 >
-                                  No Data Available
+                                  {all.length === 0
+                                    ? "No products yet. Add one with the button above."
+                                    : "No products match your search."}
                                 </td>
                               </tr>
                             );
                           }
-                          return rows.map((p) => (
-                            <tr
-                              key={p.id}
-                              className="border-t border-gray-100 dark:border-gray-800 hover:bg-gray-50/60 dark:hover:bg-gray-800/60"
-                            >
-                              <td className="px-4 py-3">
-                                <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img
-                                    src={p.icon}
-                                    alt={p.name}
-                                    className="w-full h-full object-cover"
-                                  />
-                                </div>
-                              </td>
-                              <td className="px-4 py-3">
-                                <p className="font-medium text-gray-900 dark:text-gray-100">
-                                  {p.name}
-                                </p>
-                              </td>
-                              <td className="px-4 py-3 max-w-xs">
-                                <p className="truncate text-gray-600 dark:text-gray-300 text-xs">
-                                  {p.url || "-"}
-                                </p>
-                              </td>
-                              <td className="px-4 py-3">
-                                <p className="text-gray-900 dark:text-gray-100 text-sm">
-                                  {p.price
-                                    ? `${p.currency ? p.currency + " " : ""}${p.price}`
-                                    : "-"}
-                                </p>
-                              </td>
-                              <td className="px-4 py-3">
-                                <div className="flex items-center gap-3 text-lg">
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="View product"
-                                    onClick={() =>
-                                      setPreviewProduct({
-                                        name: p.name,
-                                        description: (p as any).description,
-                                        price: p.price,
-                                        currency: p.currency,
-                                        url: p.url,
-                                        icon: p.icon,
-                                      })
-                                    }
-                                  >
-                                    👁
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="Edit product"
-                                    onClick={() => {
-                                      setEditingProductId(p.id);
-                                      setNewProductName(p.name);
-                                      setNewProductCurrency(p.currency || "");
-                                      setNewProductPrice(p.price || "");
-                                      setNewProductSort((p as any).sort || "");
-                                      setNewProductUrl(p.url || "");
-                                      setNewProductDescription((p as any).description || "");
-                                      setNewProductIconPreview(p.icon);
-                                      setShowNewProductModal(true);
-                                    }}
-                                  >
-                                    ✏️
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-red-500 hover:text-red-600"
-                                    aria-label="Delete product"
-                                    onClick={() => {
-                                      if (!vcardId) return;
-                                      // eslint-disable-next-line no-alert
-                                      if (!confirm("Delete this product?")) return;
-                                      setVCards((prev) =>
-                                        prev.map((c) =>
-                                          c.id === vcardId
-                                            ? {
-                                              ...c,
-                                              products: (c.products ?? []).filter(
-                                                (x) => x.id !== p.id,
-                                              ),
-                                            }
-                                            : c,
-                                        ),
-                                      );
-                                    }}
-                                  >
-                                    🗑
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ));
+                          return rows.map((p) => {
+                            const urlFull = (p.url ?? "").trim();
+                            const openHref = normalizeOpenableUrl(p.url);
+                            return (
+                              <tr
+                                key={p.id}
+                                className="transition-colors hover:bg-slate-50/80 dark:hover:bg-gray-800/50"
+                              >
+                                <td className="px-5 py-4 align-middle">
+                                  <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200/90 bg-gradient-to-br from-slate-50 to-slate-100 ring-1 ring-black/[0.04] dark:border-gray-600 dark:from-gray-800 dark:to-gray-900 dark:ring-white/5">
+                                    {serviceIconIsRenderable(p.icon) ? (
+                                      // eslint-disable-next-line @next/next/no-img-element
+                                      <img
+                                        src={p.icon}
+                                        alt=""
+                                        className="h-full w-full object-cover"
+                                      />
+                                    ) : (
+                                      <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                                        {(p.name || "?").charAt(0).toUpperCase()}
+                                      </span>
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 align-middle">
+                                  <p className="font-semibold text-gray-900 dark:text-gray-100">{p.name}</p>
+                                </td>
+                                <td className="max-w-[min(40vw,320px)] px-5 py-4 align-middle">
+                                  <div className="flex min-w-0 items-center gap-2">
+                                    <p
+                                      className="min-w-0 flex-1 truncate font-mono text-xs text-slate-600 dark:text-slate-300"
+                                      title={urlFull || undefined}
+                                    >
+                                      {formatUrlDisplay(p.url)}
+                                    </p>
+                                    {openHref ? (
+                                      <button
+                                        type="button"
+                                        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-blue-200 bg-blue-50/80 px-2 py-1 text-[11px] font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-800/80 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/40"
+                                        aria-label="Open product URL in new tab"
+                                        title={urlFull}
+                                        onClick={() => window.open(openHref, "_blank", "noopener,noreferrer")}
+                                      >
+                                        <OpenInNewTabArrowIcon className="h-3.5 w-3.5" />
+                                        Open
+                                      </button>
+                                    ) : null}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 align-middle">
+                                  <p className="text-sm font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                                    {p.price ? `${p.currency ? `${p.currency} ` : ""}${p.price}` : "—"}
+                                  </p>
+                                </td>
+                                <td className="px-5 py-4 align-middle">
+                                  <div className="flex items-center justify-end gap-1">
+                                    <AdminTableIconButton
+                                      aria-label="Preview product"
+                                      title="Preview"
+                                      onClick={() =>
+                                        setPreviewProduct({
+                                          name: p.name,
+                                          description: (p as any).description,
+                                          price: p.price,
+                                          currency: p.currency,
+                                          url: p.url,
+                                          icon: p.icon,
+                                        })
+                                      }
+                                    >
+                                      <PreviewEyeIcon />
+                                    </AdminTableIconButton>
+                                    <AdminTableIconButton
+                                      aria-label="Edit product"
+                                      title="Edit"
+                                      onClick={() => {
+                                        setEditingProductId(p.id);
+                                        setNewProductName(p.name);
+                                        setNewProductCurrency(p.currency || "");
+                                        setNewProductPrice(p.price || "");
+                                        setNewProductSort((p as any).sort || "");
+                                        setNewProductUrl(p.url || "");
+                                        setNewProductDescription((p as any).description || "");
+                                        setNewProductIconPreview(p.icon);
+                                        setShowNewProductModal(true);
+                                      }}
+                                    >
+                                      <PencilIcon />
+                                    </AdminTableIconButton>
+                                    <AdminTableIconButton
+                                      className="hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900 dark:hover:bg-red-950/40 dark:hover:text-red-400"
+                                      aria-label="Delete product"
+                                      title="Delete"
+                                      onClick={() => {
+                                        if (!vcardId) return;
+                                        // eslint-disable-next-line no-alert
+                                        if (!confirm("Delete this product?")) return;
+                                        setVCards((prev) =>
+                                          prev.map((c) =>
+                                            c.id === vcardId
+                                              ? {
+                                                ...c,
+                                                products: (c.products ?? []).filter(
+                                                  (x) => x.id !== p.id,
+                                                ),
+                                              }
+                                              : c,
+                                          ),
+                                        );
+                                      }}
+                                    >
+                                      <TrashIcon />
+                                    </AdminTableIconButton>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          });
                         })()}
                       </tbody>
                     </table>
                   </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                  <div className="flex flex-col gap-3 border-t border-gray-200 bg-slate-50/80 px-5 py-3.5 dark:border-gray-700 dark:bg-gray-800/40 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                      <span className="font-medium">Rows per page</span>
                       <select
                         value={productsShowPerPage}
                         onChange={(e) => setProductsShowPerPage(Number(e.target.value))}
-                        className={`${inputClass} h-9 py-1 pr-8 w-20 rounded-lg border border-gray-200 dark:border-gray-600`}
+                        className={`${inputClass} h-9 w-[4.75rem] rounded-lg border border-gray-200 bg-white py-1 pr-8 text-sm font-medium shadow-sm dark:border-gray-600 dark:bg-gray-900`}
                       >
                         <option value={10}>10</option>
                         <option value={25}>25</option>
                         <option value={50}>50</option>
                       </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing{" "}
-                        <span className="font-semibold text-gray-900 dark:text-gray-100">
-                          {(currentCard?.products ?? []).length}
-                        </span>{" "}
-                        results
-                      </span>
                     </div>
+                    {(() => {
+                      const all = (currentCard?.products ?? []) as { name: string }[];
+                      const filtered = productsSearch.trim()
+                        ? all.filter((p) => p.name.toLowerCase().includes(productsSearch.toLowerCase()))
+                        : all;
+                      const visible = Math.min(filtered.length, productsShowPerPage);
+                      return (
+                        <p className="text-sm tabular-nums text-gray-600 dark:text-gray-400">
+                          Showing{" "}
+                          <span className="font-semibold text-gray-900 dark:text-gray-100">{visible}</span>
+                          {" of "}
+                          <span className="font-semibold text-gray-900 dark:text-gray-100">{filtered.length}</span>
+                          {" products"}
+                        </p>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
@@ -6614,6 +6977,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <textarea
                     className={`${inputClass} min-h-[140px] resize-y`}
                     placeholder="Enter Custom Css"
+                    value={customCssInput}
+                    onChange={(e) => setCustomCssInput(e.target.value)}
                   />
                 </div>
                 <div>
@@ -6621,6 +6986,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <textarea
                     className={`${inputClass} min-h-[140px] resize-y`}
                     placeholder="Enter Custom Js"
+                    value={customJsInput}
+                    onChange={(e) => setCustomJsInput(e.target.value)}
                   />
                 </div>
                 <div className="flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-3">
@@ -6649,17 +7016,21 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     type="button"
                     onClick={() => {
                       if (!vcardId || !currentCard) return;
+                      const pwd = advancedPassword.trim();
                       setVCards((prev) =>
-                        prev.map((card) =>
-                          card.id === vcardId
+                        prev.map((c) =>
+                          c.id === vcardId
                             ? {
-                              ...card,
-                              // yahan baad me actual SEO fields bind kar sakte hain
-                            }
-                            : card
+                                ...c,
+                                ...(pwd ? { password: pwd } : { password: undefined }),
+                                customCss: customCssInput,
+                                customJs: customJsInput,
+                                removeBranding,
+                              }
+                            : c
                         )
                       );
-                      setSeoSaveSuccess(true);
+                      setAdvancedSaveSuccess(true);
                     }}
                     className="btn-primary-premium inline-flex items-center justify-center"
                   >
@@ -6667,6 +7038,13 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   </button>
                   <button
                     type="button"
+                    onClick={() => {
+                      if (!currentCard) return;
+                      setAdvancedPassword((currentCard as { password?: string }).password ?? "");
+                      setCustomCssInput(currentCard.customCss ?? "");
+                      setCustomJsInput(currentCard.customJs ?? "");
+                      setRemoveBranding(!!currentCard.removeBranding);
+                    }}
                     className="btn-secondary-premium inline-flex items-center justify-center"
                   >
                     Discard
