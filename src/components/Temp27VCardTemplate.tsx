@@ -87,6 +87,7 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
 
                     {/* ABOUT & CONTACT SECTION (Image 2 style) */}
+                    {(!card.manageSection || card.manageSection.about || card.manageSection.contact) && (
                     <section className="px-8 pb-20 bg-white relative overflow-hidden">
                          {/* Decorative Map Icon (Top Left) */}
                          <div className="absolute top-10 left-6 opacity-30 pointer-events-none">
@@ -94,11 +95,13 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                          </div>
 
                          {/* Description Text */}
+                         {(!card.manageSection || card.manageSection.about) && (
                          <div className="pt-20 pb-16 text-center text-slate-700 max-w-[480px] mx-auto">
                               <p className="text-[19px] leading-relaxed font-serif italic text-slate-600">
                                    At <span className="font-extrabold text-[#0F172A] not-italic tracking-tighter">{card.title || "Desi Miles"}</span>, we specialize in crafting unforgettable travel experiences tailored to your dreams. Whether you're seeking a relaxing beach escape, an adventurous mountain trek, or a cultural city tour, our team is here to make every journey seamless.
                               </p>
                          </div>
+                         )}
 
                          {/* Social Media Icons (Tan rounded squares) */}
                          <VCardSocialLinks 
@@ -116,6 +119,7 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                          </div>
 
                          {/* Contact Grid Section */}
+                         {(!card.manageSection || card.manageSection.contact) && (
                          <div className="relative text-center mb-24 pt-10">
                               <h2 className="text-[36px] font-serif italic text-[#0F172A] inline-block relative after:content-[''] after:absolute after:-bottom-3 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1.5 after:bg-[#A3A375] after:rounded-full mb-16 px-4">
                                    Contact Us
@@ -130,6 +134,7 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                                    <ContactTile icon={MapPin} value={card.address || "India, Mumbai"} />
                               </div>
                          </div>
+                         )}
 
                          {/* Decorative Camera Icon (Bottom Left) */}
                          <div className="absolute bottom-6 left-6 opacity-30 pointer-events-none">
@@ -146,8 +151,10 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </button>
                          </div>
                     </section>
+                    )}
 
                     {/* GALLERY SECTION */}
+                    {(!card.manageSection || card.manageSection.galleries) && (
                     <section className="px-8 pb-20 bg-white relative overflow-hidden">
                          <div className="absolute top-4 left-6 opacity-20 pointer-events-none">
                               <Camera size={60} className="text-[#A3A375]" />
@@ -173,8 +180,10 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* OUR SERVICES SECTION (Expanded 2x2 Grid) */}
+                    {(!card.manageSection || card.manageSection.services) && (
                     <section className="px-8 pb-32 bg-white relative overflow-hidden">
                          <div className="relative text-center mb-16 pt-10">
                               <h2 className="text-[32px] font-black text-[#0F172A] inline-block relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1.5 after:bg-[#A3A375] after:rounded-full mb-8">
@@ -212,8 +221,10 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               />
                          </div>
                     </section>
+                    )}
 
                     {/* MAKE AN APPOINTMENT SECTION */}
+                    {(!card.manageSection || card.manageSection.appointments) && (
                     <section className="px-8 pb-20 bg-white relative overflow-hidden">
                          <div className="absolute top-4 left-6 opacity-20 pointer-events-none -rotate-12">
                               <Ticket size={60} className="text-[#A3A375]" />
@@ -237,8 +248,11 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* PRODUCTS SECTION */}
+                    {(!card.manageSection || card.manageSection.products) && (
+                    <>
                     <section className="px-8 pb-32 bg-white relative overflow-hidden">
                          <div className="relative text-center mb-16 pt-10">
                               <h2 className="text-[32px] font-black text-[#0F172A] inline-block relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1.5 after:bg-[#A3A375] after:rounded-full mb-8">
@@ -271,8 +285,11 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               View More Products <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                          </button>
                     </div>
+                    </>
+                    )}
 
                     {/* TESTIMONIALS SECTION */}
+                    {(!card.manageSection || card.manageSection.testimonials) && (
                     <section className="px-8 pb-24 bg-white relative overflow-hidden">
                          <div className="absolute top-4 left-6 opacity-20 pointer-events-none -rotate-12">
                               <Wallet size={60} className="text-[#A3A375]" />
@@ -317,8 +334,10 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               <div className="h-2.5 w-8 rounded-full bg-[#0F172A]" />
                          </div>
                     </section>
+                    )}
 
                     {/* BLOG SECTION */}
+                    {(!card.manageSection || card.manageSection.blogs) && (
                     <section className="px-8 pb-40 bg-white relative overflow-hidden">
                          <div className="relative text-center mb-16 pt-10">
                               <h2 className="text-[32px] font-black text-[#0F172A] inline-block relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1.5 after:bg-[#A3A375] after:rounded-full mb-8">
@@ -373,8 +392,10 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               <div className="h-2.5 w-8 rounded-full bg-[#0F172A]" />
                          </div>
                     </section>
+                    )}
 
                     {/* BUSINESS HOURS SECTION */}
+                    {(!card.manageSection || card.manageSection.businessHours) && (
                     <section className="px-8 pb-40 bg-white relative overflow-hidden text-center">
                          <div className="absolute top-4 left-6 opacity-20 pointer-events-none -rotate-12">
                               <GlassWater size={60} className="text-[#A3A375]" />
@@ -412,8 +433,10 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* QR CODE SECTION */}
+                    {(!card.manageSection || card.manageSection.qrCode) && (
                     <section className="px-8 pb-32 bg-white relative overflow-hidden">
                          <div className="relative text-center mb-16 pt-10">
                               <h2 className="text-[32px] font-black text-[#0F172A] inline-block relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1.5 after:bg-[#A3A375] after:rounded-full mb-12">
@@ -439,12 +462,14 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* CONTACT US SECTION (Refined) */}
+                    {(!card.manageSection || card.manageSection.inquiries) && (
                     <section className="px-8 pb-40 bg-white relative overflow-hidden text-center">
                          <div className="relative mb-16 pt-10">
                               <h2 className="text-[32px] font-black text-[#0F172A] inline-block relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1.5 after:bg-[#A3A375] after:rounded-full mb-12">
-                                   Contact Us
+                                   Inquiry
                               </h2>
                          </div>
 
@@ -471,10 +496,17 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </button>
                          </div>
                     </section>
+                    )}
 
                     {/* DYNAMIC SECTIONS */}
                     <div className="px-0 pb-10 border-t border-slate-100 pt-10 bg-white">
-                         <VCardDynamicSections card={card} />
+                         <VCardDynamicSections 
+                            card={card} 
+                            exclude={Object.entries(card.manageSection || {})
+                            .filter(([_, value]) => !value)
+                            .map(([key]) => key === 'instagramFeed' ? 'iframes' : key as any)
+                            }
+                         />
                     </div>
 
                     {/* FOOTER INTERFACE */}

@@ -60,29 +60,20 @@ const EditNavIcon = ({ id, active }: { id: string; active: boolean }) => {
     case "basic":
       return (
         <svg className={cn} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       );
     case "templates":
       return (
         <svg className={cn} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
+          <rect x="3" y="3" width="18" height="18" rx="2" strokeWidth={2} />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9h18M9 21V9" />
         </svg>
       );
     case "dynamic":
       return (
         <svg className={cn} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8h-8m8 8H3" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
         </svg>
       );
     case "hours":
@@ -98,20 +89,11 @@ const EditNavIcon = ({ id, active }: { id: string; active: boolean }) => {
       );
     case "qr":
       return (
-        <svg className={`w-4 h-4 shrink-0 ${color}`} fill="currentColor" viewBox="0 0 20 20" aria-hidden>
-          <defs>
-            <filter id="edit-vcard-qr-icon-shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0.4" dy="0.4" stdDeviation="0.25" floodOpacity="0.4" />
-            </filter>
-          </defs>
-          <g filter="url(#edit-vcard-qr-icon-shadow)">
-            <rect x="0" y="0" width="6" height="6" rx="1.25" ry="1.25" />
-            <rect x="9" y="0" width="6" height="6" rx="1.25" ry="1.25" />
-            <rect x="0" y="9" width="6" height="6" rx="1.25" ry="1.25" />
-            <rect x="9" y="9" width="6" height="6" rx="1.25" ry="1.25" />
-            <rect x="4.5" y="14" width="6" height="6" rx="1.25" ry="1.25" />
-            <rect x="13.5" y="14" width="6" height="6" rx="1.25" ry="1.25" />
-          </g>
+        <svg className={cn} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1" strokeWidth={2} />
+          <rect x="14" y="3" width="7" height="7" rx="1" strokeWidth={2} />
+          <rect x="3" y="14" width="7" height="7" rx="1" strokeWidth={2} />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 14h3v3h-3v-3zM18 18h3v3h-3v-3zM14 18h1v3h-1v-3zM18 14h3v1h-3v-1z" />
         </svg>
       );
     case "services":
@@ -140,14 +122,13 @@ const EditNavIcon = ({ id, active }: { id: string; active: boolean }) => {
     case "insta":
       return (
         <svg className={cn} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.919-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.919.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z" />
-          <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM18.406 5.234a1.44 1.44 0 100 2.882 1.44 1.44 0 000-2.882z" />
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.919-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.919.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-1.277.06-2.148.262-2.913.558-.788.306-1.459.717-2.126 1.384-.666.667-1.079 1.336-1.384 2.126-.296.765-.499 1.636-.558 2.913-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.06 1.277.262 2.148.558 2.913.305.789.718 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558-1.28-.058-1.688-.072-4.947-.072zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM18.406 5.234a1.44 1.44 0 100 2.882 1.44 1.44 0 000-2.882z" />
         </svg>
       );
     case "linkedin":
       return (
         <svg className={cn} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433C4.193 7.433 3.274 6.507 3.274 5.368c0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zM3.555 20.452h3.564V9H3.555v11.452z" />
+          <path d="M19 0h-14c-3.313 0-6 2.687-6 6v14.073c0 3.313 2.687 6 6 6h14c3.313 0 6-2.687 6-6v-14.073c0-3.313-2.687-6-6-6zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.784 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
         </svg>
       );
     case "galleries":
@@ -186,8 +167,7 @@ const EditNavIcon = ({ id, active }: { id: string; active: boolean }) => {
     case "iframes":
       return (
         <svg className={cn} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9l3 3-3 3M15 9l3 3-3 3" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       );
     case "appointments":
@@ -719,7 +699,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const searchParams = useSearchParams();
   const { vCards, setVCards } = useVCards();
   const currentCard = vcardId ? vCards.find((c) => c.id === vcardId) : undefined;
-  const showCreatedSuccess = searchParams.get("created") === "1";
+  const initialCreatedSuccess = searchParams.get("created") === "1";
+  const [showCreatedSuccess, setShowCreatedSuccess] = useState(initialCreatedSuccess);
 
   const [activeSection, setActiveSection] = useState<string>("basic");
   const [activeTab, setActiveTab] = useState<"basic" | "personal" | "other">("basic");
@@ -1045,6 +1026,20 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const profileImageInputRef = useRef<HTMLInputElement>(null);
   const [basicAlias, setBasicAlias] = useState("");
   const [basicAliasError, setBasicAliasError] = useState<string | null>(null);
+
+  // Personal Details form state
+  const [pdFirstName, setPdFirstName] = useState("");
+  const [pdLastName, setPdLastName] = useState("");
+  const [pdEmail, setPdEmail] = useState("");
+  const [pdPhone, setPdPhone] = useState("");
+  const [pdAltEmail, setPdAltEmail] = useState("");
+  const [pdAltPhone, setPdAltPhone] = useState("");
+  const [pdLocation, setPdLocation] = useState("");
+  const [pdLocationUrl, setPdLocationUrl] = useState("");
+  const [pdCompany, setPdCompany] = useState("");
+  const [pdJobTitle, setPdJobTitle] = useState("");
+  const [pdBirthDate, setPdBirthDate] = useState("");
+  const [pdSaveSuccess, setPdSaveSuccess] = useState(false);
   const getEmbedRowsForSection = (section: "insta" | "linkedin" | "iframes") => {
     const all = (currentCard?.embedTags ?? []) as { id: string; type: string; value: string; section?: string }[];
     const bySection = all.filter((e) => (e.section ?? "insta") === section);
@@ -1137,7 +1132,56 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     currentCard?.businessHours,
     currentCard?.appointmentType,
     currentCard?.appointmentServices,
+    currentCard?.manageSection,
   ]);
+
+  useEffect(() => {
+    if (currentCard?.manageSection) {
+      setManageSectionSections(currentCard.manageSection);
+    }
+  }, [currentCard?.id, currentCard?.manageSection]);
+
+  // Sync personal details from currentCard
+  useEffect(() => {
+    if (!currentCard) return;
+    const parts = (currentCard.title ?? "").split(" ");
+    setPdFirstName(parts[0] ?? "");
+    setPdLastName(parts.slice(1).join(" ") ?? "");
+    setPdEmail(currentCard.email ?? "");
+    setPdPhone(currentCard.phone ?? "");
+    setPdAltEmail("");
+    setPdAltPhone(currentCard.whatsapp ?? "");
+    setPdLocation(currentCard.address ?? "");
+    setPdLocationUrl("");
+    setPdCompany(currentCard.company ?? "");
+    setPdJobTitle(currentCard.occupation ?? "");
+    setPdBirthDate(currentCard.birthDate ?? "");
+  }, [currentCard?.id]);
+
+  const [manageSectionSections, setManageSectionSections] = useState({
+    header: true,
+    galleries: true,
+    blogs: true,
+    map: true,
+    linkedinFeed: true,
+    contact: true,
+    products: true,
+    businessHours: true,
+    iframes: true,
+    services: true,
+    testimonials: true,
+    appointments: true,
+    instagramFeed: true,
+    qrCode: true,
+    inquiries: true,
+  });
+  const [manageSectionSaveSuccess, setManageSectionSaveSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!pdSaveSuccess) return;
+    const t = setTimeout(() => setPdSaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [pdSaveSuccess]);
   useEffect(() => {
     if (!qrCreateSuccess) return;
     const t = setTimeout(() => setQrCreateSuccess(false), 4000);
@@ -1163,6 +1207,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     const t = setTimeout(() => setSeoSaveSuccess(false), 3000);
     return () => clearTimeout(t);
   }, [seoSaveSuccess]);
+  useEffect(() => {
+    if (!manageSectionSaveSuccess) return;
+    const t = setTimeout(() => setManageSectionSaveSuccess(false), 3000);
+    return () => clearTimeout(t);
+  }, [manageSectionSaveSuccess]);
   useEffect(() => {
     if (!currentCard) return;
     if (currentCard.fontFamily) setFontFamily(currentCard.fontFamily);
@@ -1190,22 +1239,6 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
   const [showAdvancedPassword, setShowAdvancedPassword] = useState(false);
   const [advancedPassword, setAdvancedPassword] = useState("");
   const [removeBranding, setRemoveBranding] = useState(false);
-  const [manageSectionSections, setManageSectionSections] = useState({
-    header: true,
-    galleries: true,
-    blogs: true,
-    map: true,
-    linkedinFeed: true,
-    contact: true,
-    products: true,
-    businessHours: true,
-    iframes: true,
-    services: true,
-    testimonials: true,
-    appointments: true,
-    instagramFeed: true,
-    newsletterPopup: true,
-  });
   const [otherToggles, setOtherToggles] = useState({
     languageLocalization: true,
     inquiryForm: true,
@@ -1364,7 +1397,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
           role="alert"
         >
-          vCard created successfully.
+          vCard updated successfully.
         </div>
       )}
       {qrCreateSuccess && (
@@ -1397,6 +1430,14 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
           role="alert"
         >
           SEO updated successfully.
+        </div>
+      )}
+      {manageSectionSaveSuccess && (
+        <div
+          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+          role="alert"
+        >
+          Manage Section updated successfully.
         </div>
       )}
 
@@ -1782,7 +1823,38 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                 )}
 
                 {activeTab === "personal" && (
-                  <form className="space-y-5">
+                  <form
+                    className="space-y-5"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (!vcardId || !currentCard) return;
+                      const fullName = `${pdFirstName.trim()} ${pdLastName.trim()}`.trim();
+                      setVCards((prev) =>
+                        prev.map((c) =>
+                          c.id === vcardId
+                            ? {
+                                ...c,
+                                title: fullName || c.title,
+                                email: pdEmail.trim() || undefined,
+                                phone: pdPhone.trim() || undefined,
+                                whatsapp: pdAltPhone.trim() || undefined,
+                                address: pdLocation.trim() || undefined,
+                                company: pdCompany.trim() || undefined,
+                                occupation: pdJobTitle.trim() || undefined,
+                                birthDate: pdBirthDate.trim() || undefined,
+                              }
+                            : c
+                        )
+                      );
+                      setPdSaveSuccess(true);
+                      setActiveTab("other");
+                    }}
+                  >
+                    {pdSaveSuccess && (
+                      <div className="mb-2 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200">
+                        Personal Details saved successfully.
+                      </div>
+                    )}
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">vCard Details</h2>
                     <div className="grid md:grid-cols-2 gap-4">
                       {/* Left column */}
@@ -1791,27 +1863,63 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           <label className={labelClass}>
                             First Name <span className="text-red-500">*</span>
                           </label>
-                          <input type="text" className={inputClass} placeholder="Enter First Name" />
+                          <input
+                            type="text"
+                            className={inputClass}
+                            placeholder="Enter First Name"
+                            value={pdFirstName}
+                            onChange={(e) => setPdFirstName(e.target.value)}
+                            required
+                          />
                         </div>
                         <div>
                           <label className={labelClass}>Email:</label>
-                          <input type="email" className={inputClass} placeholder="Enter Email Address" />
+                          <input
+                            type="email"
+                            className={inputClass}
+                            placeholder="Enter Email Address"
+                            value={pdEmail}
+                            onChange={(e) => setPdEmail(e.target.value)}
+                          />
                         </div>
                         <div>
                           <label className={labelClass}>Alternate Email:</label>
-                          <input type="email" className={inputClass} placeholder="Alternate Email" />
+                          <input
+                            type="email"
+                            className={inputClass}
+                            placeholder="Alternate Email"
+                            value={pdAltEmail}
+                            onChange={(e) => setPdAltEmail(e.target.value)}
+                          />
                         </div>
                         <div>
                           <label className={labelClass}>Location:</label>
-                          <textarea className={`${inputClass} h-24 resize-y min-h-[80px]`} placeholder="Enter Your Location" />
+                          <textarea
+                            className={`${inputClass} h-24 resize-y min-h-[80px]`}
+                            placeholder="Enter Your Location"
+                            value={pdLocation}
+                            onChange={(e) => setPdLocation(e.target.value)}
+                          />
                         </div>
                         <div>
                           <label className={labelClass}>Location URL:</label>
-                          <input type="url" className={inputClass} placeholder="Enter Your Location URL" />
+                          <input
+                            type="url"
+                            className={inputClass}
+                            placeholder="Enter Your Location URL"
+                            value={pdLocationUrl}
+                            onChange={(e) => setPdLocationUrl(e.target.value)}
+                          />
                         </div>
                         <div>
                           <label className={labelClass}>Company:</label>
-                          <input type="text" className={inputClass} placeholder="Enter Company Name" />
+                          <input
+                            type="text"
+                            className={inputClass}
+                            placeholder="Enter Company Name"
+                            value={pdCompany}
+                            onChange={(e) => setPdCompany(e.target.value)}
+                          />
                         </div>
                       </div>
                       {/* Right column */}
@@ -1820,78 +1928,73 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           <label className={labelClass}>
                             Last Name <span className="text-red-500">*</span>
                           </label>
-                          <input type="text" className={inputClass} placeholder="Enter Last Name" />
+                          <input
+                            type="text"
+                            className={inputClass}
+                            placeholder="Enter Last Name"
+                            value={pdLastName}
+                            onChange={(e) => setPdLastName(e.target.value)}
+                          />
                         </div>
                         <div>
                           <label className={labelClass}>Phone:</label>
-                          <div className="flex gap-2">
-                            <select className={`${inputClass} w-[100px] shrink-0`}>
-                              <option value="+91">🇮🇳 +91</option>
-                              <option value="+1">+1</option>
-                              <option value="+44">+44</option>
-                            </select>
-                            <input type="tel" className={`${inputClass} flex-1`} placeholder="Enter Phone Number" />
-                          </div>
+                          <input
+                            type="tel"
+                            className={inputClass}
+                            placeholder="Enter Phone Number"
+                            value={pdPhone}
+                            onChange={(e) => setPdPhone(e.target.value)}
+                          />
                         </div>
                         <div>
-                          <label className={labelClass}>Alternate Phone:</label>
-                          <div className="flex gap-2">
-                            <select className={`${inputClass} w-[100px] shrink-0`}>
-                              <option value="+91">🇮🇳 +91</option>
-                              <option value="+1">+1</option>
-                              <option value="+44">+44</option>
-                            </select>
-                            <input type="tel" className={`${inputClass} flex-1`} placeholder="Alternate Phone" />
-                          </div>
-                        </div>
-                        <div>
-                          <label className={labelClass}>Select Location Type:</label>
-                          <select className={inputClass}>
-                            <option>Link</option>
-                            <option>Map</option>
-                            <option>None</option>
-                          </select>
+                          <label className={labelClass}>Alternate Phone / WhatsApp:</label>
+                          <input
+                            type="tel"
+                            className={inputClass}
+                            placeholder="Alternate Phone"
+                            value={pdAltPhone}
+                            onChange={(e) => setPdAltPhone(e.target.value)}
+                          />
                         </div>
                         <div>
                           <label className={labelClass}>Date Of Birth:</label>
-                          <input type="text" className={inputClass} placeholder="Enter Date of Birth" />
+                          <input
+                            type="text"
+                            className={inputClass}
+                            placeholder="Enter Date of Birth"
+                            value={pdBirthDate}
+                            onChange={(e) => setPdBirthDate(e.target.value)}
+                          />
                         </div>
                         <div>
-                          <label className={labelClass}>Made By:</label>
-                          <input type="text" className={inputClass} placeholder="Made By" />
+                          <label className={labelClass}>Job Title / Occupation:</label>
+                          <input
+                            type="text"
+                            className={inputClass}
+                            placeholder="Enter Job Title"
+                            value={pdJobTitle}
+                            onChange={(e) => setPdJobTitle(e.target.value)}
+                          />
                         </div>
-                      </div>
-                    </div>
-                    {/* Second row: Made By URL, Job Title, Default Language, Cover Image Type */}
-                    <div className="grid md:grid-cols-2 gap-4 pt-2 border-t border-gray-200 dark:border-gray-700 pt-6">
-                      <div>
-                        <label className={labelClass}>Made By URL:</label>
-                        <input type="url" className={inputClass} placeholder="Made By URL" />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Job Title:</label>
-                        <input type="text" className={inputClass} placeholder="Enter Job Title" />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Default Language:</label>
-                        <select className={inputClass}>
-                          <option>English</option>
-                          <option>Hindi</option>
-                          <option>Spanish</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className={labelClass}>Cover Image Type:</label>
-                        <select className={inputClass}>
-                          <option>Cover</option>
-                          <option>Image</option>
-                          <option>None</option>
-                        </select>
                       </div>
                     </div>
                     <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
                       <button
                         type="button"
+                        onClick={() => {
+                          if (!currentCard) return;
+                          const parts = (currentCard.title ?? "").split(" ");
+                          setPdFirstName(parts[0] ?? "");
+                          setPdLastName(parts.slice(1).join(" ") ?? "");
+                          setPdEmail(currentCard.email ?? "");
+                          setPdPhone(currentCard.phone ?? "");
+                          setPdAltPhone(currentCard.whatsapp ?? "");
+                          setPdLocation(currentCard.address ?? "");
+                          setPdLocationUrl("");
+                          setPdCompany(currentCard.company ?? "");
+                          setPdJobTitle(currentCard.occupation ?? "");
+                          setPdBirthDate(currentCard.birthDate ?? "");
+                        }}
                         className="btn-secondary-premium inline-flex items-center justify-center"
                       >
                         Discard
@@ -6109,6 +6212,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-14 sm:gap-x-16 gap-y-4 mb-10">
                     {[
                       { key: "header" as const, label: "Header" },
+                      { key: "about" as const, label: "About" },
                       { key: "contact" as const, label: "Contact" },
                       { key: "services" as const, label: "Services" },
                       { key: "galleries" as const, label: "Galleries" },
@@ -6121,7 +6225,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       { key: "instagramFeed" as const, label: "Instagram Feed" },
                       { key: "linkedinFeed" as const, label: "LinkedIn Feed" },
                       { key: "iframes" as const, label: "Iframes" },
-                      { key: "newsletterPopup" as const, label: "News Letter popup" },
+                      { key: "qrCode" as const, label: "QR Code" },
+                      { key: "inquiries" as const, label: "Inquiries" },
                     ].map(({ key, label }) => (
                       <label
                         key={key}
@@ -6129,7 +6234,7 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       >
                         <input
                           type="checkbox"
-                          checked={manageSectionSections[key]}
+                          checked={!!manageSectionSections[key]}
                           onChange={() =>
                             setManageSectionSections((prev) => ({ ...prev, [key]: !prev[key] }))
                           }
@@ -6146,12 +6251,34 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                 <div className="flex justify-center gap-2.5 px-10 sm:px-12 pt-2 pb-8 sm:pb-10 border-t border-gray-200 dark:border-gray-700">
                   <button
                     type="button"
+                    onClick={() => {
+                      if (!vcardId || !currentCard) return;
+                      setVCards((prev) =>
+                        prev.map((card) =>
+                          card.id === vcardId
+                            ? {
+                                ...card,
+                                manageSection: manageSectionSections,
+                              }
+                            : card
+                        )
+                      );
+                      setManageSectionSaveSuccess(true);
+                      // Adding a clear confirmation message
+                      setShowCreatedSuccess(true);
+                      setTimeout(() => setShowCreatedSuccess(false), 3000);
+                    }}
                     className="btn-primary-premium inline-flex items-center justify-center min-w-[100px]"
                   >
                     Save
                   </button>
                   <button
                     type="button"
+                    onClick={() => {
+                      if (currentCard?.manageSection) {
+                        setManageSectionSections(currentCard.manageSection);
+                      }
+                    }}
                     className="btn-secondary-premium inline-flex items-center justify-center min-w-[100px]"
                   >
                     Discard

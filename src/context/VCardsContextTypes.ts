@@ -25,7 +25,7 @@ export type VCardEmbedTag = {
   id: string;
   type: string;
   value: string;
-  section?: "insta" | "linkedin" | "iframes";
+  section?: "insta" | "linkedin" | "iframes" | "map";
 };
 
 export type VCardCustomLink = {
@@ -138,4 +138,22 @@ export type VCardItem = {
   password?: string;
   /** Set by API when card has password; client uses this to show unlock form. */
   requiresPassword?: boolean;
+  manageSection?: {
+    header: boolean;
+    about: boolean;
+    galleries: boolean;
+    blogs: boolean;
+    map: boolean;
+    linkedinFeed: boolean;
+    contact: boolean;
+    products: boolean;
+    businessHours: boolean;
+    iframes: boolean;
+    services: boolean;
+    testimonials: boolean;
+    appointments: boolean;
+    instagramFeed: boolean;
+    qrCode: boolean;
+    inquiries: boolean;
+  };
 };

@@ -63,6 +63,7 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         </div>
 
         {/* HERO SECTION */}
+        {(!card.manageSection || card.manageSection.header) && (
         <section className="relative pt-40 pb-20 px-10 flex flex-col items-center text-center">
              <div className="relative inline-block mb-16">
                   <h1 className="text-[64px] sm:text-[84px] font-normal italic tracking-tight text-[#4C0519] leading-none mb-4" style={{ fontFamily: '"Great Vibes", cursive' }}>
@@ -106,6 +107,7 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </div>
              </div>
         </section>
+        )}
 
         {/* BRANDED CALL-TO-ACTION */}
         <section className="px-10 pb-32">
@@ -130,6 +132,7 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
         </section>
 
         {/* ABOUT SECTION */}
+        {(!card.manageSection || card.manageSection.about) && (
         <section className="px-14 pb-40 text-center space-y-16">
              <div className="space-y-10 max-w-lg mx-auto">
                   <div className="space-y-4">
@@ -149,8 +152,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   />
              </div>
         </section>
+        )}
 
         {/* SERVICES SECTION */}
+        {(!card.manageSection || card.manageSection.services) && (
         <div className="px-10 pb-40">
              <PremiumSectionTitle title="Our Services" subtitle="Luxury Matchmaking Ecosystem" />
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-20">
@@ -176,8 +181,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   />
              </div>
         </div>
+        )}
 
         {/* CONTACT GRID */}
+        {(!card.manageSection || card.manageSection.contact) && (
         <section className="px-10 pb-40 relative">
              <PremiumSectionTitle title="Connect" subtitle="Reach Our Dedicated Desk" />
              <div className="grid grid-cols-2 gap-8 mt-20">
@@ -187,8 +194,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   <WeddingContactCard icon={MapPin} value={card.address || "Heritage Plaza, Surat"} />
              </div>
         </section>
+        )}
 
         {/* APPOINTMENT SECTION */}
+        {(!card.manageSection || card.manageSection.appointments) && (
         <div className="px-10 pb-40">
              <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-[80px] p-16 border border-white shadow-xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-10 opacity-5">
@@ -225,8 +234,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </div>
              </div>
         </div>
+        )}
 
         {/* GALLERY SECTION */}
+        {(!card.manageSection || card.manageSection.galleries) && (
         <div className="px-10 pb-40">
              <PremiumSectionTitle title="Visuals" subtitle="Glance of Success" />
              <div className="relative mt-20 group">
@@ -257,8 +268,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </div>
              </div>
         </div>
+        )}
 
         {/* PRODUCTS SECTION */}
+        {(!card.manageSection || card.manageSection.products) && (
         <div className="px-10 pb-40">
              <PremiumSectionTitle title="Investment" subtitle="Packages for Every Heart" />
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-20">
@@ -280,8 +293,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </button>
              </div>
         </div>
+        )}
 
         {/* TESTIMONIALS */}
+        {(!card.manageSection || card.manageSection.testimonials) && (
         <div className="px-10 pb-40">
              <div className="bg-white border border-rose-100 rounded-[80px] p-20 relative text-center shadow-2xl">
                   <div className="absolute top-10 left-10 text-rose-100 italic text-[120px] leading-none select-none opacity-50">“</div>
@@ -301,8 +316,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </div>
              </div>
         </div>
+        )}
 
         {/* HOURS SECTION */}
+        {(!card.manageSection || card.manageSection.businessHours) && (
         <div className="px-10 pb-40">
              <PremiumSectionTitle title="Availability" subtitle="We Are Always Listening" />
              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-20">
@@ -323,8 +340,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </div>
              </div>
         </div>
+        )}
 
         {/* INQUIRY FORM */}
+        {(!card.manageSection || card.manageSection.inquiries) && (
         <div className="px-10 pb-40" id="inquiries">
              <div className="bg-rose-950 rounded-[80px] p-20 text-white relative overflow-hidden shadow-2xl shadow-rose-950/40">
                   <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-rose-900 to-rose-950 opacity-90" />
@@ -355,8 +374,10 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                   </div>
              </div>
         </div>
+        )}
 
         {/* QR SECTION */}
+        {(!card.manageSection || card.manageSection.qrCode) && (
         <section className="px-10 py-40 bg-white flex flex-col items-center">
              <PremiumSectionTitle title="QR Code" subtitle="Save Our Legacy Directly" />
              <div className="mt-24 relative">
@@ -381,10 +402,17 @@ export function Temp24VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                    </button>
              </div>
         </section>
+        )}
 
         {/* DYNAMIC SECTIONS */}
         <div className="px-0 pb-20">
-            <VCardDynamicSections card={card} />
+            <VCardDynamicSections 
+                card={card} 
+                exclude={Object.entries(card.manageSection || {})
+                .filter(([_, value]) => !value)
+                .map(([key]) => key === 'instagramFeed' ? 'iframes' : key as any)
+                }
+            />
         </div>
 
         {/* FOOTER */}

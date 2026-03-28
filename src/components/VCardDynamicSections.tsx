@@ -5,7 +5,7 @@ import type { VCardItem } from "@/context/VCardsContextTypes";
 
 interface Props {
   card: VCardItem;
-  exclude?: ("testimonials" | "galleries" | "businessHours" | "services" | "products" | "blogs")[];
+  exclude?: ("testimonials" | "galleries" | "businessHours" | "services" | "products" | "blogs" | "iframes" | "map")[];
 }
 
 export function VCardDynamicSections({ card, exclude = [] }: Props) {
@@ -123,6 +123,30 @@ export function VCardDynamicSections({ card, exclude = [] }: Props) {
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 px-3 w-full text-center">{p.description}</p>
                 </div>
              ))}
+          </div>
+        </section>
+      )}
+
+      {/* Iframes */}
+      {card.embedTags && card.embedTags.some(t => t.section === 'iframes') && !exclude.includes('iframes') && (
+        <section className="bg-white/5 dark:bg-black/10 backdrop-blur rounded-[32px] p-6 sm:p-8 border border-gray-200 dark:border-white/10 shadow-sm">
+          <h3 className="text-xl font-bold mb-6 text-center text-inherit">Iframes</h3>
+          <div className="space-y-6">
+            {card.embedTags.filter(t => t.section === 'iframes').map((tag, i) => (
+              <div key={i} className="w-full h-[450px] rounded-2xl overflow-hidden bg-gray-100 shadow-lg border border-gray-200" dangerouslySetInnerHTML={{ __html: tag.value }} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Map */}
+      {card.embedTags && card.embedTags.some(t => t.section === 'map') && !exclude.includes('map') && (
+        <section className="bg-white/5 dark:bg-black/10 backdrop-blur rounded-[32px] p-6 sm:p-8 border border-gray-200 dark:border-white/10 shadow-sm">
+          <h3 className="text-xl font-bold mb-6 text-center text-inherit">Map</h3>
+          <div className="w-full h-[450px] rounded-2xl overflow-hidden bg-gray-100 shadow-lg border border-gray-200">
+            {card.embedTags.filter(t => t.section === 'map').map((tag, i) => (
+              <div key={i} className="w-full h-full" dangerouslySetInnerHTML={{ __html: tag.value }} />
+            ))}
           </div>
         </section>
       )}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
@@ -192,268 +192,289 @@ export function Corporate7VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
         </section>
 
         {/* OUR SERVICES SECTION - Matching Image 4 */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-400">
-            {/* BACKGROUND WATERMARKS (Services) */}
-            <div className="absolute top-[5%] left-[5%] opacity-[0.03] text-[70px] select-none pointer-events-none -rotate-12">€</div>
-            <div className="absolute top-[2%] right-[10%] opacity-[0.03] text-[70px] select-none pointer-events-none rotate-12">$</div>
-            <div className="absolute bottom-[5%] left-[15%] opacity-[0.03] text-[60px] select-none pointer-events-none rotate-45">💼</div>
-            <div className="absolute bottom-[2%] right-[5%] opacity-[0.03] text-[70px] select-none pointer-events-none -rotate-12">🤝</div>
+        {(!card.manageSection || card.manageSection.services) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-400">
+                {/* BACKGROUND WATERMARKS (Services) */}
+                <div className="absolute top-[5%] left-[5%] opacity-[0.03] text-[70px] select-none pointer-events-none -rotate-12">€</div>
+                <div className="absolute top-[2%] right-[10%] opacity-[0.03] text-[70px] select-none pointer-events-none rotate-12">$</div>
+                <div className="absolute bottom-[5%] left-[15%] opacity-[0.03] text-[60px] select-none pointer-events-none rotate-45">💼</div>
+                <div className="absolute bottom-[2%] right-[5%] opacity-[0.03] text-[70px] select-none pointer-events-none -rotate-12">🤝</div>
 
-            <div className="flex items-center justify-end mb-10">
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-0">
-                        <div className="w-3 h-3 bg-blue-500 rotate-45 transform mr-[-4px] z-10" />
-                        <div className="w-24 h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full" />
+                <div className="flex items-center justify-end mb-10">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-0">
+                            <div className="w-3 h-3 bg-blue-500 rotate-45 transform mr-[-4px] z-10" />
+                            <div className="w-24 h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full" />
+                        </div>
+                        <h2 className="text-[32px] font-black text-[#1e1b4b] tracking-tight">Our Services</h2>
                     </div>
-                    <h2 className="text-[32px] font-black text-[#1e1b4b] tracking-tight">Our Services</h2>
                 </div>
-            </div>
 
-            <div className="space-y-6">
-                {(card.services && card.services.length > 0 ? card.services : [
-                    { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "browser" },
-                    { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "pen-tool" },
-                    { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "browser" },
-                    { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "browser" }
-                ]).map((svc, idx) => (
-                    <ServiceCard key={idx} service={svc} />
-                ))}
-            </div>
-        </section>
+                <div className="space-y-6">
+                    {(card.services && card.services.length > 0 ? card.services : [
+                        { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "browser" },
+                        { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "pen-tool" },
+                        { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "browser" },
+                        { name: "Web Design", description: "There are many variations of passages of Lorem Ipsum but the majority have suffered alteration in some form", icon: "browser" }
+                    ]).map((svc, idx) => (
+                        <ServiceCard key={idx} service={svc} />
+                    ))}
+                </div>
+            </section>
+        )}
+
 
         {/* MAKE AN APPOINTMENT SECTION - Matching Image 5 */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
-            {/* BACKGROUND WATERMARKS (Appointment) */}
-            <div className="absolute top-[5%] right-[2%] opacity-[0.03] text-[90px] select-none pointer-events-none rotate-12">🤝</div>
+        {(!card.manageSection || card.manageSection.appointments) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
+                {/* BACKGROUND WATERMARKS (Appointment) */}
+                <div className="absolute top-[5%] right-[2%] opacity-[0.03] text-[90px] select-none pointer-events-none rotate-12">🤝</div>
 
-            <div className="flex items-center justify-start mb-10 gap-4">
-                <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Make An Appointment</h2>
-                <div className="flex items-center gap-0 w-full">
-                    <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
-                    <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
-                </div>
-            </div>
-
-            <div className="space-y-8">
-                {/* DATE SELECTOR */}
-                <div className="flex items-center gap-6">
-                    <span className="text-[18px] font-black text-[#1e1b4b] min-w-[70px]">Date:</span>
-                    <div className="flex-1 relative group">
-                        <input 
-                            type="text" 
-                            placeholder="Pick a date"
-                            readOnly
-                            className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-5 text-[15px] text-slate-400 placeholder-slate-300 focus:outline-none focus:border-blue-400 transition-colors cursor-pointer shadow-sm group-hover:shadow-md"
-                        />
-                        <Calendar className="absolute right-6 top-1/2 -translate-y-1/2 text-blue-500" size={24} />
+                <div className="flex items-center justify-start mb-10 gap-4">
+                    <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Make An Appointment</h2>
+                    <div className="flex items-center gap-0 w-full">
+                        <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
+                        <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
                     </div>
                 </div>
 
-                {/* HOUR SELECTOR */}
-                <div className="flex items-start gap-6">
-                    <span className="text-[18px] font-black text-[#1e1b4b] min-w-[70px] pt-4">Hour:</span>
-                    <div className="flex-1 grid grid-cols-2 gap-3">
-                        {["8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00"].map((slot, idx) => (
-                            <div key={idx} className="bg-white border border-slate-200 rounded-2xl py-5 text-center text-[#1e1b4b]/60 text-[16px] font-medium shadow-sm hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer">
-                                {slot}
+                <div className="space-y-8">
+                    {/* DATE SELECTOR */}
+                    <div className="flex items-center gap-6">
+                        <span className="text-[18px] font-black text-[#1e1b4b] min-w-[70px]">Date:</span>
+                        <div className="flex-1 relative group">
+                            <input 
+                                type="text" 
+                                placeholder="Pick a date"
+                                readOnly
+                                className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-5 text-[15px] text-slate-400 placeholder-slate-300 focus:outline-none focus:border-blue-400 transition-colors cursor-pointer shadow-sm group-hover:shadow-md"
+                            />
+                            <Calendar className="absolute right-6 top-1/2 -translate-y-1/2 text-blue-500" size={24} />
+                        </div>
+                    </div>
+
+                    {/* HOUR SELECTOR */}
+                    <div className="flex items-start gap-6">
+                        <span className="text-[18px] font-black text-[#1e1b4b] min-w-[70px] pt-4">Hour:</span>
+                        <div className="flex-1 grid grid-cols-2 gap-3">
+                            {["8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00"].map((slot, idx) => (
+                                <div key={idx} className="bg-white border border-slate-200 rounded-2xl py-5 text-center text-[#1e1b4b]/60 text-[16px] font-medium shadow-sm hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer">
+                                    {slot}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )}
+
+
+        {/* GALLERY SECTION - Matching Image 6 */}
+        {(!card.manageSection || card.manageSection.galleries) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
+                <div className="flex items-center justify-end mb-10 gap-4">
+                    <div className="flex items-center gap-0 w-full max-w-[150px]">
+                        <div className="w-3 h-3 bg-blue-500 rotate-45 transform mr-[-4px] z-10" />
+                        <div className="w-full h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full" />
+                    </div>
+                    <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Gallery</h2>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                    {((card as any).gallery && (card as any).gallery.length > 0 ? (card as any).gallery : [
+                        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=400",
+                        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400",
+                        "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=400"
+                    ]).slice(0, 3).map((imgUrl: any, idx: number) => (
+                        <div key={idx} className="aspect-square relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                            <Image src={(imgUrl as any).url || imgUrl} alt="Gallery" fill className="object-cover" />
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )}
+
+
+        {/* PRODUCTS SECTION - Matching Image 6 */}
+        {(!card.manageSection || card.manageSection.products) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-600">
+                <div className="absolute top-[5%] right-[-5%] opacity-[0.03] text-[100px] select-none pointer-events-none -rotate-12 translate-x-[20%]">€</div>
+                
+                <div className="flex items-center mb-10 gap-4">
+                    <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Products</h2>
+                    <div className="flex items-center gap-0 w-full max-w-[150px]">
+                        <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
+                        <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                    {((card as any).products && (card as any).products.length > 0 ? (card as any).products : [
+                        { name: "Lorem 1", price: "25", description: "Lorem is dummy text", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400" },
+                        { name: "Lorem 2", price: "155", description: "Lorem is dummy text", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400" }
+                    ]).map((prod: any, idx: number) => (
+                        <div key={idx} className="bg-white rounded-[24px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-slate-50 flex flex-col group transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
+                            <div className="aspect-[4/3] relative overflow-hidden">
+                                <Image src={(prod as any).image} alt={prod.name} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                            </div>
+                            <div className="p-5 space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-[17px] font-black text-[#1e1b4b] tracking-tight truncate">{prod.name}</h3>
+                                    <span className="text-[16px] font-black text-blue-500">${prod.price}</span>
+                                </div>
+                                <p className="text-[13px] font-medium text-slate-400 leading-tight truncate">
+                                    {prod.description}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )}
+
+
+        {/* BLOG SECTION - Refined Overlapping Layout (Matching Image 7) */}
+        {(!card.manageSection || card.manageSection.blogs) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-700">
+                <div className="absolute bottom-[0%] left-[-5%] opacity-[0.03] text-[100px] select-none pointer-events-none rotate-12">📄</div>
+
+                <div className="flex items-center justify-end mb-12 gap-4">
+                    <div className="flex items-center gap-0 w-full max-w-[200px]">
+                        {/* Share-style Node Icon from image */}
+                        <div className="flex items-center justify-center w-12 h-12 rounded-full border-[1.5px] border-blue-400 bg-white shadow-sm z-20">
+                             <div className="relative w-6 h-6">
+                                <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-blue-500" />
+                                <div className="absolute bottom-0 left-0 w-2 h-2 rounded-full bg-blue-500" />
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-blue-500" />
+                                <svg className="absolute inset-0 w-full h-full text-blue-500 opacity-30" viewBox="0 0 24 24"><path d="M18 8l-6 4 6 4M6 12l6-4M6 12l6 4" stroke="currentColor" strokeWidth="2" /></svg>
+                             </div>
+                        </div>
+                        <div className="w-full h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full ml-[-24px]" />
+                    </div>
+                    <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Blog</h2>
+                </div>
+                
+                <div className="space-y-8">
+                    {((card as any).blogs && (card as any).blogs.length > 0 ? (card as any).blogs : [
+                        { title: "Coding", description: "Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industry's standard.", image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=400" }
+                    ]).slice(0, 1).map((blog: any, idx: number) => (
+                        <div key={idx} className="relative">
+                            {/* Main Image - Rounded */}
+                            <div className="w-[85%] aspect-[5/4] sm:aspect-square relative rounded-[40px] overflow-hidden shadow-2xl">
+                                 <Image src={(blog as any).image} alt={blog.title} fill className="object-cover" />
+                            </div>
+                            
+                            {/* Overlapping Glass Card */}
+                            <div className="absolute top-[20%] right-[-5%] w-[70%] bg-white rounded-[24px] p-6 sm:p-8 shadow-[0_15px_45px_rgba(30,27,75,0.1)] border border-blue-50 z-10">
+                               <h3 className="text-[20px] font-black text-[#1e1b4b] tracking-tight mb-2">{blog.title}</h3>
+                               <p className="text-[14px] font-medium text-slate-400 leading-relaxed">
+                                   {blog.description}
+                               </p>
+                            </div>
+                        </div>
+                    ))}
+
+                    {/* Navigation Arrows */}
+                    <div className="flex justify-end gap-3 pt-4 pr-10">
+                        <button className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-[#1e1b4b]/40 hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <button className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-[#1e1b4b]/40 hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        )}
+
+
+        {/* TESTIMONIALS SECTION - Matching Image 7 */}
+        {(!card.manageSection || card.manageSection.testimonials) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-800">
+                <div className="flex items-center mb-16 gap-4">
+                    <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Testimonials</h2>
+                    <div className="flex items-center gap-0 w-full max-w-[150px]">
+                        <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
+                        <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
+                    </div>
+                </div>
+
+                <div className="relative group group-hover:scale-[1.01] transition-transform duration-700 flex flex-col items-center">
+                    {((card as any).testimonials && (card as any).testimonials.length > 0 ? (card as any).testimonials : [
+                        { name: "Jane Doe", role: "CEO", quote: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400" }
+                    ]).slice(0, 1).map((t: any, idx: number) => (
+                        <div key={idx} className="flex flex-col items-center text-center max-w-[400px]">
+                            {/* Large Central Portrait with blue ring */}
+                            <div className="relative w-40 h-40 rounded-full border-[6px] border-[#3B82F6] p-1.5 shadow-xl bg-white mb-8 group-hover:scale-[1.05] transition-transform duration-700">
+                                <div className="relative w-full h-full rounded-full overflow-hidden">
+                                    <Image src={(t as any).image} alt={t.name} fill className="object-cover" />
+                                </div>
+                            </div>
+
+                            <div className="space-y-1 mb-6">
+                                <h3 className="text-[22px] font-black text-[#1e1b4b] tracking-tight">{t.name}</h3>
+                                <p className="text-[14px] font-black text-slate-400 tracking-[0.2em] uppercase">{t.role}</p>
+                            </div>
+
+                            {/* Large Quotes Layout */}
+                            <div className="relative px-10">
+                                <div className="absolute top-[-20px] left-[-10px] text-[100px] leading-none text-slate-200 opacity-60 font-serif select-none pointer-events-none">“</div>
+                                <p className="italic text-[16px] font-medium text-slate-400 leading-relaxed px-2">
+                                    {t.quote}
+                                </p>
+                                <div className="absolute bottom-[-50px] right-[-10px] text-[100px] leading-none text-slate-200 opacity-60 font-serif select-none pointer-events-none">”</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )}
+
+
+        {/* BUSINESS HOURS SECTION - Matching Image 9 */}
+        {(!card.manageSection || card.manageSection.businessHours) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
+                {/* BACKGROUND WATERMARKS (Business Hours) */}
+                <div className="absolute top-[0%] right-[0%] opacity-[0.03] text-[100px] select-none pointer-events-none -rotate-12 translate-x-[20%]">🕒</div>
+                <div className="absolute bottom-[0%] left-[0%] opacity-[0.03] text-[100px] select-none pointer-events-none rotate-12 translate-x-[-20%]">🕒</div>
+
+                <div className="flex items-center mb-16 gap-4">
+                    <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Business Hours</h2>
+                    <div className="flex items-center gap-0 w-full max-w-[150px]">
+                        <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
+                        <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-[32px] border-[1.5px] border-blue-200 p-10 shadow-[0_20px_60px_rgba(30,27,75,0.05)] transition-all duration-700 hover:shadow-xl group-hover:-translate-y-2">
+                    <div className="space-y-4">
+                        {(((card as any).businessHours && Array.isArray((card as any).businessHours) && (card as any).businessHours.length > 0) ? (card as any).businessHours : [
+                            { day: "Sunday", time: "08:10 - 20:00" },
+                            { day: "Monday", time: "08:10 - 20:00" },
+                            { day: "Tuesday", time: "08:10 - 20:00" },
+                            { day: "Wednesday", time: "08:10 - 10:00" },
+                            { day: "Thursday", time: "08:10 - 20:00" },
+                            { day: "Friday", time: "08:10 - 20:00" },
+                            { day: "Saturday", time: "Closed" }
+                        ]).map((row: any, idx: number) => (
+                            <div key={idx} className="flex items-center justify-between group/row">
+                                <span className="text-[18px] font-black text-[#1e1b4b] tracking-tight transition-transform group-hover/row:translate-x-1">{row.day} :</span>
+                                <span className={`text-[17px] font-medium tracking-tight ${row.time === 'Closed' ? 'text-[#1e1b4b]/40' : 'text-slate-500'}`}>
+                                    {row.time}
+                                </span>
                             </div>
                         ))}
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        )}
 
-        {/* GALLERY SECTION - Matching Image 6 */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
-            <div className="flex items-center justify-end mb-10 gap-4">
-                <div className="flex items-center gap-0 w-full max-w-[150px]">
-                    <div className="w-3 h-3 bg-blue-500 rotate-45 transform mr-[-4px] z-10" />
-                    <div className="w-full h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full" />
-                </div>
-                <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Gallery</h2>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                {((card as any).gallery && (card as any).gallery.length > 0 ? (card as any).gallery : [
-                    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=400",
-                    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400",
-                    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=400"
-                ]).slice(0, 3).map((imgUrl: any, idx: number) => (
-                    <div key={idx} className="aspect-square relative rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
-                        <Image src={(imgUrl as any).url || imgUrl} alt="Gallery" fill className="object-cover" />
-                    </div>
-                ))}
-            </div>
-        </section>
-
-        {/* PRODUCTS SECTION - Matching Image 6 */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-600">
-            <div className="absolute top-[5%] right-[-5%] opacity-[0.03] text-[100px] select-none pointer-events-none -rotate-12">€</div>
-            
-            <div className="flex items-center mb-10 gap-4">
-                <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Products</h2>
-                <div className="flex items-center gap-0 w-full max-w-[150px]">
-                    <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
-                    <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
-                </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
-                {((card as any).products && (card as any).products.length > 0 ? (card as any).products : [
-                    { name: "Lorem 1", price: "25", description: "Lorem is dummy text", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400" },
-                    { name: "Lorem 2", price: "155", description: "Lorem is dummy text", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400" }
-                ]).map((prod: any, idx: number) => (
-                    <div key={idx} className="bg-white rounded-[24px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-slate-50 flex flex-col group transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
-                        <div className="aspect-[4/3] relative overflow-hidden">
-                            <Image src={(prod as any).image} alt={prod.name} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                        </div>
-                        <div className="p-5 space-y-2">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-[17px] font-black text-[#1e1b4b] tracking-tight truncate">{prod.name}</h3>
-                                <span className="text-[16px] font-black text-blue-500">${prod.price}</span>
-                            </div>
-                            <p className="text-[13px] font-medium text-slate-400 leading-tight truncate">
-                                {prod.description}
-                            </p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
-
-        {/* BLOG SECTION - Refined Overlapping Layout (Matching Image 7) */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-700">
-            <div className="absolute bottom-[0%] left-[-5%] opacity-[0.03] text-[100px] select-none pointer-events-none rotate-12">📄</div>
-
-            <div className="flex items-center justify-end mb-12 gap-4">
-                <div className="flex items-center gap-0 w-full max-w-[200px]">
-                    {/* Share-style Node Icon from image */}
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-[1.5px] border-blue-400 bg-white shadow-sm z-20">
-                         <div className="relative w-6 h-6">
-                            <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-blue-500" />
-                            <div className="absolute bottom-0 left-0 w-2 h-2 rounded-full bg-blue-500" />
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-blue-500" />
-                            <svg className="absolute inset-0 w-full h-full text-blue-500 opacity-30" viewBox="0 0 24 24"><path d="M18 8l-6 4 6 4M6 12l6-4M6 12l6 4" stroke="currentColor" strokeWidth="2" /></svg>
-                         </div>
-                    </div>
-                    <div className="w-full h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full ml-[-24px]" />
-                </div>
-                <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Blog</h2>
-            </div>
-            
-            <div className="space-y-8">
-                {((card as any).blogs && (card as any).blogs.length > 0 ? (card as any).blogs : [
-                    { title: "Coding", description: "Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industry's standard.", image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=400" }
-                ]).slice(0, 1).map((blog: any, idx: number) => (
-                    <div key={idx} className="relative">
-                        {/* Main Image - Rounded */}
-                        <div className="w-[85%] aspect-[5/4] sm:aspect-square relative rounded-[40px] overflow-hidden shadow-2xl">
-                             <Image src={(blog as any).image} alt={blog.title} fill className="object-cover" />
-                        </div>
-                        
-                        {/* Overlapping Glass Card */}
-                        <div className="absolute top-[20%] right-[-5%] w-[70%] bg-white rounded-[24px] p-6 sm:p-8 shadow-[0_15px_45px_rgba(30,27,75,0.1)] border border-blue-50 z-10">
-                           <h3 className="text-[20px] font-black text-[#1e1b4b] tracking-tight mb-2">{blog.title}</h3>
-                           <p className="text-[14px] font-medium text-slate-400 leading-relaxed">
-                               {blog.description}
-                           </p>
-                        </div>
-                    </div>
-                ))}
-
-                {/* Navigation Arrows */}
-                <div className="flex justify-end gap-3 pt-4 pr-10">
-                    <button className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-[#1e1b4b]/40 hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-                    </button>
-                    <button className="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-[#1e1b4b]/40 hover:border-blue-400 hover:text-blue-500 transition-all cursor-pointer">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        {/* TESTIMONIALS SECTION - Matching Image 7 */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-800">
-            <div className="flex items-center mb-16 gap-4">
-                <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Testimonials</h2>
-                <div className="flex items-center gap-0 w-full max-w-[150px]">
-                    <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
-                    <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
-                </div>
-            </div>
-
-            <div className="relative group flex flex-col items-center">
-                {((card as any).testimonials && (card as any).testimonials.length > 0 ? (card as any).testimonials : [
-                    { name: "Jane Doe", role: "CEO", quote: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400" }
-                ]).slice(0, 1).map((t: any, idx: number) => (
-                    <div key={idx} className="flex flex-col items-center text-center max-w-[400px]">
-                        {/* Large Central Portrait with blue ring */}
-                        <div className="relative w-40 h-40 rounded-full border-[6px] border-[#3B82F6] p-1.5 shadow-xl bg-white mb-8 group-hover:scale-[1.05] transition-transform duration-700">
-                            <div className="relative w-full h-full rounded-full overflow-hidden">
-                                <Image src={(t as any).image} alt={t.name} fill className="object-cover" />
-                            </div>
-                        </div>
-
-                        <div className="space-y-1 mb-6">
-                            <h3 className="text-[22px] font-black text-[#1e1b4b] tracking-tight">{t.name}</h3>
-                            <p className="text-[14px] font-black text-slate-400 tracking-[0.2em] uppercase">{t.role}</p>
-                        </div>
-
-                        {/* Large Quotes Layout */}
-                        <div className="relative px-10">
-                            <div className="absolute top-[-20px] left-[-10px] text-[100px] leading-none text-slate-200 opacity-60 font-serif select-none pointer-events-none">“</div>
-                            <p className="italic text-[16px] font-medium text-slate-400 leading-relaxed px-2">
-                                {t.quote}
-                            </p>
-                            <div className="absolute bottom-[-50px] right-[-10px] text-[100px] leading-none text-slate-200 opacity-60 font-serif select-none pointer-events-none">”</div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
-
-        {/* BUSINESS HOURS SECTION - Matching Image 9 */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
-            {/* BACKGROUND WATERMARKS (Business Hours) */}
-            <div className="absolute top-[0%] right-[0%] opacity-[0.03] text-[100px] select-none pointer-events-none -rotate-12 translate-x-[20%]">🕒</div>
-            <div className="absolute bottom-[0%] left-[0%] opacity-[0.03] text-[100px] select-none pointer-events-none rotate-12 translate-x-[-20%]">🕒</div>
-
-            <div className="flex items-center mb-16 gap-4">
-                <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Business Hours</h2>
-                <div className="flex items-center gap-0 w-full max-w-[150px]">
-                    <div className="w-full h-[3px] bg-gradient-to-r from-blue-400 to-blue-500 rounded-full" />
-                    <div className="w-3 h-3 bg-blue-500 rotate-45 transform ml-[-4px]" />
-                </div>
-            </div>
-
-            <div className="bg-white rounded-[32px] border-[1.5px] border-blue-200 p-10 shadow-[0_20px_60px_rgba(30,27,75,0.05)] transition-all duration-700 hover:shadow-xl group-hover:-translate-y-2">
-                <div className="space-y-4">
-                    {(((card as any).businessHours && Array.isArray((card as any).businessHours) && (card as any).businessHours.length > 0) ? (card as any).businessHours : [
-                        { day: "Sunday", time: "08:10 - 20:00" },
-                        { day: "Monday", time: "08:10 - 20:00" },
-                        { day: "Tuesday", time: "08:10 - 20:00" },
-                        { day: "Wednesday", time: "08:10 - 10:00" },
-                        { day: "Thursday", time: "08:10 - 20:00" },
-                        { day: "Friday", time: "08:10 - 20:00" },
-                        { day: "Saturday", time: "Closed" }
-                    ]).map((row: any, idx: number) => (
-                        <div key={idx} className="flex items-center justify-between group/row">
-                            <span className="text-[18px] font-black text-[#1e1b4b] tracking-tight transition-transform group-hover/row:translate-x-1">{row.day} :</span>
-                            <span className={`text-[17px] font-medium tracking-tight ${row.time === 'Closed' ? 'text-[#1e1b4b]/40' : 'text-slate-500'}`}>
-                                {row.time}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
 
         {/* QR CODE SECTION - Matching Image 8 (MOVED HERE) */}
-        {qrCode && (
+        {qrCode && (!card.manageSection || card.manageSection.qrCode) && (
             <section className="px-8 pb-16 relative z-10 animate-in zoom-in duration-700 delay-500">
                 {/* BACKGROUND WATERMARKS (QR) */}
-                <div className="absolute bottom-[2%] right-[5%] opacity-[0.03] text-[90px] select-none pointer-events-none rotate-12">🕒</div>
+                <div className="absolute bottom-[2%] right-[5%] opacity-[0.03] text-[90px] select-none pointer-events-none rotate-12 translate-x-[20%]">🕒</div>
 
                 <div className="flex items-center justify-end mb-16 gap-4">
                     <div className="flex items-center gap-0 w-full max-w-[150px]">
@@ -498,52 +519,56 @@ export function Corporate7VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
             </section>
         )}
 
+
         {/* CONTACT US FORM SECTION - Matching Image 10 */}
-        <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
-            <div className="flex items-center justify-end mb-16 gap-4">
-                <div className="flex items-center gap-0 w-full max-w-[150px]">
-                    <div className="w-3 h-3 bg-blue-500 rotate-45 transform mr-[-4px] z-10" />
-                    <div className="w-full h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full" />
+        {(!card.manageSection || card.manageSection.inquiries) && (
+            <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-500">
+                <div className="flex items-center justify-end mb-16 gap-4">
+                    <div className="flex items-center gap-0 w-full max-w-[150px]">
+                        <div className="w-3 h-3 bg-blue-500 rotate-45 transform mr-[-4px] z-10" />
+                        <div className="w-full h-[3px] bg-gradient-to-l from-blue-400 to-blue-500 rounded-full" />
+                    </div>
+                    <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Contact Us</h2>
                 </div>
-                <h2 className="text-[30px] font-black text-[#1e1b4b] tracking-tight shrink-0">Contact Us</h2>
-            </div>
 
-            <div className="bg-white rounded-[32px] p-2 flex flex-col gap-6">
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-[14px] font-black text-slate-600 block pl-1">Your Name</label>
-                        <div className="relative group">
-                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400"><User size={20} /></span>
-                            <input type="text" className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-14 pr-4 focus:border-blue-400 focus:outline-none transition-all shadow-sm group-hover:shadow-md" />
+                <div className="bg-white rounded-[32px] p-2 flex flex-col gap-6">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-[14px] font-black text-slate-600 block pl-1">Your Name</label>
+                            <div className="relative group">
+                                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400"><User size={20} /></span>
+                                <input type="text" className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-14 pr-4 focus:border-blue-400 focus:outline-none transition-all shadow-sm group-hover:shadow-md" />
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[14px] font-black text-slate-600 block pl-1">Phone</label>
+                            <div className="relative group">
+                                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400"><Phone size={20} /></span>
+                                <input type="text" className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-14 pr-4 focus:border-blue-400 focus:outline-none transition-all shadow-sm group-hover:shadow-md" />
+                            </div>
                         </div>
                     </div>
+
                     <div className="space-y-2">
-                        <label className="text-[14px] font-black text-slate-600 block pl-1">Phone</label>
+                        <label className="text-[14px] font-black text-slate-600 block pl-1">E-mail</label>
                         <div className="relative group">
-                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400"><Phone size={20} /></span>
-                            <input type="text" className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-14 pr-4 focus:border-blue-400 focus:outline-none transition-all shadow-sm group-hover:shadow-md" />
+                            <span className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400"><Mail size={20} /></span>
+                            <input type="email" className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-14 pr-4 focus:border-blue-400 focus:outline-none transition-all shadow-sm group-hover:shadow-md" />
                         </div>
                     </div>
-                </div>
 
-                <div className="space-y-2">
-                    <label className="text-[14px] font-black text-slate-600 block pl-1">E-mail</label>
-                    <div className="relative group">
-                        <span className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-400"><Mail size={20} /></span>
-                        <input type="email" className="w-full bg-white border border-slate-100 rounded-2xl py-4 pl-14 pr-4 focus:border-blue-400 focus:outline-none transition-all shadow-sm group-hover:shadow-md" />
+                    <div className="space-y-2">
+                        <label className="text-[14px] font-black text-slate-600 block pl-1">Your Message</label>
+                        <textarea placeholder="Type a Message..." className="w-full bg-white border border-slate-100 rounded-2xl py-5 px-6 min-h-[150px] focus:border-blue-400 focus:outline-none transition-all shadow-sm hover:shadow-md" />
                     </div>
-                </div>
 
-                <div className="space-y-2">
-                    <label className="text-[14px] font-black text-slate-600 block pl-1">Your Message</label>
-                    <textarea placeholder="Type a Message..." className="w-full bg-white border border-slate-100 rounded-2xl py-5 px-6 min-h-[150px] focus:border-blue-400 focus:outline-none transition-all shadow-sm hover:shadow-md" />
+                    <button className="w-full sm:w-max mx-auto bg-[#3B82F6] text-white py-5 px-16 rounded-[20px] text-[18px] font-black tracking-tight shadow-xl shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95">
+                        Send Message
+                    </button>
                 </div>
+            </section>
+        )}
 
-                <button className="w-full sm:w-max mx-auto bg-[#3B82F6] text-white py-5 px-16 rounded-[20px] text-[18px] font-black tracking-tight shadow-xl shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95">
-                    Send Message
-                </button>
-            </div>
-        </section>
 
         {/* CREATE YOUR VCARD SECTION - Matching Image 11 */}
         <section className="px-8 pb-16 relative z-10 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-600">
@@ -575,8 +600,18 @@ export function Corporate7VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
 
         {/* PREMIUM DYNAMIC SECTIONS */}
         <div className="px-0 pb-16">
-            <VCardDynamicSections card={card} />
+            <VCardDynamicSections 
+                card={card} 
+                exclude={
+                  card.manageSection 
+                    ? Object.entries(card.manageSection)
+                        .filter(([_, value]) => value === false)
+                        .map(([key]) => key)
+                    : []
+                } 
+            />
         </div>
+
 
         {/* FOOTER - Refined */}
         <footer className="py-12 text-center border-t border-slate-100 bg-white/30 backdrop-blur-md relative z-10">

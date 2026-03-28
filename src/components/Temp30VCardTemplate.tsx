@@ -52,6 +52,7 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                <div className="w-full max-w-[740px] bg-white sm:rounded-[60px] relative flex flex-col shadow-[0_100px_200px_-50px_rgba(15,23,42,0.15)] overflow-hidden border border-white/50 ring-1 ring-slate-100 shadow-3xl">
 
                     {/* ELITE HERO IMAGE & LANGUAGE SELECTOR */}
+                    {(!card.manageSection || card.manageSection.header) && (
                     <section className="relative h-[380px] w-full overflow-hidden group">
                          <Image
                               src="https://images.unsplash.com/photo-1559839734-2b71f1e3c770?q=80&w=1200"
@@ -69,8 +70,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* CENTERED PROFILE HUB - IMAGE 2 REDESIGN */}
+                    {(!card.manageSection || card.manageSection.header) && (
                     <section className="relative px-12 -mt-28 mb-24 z-10 text-center space-y-16">
                          {/* Profile Image Node */}
                          <div className="relative group mx-auto w-fit">
@@ -106,15 +109,19 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* CLINICAL SUMMARY SECTION */}
+                    {(!card.manageSection || card.manageSection.header) && (
                     <section className="px-12 pb-32 text-center">
                          <p className="text-slate-500 font-medium text-lg leading-[1.9] max-w-[480px] mx-auto italic opacity-90">
                               {card.description || `A highly specialized medical professional who diagnoses and performs surgical treatment of disorders affecting the brain, spinal cord, and peripheral nerves.`}
                          </p>
                     </section>
+                    )}
 
                     {/* PRIMARY ACTIONS - ELITE CLINICAL */}
+                    {(!card.manageSection || card.manageSection.header) && (
                     <section className="px-12 pb-32">
                          <div className="flex flex-col gap-6">
                               <button
@@ -127,8 +134,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               <p className="text-center text-[10px] font-black text-slate-300 uppercase tracking-[0.8em]">Encrypted Clinical Identity Node</p>
                          </div>
                     </section>
+                    )}
 
                     {/* MEDICAL CAPABILITIES GRID */}
+                    {(!card.manageSection || card.manageSection.header) && (
                     <section className="px-12 pb-40">
                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
                               <ClinicalStatItem icon={Activity} label="Surgical Rate" value="98.4%" />
@@ -137,8 +146,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               <ClinicalStatItem icon={Dna} label="Genomics" value="Active" />
                          </div>
                     </section>
+                    )}
 
                     {/* ELITE CONTACT HUB */}
+                    {(!card.manageSection || card.manageSection.contact) && (
                     <section className="px-12 pb-40 relative">
                          {/* Floating Stethoscope Decoration */}
                          <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-[0.08] pointer-events-none scale-150 -translate-x-12">
@@ -147,7 +158,7 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
                          <div className="relative z-10 space-y-20">
                                {/* Social Vertical Stack */}
-                               {card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
+                               {(!card.manageSection || card.manageSection.contact) && card.socialLinks && card.socialLinks.filter(l => l.url).length > 0 && (
                                     <div className="flex flex-col items-center w-full">
                                          <VCardSocialLinks 
                                              card={card} 
@@ -174,13 +185,17 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* CLINICAL ENDPOINTS - SIMPLIFIED */}
+                    {(!card.manageSection || card.manageSection.contact) && (
                     <section className="px-12 pb-40 space-y-6">
                          <ClinicalDetail icon={Globe} label="Registry Portal" value={card.website || "www.cityhospital.med/rishi"} />
                     </section>
+                    )}
 
                     {/* ELITE QR CREDENTIAL */}
+                    {(!card.manageSection || card.manageSection.qrCode) && (
                     <section className="px-12 pb-40 relative group">
                          {/* Medicine Bottle Decoration */}
                          <div className="absolute -top-12 right-4 opacity-[0.15] scale-150 pointer-events-none group-hover:rotate-12 transition-transform duration-1000">
@@ -204,8 +219,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* CORE CLINICAL SERVICES */}
+                    {(!card.manageSection || card.manageSection.services) && (
                     <section className="px-12 pb-40 relative">
                          {/* Stopwatch Path Decoration */}
                          <div className="absolute left-0 top-0 opacity-[0.1] -translate-x-12 translate-y-12 select-none pointer-events-none">
@@ -248,8 +265,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               />
                          </div>
                     </section>
+                    )}
 
                     {/* CINEMATIC MEDICAL FACILITY GALLERY */}
+                    {(!card.manageSection || card.manageSection.galleries) && (
                     <section className="px-12 pb-40 relative overflow-hidden">
                          {/* Test Tube Decoration */}
                          <div className="absolute top-0 right-4 opacity-[0.2] -translate-y-8 scale-125 select-none pointer-events-none group">
@@ -290,8 +309,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* HEALTHCARE PACKAGES HUB */}
+                    {(!card.manageSection || card.manageSection.products) && (
                     <section className="px-12 pb-40 relative group/products">
                          {/* Bandage Decoration */}
                          <div className="absolute top-0 left-4 opacity-[0.2] -translate-y-8 -rotate-12 scale-150 select-none pointer-events-none group-hover:rotate-0 transition-transform duration-1000">
@@ -318,8 +339,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               />
                          </div>
                     </section>
+                    )}
 
                     {/* CLINICAL TESTIMONIALS CAROUSEL */}
+                    {(!card.manageSection || card.manageSection.testimonials) && (
                     <section className="px-12 pb-40 relative group/testimonials">
                          {/* Care-Heart Decoration */}
                          <div className="absolute top-0 right-4 opacity-[0.2] -translate-y-12 scale-150 select-none pointer-events-none group-hover/testimonials:scale-[1.75] transition-transform duration-1000">
@@ -367,8 +390,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* CLINICAL INSIGHTS (BLOG) */}
+                    {(!card.manageSection || card.manageSection.blogs) && (
                     <section className="px-12 pb-40 relative group/blog">
                          {/* Digital Thermometer Decoration */}
                          <div className="absolute bottom-0 right-10 opacity-[0.15] scale-150 translate-y-12 select-none pointer-events-none group-hover/blog:translate-x-4 transition-transform duration-1000 rotate-[45deg]">
@@ -411,11 +436,13 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                                    <div className="w-16 h-16 rounded-full bg-[#38b2ac]/5 border border-[#38b2ac]/10 flex items-center justify-center text-[#38b2ac] hover:bg-[#38b2ac] hover:text-white transition-all cursor-pointer shadow-sm hover:scale-110">
                                         <ArrowRight size={24} strokeWidth={3} />
                                    </div>
-                              </div>
-                         </div>
+                               </div>
+                          </div>
                     </section>
+                    )}
 
                     {/* CLINICAL AVAILABILITY (BUSINESS HOURS) - REDESIGNED */}
+                    {(!card.manageSection || card.manageSection.businessHours) && (
                     <section className="px-12 pb-40 relative group/hours">
                          {/* Cellular Decoration */}
                          <div className="absolute top-0 left-4 opacity-[0.15] -translate-y-8 -rotate-12 scale-150 select-none pointer-events-none group-hover/hours:rotate-0 transition-transform duration-1000">
@@ -472,8 +499,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* CLINICAL SCHEDULING (MAKE AN APPOINTMENT) */}
+                    {(!card.manageSection || card.manageSection.appointments) && (
                     <section className="px-12 pb-40 relative group/apt">
                          {/* Pill Decoration */}
                          <div className="absolute top-0 right-4 opacity-[0.2] -translate-y-8 scale-150 rotate-[25deg] select-none pointer-events-none group-hover/apt:rotate-0 transition-transform duration-1000">
@@ -495,8 +524,10 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </div>
                          </div>
                     </section>
+                    )}
 
                     {/* PATIENT INQUIRIES HUB */}
+                    {(!card.manageSection || card.manageSection.inquiries) && (
                     <section className="px-12 pb-16 relative group/inquiry">
                          {/* Syringe Decoration */}
                          <div className="absolute top-1/2 right-4 -translate-y-1/2 opacity-[0.12] scale-150 -rotate-[15deg] select-none pointer-events-none group-hover/inquiry:rotate-0 transition-transform duration-1000">
@@ -520,10 +551,22 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                               </button>
                          </div>
                     </section>
+                    )}
 
-                    {/* DYNAMIC SECTIONS - UNIFIED THEME */}
-                    <div className="px-12 pb-12 pt-8 relative z-10 border-t border-slate-100/50">
-                         <VCardDynamicSections card={card} />
+                    <div className="px-12 pb-12 pt-8 relative z-10 border-t border-slate-100/50 text-slate-900">
+                         <VCardDynamicSections 
+                             card={card} 
+                             exclude={[
+                                 ...(!card.manageSection || card.manageSection.testimonials ? [] : ['testimonials'] as const),
+                                 ...(!card.manageSection || card.manageSection.galleries ? [] : ['galleries'] as const),
+                                 ...(!card.manageSection || card.manageSection.businessHours ? [] : ['businessHours'] as const),
+                                 ...(!card.manageSection || card.manageSection.services ? [] : ['services'] as const),
+                                 ...(!card.manageSection || card.manageSection.products ? [] : ['products'] as const),
+                                 ...(!card.manageSection || card.manageSection.blogs ? [] : ['blogs'] as const),
+                                 ...(!card.manageSection || card.manageSection.iframes ? [] : ['iframes'] as const),
+                                 ...(!card.manageSection || card.manageSection.map ? [] : ['map'] as const),
+                             ]}
+                         />
                     </div>
 
                     {/* ELITE FOOTER */}
