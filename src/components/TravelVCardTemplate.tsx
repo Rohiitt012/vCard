@@ -6,7 +6,6 @@ import {
   ArrowLeft, ArrowRight, ExternalLink, UserPlus,
   Plane, Camera, Facebook, Linkedin, Instagram, Twitter
 } from "lucide-react";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 
@@ -742,11 +741,6 @@ export function TravelVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
           </div>
         </section>
 
-        {/* 3. Detailed Sections (Dynamic) */}
-        <section className="bg-slate-50/50 flex-1 border-t border-slate-100">
-           <VCardDynamicSections card={card} />
-        </section>
-        
         {/* Footer */}
         <footer className="px-8 py-10 bg-[#2b4266] text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] text-center">
            Designed with passion for travelers

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { 
      Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter, 
      MessageCircle, ChevronDown, LayoutGrid, User, Sparkles, Globe, 
@@ -584,25 +583,6 @@ export function Temp30VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                          </div>
                     </section>
                     )}
-
-                    <div className="px-12 pb-12 pt-8 relative z-10 border-t border-slate-100/50 text-slate-900">
-                         <VCardDynamicSections
-                              card={card}
-                              exclude={[
-                                   ...(!card.manageSection || card.manageSection.testimonials ? [] : ["testimonials" as const]),
-                                   ...(!card.manageSection || card.manageSection.galleries ? [] : ["galleries" as const]),
-                                   ...(!card.manageSection || card.manageSection.businessHours ? [] : ["businessHours" as const]),
-                                   ...(!card.manageSection || card.manageSection.services ? [] : ["services" as const]),
-                                   ...(!card.manageSection || card.manageSection.products ? [] : ["products" as const]),
-                                   ...(!card.manageSection || card.manageSection.blogs ? [] : ["blogs" as const]),
-                                   ...(!card.manageSection || card.manageSection.iframes ? [] : ["iframes" as const]),
-                                   ...(!card.manageSection || card.manageSection.map ? [] : ["map" as const]),
-                                   ...(!card.manageSection || card.manageSection.instagramFeed ? [] : ["insta" as const]),
-                                   ...(!card.manageSection || card.manageSection.linkedinFeed ? [] : ["linkedin" as const]),
-                                   ...(!card.manageSection || card.manageSection.appointments ? [] : ["appointments" as const]),
-                              ]}
-                         />
-                    </div>
 
                     {/* ELITE FOOTER */}
                     <footer className="py-32 bg-slate-950 text-white text-center space-y-20 relative overflow-hidden">

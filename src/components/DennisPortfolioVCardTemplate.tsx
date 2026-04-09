@@ -1,6 +1,5 @@
 "use client";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 
@@ -281,7 +280,6 @@ export function DennisPortfolioVCardTemplate({ card, slug, baseUrl, onDownloadVC
           </div>
         </section>
       
-      <VCardDynamicSections card={card} />
 </div>
     </div>
   );

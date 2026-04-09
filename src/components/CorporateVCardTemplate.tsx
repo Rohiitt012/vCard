@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles, ChevronDown, Globe, Instagram, Youtube, Linkedin, Maximize, ArrowRight, Wifi, Clock, ArrowLeft, Cpu } from "lucide-react";
 import { getSocialIcon } from "@/lib/social-icons";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";

@@ -1,6 +1,5 @@
-﻿"use client";
+"use client";
 
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
@@ -1215,9 +1214,7 @@ export function LegalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pro
             <a href="#contact" className="hover:text-white">Contact</a>
             <a href={`${baseUrl}/${slug}`} className="hover:text-white">View Profile</a>
           </div>
-        
-      <VCardDynamicSections card={card} />
-</div>
+        </div>
       </footer>
 
       {/* Scroll Top – Borox primary color */}

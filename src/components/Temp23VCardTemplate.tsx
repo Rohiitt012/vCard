@@ -1,8 +1,7 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter, MessageCircle, Star, Cake, Globe, ExternalLink, Clock, LayoutGrid } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
@@ -260,7 +259,6 @@ export function Temp23VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
              {/* DYNAMIC SECTIONS */}
              <div className="space-y-12 text-white">
-                  <VCardDynamicSections card={card} exclude={['services', 'testimonials', 'businessHours']} />
              </div>
 
              {/* ENQUIRIES SECTION */}

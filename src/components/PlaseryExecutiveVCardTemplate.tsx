@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { generateQrDataUrl, downloadQrPng } from "@/lib/qr";
 

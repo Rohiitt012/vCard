@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import {
      Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter,
      MessageCircle, ChevronDown, LayoutGrid, User, Sparkles, Globe, Palmtree,
@@ -497,17 +496,6 @@ export function Temp27VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
                          </div>
                     </section>
                     )}
-
-                    {/* DYNAMIC SECTIONS */}
-                    <div className="px-0 pb-10 border-t border-slate-100 pt-10 bg-white">
-                         <VCardDynamicSections 
-                            card={card} 
-                            exclude={Object.entries(card.manageSection || {})
-                            .filter(([_, value]) => !value)
-                            .map(([key]) => key === 'instagramFeed' ? 'iframes' : key as any)
-                            }
-                         />
-                    </div>
 
                     {/* FOOTER INTERFACE */}
                     <footer className="py-24 text-center space-y-16 bg-[#0F172A] text-white relative overflow-hidden">

@@ -1,9 +1,8 @@
-﻿"use client";
+"use client";
 
 /* Medinova-style fitness vCard single-page layout (Tailwind CSS, narrow card) */
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 type Props = {

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections, buildManageSectionDynamicExclude } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Calendar, ExternalLink, Facebook, Instagram, Linkedin, Twitter, MessageCircle, Monitor, PenTool, Layout, Code, User } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { getSocialIcon, getSocialColor } from "@/lib/social-icons";
@@ -602,12 +601,6 @@ export function Corporate7VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                 </button>
             </div>
         </section>
-
-        {/* PREMIUM DYNAMIC SECTIONS */}
-        <div className="px-0 pb-16">
-            <VCardDynamicSections card={card} exclude={buildManageSectionDynamicExclude(card)} />
-        </div>
-
 
         {/* FOOTER - Refined */}
         <footer className="py-12 text-center border-t border-slate-100 bg-white/30 backdrop-blur-md relative z-10">

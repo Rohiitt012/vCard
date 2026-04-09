@@ -2,7 +2,6 @@
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles } from "lucide-react";
 
 type Props = {
@@ -135,9 +134,6 @@ export function Corporate1VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
             </section>
         )}
 
-        {/* Dynamic Sections */}
-        <VCardDynamicSections card={card} />
-        
         <footer className="px-8 py-10 text-center text-[10px] font-black text-slate-300 uppercase tracking-widest">
            {name} &copy; {new Date().getFullYear()}
         </footer>

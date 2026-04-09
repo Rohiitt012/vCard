@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections, buildManageSectionDynamicExclude } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Star, Download, Calendar, ExternalLink, Sparkles } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
@@ -492,12 +491,6 @@ export function Corporate4VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                 </button>
             </div>
         </section>
-
-        {/* DYNAMIC SECTIONS FALLBACK (Products, Galleries, etc) */}
-        <div className="px-0 pb-12">
-            <VCardDynamicSections card={card} exclude={buildManageSectionDynamicExclude(card)} />
-        </div>
-
 
         {/* MINIMAL FOOTER */}
         <footer className="py-10 text-center border-t border-slate-50 bg-slate-50/30">

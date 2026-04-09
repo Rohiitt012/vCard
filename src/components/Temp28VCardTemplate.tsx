@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { 
   Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter, 
   MessageCircle, ChevronDown, LayoutGrid, User, Sparkles, Globe, 
@@ -536,7 +535,6 @@ export function Temp28VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
         {/* DYNAMIC SECTIONS */}
         <div className="px-10 pb-10 border-t border-white/5 pt-10 bg-[#0A0A0A]">
-             <VCardDynamicSections card={card} />
         </div>
 
         {/* REFINED FOOTER */}

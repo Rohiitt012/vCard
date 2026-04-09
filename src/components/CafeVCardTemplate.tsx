@@ -1,7 +1,6 @@
-﻿"use client";
+"use client";
 import Image from "next/image";
 import { Mail, Phone, MapPin, Globe2, Cake, Calendar, ArrowLeft, ArrowRight, ExternalLink, UserPlus } from "lucide-react";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 
 import type { VCardItem } from "@/context/VCardsContextTypes";
@@ -647,9 +646,6 @@ export function CafeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Prop
              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Designed by learnhub academy</p>
            </div>
         </section>
-
-        {/* 13. Dynamic Content Fallback */}
-        <VCardDynamicSections card={card} exclude={['testimonials']} />
 
         {/* 14. Floral Footer */}
         <section className="relative h-48 w-full overflow-hidden pointer-events-none select-none">

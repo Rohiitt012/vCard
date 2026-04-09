@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, MessageCircle, Cake, ExternalLink, Calendar, Star, Clock, User } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
@@ -320,7 +319,6 @@ export function Temp22VCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
 
              {/* DYNAMIC SECTIONS */}
              <div className="mt-16 pt-12 border-t border-white/20 text-white space-y-12">
-                  <VCardDynamicSections card={card} exclude={['services', 'testimonials', 'businessHours']} />
              </div>
 
              {/* QR CODE SECTION (Pink Horizontal Card) */}

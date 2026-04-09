@@ -8,7 +8,23 @@ import { downloadVCard } from "@/lib/vcard";
 import { generateQrDataUrl, downloadQrPng } from "@/lib/qr";
 import { apiIncrementView, apiSubmitInquiry, apiSubscribe } from "@/lib/vcards-api";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections, buildManageSectionDynamicExclude } from "@/components/VCardDynamicSections";
+import {
+  VCardDynamicSections,
+  buildManageSectionDynamicExclude,
+  type VCardDynamicExclude,
+} from "@/components/VCardDynamicSections";
+
+/** Template already renders these; avoid duplicate blocks in the shared dynamic area. */
+const extraExcludeCafe: VCardDynamicExclude[] = ["testimonials"];
+const extraExcludeCreativeStudio: VCardDynamicExclude[] = ["testimonials", "blogs", "businessHours"];
+const extraExcludeCorporate2Or3: VCardDynamicExclude[] = [
+  "services",
+  "blogs",
+  "testimonials",
+  "businessHours",
+];
+const extraExcludeTemp22Or23: VCardDynamicExclude[] = ["services", "testimonials", "businessHours"];
+const extraExcludeFloral: VCardDynamicExclude[] = ["services", "blogs", "businessHours"];
 import { contactMailto, contactTel, contactWhatsApp } from "@/lib/contact-href";
 import { CafeVCardTemplate } from "@/components/CafeVCardTemplate";
 import { CorporateVCardTemplate } from "@/components/CorporateVCardTemplate";
@@ -535,28 +551,41 @@ export default function PublicVCardPage() {
       </div>
     ) : null;
 
-  const VCardWidthShell = ({ children }: { children: React.ReactNode }) => (
-    <div className="min-h-screen bg-gray-100 flex justify-center px-0 sm:px-4 py-0 sm:py-8 no-scrollbar overflow-x-hidden">
-      <div className="w-full max-w-[540px] no-scrollbar">
-        {children}
-        <VCardSeoSections />
-        {!shouldUseInlineLegalPlacement && <VCardLegalSections />}
+  const VCardWidthShell = ({
+    children,
+    dynamicExtraExclude,
+  }: {
+    children: React.ReactNode;
+    dynamicExtraExclude?: VCardDynamicExclude[];
+  }) => {
+    const dynamicExclude = [
+      ...buildManageSectionDynamicExclude(card),
+      ...(dynamicExtraExclude ?? []),
+    ];
+    return (
+      <div className="min-h-screen bg-gray-100 flex justify-center px-0 sm:px-4 py-0 sm:py-8 no-scrollbar overflow-x-hidden">
+        <div className="w-full max-w-[540px] no-scrollbar">
+          {children}
+          <VCardDynamicSections card={card} exclude={dynamicExclude} />
+          <VCardSeoSections />
+          {!shouldUseInlineLegalPlacement && <VCardLegalSections />}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const lowerSlug = slug.toLowerCase();
   
   if (card.selectedTemplateId === 22 || lowerSlug === "temp-22" || lowerSlug.includes("temp22")) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeTemp22Or23}>
         <Temp22VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
       </VCardWidthShell>
     );
   }
   if (card.selectedTemplateId === 23 || lowerSlug === "temp-23" || lowerSlug.includes("temp23")) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeTemp22Or23}>
         <Temp23VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
       </VCardWidthShell>
     );
@@ -605,7 +634,7 @@ export default function PublicVCardPage() {
   }
   if (card.selectedTemplateId === 30 || lowerSlug === "temp-30" || lowerSlug.includes("temp30")) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeTemp22Or23}>
         <Temp30VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
       </VCardWidthShell>
     );
@@ -616,7 +645,7 @@ export default function PublicVCardPage() {
     card.templateName?.trim().toLowerCase() === "cafe vcard";
   if (isCafeTemplate) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeCafe}>
         <CafeVCardTemplate
           card={card}
           slug={slug}
@@ -639,7 +668,7 @@ export default function PublicVCardPage() {
   const isCorporate2Template = card.selectedTemplateId === 14 || (card.templateName || "").toLowerCase().includes("corporate (2)");
   if (isCorporate2Template) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeCorporate2Or3}>
         <Corporate2VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
       </VCardWidthShell>
     );
@@ -655,7 +684,7 @@ export default function PublicVCardPage() {
     (card.title || "").toLowerCase().includes("cooporate 3");
   if (isCorporate3Template) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeCorporate2Or3}>
         <Corporate3VCardTemplate card={card} slug={slug} baseUrl={baseUrl} onDownloadVCard={() => downloadVCard(card, baseUrl)} />
       </VCardWidthShell>
     );
@@ -778,7 +807,7 @@ export default function PublicVCardPage() {
 
   if (isFloralTemplate) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeFloral}>
         <FloralVCardTemplate
           card={card}
           slug={slug}
@@ -1584,6 +1613,12 @@ export default function PublicVCardPage() {
         </section>
         )}
 
+        <section className="bg-[#111111] border-t border-white/5 py-12 md:py-16 px-6 md:px-10">
+          <div className="max-w-5xl mx-auto">
+            <VCardDynamicSections card={card} exclude={buildManageSectionDynamicExclude(card)} />
+          </div>
+        </section>
+
         {/* Simple footer */}
         <footer className="bg-[#0b0b0b] border-t border-white/10 py-5 px-6 md:px-10">
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-slate-400">
@@ -1619,7 +1654,7 @@ export default function PublicVCardPage() {
 
   if (isCreativeStudioTemplate) {
     return (
-      <VCardWidthShell>
+      <VCardWidthShell dynamicExtraExclude={extraExcludeCreativeStudio}>
         <CreativeVCardTemplate
           card={card}
           slug={slug}

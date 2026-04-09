@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Target, Presentation, Calendar, ChevronLeft, ChevronRight, LayoutGrid, Share2, MessageCircle, ExternalLink, User, Sparkles, Star, Download } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 
@@ -504,9 +503,6 @@ export function Corporate2VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
         {/* Bottom Red Slanted Detail (Image Style) */}
         <div className="absolute bottom-0 left-[-100px] w-[200px] h-[400px] bg-[#FF5E5E] skew-x-[-20deg] pointer-events-none z-0 opacity-90 transform-gpu"></div>
 
-        {/* Dynamic Sections */}
-        <VCardDynamicSections card={card} exclude={['services', 'blogs', 'testimonials', 'businessHours']} />
-        
         {/* Footer info */}
         <footer className="px-8 py-10 mt-10 border-t border-slate-50 flex flex-col items-center gap-4 text-[11px] font-black text-slate-300 uppercase tracking-[0.3em]">
            <span>{name} &copy; {new Date().getFullYear()}</span>

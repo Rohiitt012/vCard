@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React from "react";
 import Image from "next/image";
 import { 
@@ -7,7 +7,6 @@ import {
   Cake, Maximize2, ArrowRight, CalendarClock, Upload, Share2, User
 } from "lucide-react";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { getSocialIcon } from "@/lib/social-icons";
 
@@ -801,10 +800,6 @@ export function MedicalVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: P
               </button>
            </div>
 
-           {/* Dynamic Sections (Testimonials, etc) */}
-           <div className="pt-4">
-              <VCardDynamicSections card={card} />
-           </div>
         </div>
 
                  {/* Minimal Footer */}

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { SocialCircleIcon } from "@/components/SocialCircleIcon";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import { Mail, Phone, MapPin, Cake, Star, Download, Calendar, ExternalLink, Sparkles, MessageCircle, LayoutGrid, Share2 } from "lucide-react";
 import { generateQrDataUrl, downloadQrPng } from "@/lib/qr";
@@ -469,12 +468,6 @@ export function Corporate3VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
               </div>
            </div>
         </section>
-
-        {/* CONTENT AREA (Dynamic Data) */}
-        <div className="bg-[#0D121F] pt-10 px-0 text-left relative z-20 text-white">
-           <VCardDynamicSections card={card} exclude={['services', 'blogs', 'testimonials', 'businessHours']} />
-           <div className="h-4 whitespace-pre" />
-        </div>
 
         {/* PREMIUM SIGNATURE FOOTER (Dark) */}
         <footer className="bg-[#0D121F] py-24 px-8 relative overflow-hidden text-center">

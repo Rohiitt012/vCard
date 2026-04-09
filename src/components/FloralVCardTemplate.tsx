@@ -1,5 +1,4 @@
 "use client";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
@@ -1013,13 +1012,6 @@ export function FloralVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: Pr
             </p>
           </div>
         </div>
-        <VCardDynamicSections
-          card={card}
-          exclude={Object.entries(card.manageSection || {})
-            .filter(([_, value]) => !value)
-            .map(([key]) => key === 'instagramFeed' ? 'iframes' : key as any)
-          }
-        />
       </footer>
 
       {/* Back to top – Dennis .back-to-top */}

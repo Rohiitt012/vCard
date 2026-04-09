@@ -22,7 +22,6 @@ import {
   Tv,
   ExternalLink
 } from "lucide-react";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 
@@ -902,11 +901,6 @@ export function CreativeVCardTemplate({ card, slug, baseUrl, onDownloadVCard }: 
                 className="object-contain"
               />
            </div>
-        </section>
-
-        {/* Dynamic Sections (Other Content) */}
-        <section className="mt-16">
-          <VCardDynamicSections card={card} exclude={['testimonials', 'blogs', 'businessHours']} />
         </section>
 
         {/* Footer */}

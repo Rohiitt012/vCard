@@ -535,208 +535,264 @@ function getMobilePreviewContent(template: { id: number; name: string }): {
   }
 }
 
-const VCARD_TEMPLATES: { id: number; name: string; description: string; accent: string; previewImage?: string }[] = [
-  {
-    id: 11,
-    name: "Cafe & Bistro",
-    description: "Warm, inviting contact card for cafes and bistros.",
-    accent: "from-amber-700 to-amber-900",
-    previewImage: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400",
-  },
-  {
-    id: 7,
-    name: "Enterprise Corporate",
-    description: "Professional vCard for businesses, agencies and teams.",
-    accent: "from-blue-700 to-indigo-800",
-    previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400",
-  },
-  {
-    id: 3,
-    name: "Creative Studio",
-    description: "Bold portfolio vCard for designers, studios and creators.",
-    accent: "from-violet-600 to-purple-800",
-    previewImage: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=400",
-  },
-  {
-    id: 1,
-    name: "Classic Leadership",
-    description: "Clean leadership vCard for founders, CXOs and managers.",
-    accent: "from-slate-700 to-slate-900",
-    previewImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=400",
-  },
-  {
-    id: 12,
-    name: "Fitness Trainer",
-    description: "Energetic vCard for fitness trainers, gyms and coaches.",
-    accent: "from-rose-600 to-red-700",
-    previewImage: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400",
-  },
-  {
-    id: 6,
-    name: "Floral Boutique",
-    description: "Elegant vCard for florists, decorators and boutiques.",
-    accent: "from-emerald-500 to-teal-600",
-    previewImage: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=400",
-  },
-  {
-    id: 10,
-    name: "Legal Consultant",
-    description: "Formal vCard for lawyers, firms and legal consultants.",
-    accent: "from-slate-800 to-slate-950",
-    previewImage: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=400",
-  },
-  {
-    id: 9,
-    name: "Medical Health",
-    description: "Trust-focused vCard for clinics, doctors and healthcare.",
-    accent: "from-cyan-600 to-blue-700",
-    previewImage: "https://images.unsplash.com/photo-1505751172107-593d63a710b9?q=80&w=400",
-  },
-  {
-    id: 2,
-    name: "Pure Minimalist",
-    description: "Simple, minimal vCard suitable for any profession.",
-    accent: "from-gray-100 to-white",
-    previewImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=400",
-  },
-  {
-    id: 8,
-    name: "Visual Portfolio",
-    description: "Image-first vCard for photographers and visual artists.",
-    accent: "from-neutral-800 to-black",
-    previewImage: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=400",
-  },
-  {
-    id: 4,
-    name: "Real Estate Pro",
-    description: "Listing-friendly vCard for real estate and rentals.",
-    accent: "from-amber-600 to-orange-700",
-    previewImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=400",
-  },
-  {
-    id: 5,
-    name: "Global Travel",
-    description: "Travel themed vCard for agents, guides and tours.",
-    accent: "from-sky-600 to-blue-800",
-    previewImage: "https://images.unsplash.com/photo-1488646953014-85cb44e2a028?q=80&w=400",
-  },
-  {
-    id: 13,
-    name: "Professional Business",
-    description: "Professional variation for corporate branding.",
-    accent: "from-blue-600 to-indigo-700",
-    previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400",
-  },
-  {
-    id: 14,
-    name: "Modern Arcs",
-    description: "Elegant business layout with deep ocean tones.",
-    accent: "from-sky-800 to-sky-950",
-  },
-  {
-    id: 15,
-    name: "Clean Corporate",
-    description: "Modern corporate design with a clean finish.",
-    accent: "from-cyan-700 to-blue-800",
-    previewImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=400",
-  },
-  {
-    id: 16,
-    name: "Premium Executive",
-    description: "Premium leadership profile with sophisticated gradients.",
-    accent: "from-indigo-600 to-violet-800",
-    previewImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400",
-  },
-  {
-    id: 17,
-    name: "Dynamic Hub",
-    description: "Bold corporate presence for dynamic teams.",
-    accent: "from-slate-700 to-slate-900",
-    previewImage: "https://images.unsplash.com/photo-1436450412740-6b988f486c6b?q=80&w=400",
-  },
-  {
-    id: 18,
-    name: "Founders Edition",
-    description: "Minimalist professional profile for founders.",
-    accent: "from-zinc-800 to-zinc-950",
-    previewImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=400",
-  },
-  {
-    id: 19,
-    name: "Sleek Executive",
-    description: "Sleek and efficient business card variation.",
-    accent: "from-neutral-700 to-black",
-    previewImage: "https://images.unsplash.com/photo-1454165833767-027ee0b496d4?q=80&w=400",
-  },
-  {
-    id: 20,
-    name: "Boutique Premium",
-    description: "Formal corporate template for established firms.",
-    accent: "from-stone-800 to-stone-950",
-    previewImage: "https://images.unsplash.com/photo-1522338255047-105ec746db95?q=80&w=400",
-  },
-  {
-    id: 21,
-    name: "Wavy Professional",
-    description: "Sleek professional profile with wavy gradients.",
-    accent: "from-indigo-500 via-purple-500 to-orange-500",
-    previewImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400",
-  },
-  {
-    id: 22,
-    name: "temp-22",
-    description: "Modern professional template with focus on typography.",
-    accent: "from-slate-800 to-black",
-  },
-  {
-    id: 23,
-    name: "temp-23",
-    description: "Elegant pastel design for boutiques and creative professionals.",
-    accent: "from-rose-100 to-teal-50",
-  },
-  {
-    id: 24,
-    name: "temp-24",
-    description: "Glassmorphic interface for a futuristic digital presence.",
-    accent: "from-blue-600 to-violet-600",
-  },
-  {
-    id: 25,
-    name: "temp-25",
-    description: "Vibrant neon accents for tech-savvy founders.",
-    accent: "from-emerald-400 to-cyan-500",
-  },
-  {
-    id: 26,
-    name: "temp-26",
-    description: "Pure white minimalist design for maximum clarity.",
-    accent: "from-white to-gray-50",
-  },
-  {
-    id: 27,
-    name: "temp-27",
-    description: "Deep space theme for high-end corporate consulting.",
-    accent: "from-sky-900 to-indigo-950",
-  },
-  {
-    id: 28,
-    name: "temp-28",
-    description: "Luxury gold theme for premium executive branding.",
-    accent: "from-amber-200 via-amber-400 to-amber-500",
-  },
-  {
-    id: 29,
-    name: "temp-29",
-    description: "Creative mesh gradients for a dynamic artistic look.",
-    accent: "from-fuchsia-500 via-purple-600 to-indigo-700",
-  },
-  {
-    id: 30,
-    name: "temp-30",
-    description: "Sleek industrial design for tech and manufacturing firms.",
-    accent: "from-zinc-700 to-zinc-900",
-  },
+type VCardTemplateCategory = "corporate" | "creative" | "minimal" | "lifestyle";
+
+const VCARD_TEMPLATE_CATEGORY_CHIPS: { id: "all" | VCardTemplateCategory; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "corporate", label: "Corporate" },
+  { id: "creative", label: "Creative" },
+  { id: "minimal", label: "Minimal" },
+  { id: "lifestyle", label: "Lifestyle" },
 ];
+
+const VCARD_TEMPLATES: {
+  id: number;
+  name: string;
+  description: string;
+  accent: string;
+  category: VCardTemplateCategory;
+  previewImage?: string;
+}[] = [
+    {
+      id: 11,
+      name: "Cafe & Bistro",
+      description: "Warm, inviting contact card for cafes and bistros.",
+      accent: "from-amber-700 to-amber-900",
+      category: "lifestyle",
+      previewImage: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400",
+    },
+    {
+      id: 7,
+      name: "Enterprise Corporate",
+      description: "Professional vCard for businesses, agencies and teams.",
+      accent: "from-blue-700 to-indigo-800",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400",
+    },
+    {
+      id: 3,
+      name: "Creative Studio",
+      description: "Bold portfolio vCard for designers, studios and creators.",
+      accent: "from-violet-600 to-purple-800",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=400",
+    },
+    {
+      id: 1,
+      name: "Classic Leadership",
+      description: "Clean leadership vCard for founders, CXOs and managers.",
+      accent: "from-slate-700 to-slate-900",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=400",
+    },
+    {
+      id: 12,
+      name: "Fitness Trainer",
+      description: "Energetic vCard for fitness trainers, gyms and coaches.",
+      accent: "from-rose-600 to-red-700",
+      category: "lifestyle",
+      previewImage: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400",
+    },
+    {
+      id: 6,
+      name: "Floral Boutique",
+      description: "Elegant vCard for florists, decorators and boutiques.",
+      accent: "from-emerald-500 to-teal-600",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=400",
+    },
+    {
+      id: 10,
+      name: "Legal Consultant",
+      description: "Formal vCard for lawyers, firms and legal consultants.",
+      accent: "from-slate-800 to-slate-950",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=400",
+    },
+    {
+      id: 9,
+      name: "Medical Health",
+      description: "Trust-focused vCard for clinics, doctors and healthcare.",
+      accent: "from-cyan-600 to-blue-700",
+      category: "lifestyle",
+      previewImage: "https://images.unsplash.com/photo-1505751172107-593d63a710b9?q=80&w=400",
+    },
+    {
+      id: 2,
+      name: "Pure Minimalist",
+      description: "Simple, minimal vCard suitable for any profession.",
+      accent: "from-gray-100 to-white",
+      category: "minimal",
+      previewImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=400",
+    },
+    {
+      id: 8,
+      name: "Visual Portfolio",
+      description: "Image-first vCard for photographers and visual artists.",
+      accent: "from-neutral-800 to-black",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=400",
+    },
+    {
+      id: 4,
+      name: "Real Estate Pro",
+      description: "Listing-friendly vCard for real estate and rentals.",
+      accent: "from-amber-600 to-orange-700",
+      category: "lifestyle",
+      previewImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=400",
+    },
+    {
+      id: 5,
+      name: "Global Travel",
+      description: "Travel themed vCard for agents, guides and tours.",
+      accent: "from-sky-600 to-blue-800",
+      category: "lifestyle",
+      previewImage: "https://images.unsplash.com/photo-1488646953014-85cb44e2a028?q=80&w=400",
+    },
+    {
+      id: 13,
+      name: "Professional Business",
+      description: "Professional variation for corporate branding.",
+      accent: "from-blue-600 to-indigo-700",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=400",
+    },
+    {
+      id: 14,
+      name: "Modern Arcs",
+      description: "Elegant business layout with deep ocean tones.",
+      accent: "from-sky-800 to-sky-950",
+      category: "corporate",
+    },
+    {
+      id: 15,
+      name: "Clean Corporate",
+      description: "Modern corporate design with a clean finish.",
+      accent: "from-cyan-700 to-blue-800",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=400",
+    },
+    {
+      id: 16,
+      name: "Premium Executive",
+      description: "Premium leadership profile with sophisticated gradients.",
+      accent: "from-indigo-600 to-violet-800",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400",
+    },
+    {
+      id: 17,
+      name: "Dynamic Hub",
+      description: "Bold corporate presence for dynamic teams.",
+      accent: "from-slate-700 to-slate-900",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1436450412740-6b988f486c6b?q=80&w=400",
+    },
+    {
+      id: 18,
+      name: "Founders Edition",
+      description: "Minimalist professional profile for founders.",
+      accent: "from-zinc-800 to-zinc-950",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=400",
+    },
+    {
+      id: 19,
+      name: "Sleek Executive",
+      description: "Sleek and efficient business card variation.",
+      accent: "from-neutral-700 to-black",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1454165833767-027ee0b496d4?q=80&w=400",
+    },
+    {
+      id: 20,
+      name: "Boutique Premium",
+      description: "Formal corporate template for established firms.",
+      accent: "from-stone-800 to-stone-950",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1522338255047-105ec746db95?q=80&w=400",
+    },
+    {
+      id: 21,
+      name: "Wavy Professional",
+      description: "Sleek professional profile with wavy gradients.",
+      accent: "from-indigo-500 via-purple-500 to-orange-500",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400",
+    },
+    {
+      id: 22,
+      name: "Noir Typography",
+      description: "Dark, editorial layout with strong type hierarchy.",
+      accent: "from-slate-800 to-black",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=400",
+    },
+    {
+      id: 23,
+      name: "Pastel Atelier",
+      description: "Soft pastel tones for boutiques and creative studios.",
+      accent: "from-rose-100 to-teal-50",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1522338255047-105ec746db95?q=80&w=400",
+    },
+    {
+      id: 24,
+      name: "Glass Horizon",
+      description: "Glassmorphic layers for a futuristic digital presence.",
+      accent: "from-blue-600 to-violet-600",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1639762681489-6b7df7e90c8d?q=80&w=400",
+    },
+    {
+      id: 25,
+      name: "Neon Foundry",
+      description: "High-energy accents for tech founders and startups.",
+      accent: "from-emerald-400 to-cyan-500",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=400",
+    },
+    {
+      id: 26,
+      name: "Linen Air",
+      description: "Crisp white space and calm typography for clarity.",
+      accent: "from-white to-gray-50",
+      category: "minimal",
+      previewImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=400",
+    },
+    {
+      id: 27,
+      name: "Orbit Elite",
+      description: "Deep space tones for consulting and premium services.",
+      accent: "from-sky-900 to-indigo-950",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400",
+    },
+    {
+      id: 28,
+      name: "Aurum Executive",
+      description: "Gold-forward luxury for executive and personal brands.",
+      accent: "from-amber-200 via-amber-400 to-amber-500",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=400",
+    },
+    {
+      id: 29,
+      name: "Spectrum Studio",
+      description: "Bold mesh gradients for artists and creative directors.",
+      accent: "from-fuchsia-500 via-purple-600 to-indigo-700",
+      category: "creative",
+      previewImage: "https://images.unsplash.com/photo-1557682250-33bd709cbe85?q=80&w=400",
+    },
+    {
+      id: 30,
+      name: "Forge Industrial",
+      description: "Structured industrial tone for tech and manufacturing.",
+      accent: "from-zinc-700 to-zinc-900",
+      category: "corporate",
+      previewImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=400",
+    },
+  ];
 
 function getInitialAppointmentSchedule(): Record<
   string,
@@ -827,6 +883,8 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     icon: string;
   } | null>(null);
   const [productsSearch, setProductsSearch] = useState("");
+  const [templatePickerSearch, setTemplatePickerSearch] = useState("");
+  const [templateCategoryFilter, setTemplateCategoryFilter] = useState<"all" | VCardTemplateCategory>("all");
   const [showNewProductModal, setShowNewProductModal] = useState(false);
   const [newProductName, setNewProductName] = useState("");
   const [newProductCurrency, setNewProductCurrency] = useState("");
@@ -1504,11 +1562,11 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
       prev.map((c) =>
         c.id === vcardId
           ? {
-              ...c,
-              businessHours: nextBusinessHours,
-              appointmentType,
-              appointmentServices,
-            }
+            ...c,
+            businessHours: nextBusinessHours,
+            appointmentType,
+            appointmentServices,
+          }
           : c
       )
     );
@@ -1530,4161 +1588,3322 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
     window.open(withBust, "_blank", "noopener,noreferrer");
   };
 
+  const activeNavLabel = editNavItems.find((i) => i.id === activeSection)?.label ?? "Editor";
+
   return (
-    <div className="p-4 sm:p-6 md:p-8 relative min-h-[calc(100vh-4rem)] bg-gradient-to-br from-gray-50/50 to-brand-50/30 dark:from-gray-900 dark:to-brand-900/10">
-      {/* Soft glowing animated background elements */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-brand-500/10 dark:bg-brand-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
-      <div className="absolute bottom-1/4 left-10 w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+    <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden bg-slate-100/90 dark:bg-slate-950">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.45] dark:opacity-[0.2]"
+        style={{
+          backgroundImage: `radial-gradient(at 0% 0%, rgb(59 130 246 / 0.12) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgb(99 102 241 / 0.1) 0px, transparent 45%),
+            radial-gradient(at 100% 100%, rgb(14 165 233 / 0.08) 0px, transparent 40%)`,
+        }}
+      />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgb(148_163_184/0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgb(148_163_184/0.06)_1px,transparent_1px)] bg-[size:48px_48px] dark:bg-[linear-gradient(to_right,rgb(51_65_85/0.35)_1px,transparent_1px),linear-gradient(to_bottom,rgb(51_65_85/0.35)_1px,transparent_1px)]" />
 
-      {/* Header: Edit vCard title + Back / Preview */}
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 glass-header border-b border-gray-200/50 dark:border-gray-800/50 pb-5">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 tracking-tight">
-            Edit vCard
-          </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Customize your premium digital presence.</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={handlePreviewClick}
-            className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-700/80 hover:shadow-md hover:-translate-y-0.5"
-          >
-            <span className="hidden sm:inline">Preview</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-0.5"
-          >
-            <span className="hidden sm:inline">Back</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Success banners */}
-      {basicDetailsUpdated && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          Basic Details updated successfully.
-        </div>
-      )}
-      {!basicDetailsUpdated && showCreatedSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          vCard updated successfully.
-        </div>
-      )}
-      {qrCreateSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          Create QR successfully.
-        </div>
-      )}
-      {termsSaveSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          Terms &amp; Conditions updated successfully.
-        </div>
-      )}
-      {privacySaveSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          Privacy Policy updated successfully.
-        </div>
-      )}
-      {seoSaveSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-500 px-4 py-3 text-sm font-medium text-white dark:border-green-700 dark:bg-green-600"
-          role="alert"
-        >
-          SEO updated successfully.
-        </div>
-      )}
-      {manageSectionSaveSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          Manage Section updated successfully.
-        </div>
-      )}
-      {advancedSaveSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          Advanced settings saved successfully.
-        </div>
-      )}
-      {dynamicThemeSaveSuccess && (
-        <div
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
-          role="alert"
-        >
-          Dynamic vCard theme saved. It will apply on your public vCard page.
-        </div>
-      )}
-
-      {/* Global success toast (services, blogs, etc.) */}
-      {showServicesSuccessToast && (
-        <div
-          className="fixed top-4 right-4 z-[100000] w-full max-w-md"
-          role="alert"
-          aria-live="polite"
-        >
-          <div className="rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800 overflow-hidden">
-            <div className="flex items-start gap-3 px-5 pt-5 pb-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div className="min-w-0 flex-1 pr-8">
-                <p className="text-sm font-bold text-gray-900 dark:text-white">Successful</p>
-                <p className="mt-1 text-sm font-normal text-gray-600 dark:text-gray-400">{servicesSuccessMessage}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowServicesSuccessToast(false)}
-                className="absolute right-3 top-3 rounded p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                aria-label="Close"
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+      <div className="relative mx-auto max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8 md:px-8">
+        {/* Header */}
+        <header className="mb-6 flex flex-col gap-4 rounded-2xl border border-slate-200/80 bg-white/90 px-5 py-5 shadow-sm shadow-slate-200/40 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/90 dark:shadow-none sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+              vCard studio
             </div>
-            <div className="h-1.5 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
-              <div
-                className="h-full rounded-b bg-green-500 transition-[width] duration-75 ease-linear"
-                style={{ width: `${servicesToastProgress}%` }}
-              />
-            </div>
-            <div className="px-5 pb-5 pt-3 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setShowServicesSuccessToast(false)}
-                className="rounded-lg bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-800/50"
-              >
-                Back
-              </button>
-            </div>
+            <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
+              Edit vCard
+            </h1>
+            <p className="mt-1 max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              Customize your digital profile, content blocks, and public page — changes sync from this workspace.
+            </p>
           </div>
-        </div>
-      )}
+          <div className="flex shrink-0 flex-wrap items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              onClick={handlePreviewClick}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-violet-200 bg-white px-4 py-2.5 text-sm font-semibold text-violet-700 shadow-sm transition hover:border-violet-300 hover:bg-violet-50 dark:border-violet-800 dark:bg-slate-900/90 dark:text-violet-300 dark:hover:border-violet-700 sm:flex-initial"
+            >
+              <svg className="h-4 w-4 text-violet-500 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              Preview
+            </button>
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-violet-200/50 transition hover:from-violet-700 hover:to-indigo-700 dark:shadow-none sm:flex-initial"
+            >
+              <svg className="h-4 w-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back
+            </button>
+          </div>
+        </header>
 
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-        {/* Left sidebar */}
-        <nav className="lg:w-64 shrink-0">
-          <div className="surface-premium overflow-hidden p-2.5 rounded-[24px] flex flex-col gap-1.5 backdrop-blur-2xl bg-white/80 dark:bg-gray-900/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/60 dark:border-white/5">
-            {editNavItems.map((item) => {
-              const isManageSection = item.id === "manage-section";
-              const isCustomLinks = item.id === "custom-links";
-              const isActive = activeSection === item.id;
-              const activeBg = (isManageSection || isCustomLinks) && isActive
-                ? "bg-gradient-to-r from-purple-600 to-indigo-600 shadow-md shadow-purple-500/25"
-                : isActive
-                ? "bg-gradient-to-r from-brand-600 to-brand-500 shadow-md shadow-brand-500/25"
-                : "";
-              return (
+        {/* Success banners */}
+        {basicDetailsUpdated && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            Basic Details updated successfully.
+          </div>
+        )}
+        {!basicDetailsUpdated && showCreatedSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            vCard updated successfully.
+          </div>
+        )}
+        {qrCreateSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            Create QR successfully.
+          </div>
+        )}
+        {termsSaveSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            Terms &amp; Conditions updated successfully.
+          </div>
+        )}
+        {privacySaveSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            Privacy Policy updated successfully.
+          </div>
+        )}
+        {seoSaveSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-500 px-4 py-3 text-sm font-medium text-white dark:border-green-700 dark:bg-green-600"
+            role="alert"
+          >
+            SEO updated successfully.
+          </div>
+        )}
+        {manageSectionSaveSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            Manage Section updated successfully.
+          </div>
+        )}
+        {advancedSaveSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            Advanced settings saved successfully.
+          </div>
+        )}
+        {dynamicThemeSaveSuccess && (
+          <div
+            className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200"
+            role="alert"
+          >
+            Dynamic vCard theme saved. It will apply on your public vCard page.
+          </div>
+        )}
+
+        {/* Global success toast (services, blogs, etc.) */}
+        {showServicesSuccessToast && (
+          <div
+            className="fixed top-4 right-4 z-[100000] w-full max-w-md"
+            role="alert"
+            aria-live="polite"
+          >
+            <div className="rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800 overflow-hidden">
+              <div className="flex items-start gap-3 px-5 pt-5 pb-4">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div className="min-w-0 flex-1 pr-8">
+                  <p className="text-sm font-bold text-gray-900 dark:text-white">Successful</p>
+                  <p className="mt-1 text-sm font-normal text-gray-600 dark:text-gray-400">{servicesSuccessMessage}</p>
+                </div>
                 <button
-                  key={item.id}
                   type="button"
-                  onClick={() => setActiveSection(item.id)}
-                  className={`group relative flex w-full items-center gap-3.5 px-4 py-3 text-left text-sm font-semibold transition-all duration-300 rounded-[14px] overflow-hidden ${
-                    isActive
-                      ? `${activeBg} text-white transform scale-[1.02]`
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100/80 dark:hover:bg-gray-800/80 hover:text-gray-900 dark:hover:text-white"
-                  }`}
+                  onClick={() => setShowServicesSuccessToast(false)}
+                  className="absolute right-3 top-3 rounded p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                  aria-label="Close"
                 >
-                  <div className={`transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`}>
-                    <EditNavIcon id={item.id} active={isActive} />
-                  </div>
-                  <span className="relative z-10">{item.label}</span>
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
-              );
-            })}
+              </div>
+              <div className="h-1.5 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+                <div
+                  className="h-full rounded-b bg-green-500 transition-[width] duration-75 ease-linear"
+                  style={{ width: `${servicesToastProgress}%` }}
+                />
+              </div>
+              <div className="px-5 pb-5 pt-3 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setShowServicesSuccessToast(false)}
+                  className="rounded-lg bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-200 dark:hover:bg-blue-800/50"
+                >
+                  Back
+                </button>
+              </div>
+            </div>
           </div>
-        </nav>
+        )}
 
-        {/* Main content - single card, scrollable on hover */}
-        <div className="flex-1 flex flex-col min-h-0 max-h-[calc(100vh-8rem)] relative">
-          <div className="group/card p-6 md:p-8 lg:p-10 flex-1 min-h-[600px] overflow-x-hidden overflow-y-auto rounded-[32px] transition-shadow duration-300 backdrop-blur-3xl bg-white/70 dark:bg-gray-900/70 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/80 dark:border-gray-700/50 hover:shadow-xl [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 hover:[&::-webkit-scrollbar-thumb]:bg-gray-400 dark:hover:[&::-webkit-scrollbar-thumb]:bg-gray-500 relative z-10">
-            {/* Basic section with tabs */}
-            {activeSection === "basic" && (
-              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="mb-8">
-                  <div className="flex gap-2 bg-gray-100/60 dark:bg-gray-800/60 p-1.5 rounded-2xl w-fit backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-inner">
-                    {[
-                      { id: "basic", label: "Basic Details" },
-                      { id: "personal", label: "Personal Details" },
-                      { id: "other", label: "Other Configs" },
-                    ].map((tab) => (
-                      <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                        className={`relative px-5 py-2.5 text-sm font-semibold transition-all duration-300 rounded-xl ${activeTab === tab.id
-                          ? "bg-white dark:bg-gray-900 text-brand-600 dark:text-brand-400 shadow-[0_2px_8px_rgb(0,0,0,0.08)] transform scale-[1.02]"
-                          : "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-white/40 dark:hover:bg-gray-800/40"
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch lg:gap-8 lg:min-h-[calc(100vh-12rem)]">
+          {/* Left sidebar */}
+          <nav className="shrink-0 lg:w-[260px]" aria-label="vCard editor sections">
+            <div className="sticky top-4 overflow-hidden rounded-2xl border border-slate-200/90 bg-white/95 p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900/95">
+              <p className="px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+                Sections
+              </p>
+              <div className="flex flex-col gap-0.5">
+                {editNavItems.map((item) => {
+                  const isActive = activeSection === item.id;
+                  const activeBg = isActive
+                    ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-200/50 dark:shadow-none"
+                    : "";
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setActiveSection(item.id)}
+                      className={`group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-colors ${isActive
+                        ? `${activeBg}`
+                        : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800/80 dark:hover:text-slate-200"
+                        }`}
+                    >
+                      <span
+                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors ${isActive
+                          ? "border-white/20 bg-white/10 text-white"
+                          : "border-slate-200/80 bg-slate-50 text-slate-500 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-400"
                           }`}
                       >
-                        {tab.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                        <EditNavIcon id={item.id} active={isActive} />
+                      </span>
+                      <span className="min-w-0 leading-snug">{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </nav>
 
-                {activeTab === "basic" && (
-                  <form
-                    className="space-y-5"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (!vcardId || !currentCard) return;
-                      const rawAlias = basicAlias.trim() || "my-vcard";
-                      const alias = rawAlias.toLowerCase();
-                      const aliasExists = vCards.some((card) => {
-                        if (card.id === vcardId) return false;
-                        const slug = (card.slug ??
-                          card.previewUrl.replace(/^https?:\/\/[^/]+/, "").replace(/^\/+/, "")).toLowerCase();
-                        return slug === alias;
-                      });
-                      if (aliasExists) {
-                        setBasicAliasError("This URL Alias already exists. Please choose another.");
-                        return;
-                      }
-                      setBasicAliasError(null);
-
-                      setVCards((prev) =>
-                        prev.map((card) =>
-                          card.id === vcardId
-                            ? {
-                              ...card,
-                              slug: alias,
-                              previewUrl: `/${alias}`,
-                            }
-                            : card
-                        )
-                      );
-
-                      setBasicDetailsUpdated(true);
-                      setActiveTab("personal");
-                    }}
-                  >
-                    {/* URL Alias - full width with help + refresh */}
-                    <div>
-                      <label className={`${labelClass} inline-flex items-center gap-1.5`}>
-                        URL Alias <span className="text-red-500">*</span>
-                        <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
-                          <HelpIcon />
-                        </button>
-                      </label>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          className={`${inputClass} ${basicAliasError ? "border-red-500 focus:ring-red-500" : ""}`}
-                          defaultValue={basicAlias}
-                          onChange={(e) => setBasicAlias(e.target.value)}
-                          placeholder="alias"
-                        />
-                        <button
-                          type="button"
-                          className="shrink-0 inline-flex items-center justify-center h-11 w-11 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          aria-label="Refresh alias"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                          </svg>
-                        </button>
+          {/* Main content */}
+          <div className="relative flex flex-1 flex-col">
+            <div className="group/card relative z-10 flex h-full flex-col overflow-x-hidden overflow-y-auto rounded-2xl border border-slate-200/90 bg-white shadow-[0_1px_3px_rgb(15_23_42/0.06),0_12px_40px_-12px_rgb(15_23_42/0.12)] dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-[0_0_0_1px_rgb(51_65_85/0.4)] md:min-h-[600px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 dark:[&::-webkit-scrollbar-thumb]:bg-slate-600">
+              <div className="border-b border-slate-100 bg-slate-50/90 px-5 py-5 dark:border-slate-800 dark:bg-slate-900/60 md:px-8 md:py-6 lg:px-10">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+                  Active workspace
+                </p>
+                <h2 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-3xl">
+                  {activeNavLabel}
+                </h2>
+              </div>
+              <div className="p-5 md:p-8 lg:p-10">
+                {/* Basic section with tabs */}
+                {activeSection === "basic" && (
+                  <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="mb-8">
+                      <p className="mb-2 text-xs font-medium text-slate-500 dark:text-slate-400">Basic details workflow</p>
+                      <div
+                        className="inline-flex flex-wrap gap-1 rounded-xl border border-slate-200/90 bg-slate-100/90 p-1 dark:border-slate-700 dark:bg-slate-800/80"
+                        role="tablist"
+                        aria-label="Basic details tabs"
+                      >
+                        {[
+                          { id: "basic", label: "Basic Details" },
+                          { id: "personal", label: "Personal Details" },
+                          { id: "other", label: "Other Configs" },
+                        ].map((tab) => (
+                          <button
+                            key={tab.id}
+                            type="button"
+                            role="tab"
+                            aria-selected={activeTab === tab.id}
+                            onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                            className={`rounded-lg px-4 py-2 text-sm font-semibold transition-all ${activeTab === tab.id
+                              ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200/80 dark:bg-slate-900 dark:text-white dark:ring-slate-600"
+                              : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                              }`}
+                          >
+                            {tab.label}
+                          </button>
+                        ))}
                       </div>
-                      {basicAliasError && (
-                        <p className="mt-1 text-xs text-red-500">{basicAliasError}</p>
-                      )}
                     </div>
 
-                    {/* vCard Name */}
-                    <div>
-                      <label className={labelClass}>
-                        vCard Name <span className="text-red-500">*</span>
-                      </label>
-                      <input type="text" className={inputClass} defaultValue="website builder" placeholder="Enter vCard name" />
-                    </div>
+                    {activeTab === "basic" && (
+                      <form
+                        className="space-y-5"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          if (!vcardId || !currentCard) return;
+                          const rawAlias = basicAlias.trim() || "my-vcard";
+                          const alias = rawAlias.toLowerCase();
+                          const aliasExists = vCards.some((card) => {
+                            if (card.id === vcardId) return false;
+                            const slug = (card.slug ??
+                              card.previewUrl.replace(/^https?:\/\/[^/]+/, "").replace(/^\/+/, "")).toLowerCase();
+                            return slug === alias;
+                          });
+                          if (aliasExists) {
+                            setBasicAliasError("This URL Alias already exists. Please choose another.");
+                            return;
+                          }
+                          setBasicAliasError(null);
 
-                    {/* Two columns: Description (left) | Occupation, Cover Type, Cover Image, Profile Image (right) */}
-                    <div className="grid lg:grid-cols-3 gap-6">
-                      {/* Left: Description with rich text toolbar */}
-                      <div className="lg:col-span-2 space-y-2">
-                        <label className={labelClass}>Description:</label>
-                        <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                          {/* Rich text toolbar */}
-                          <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Bold">
-                              <span className="font-bold text-sm">B</span>
-                            </button>
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic" title="Italic">
-                              <span className="text-sm">I</span>
-                            </button>
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline" title="Underline">
-                              <span className="text-sm">U</span>
-                            </button>
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 line-through" title="Strikethrough">
-                              <span className="text-sm">S</span>
-                            </button>
-                            <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Quote">
-                              <span className="text-sm">&quot;</span>
-                            </button>
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Code">
-                              <span className="text-xs">&lt; /&gt;</span>
-                            </button>
-                            <select className="ml-1 h-8 min-w-[80px] rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 px-2">
-                              <option>Normal</option>
-                            </select>
-                            <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Text color">
-                              <span className="text-sm font-semibold">A</span>
-                            </button>
-                            <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Highlight">
-                              <span className="text-sm font-semibold">A</span>
-                            </button>
-                          </div>
-                          <textarea
-                            className="w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400"
-                            placeholder="Write something..."
-                            defaultValue="fbvjhgf"
-                          />
-                        </div>
-                        <button type="button" className="text-sm text-brand-600 dark:text-brand-400 hover:underline inline-flex items-center gap-1">
-                          ✨ Generate Description with AI
-                        </button>
-                      </div>
+                          setVCards((prev) =>
+                            prev.map((card) =>
+                              card.id === vcardId
+                                ? {
+                                  ...card,
+                                  slug: alias,
+                                  previewUrl: `/${alias}`,
+                                }
+                                : card
+                            )
+                          );
 
-                      {/* Right: Occupation, Cover Type, conditional Cover Image/Video/YouTube, Profile Image */}
-                      <div className="space-y-4">
-                        <div>
-                          <label className={labelClass}>Occupation:</label>
-                          <input type="text" className={inputClass} placeholder="Enter Occupation" />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Cover Type:</label>
-                          <select className={inputClass} value={coverType} onChange={(e) => setCoverType(e.target.value as "Image" | "Video" | "YouTube Link")}>
-                            <option>Image</option>
-                            <option>Video</option>
-                            <option>YouTube Link</option>
-                          </select>
-                        </div>
-                        {coverType === "Image" && (
-                          <div>
-                            <label className={`${labelClass} inline-flex items-center gap-1.5`}>
-                              Cover Image:
-                              <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
-                                <HelpIcon />
-                              </button>
-                            </label>
-                            <div className="relative mt-1.5 flex items-center justify-center h-24 w-full rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 overflow-hidden group">
-                              <div className="absolute inset-0 bg-[linear-gradient(135deg,#1e293b_0%,#334155_50%,#475569_100%)]" />
-                              <button
-                                type="button"
-                                className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
-                                aria-label="Edit cover"
-                              >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                </svg>
-                              </button>
-                            </div>
-                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
-                          </div>
-                        )}
-                        {coverType === "Video" && (
-                          <div>
-                            <label className={`${labelClass} inline-flex items-center gap-1.5`}>
-                              Cover Video:
-                              <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
-                                <HelpIcon />
-                              </button>
-                            </label>
-                            <div className="relative mt-1.5 flex items-center justify-center h-40 w-40 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 overflow-hidden group">
-                              <svg className="w-14 h-14 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                              <button
-                                type="button"
-                                className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
-                                aria-label="Edit cover video"
-                              >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                </svg>
-                              </button>
-                            </div>
-                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: mp4.</p>
-                          </div>
-                        )}
-                        {coverType === "YouTube Link" && (
-                          <div>
-                            <label className={`${labelClass} inline-flex items-center gap-1.5`}>
-                              YouTube URL:
-                              <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
-                                <HelpIcon />
-                              </button>
-                            </label>
-                            <input type="url" className={inputClass} placeholder="https://www.youtube.com/watch?v=..." />
-                          </div>
-                        )}
+                          setBasicDetailsUpdated(true);
+                          setActiveTab("personal");
+                        }}
+                      >
+                        {/* URL Alias - full width with help + refresh */}
                         <div>
                           <label className={`${labelClass} inline-flex items-center gap-1.5`}>
-                            Profile Image:
+                            URL Alias <span className="text-red-500">*</span>
                             <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
                               <HelpIcon />
                             </button>
                           </label>
-                          <input
-                            ref={profileImageInputRef}
-                            type="file"
-                            accept="image/png,image/jpeg,image/jpg"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (!file || !vcardId || !currentCard) return;
-                              const reader = new FileReader();
-                              reader.onload = () => {
-                                const dataUrl = reader.result as string;
-                                setVCards((prev) =>
-                                  prev.map((c) => (c.id === vcardId ? { ...c, image: dataUrl } : c))
-                                );
-                              };
-                              reader.readAsDataURL(file);
-                              e.target.value = "";
-                            }}
-                          />
-                          <div className="relative mt-1.5 flex items-center justify-center h-28 w-28 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 overflow-hidden group">
-                            {currentCard?.image ? (
-                              <Image
-                                src={currentCard.image}
-                                alt="Profile"
-                                fill
-                                className="object-cover"
-                                sizes="112px"
-                                unoptimized={currentCard.image.startsWith("data:")}
-                              />
-                            ) : (
-                              <svg className="w-14 h-14 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                              </svg>
-                            )}
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              className={`${inputClass} ${basicAliasError ? "border-red-500 focus:ring-red-500" : ""}`}
+                              defaultValue={basicAlias}
+                              onChange={(e) => setBasicAlias(e.target.value)}
+                              placeholder="alias"
+                            />
                             <button
                               type="button"
-                              onClick={() => profileImageInputRef.current?.click()}
-                              className="absolute top-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
-                              aria-label="Edit profile image"
+                              className="shrink-0 inline-flex items-center justify-center h-11 w-11 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                              aria-label="Refresh alias"
                             >
-                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                               </svg>
                             </button>
                           </div>
-                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg. Ye photo vCards list pe bhi dikhegi.</p>
+                          {basicAliasError && (
+                            <p className="mt-1 text-xs text-red-500">{basicAliasError}</p>
+                          )}
                         </div>
-                      </div>
-                    </div>
 
-                    <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-                      <button
-                        type="button"
-                        className="btn-secondary-premium inline-flex items-center justify-center"
-                      >
-                        Discard
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn-primary-premium inline-flex items-center justify-center"
-                      >
-                        Save &amp; Next
-                      </button>
-                    </div>
-                  </form>
-                )}
-
-                {activeTab === "personal" && (
-                  <form
-                    className="space-y-5"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (!vcardId || !currentCard) return;
-                      const fullName = `${pdFirstName.trim()} ${pdLastName.trim()}`.trim();
-                      setVCards((prev) =>
-                        prev.map((c) =>
-                          c.id === vcardId
-                            ? {
-                                ...c,
-                                title: fullName || c.title,
-                                email: pdEmail.trim() || undefined,
-                                phone: pdPhone.trim() || undefined,
-                                whatsapp: pdAltPhone.trim() || undefined,
-                                address: pdLocation.trim() || undefined,
-                                company: pdCompany.trim() || undefined,
-                                occupation: pdJobTitle.trim() || undefined,
-                                birthDate: pdBirthDate.trim() || undefined,
-                              }
-                            : c
-                        )
-                      );
-                      setPdSaveSuccess(true);
-                      setActiveTab("other");
-                    }}
-                  >
-                    {pdSaveSuccess && (
-                      <div className="mb-2 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200">
-                        Personal Details saved successfully.
-                      </div>
-                    )}
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">vCard Details</h2>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {/* Left column */}
-                      <div className="space-y-4">
+                        {/* vCard Name */}
                         <div>
                           <label className={labelClass}>
-                            First Name <span className="text-red-500">*</span>
+                            vCard Name <span className="text-red-500">*</span>
                           </label>
-                          <input
-                            type="text"
-                            className={inputClass}
-                            placeholder="Enter First Name"
-                            value={pdFirstName}
-                            onChange={(e) => setPdFirstName(e.target.value)}
-                            required
-                          />
+                          <input type="text" className={inputClass} defaultValue="website builder" placeholder="Enter vCard name" />
                         </div>
-                        <div>
-                          <label className={labelClass}>Email:</label>
-                          <input
-                            type="email"
-                            className={inputClass}
-                            placeholder="Enter Email Address"
-                            value={pdEmail}
-                            onChange={(e) => setPdEmail(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Alternate Email:</label>
-                          <input
-                            type="email"
-                            className={inputClass}
-                            placeholder="Alternate Email"
-                            value={pdAltEmail}
-                            onChange={(e) => setPdAltEmail(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Location:</label>
-                          <textarea
-                            className={`${inputClass} h-24 resize-y min-h-[80px]`}
-                            placeholder="Enter Your Location"
-                            value={pdLocation}
-                            onChange={(e) => setPdLocation(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Location URL:</label>
-                          <input
-                            type="url"
-                            className={inputClass}
-                            placeholder="Enter Your Location URL"
-                            value={pdLocationUrl}
-                            onChange={(e) => setPdLocationUrl(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Company:</label>
-                          <input
-                            type="text"
-                            className={inputClass}
-                            placeholder="Enter Company Name"
-                            value={pdCompany}
-                            onChange={(e) => setPdCompany(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                      {/* Right column */}
-                      <div className="space-y-4">
-                        <div>
-                          <label className={labelClass}>
-                            Last Name <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className={inputClass}
-                            placeholder="Enter Last Name"
-                            value={pdLastName}
-                            onChange={(e) => setPdLastName(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Phone:</label>
-                          <input
-                            type="tel"
-                            className={inputClass}
-                            placeholder="Enter Phone Number"
-                            value={pdPhone}
-                            onChange={(e) => setPdPhone(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Alternate Phone / WhatsApp:</label>
-                          <input
-                            type="tel"
-                            className={inputClass}
-                            placeholder="Alternate Phone"
-                            value={pdAltPhone}
-                            onChange={(e) => setPdAltPhone(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Date Of Birth:</label>
-                          <input
-                            type="text"
-                            className={inputClass}
-                            placeholder="Enter Date of Birth"
-                            value={pdBirthDate}
-                            onChange={(e) => setPdBirthDate(e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Job Title / Occupation:</label>
-                          <input
-                            type="text"
-                            className={inputClass}
-                            placeholder="Enter Job Title"
-                            value={pdJobTitle}
-                            onChange={(e) => setPdJobTitle(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (!currentCard) return;
-                          const parts = (currentCard.title ?? "").split(" ");
-                          setPdFirstName(parts[0] ?? "");
-                          setPdLastName(parts.slice(1).join(" ") ?? "");
-                          setPdEmail(currentCard.email ?? "");
-                          setPdPhone(currentCard.phone ?? "");
-                          setPdAltPhone(currentCard.whatsapp ?? "");
-                          setPdLocation(currentCard.address ?? "");
-                          setPdLocationUrl("");
-                          setPdCompany(currentCard.company ?? "");
-                          setPdJobTitle(currentCard.occupation ?? "");
-                          setPdBirthDate(currentCard.birthDate ?? "");
-                        }}
-                        className="btn-secondary-premium inline-flex items-center justify-center"
-                      >
-                        Discard
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn-primary-premium inline-flex items-center justify-center"
-                      >
-                        Save &amp; Next
-                      </button>
-                    </div>
-                  </form>
-                )}
 
-                {activeTab === "other" && (
-                  <div className="space-y-6">
-                    {/* 8 toggle cards in 2x4 grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {[
-                        { key: "languageLocalization" as const, label: "Display Language Localization:", help: false },
-                        { key: "inquiryForm" as const, label: "Display Inquiry Form:", help: false },
-                        { key: "downloadQrIcon" as const, label: "Display Download Qr Icon:", help: false },
-                        { key: "qrSection" as const, label: "Display Qr Section:", help: false },
-                        { key: "userAffiliation" as const, label: "Display User Affiliation:", help: true },
-                        { key: "addToContact" as const, label: "Display Add To Contact:", help: true },
-                        { key: "hideStickyBar" as const, label: "Hide vCard Sticky Bar:", help: true },
-                        { key: "whatsappShare" as const, label: "Display WhatsApp Share:", help: true },
-                      ].map((item) => {
-                        const on = otherToggles[item.key];
-                        return (
-                          <div
-                            key={item.key}
-                            className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-4 shadow-sm"
-                          >
-                            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-800 dark:text-gray-100 pr-2">
-                              {item.label}
-                              {item.help && (
+                        {/* Two columns: Description (left) | Occupation, Cover Type, Cover Image, Profile Image (right) */}
+                        <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
+                          {/* Left: Description with rich text toolbar */}
+                          <div className="space-y-2 lg:col-span-2">
+                            <label className={labelClass}>Description:</label>
+                            <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                              {/* Rich text toolbar */}
+                              <div className="flex flex-wrap items-center gap-0.5 border-b border-slate-200 bg-slate-50 px-2 py-2 dark:border-slate-700 dark:bg-slate-800/90">
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Bold">
+                                  <span className="font-bold text-sm">B</span>
+                                </button>
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic" title="Italic">
+                                  <span className="text-sm">I</span>
+                                </button>
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline" title="Underline">
+                                  <span className="text-sm">U</span>
+                                </button>
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 line-through" title="Strikethrough">
+                                  <span className="text-sm">S</span>
+                                </button>
+                                <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Quote">
+                                  <span className="text-sm">&quot;</span>
+                                </button>
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Code">
+                                  <span className="text-xs">&lt; /&gt;</span>
+                                </button>
+                                <select className="ml-1 h-8 min-w-[80px] rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 px-2">
+                                  <option>Normal</option>
+                                </select>
+                                <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Text color">
+                                  <span className="text-sm font-semibold">A</span>
+                                </button>
+                                <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Highlight">
+                                  <span className="text-sm font-semibold">A</span>
+                                </button>
+                              </div>
+                              <textarea
+                                className="w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400"
+                                placeholder="Write something..."
+                                defaultValue="fbvjhgf"
+                              />
+                            </div>
+                            <button type="button" className="text-sm text-brand-600 dark:text-brand-400 hover:underline inline-flex items-center gap-1">
+                              ✨ Generate Description with AI
+                            </button>
+                          </div>
+
+                          {/* Right: Occupation, Cover Type, conditional Cover Image/Video/YouTube, Profile Image */}
+                          <div className="space-y-4">
+                            <div>
+                              <label className={labelClass}>Occupation:</label>
+                              <input type="text" className={inputClass} placeholder="Enter Occupation" />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Cover Type:</label>
+                              <select className={inputClass} value={coverType} onChange={(e) => setCoverType(e.target.value as "Image" | "Video" | "YouTube Link")}>
+                                <option>Image</option>
+                                <option>Video</option>
+                                <option>YouTube Link</option>
+                              </select>
+                            </div>
+                            {coverType === "Image" && (
+                              <div>
+                                <label className={`${labelClass} inline-flex items-center gap-1.5`}>
+                                  Cover Image:
+                                  <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                                    <HelpIcon />
+                                  </button>
+                                </label>
+                                <div className="relative mt-1.5 flex items-center justify-center h-24 w-full rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 overflow-hidden group">
+                                  <div className="absolute inset-0 bg-[linear-gradient(135deg,#1e293b_0%,#334155_50%,#475569_100%)]" />
+                                  <button
+                                    type="button"
+                                    className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
+                                    aria-label="Edit cover"
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                  </button>
+                                </div>
+                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
+                              </div>
+                            )}
+                            {coverType === "Video" && (
+                              <div>
+                                <label className={`${labelClass} inline-flex items-center gap-1.5`}>
+                                  Cover Video:
+                                  <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                                    <HelpIcon />
+                                  </button>
+                                </label>
+                                <div className="relative mt-1.5 flex items-center justify-center h-40 w-40 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 overflow-hidden group">
+                                  <svg className="w-14 h-14 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
+                                  <button
+                                    type="button"
+                                    className="absolute top-1.5 right-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
+                                    aria-label="Edit cover video"
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                  </button>
+                                </div>
+                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: mp4.</p>
+                              </div>
+                            )}
+                            {coverType === "YouTube Link" && (
+                              <div>
+                                <label className={`${labelClass} inline-flex items-center gap-1.5`}>
+                                  YouTube URL:
+                                  <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                                    <HelpIcon />
+                                  </button>
+                                </label>
+                                <input type="url" className={inputClass} placeholder="https://www.youtube.com/watch?v=..." />
+                              </div>
+                            )}
+                            <div>
+                              <label className={`${labelClass} inline-flex items-center gap-1.5`}>
+                                Profile Image:
                                 <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
                                   <HelpIcon />
                                 </button>
-                              )}
-                            </span>
-                            <button
-                              type="button"
-                              role="switch"
-                              aria-checked={on}
-                              onClick={() => setOtherToggle(item.key)}
-                              className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${on ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
-                                }`}
-                            >
-                              <span
-                                className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${on ? "translate-x-[1.375rem]" : "translate-x-0"
-                                  }`}
+                              </label>
+                              <input
+                                ref={profileImageInputRef}
+                                type="file"
+                                accept="image/png,image/jpeg,image/jpg"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file || !vcardId || !currentCard) return;
+                                  const reader = new FileReader();
+                                  reader.onload = () => {
+                                    const dataUrl = reader.result as string;
+                                    setVCards((prev) =>
+                                      prev.map((c) => (c.id === vcardId ? { ...c, image: dataUrl } : c))
+                                    );
+                                  };
+                                  reader.readAsDataURL(file);
+                                  e.target.value = "";
+                                }}
                               />
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {/* QR Code download size slider */}
-                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-4 shadow-sm">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <label className="text-sm font-medium text-gray-800 dark:text-gray-100">QR Code download size</label>
-                        <div className="flex items-center gap-3 min-w-[120px]">
-                          <input
-                            type="range"
-                            min={100}
-                            max={400}
-                            step={10}
-                            value={qrDownloadSize}
-                            onChange={(e) => setQrDownloadSize(Number(e.target.value))}
-                            className="h-2 w-32 sm:flex-1 max-w-[200px] rounded-full appearance-none bg-gray-200 dark:bg-gray-600 accent-brand-500"
-                          />
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300 w-12 shrink-0">{qrDownloadSize}px</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex justify-end gap-3 pt-2">
-                      <button
-                        type="button"
-                        className="btn-secondary-premium inline-flex items-center justify-center"
-                      >
-                        Discard
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-primary-premium inline-flex items-center justify-center"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Templates – template grid + mobile view preview in phone frame */}
-            {activeSection === "templates" && (
-              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-                <div className="flex-1 min-w-0 space-y-4">
-                  <label className={labelClass}>
-                    Select Template: <span className="text-red-500">*</span>
-                  </label>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 max-h-[70vh] overflow-y-auto pr-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600">
-                    {VCARD_TEMPLATES.map((template) => {
-                      const isSelected = selectedTemplateId === template.id;
-                      return (
-                        <button
-                          key={template.id}
-                          type="button"
-                          onClick={() => setSelectedTemplateId(template.id)}
-                          className={`group relative rounded-2xl border-2 p-0 text-left transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 overflow-hidden shadow-sm hover:shadow-md ${isSelected
-                            ? "border-brand-500 bg-white dark:bg-gray-800 shadow-md"
-                            : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-brand-400 dark:hover:border-brand-500"
-                            }`}
-                        >
-                          {/* Preview area: gradient + placeholder content + title bar; on hover content scrolls upward */}
-                          <div className="relative mb-3 overflow-hidden rounded-t-2xl aspect-[9/16] w-full">
-                            {template.previewImage ? (
-                              <div className="absolute inset-0 z-0 transition-transform duration-500 ease-out group-hover:scale-110">
-                                <Image
-                                  src={template.previewImage}
-                                  alt={template.name}
-                                  fill
-                                  className="object-cover"
-                                  sizes="(max-width: 640px) 100vw, 300px"
-                                />
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-300" />
+                              <div className="relative mt-1.5 flex items-center justify-center h-28 w-28 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 overflow-hidden group">
+                                {currentCard?.image ? (
+                                  <Image
+                                    src={currentCard.image}
+                                    alt="Profile"
+                                    fill
+                                    className="object-cover"
+                                    sizes="112px"
+                                    unoptimized={currentCard.image.startsWith("data:")}
+                                  />
+                                ) : (
+                                  <svg className="w-14 h-14 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                  </svg>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => profileImageInputRef.current?.click()}
+                                  className="absolute top-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 z-10"
+                                  aria-label="Edit profile image"
+                                >
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                  </svg>
+                                </button>
                               </div>
-                            ) : (
-                              <div
-                                className={`absolute inset-0 bg-gradient-to-b ${template.accent} transition-transform duration-500 ease-out group-hover:translate-y-[-12%]`}
-                              />
-                            )}
-                            {/* Template-specific preview content (screenshot-style) */}
-                            {(() => {
-                              // Special case for Corporate (2) - ID 14 to show its unique arcs
-                              if (template.id === 14) {
-                                return (
-                                  <div className="absolute inset-0 z-10 bg-white overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-3">
-                                    {/* Top Banner Dark */}
-                                    <div className="h-1/3 w-full bg-[#0A0C14]" />
-                                    {/* Decorative Arcs */}
-                                    <div className="absolute top-[25%] right-[-60px] w-48 h-48 pointer-events-none z-0">
-                                      <div className="absolute inset-0 rounded-full border-[25px] border-[#FF5E5E] scale-[1.2] translate-x-4 translate-y-4" />
-                                      <div className="absolute inset-0 rounded-full border-[25px] border-[#FFC15E] scale-[1.0] translate-x-10 translate-y-10" />
-                                      <div className="absolute inset-0 rounded-full bg-[#1A1E29] scale-[0.8] translate-x-16 translate-y-16" />
-                                    </div>
-                                    {/* Header Content Mockup */}
-                                    <div className="absolute top-[20%] left-4 z-10">
-                                      <div className="w-16 h-16 rounded-full border-2 border-white bg-slate-200 mb-2 shadow-md" />
-                                      <div className="h-3 w-20 bg-[#1A1E29] rounded-sm mb-1" />
-                                      <div className="h-2 w-16 bg-slate-300 rounded-sm" />
-                                    </div>
-                                    {/* Social row */}
-                                    <div className="absolute top-[45%] left-4 flex gap-1.5">
-                                      {[1, 2, 3, 4].map(i => <div key={i} className="w-4 h-4 rounded-full bg-[#1A1E29]" />)}
-                                    </div>
-                                    {/* Button */}
-                                    <div className="absolute bottom-4 left-4 right-4 h-6 rounded-lg bg-[#1A1E29]" />
-                                  </div>
-                                );
-                              }
-
-                              const light = isLightTemplate(template.accent);
-                              const bar = light ? "bg-gray-700/80" : "bg-white/70";
-                              const circle = light ? "bg-gray-600/80" : "bg-white/80";
-                              const icon = light ? "bg-gray-600/70" : "bg-white/50";
-                              const text = light ? "text-gray-800/95" : "text-white/95";
-                              const textSec = light ? "text-gray-700/90" : "text-white/80";
-                              const pt = getPreviewType(template);
-                              const base =
-                                "absolute inset-0 z-10 flex flex-col pt-2 px-2 pointer-events-none overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-3";
-                              if (pt === "flower") {
-                                // Jenny Wilson / Flower Garden style preview (with contact + mini gallery) for flower-type templates (including Executive Pro)
-                                return (
-                                  <div className={base}>
-                                    <div className="h-full flex items-start justify-center">
-                                      <div className="mt-1 mx-auto w-full max-w-[120px] rounded-2xl bg-white/95 shadow-sm overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-2">
-                                        {/* Top hero image */}
-                                        <div
-                                          className="h-14 w-full bg-cover bg-center"
-                                          style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
-                                        />
-                                        {/* Bottom white content */}
-                                        <div className="px-2 pb-2 pt-1">
-                                          <div className="flex items-end gap-1 -mt-5">
-                                            <div className="w-8 h-8 rounded-lg bg-gray-200 border-[2px] border-white shadow-sm shrink-0" />
-                                            <div className="flex-1 min-w-0">
-                                              <p className="text-[8px] font-semibold text-emerald-800 leading-none truncate">
-                                                {template.name}
-                                              </p>
-                                              <p className="text-[7px] text-emerald-600 leading-none mt-0.5 truncate">
-                                                Flower Garden
-                                              </p>
-                                            </div>
-                                          </div>
-
-                                          {/* Social icons row */}
-                                          <div className="mt-2 flex justify-center gap-1.5">
-                                            {[1, 2, 3, 4, 5].map((i) => (
-                                              <div
-                                                key={i}
-                                                className="w-4 h-4 rounded-full bg-emerald-50 border border-emerald-100"
-                                              />
-                                            ))}
-                                          </div>
-
-                                          {/* Description line */}
-                                          <p className="mt-2 text-[6px] leading-tight text-slate-600 text-center line-clamp-2">
-                                            Lorem ipsum is simply dummy text of the printing and typesetting industry.
-                                          </p>
-
-                                          {/* Compact contact row */}
-                                          <div className="mt-2 grid grid-cols-2 gap-1 text-[6px] text-slate-700">
-                                            <div className="flex items-center gap-0.5">
-                                              <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
-                                                ✉
-                                              </div>
-                                              <p className="truncate">jenny@gmail.com</p>
-                                            </div>
-                                            <div className="flex items-center gap-0.5">
-                                              <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
-                                                ☎
-                                              </div>
-                                              <p className="truncate">+1 234567890</p>
-                                            </div>
-                                          </div>
-
-                                          {/* Mini gallery strip */}
-                                          <div className="mt-2">
-                                            <p className="text-[6px] font-semibold text-emerald-800 text-center">Gallery</p>
-                                            <div className="mt-1 grid grid-cols-3 gap-0.5">
-                                              {[1, 2, 3].map((i) => (
-                                                <div
-                                                  key={i}
-                                                  className="aspect-[4/5] rounded-md overflow-hidden bg-emerald-50"
-                                                >
-                                                  <div
-                                                    className="w-full h-full bg-cover bg-center"
-                                                    style={{
-                                                      backgroundImage: `url('/images/product/product-0${i}.jpg')`,
-                                                    }}
-                                                  />
-                                                </div>
-                                              ))}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              }
-                              if (pt === "flower-shop") {
-                                return (
-                                  <div className={base}>
-                                    <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
-                                      <span className={`text-[6px] font-bold ${text} text-center leading-tight`}>SHOP</span>
-                                    </div>
-                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
-                                    <p className={`text-[7px] ${textSec} text-center mb-1`}>Let Your Garden Bloom With Us</p>
-                                    <div className="flex justify-center gap-0.5 mb-1">
-                                      {[1, 2, 3, 4, 5].map((i) => (
-                                        <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
-                                      ))}
-                                    </div>
-                                    <p className={`text-[7px] ${textSec} text-center`}>flowergarden@gmail.com</p>
-                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
-                                  </div>
-                                );
-                              }
-                              if (pt === "flower-snap") {
-                                return (
-                                  <div className={base}>
-                                    <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
-                                      <span className={`text-[5px] font-bold ${text} text-center leading-tight`}>FS</span>
-                                    </div>
-                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
-                                    <p className={`text-[7px] ${textSec} text-center mb-0.5`}>Creative Flower & Garden.</p>
-                                    <p className={`text-[6px] ${textSec} text-center mb-1`}>Best Plant Selling Company</p>
-                                    <p className={`text-[6px] ${textSec} text-center mb-1`}>Green Market Mumbai</p>
-                                    <div className="flex justify-center gap-0.5 mb-1">
-                                      {[1, 2, 3, 4, 5].map((i) => (
-                                        <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
-                                      ))}
-                                    </div>
-                                    <p className={`text-[7px] ${textSec} text-center`}>flowersnap@gmail.com</p>
-                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
-                                  </div>
-                                );
-                              }
-                              if (pt === "travel") {
-                                return (
-                                  <div className={base}>
-                                    <div className={`h-4 rounded ${bar} flex items-center justify-center mb-1`}>
-                                      <span className={`text-[8px] font-bold ${text}`}>TRAVEL</span>
-                                    </div>
-                                    <div className={`w-9 h-9 rounded-sm ${circle} shrink-0 mx-auto mb-1`} />
-                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
-                                    <p className={`text-[8px] ${textSec} text-center mb-1`}>Travel Agent</p>
-                                    <div className="flex justify-center gap-0.5 mb-1">
-                                      {[1, 2, 3, 4].map((i) => (
-                                        <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
-                                      ))}
-                                    </div>
-                                    <p className={`text-[7px] ${textSec} text-center`}>michael@gmail.com · +49 95864 12484</p>
-                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
-                                  </div>
-                                );
-                              }
-                              if (pt === "travel-dark") {
-                                return (
-                                  <div className={base}>
-                                    <div className={`w-8 h-6 rounded ${bar} flex items-center justify-center mx-auto mb-1`} />
-                                    <p className={`text-[9px] font-bold ${text} text-center`}>{template.name}</p>
-                                    <p className={`text-[8px] ${textSec} text-center`}>Tours & Travel Agency</p>
-                                    <p className={`text-[6px] ${textSec} text-center mt-0.5 leading-tight`}>Every Journey Begins With A Single Step</p>
-                                    <div className="flex justify-center gap-0.5 my-1">
-                                      {[1, 2, 3, 4, 5].map((i) => (
-                                        <div key={i} className={`w-3 h-3 rounded-full ${icon}`} />
-                                      ))}
-                                    </div>
-                                    <p className={`text-[7px] ${textSec} text-center`}>advmur@gmail.com · +91888887700</p>
-                                    <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                    <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
-                                  </div>
-                                );
-                              }
-                              if (pt === "personal") {
-                                return (
-                                  <div className="absolute inset-0 flex flex-col pointer-events-none overflow-hidden">
-                                    {/* Cover Area */}
-                                    <div className="h-[28%] w-full bg-white/10 relative">
-                                      <div className={`absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-[2px] border-white/30 ${circle} shadow-lg flex items-center justify-center backdrop-blur-sm`}>
-                                        <svg className={`w-6 h-6 ${text} opacity-80`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                      </div>
-                                    </div>
-                                    {/* Content Area */}
-                                    <div className="flex-1 flex flex-col items-center pt-7 px-3">
-                                      <p className={`text-[11px] font-extrabold tracking-wide ${text} text-center mb-0.5 drop-shadow-sm`}>{template.name}</p>
-                                      <p className={`text-[7px] font-medium tracking-widest uppercase ${textSec} text-center mb-3 opacity-90`}>Executive Director</p>
-
-                                      <div className="w-full flex justify-center gap-2 mb-4">
-                                        {[1, 2, 3, 4].map((i) => (
-                                          <div key={i} className={`w-5 h-5 rounded-full ${icon} shadow-sm backdrop-blur-md flex items-center justify-center`}>
-                                            <div className="w-2.5 h-2.5 rounded-[3px] bg-white/50" />
-                                          </div>
-                                        ))}
-                                      </div>
-
-                                      <div className="w-full space-y-1.5 px-1.5">
-                                        <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
-                                          <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
-                                            <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
-                                          </div>
-                                          <div className="flex-1">
-                                            <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Email</p>
-                                            <p className={`text-[6px] font-medium ${text}`}>john.doe@example.com</p>
-                                          </div>
-                                        </div>
-                                        <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
-                                          <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
-                                            <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
-                                          </div>
-                                          <div className="flex-1">
-                                            <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Phone</p>
-                                            <p className={`text-[6px] font-medium ${text}`}>+1 234 567 8900</p>
-                                          </div>
-                                        </div>
-                                        <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
-                                          <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
-                                            <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
-                                          </div>
-                                          <div className="flex-1">
-                                            <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Location</p>
-                                            <p className={`text-[6px] font-medium ${text}`}>New York, NY</p>
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      <div className="mt-auto mb-[2.5rem] w-full px-2">
-                                        <div className={`w-full py-1.5 rounded-full ${icon} backdrop-blur-md shadow-md flex items-center justify-center border border-white/10`}>
-                                          <p className={`text-[7.5px] font-bold uppercase tracking-widest ${text}`}>Save Contact</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              }
-                              if (pt === "corporate") {
-                                return (
-                                  <div className={base}>
-                                    <div className={`w-10 h-10 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
-                                    <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
-                                    <p className={`text-[8px] ${textSec} text-center mb-1`}>Leadership · Board</p>
-                                    <div className={`h-1.5 rounded ${bar} w-full max-w-[90%] mx-auto mb-1`} />
-                                    <div className={`h-1.5 rounded ${bar} w-[70%] mx-auto mb-1`} />
-                                    <p className={`text-[7px] ${textSec} text-center`}>contact@company.com</p>
-                                    <p className={`text-[6px] ${textSec} text-center mt-0.5 border-t border-white/20 pt-0.5`}>Official Website</p>
-                                  </div>
-                                );
-                              }
-                              if (pt === "creative") {
-                                return (
-                                  <div className={base}>
-                                    <p className={`text-[10px] font-bold ${text} text-center uppercase tracking-wider mt-2`}>{template.name}</p>
-                                    <p className={`text-[8px] ${textSec} text-center mb-2`}>Studio</p>
-                                    <div className={`h-2 rounded ${bar} w-full mb-0.5`} />
-                                    <div className={`h-2 rounded ${bar} w-[85%] mx-auto mb-0.5`} />
-                                    <div className={`h-2 rounded ${bar} w-[60%] mx-auto mb-1`} />
-                                    <div className="flex justify-center gap-1">
-                                      {[1, 2, 3].map((i) => (
-                                        <div key={i} className={`w-6 h-6 rounded ${icon}`} />
-                                      ))}
-                                    </div>
-                                  </div>
-                                );
-                              }
-                              // generic = same filled style as screenshot (Jenny Wilson style so no blank PREVIEW)
-                              return (
-                                <div className={base}>
-                                  <div className={`w-8 h-8 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
-                                  <p className={`text-[9px] font-semibold ${text} text-center leading-tight`}>{template.name}</p>
-                                  <p className={`text-[8px] ${textSec} text-center mb-1`}>{template.name}</p>
-                                  <div className="flex justify-center gap-1 mb-1">
-                                    {[1, 2, 3, 4].map((i) => (
-                                      <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
-                                    ))}
-                                  </div>
-                                  <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
-                                  <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
-                                  <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
-                                  <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-1`}>Gallery</p>
-                                </div>
-                              );
-                            })()}
-                            {/* Dark bar at bottom of preview with template name */}
-                            <div className="absolute inset-x-0 bottom-0 z-20 h-10 flex items-center bg-gray-900/90 dark:bg-black/80 px-3">
-                              <p className="text-sm font-semibold text-white truncate">{template.name}</p>
+                              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg. Ye photo vCards list pe bhi dikhegi.</p>
                             </div>
                           </div>
-                          {/* Removed bottom template text (name/description) */}
-                          {isSelected && (
-                            <span className="absolute top-3 right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white shadow">
-                              <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                            </span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {/* Save, Discard – left side */}
-                  <div className="mt-6 w-full max-w-md space-y-4">
-                    {templateSaveSuccess && (
-                      <p className="text-sm font-medium text-green-600 dark:text-green-400 rounded-lg bg-green-50 dark:bg-green-900/20 px-3 py-2">
-                        Template saved. It will show on the vCards list.
-                      </p>
+                        </div>
+
+                        <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+                          <button
+                            type="button"
+                            className="btn-secondary-premium inline-flex items-center justify-center"
+                          >
+                            Discard
+                          </button>
+                          <button
+                            type="submit"
+                            className="btn-primary-premium inline-flex items-center justify-center"
+                          >
+                            Save &amp; Next
+                          </button>
+                        </div>
+                      </form>
                     )}
-                    <div className="flex gap-3">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (!vcardId || !currentCard || selectedTemplateId == null) return;
-                          const template = VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId);
-                          const primaryColor = template ? getAccentPrimaryColor(template.accent) : undefined;
+
+                    {activeTab === "personal" && (
+                      <form
+                        className="space-y-5"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          if (!vcardId || !currentCard) return;
+                          const fullName = `${pdFirstName.trim()} ${pdLastName.trim()}`.trim();
                           setVCards((prev) =>
                             prev.map((c) =>
                               c.id === vcardId
-                                ? { ...c, selectedTemplateId, templateName: template?.name, templatePrimaryColor: primaryColor }
+                                ? {
+                                  ...c,
+                                  title: fullName || c.title,
+                                  email: pdEmail.trim() || undefined,
+                                  phone: pdPhone.trim() || undefined,
+                                  whatsapp: pdAltPhone.trim() || undefined,
+                                  address: pdLocation.trim() || undefined,
+                                  company: pdCompany.trim() || undefined,
+                                  occupation: pdJobTitle.trim() || undefined,
+                                  birthDate: pdBirthDate.trim() || undefined,
+                                }
                                 : c
                             )
                           );
-                          setTemplateSaveSuccess(true);
-                          router.push("/vcards");
+                          setPdSaveSuccess(true);
+                          setActiveTab("other");
                         }}
-                        disabled={selectedTemplateId == null}
-                        className="flex-1 inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Save
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => selectedTemplateId != null && setSelectedTemplateId(currentCard?.selectedTemplateId ?? null)}
-                        className="flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-                      >
-                        Discard
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Mobile view preview – selected template theme in phone frame */}
-                {(() => {
-                  const selectedTemplate =
-                    selectedTemplateId != null ? VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId) : null;
-                  const accent = selectedTemplate?.accent ?? "from-lime-400 to-lime-500";
-                  const primaryColor = selectedTemplate ? getAccentPrimaryColor(selectedTemplate.accent) : "#B4FF3B";
-                  const isLight = selectedTemplate ? isLightTemplate(selectedTemplate.accent) : false;
-                  const textOnPrimary = isLight ? "#1f2937" : "#ffffff";
-                  const previewContent = selectedTemplate
-                    ? getMobilePreviewContent(selectedTemplate)
-                    : {
-                      name: "Your Name",
-                      subtitle: "Title / Profession",
-                      description:
-                        "Add your description and contact details. Choose a template to see its content here.",
-                      ctaLabel: "Add to contact",
-                    };
-                  const previewType = selectedTemplate ? getPreviewType(selectedTemplate) : "generic";
-
-                  return (
-                    <div className="lg:w-[320px] shrink-0 flex flex-col items-center">
-                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Mobile preview</p>
-                      <div className="relative w-[320px] h-[640px] rounded-[2.25rem] bg-gray-900 shadow-2xl overflow-hidden border-[8px] border-gray-800 flex-shrink-0">
-                        <div className="absolute left-1/2 top-0 -translate-x-1/2 w-24 h-5 rounded-b-2xl bg-black z-20" />
-                        <div className="absolute inset-0 flex flex-col overflow-hidden">
-                          {selectedTemplate?.id === 14 ? (
-                            <div className="flex-1 bg-white relative overflow-hidden">
-                              {/* Full scale mimic of Corporate (2) arcs */}
-                              <div className="h-[40%] w-full bg-[#0A0C14] relative">
-                                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-950/20 via-transparent to-red-950/30" />
-                              </div>
-                              <div className="absolute top-[25%] right-[-140px] w-80 h-80 pointer-events-none z-0">
-                                <div className="absolute inset-0 rounded-full border-[40px] border-[#FF5E5E] scale-[1.2] translate-x-8 translate-y-8" />
-                                <div className="absolute inset-0 rounded-full border-[40px] border-[#FFC15E] scale-[1.0] translate-x-24 translate-y-24" />
-                                <div className="absolute inset-0 rounded-full bg-[#1A1E29] scale-[0.8] translate-x-36 translate-y-36" />
-                              </div>
-                              <div className="relative px-8 -mt-20 z-10 flex flex-col items-start">
-                                <div className="w-32 h-32 rounded-full border-4 border-white bg-slate-100 shadow-xl mb-6 overflow-hidden relative">
-                                  <div className="w-full h-full flex items-center justify-center text-4xl font-black text-slate-300">N</div>
-                                </div>
-                                <div className="space-y-2 mb-8 items-start text-left">
-                                  <div className="h-10 w-48 bg-[#1A1E29] rounded-md" />
-                                  <div className="h-6 w-32 bg-slate-300 rounded-md" />
-                                </div>
-                                <div className="flex gap-4 mb-10">
-                                  {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-10 h-10 rounded-full bg-[#1A1E29]" />)}
-                                </div>
-                                <div className="w-full h-14 rounded-2xl bg-[#1A1E29] shadow-lg flex items-center justify-center text-white font-bold">Add to Contact</div>
-                              </div>
+                        {pdSaveSuccess && (
+                          <div className="mb-2 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/40 dark:text-green-200">
+                            Personal Details saved successfully.
+                          </div>
+                        )}
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">vCard Details</h2>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {/* Left column */}
+                          <div className="space-y-4">
+                            <div>
+                              <label className={labelClass}>
+                                First Name <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className={inputClass}
+                                placeholder="Enter First Name"
+                                value={pdFirstName}
+                                onChange={(e) => setPdFirstName(e.target.value)}
+                                required
+                              />
                             </div>
-                          ) : (
-                            selectedTemplate?.previewImage ? (
-                              <div className="flex-1 relative">
-                                <Image
-                                  src={selectedTemplate.previewImage}
-                                  alt={selectedTemplate.name}
-                                  fill
-                                  className="object-cover"
-                                  sizes="320px"
-                                />
-                                <div className="absolute inset-0 bg-black/10" />
-                                {/* Overlay text matching the user's need for a "real" feel */}
-                                <div className="absolute bottom-10 left-0 right-0 p-6 text-white text-center pb-20">
-                                  <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md mx-auto mb-4 border border-white/30" />
-                                  <h3 className="text-xl font-bold mb-1">{previewContent.name}</h3>
-                                  <p className="text-sm opacity-80">{previewContent.subtitle}</p>
-                                </div>
-                              </div>
-                            ) : (
-                              // Original hardcoded mockups as fallback
-                              previewType === "flower" ? (
-                                // Jenny Wilson / Flower Garden style full template preview inside phone
-                                <div className="flex-1 bg-[#f6faf7] flex items-center justify-center px-4 py-6">
-                                  <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-emerald-100 relative">
-                                    <div className="absolute inset-0 pointer-events-none">
-                                      <div className="absolute -left-4 top-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
-                                      <div className="absolute -right-4 bottom-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
-                                    </div>
-                                    <div className="max-h-[520px] overflow-y-auto">
-                                      <section className="relative">
-                                        <div
-                                          className="h-24 w-full bg-cover bg-center bg-no-repeat"
-                                          style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
-                                        />
-                                        <div className="px-4 pb-4 pt-3 bg-white relative">
-                                          <div className="-mt-10 flex items-end gap-2">
-                                            <div className="relative w-12 h-12 rounded-xl border-2 border-white shadow-md overflow-hidden flex-shrink-0 bg-emerald-100" />
-                                            <div className="flex-1 min-w-0">
-                                              <p className="text-sm font-semibold text-emerald-900 leading-tight truncate">
-                                                {previewContent.name}
-                                              </p>
-                                              <p className="text-[11px] font-medium text-emerald-700 mt-0.5 truncate">
-                                                Flower Garden
-                                              </p>
-                                            </div>
-                                          </div>
-                                          <div className="mt-3 flex justify-center gap-3">
-                                            {[1, 2, 3, 4, 5].map((i) => (
-                                              // eslint-disable-next-line react/no-array-index-key
-                                              <div
-                                                key={i}
-                                                className="h-7 w-7 rounded-full bg-emerald-50 text-emerald-600 text-[11px] flex items-center justify-center shadow-sm"
-                                              >
-                                                ●
-                                              </div>
-                                            ))}
-                                          </div>
-                                          <p className="mt-3 text-[10px] text-slate-600 text-center leading-snug">
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                            has been the industry&apos;s standard dummy text ever since the 1500s.
-                                          </p>
-
-                                          {/* Contact row (email, phone, birth date, location) */}
-                                          <div className="mt-4 grid grid-cols-2 gap-2 text-[9px] text-slate-700">
-                                            <div className="flex items-center gap-1.5">
-                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                                ✉
-                                              </div>
-                                              <div className="min-w-0">
-                                                <p className="text-[8px] text-slate-500">Email</p>
-                                                <p className="truncate">jenny@gmail.com</p>
-                                              </div>
-                                            </div>
-                                            <div className="flex items-center gap-1.5">
-                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                                ☎
-                                              </div>
-                                              <div className="min-w-0">
-                                                <p className="text-[8px] text-slate-500">Phone</p>
-                                                <p className="truncate">+1 234567890</p>
-                                              </div>
-                                            </div>
-                                            <div className="flex items-center gap-1.5">
-                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                                🎂
-                                              </div>
-                                              <div className="min-w-0">
-                                                <p className="text-[8px] text-slate-500">Birth Date</p>
-                                                <p className="truncate">12th March, 1990</p>
-                                              </div>
-                                            </div>
-                                            <div className="flex items-center gap-1.5">
-                                              <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
-                                                📍
-                                              </div>
-                                              <div className="min-w-0">
-                                                <p className="text-[8px] text-slate-500">Location</p>
-                                                <p className="truncate">Berlin, Germany</p>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          {/* Gallery section */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Gallery
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 grid grid-cols-3 gap-2">
-                                              {[1, 2, 3].map((i) => (
-                                                // eslint-disable-next-line react/no-array-index-key
-                                                <div
-                                                  key={i}
-                                                  className="aspect-[4/5] rounded-xl overflow-hidden bg-emerald-50"
-                                                >
-                                                  <div
-                                                    className="w-full h-full bg-cover bg-center"
-                                                    style={{
-                                                      backgroundImage: `url('/images/product/product-0${i}.jpg')`,
-                                                    }}
-                                                  />
-                                                </div>
-                                              ))}
-                                            </div>
-                                          </div>
-
-                                          {/* Our Service – Dynamic from card data */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Our Service
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
-                                              <div className="mt-3 space-y-2">
-                                                {(((currentCard as any)?.services as any[]) ?? []).slice(0, 2).map((svc, idx) => (
-                                                  <div key={svc.id || idx} className="rounded-2xl border border-emerald-100 bg-white shadow-sm overflow-hidden flex">
-                                                    <div className="w-16 h-16 bg-emerald-50 shrink-0 overflow-hidden flex items-center justify-center">
-                                                      {svc.icon ? (
-                                                        <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
-                                                      ) : (
-                                                        <span className="text-emerald-300 font-bold text-lg">{idx + 1}</span>
-                                                      )}
-                                                    </div>
-                                                    <div className="px-2 py-1.5 flex-1 min-w-0">
-                                                      <p className="text-[9px] font-semibold text-slate-900 truncate">{svc.name}</p>
-                                                      <p className="mt-0.5 text-[8px] text-slate-600 leading-snug line-clamp-2">
-                                                        {svc.description}
-                                                      </p>
-                                                    </div>
-                                                  </div>
-                                                ))}
-                                              </div>
-                                            ) : (
-                                              <div className="mt-3 py-4 text-center rounded-2xl border border-dashed border-emerald-100">
-                                                <p className="text-emerald-300 text-[8px]">No services added yet.</p>
-                                              </div>
-                                            )}
-                                          </div>
-
-                                          {/* Make an Appointment – compact preview */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Make an Appointment
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 space-y-2">
-                                              <div>
-                                                <p className="text-[8px] text-slate-600 mb-0.5">Date :</p>
-                                                <div className="h-7 rounded-full border border-emerald-200 bg-white flex items-center justify-between px-2 text-[8px] text-slate-500">
-                                                  <span>Pick a date</span>
-                                                  <span>📅</span>
-                                                </div>
-                                              </div>
-                                              <div>
-                                                <p className="text-[8px] text-slate-600 mb-0.5">Hour:</p>
-                                                <div className="flex gap-1 overflow-x-auto pb-0.5">
-                                                  {["8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00"].map((label, idx) => (
-                                                    <button
-                                                      key={`${label}-${idx}`}
-                                                      type="button"
-                                                      className="px-2 py-1 rounded-full bg-white/60 border border-emerald-100 text-[8px] text-slate-600 whitespace-nowrap"
-                                                    >
-                                                      {label}
-                                                    </button>
-                                                  ))}
-                                                </div>
-                                              </div>
-                                              <button
-                                                type="button"
-                                                className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.5 shadow-md"
-                                              >
-                                                Make An Appointment
-                                              </button>
-                                            </div>
-                                          </div>
-
-                                          {/* Product – compact two-column layout */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Product
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 grid grid-cols-2 gap-2">
-                                              {[1, 2].map((i) => (
-                                                // eslint-disable-next-line react/no-array-index-key
-                                                <div key={i} className="rounded-2xl bg-white border border-emerald-100 overflow-hidden">
-                                                  <div
-                                                    className="h-16 w-full bg-cover bg-center"
-                                                    style={{
-                                                      backgroundImage: `url('/images/product/product-0${i}.jpg')`,
-                                                    }}
-                                                  />
-                                                  <div className="px-3 py-2">
-                                                    <div className="flex items-center justify-between text-[9px] text-slate-900 font-semibold">
-                                                      <span>Flower Name</span>
-                                                      <span>$25.00</span>
-                                                    </div>
-                                                    <p className="mt-0.5 text-[8px] text-slate-600">Lorem Ipsum dummy text</p>
-                                                  </div>
-                                                </div>
-                                              ))}
-                                            </div>
-                                          </div>
-
-                                          {/* Testimonials section */}
-                                          {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
-                                            <div className="mt-4 pt-3 border-t border-emerald-50">
-                                              <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                                <span className="flex-1 h-px bg-emerald-100" />
-                                                Testimonials
-                                                <span className="flex-1 h-px bg-emerald-100" />
-                                              </h3>
-                                              <div className="mt-3 space-y-3">
-                                                {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
-                                                  <div key={t.id || idx} className="rounded-2xl bg-white border border-emerald-100 px-3 py-3 flex gap-2">
-                                                    <div className="w-10 h-10 rounded-full bg-emerald-50 overflow-hidden flex-shrink-0">
-                                                      {t.image ? (
-                                                        // eslint-disable-next-line @next/next/no-img-element
-                                                        <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
-                                                      ) : (
-                                                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-emerald-600 bg-emerald-100">
-                                                          {(t.name || "C")[0].toUpperCase()}
-                                                        </div>
-                                                      )}
-                                                    </div>
-                                                    <div className="flex-1 min-w-0">
-                                                      <p className="text-[8px] text-slate-600 leading-snug line-clamp-3">
-                                                        &quot;{t.quote}&quot;
-                                                      </p>
-                                                      <p className="mt-1 text-[9px] font-semibold text-slate-900">{t.name}</p>
-                                                      <p className="text-[8px] text-emerald-600">- {t.role}</p>
-                                                    </div>
-                                                  </div>
-                                                ))}
-                                              </div>
-                                            </div>
-                                          )}
-
-                                          {/* Blog – compact layout */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Blog
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 grid grid-cols-[1.1fr,1fr] gap-2 items-center">
-                                              <div>
-                                                <p className="text-[9px] font-semibold text-slate-900 mb-0.5">Lorem Ipsum</p>
-                                                <p className="text-[8px] text-slate-600 leading-snug">
-                                                  Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has
-                                                  been the industry&apos;s standard.
-                                                </p>
-                                                <div className="mt-2 flex gap-1.5">
-                                                  <button
-                                                    type="button"
-                                                    className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
-                                                  >
-                                                    ←
-                                                  </button>
-                                                  <button
-                                                    type="button"
-                                                    className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
-                                                  >
-                                                    →
-                                                  </button>
-                                                </div>
-                                              </div>
-                                              <div className="relative">
-                                                <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg border border-emerald-200" />
-                                                <div className="relative rounded-lg overflow-hidden border border-emerald-200">
-                                                  <div
-                                                    className="h-20 w-full bg-cover bg-center"
-                                                    style={{ backgroundImage: "url('/images/product/product-03.jpg')" }}
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          {/* Business Hours – compact grid */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Business Hours
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 grid grid-cols-2 gap-y-1.5 text-[8px] text-slate-700">
-                                              <p>Sunday : 08:10 - 20:00</p>
-                                              <p>Monday : 08:10 - 20:00</p>
-                                              <p>Tuesday : 08:10 - 20:00</p>
-                                              <p>Wednesday : 08:10 - 10:00</p>
-                                              <p>Thursday : 08:10 - 20:00</p>
-                                              <p>Friday : 08:10 - 20:00</p>
-                                              <p className="col-span-2 text-center">Saturday : Closed</p>
-                                            </div>
-                                          </div>
-
-                                          {/* QR Code – compact preview */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              QR Code
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 flex flex-col items-center gap-3">
-                                              <div className="relative w-20 h-20 rounded-lg bg-white border border-emerald-100 flex items-center justify-center shadow-sm">
-                                                <div className="w-16 h-16 bg-[radial-gradient(circle,_#000_40%,_transparent_41%)] [background-size:8px_8px]" />
-                                              </div>
-                                              <button
-                                                type="button"
-                                                className="px-4 py-1.5 rounded-full bg-emerald-700 text-white text-[9px] font-semibold shadow-md"
-                                              >
-                                                Download My QR Code
-                                              </button>
-                                            </div>
-                                          </div>
-
-                                          {/* Contact Us – compact form preview */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Contact Us
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 space-y-1.5">
-                                              <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
-                                                Full Name
-                                              </div>
-                                              <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
-                                                Email Address
-                                              </div>
-                                              <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
-                                                Phone Number
-                                              </div>
-                                              <div className="h-10 rounded-2xl bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-start px-3 py-1.5">
-                                                Your Message
-                                              </div>
-                                              <button
-                                                type="button"
-                                                className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
-                                              >
-                                                Send Message
-                                              </button>
-                                            </div>
-                                          </div>
-
-                                          {/* Create Your vCard – link preview */}
-                                          <div className="mt-4 pt-3 border-t border-emerald-50 mb-3">
-                                            <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                              Create Your vCard
-                                              <span className="flex-1 h-px bg-emerald-100" />
-                                            </h3>
-                                            <div className="mt-3 rounded-2xl overflow-hidden border border-emerald-100 bg-emerald-50/60">
-                                              <div className="px-3 py-3 bg-[url('/images/cards/card-02.png')] bg-cover bg-center">
-                                                <div className="rounded-full bg-white/95 border border-slate-200 px-3 py-1.5 flex items-center justify-between text-[8px] text-slate-700">
-                                                  <span className="truncate mr-2">
-                                                    https://vcards.infyom.com/marlonbrasil
-                                                  </span>
-                                                  <span className="shrink-0 text-[9px]">↗</span>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <button
-                                              type="button"
-                                              className="mt-3 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
-                                            >
-                                              Add to Contact
-                                            </button>
-                                          </div>
-                                        </div>
-                                      </section>
-                                    </div>
-                                  </div>
-                                </div>
-                              ) : previewType === "travel" ? (
-                                <div className="flex-1 bg-sky-50 flex items-center justify-center px-4 py-6">
-                                  <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-sky-100 relative group/travel-p">
-                                    <div className="max-h-[520px] overflow-y-auto">
-                                      <div className="relative h-36 w-full overflow-hidden">
-                                        <div className="absolute inset-0 bg-sky-600">
-                                          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover opacity-60" alt="" />
-                                        </div>
-                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                          <p className="text-[40px] font-black text-slate-900/10 tracking-widest uppercase">TRAVEL</p>
-                                        </div>
-                                        <div className="absolute inset-0 pointer-events-none">
-                                          <svg viewBox="0 0 280 144" className="w-full h-full">
-                                            <path d="M 230 40 C 200 130, 50 120, 100 80 C 150 40, 250 100, 200 140" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" className="opacity-50" />
-                                            <circle cx="200" cy="140" r="3" fill="#fbbf24" className="animate-pulse" />
-                                          </svg>
-                                        </div>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-                                      </div>
-
-                                      <div className="px-4 -mt-10 relative z-10 space-y-4">
-                                        <div className="flex items-end gap-3">
-                                          <div className="w-16 h-16 rounded-2xl border-4 border-white bg-sky-100 shadow-lg overflow-hidden shrink-0" />
-                                          <div className="pb-1">
-                                            <p className="text-slate-800 font-black text-xs">{previewContent.name}</p>
-                                            <p className="text-amber-500 font-bold text-[9px]">Travel Agent</p>
-                                          </div>
-                                        </div>
-
-                                        <div className="flex justify-start gap-2">
-                                          {[1, 2, 3, 4, 5].map(i => (
-                                            <div key={i} className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 text-[10px] border border-slate-100 italic font-bold">
-                                              {i === 1 ? 'f' : i === 2 ? 'w' : i === 3 ? 'in' : i === 4 ? 'ig' : 'x'}
-                                            </div>
-                                          ))}
-                                        </div>
-
-                                        <div className="space-y-2">
-                                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                            <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Email</p>
-                                            <p className="text-slate-700 text-[10px] font-semibold truncate">travel@example.com</p>
-                                          </div>
-                                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                            <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Mobile</p>
-                                            <p className="text-slate-700 text-[10px] font-semibold truncate">+49 95864 12484</p>
-                                          </div>
-                                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                            <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Official Website</p>
-                                            <p className="text-slate-700 text-[10px] font-semibold truncate">www.travelexplorer.com</p>
-                                          </div>
-                                        </div>
-
-                                        <div className="h-20 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center">
-                                          <p className="text-sky-400 text-[10px]">Travel Gallery Preview</p>
-                                        </div>
-
-                                        <button className="w-full bg-amber-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-amber-200">
-                                          Save Contact
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              ) : previewType === "travel-dark" ? (
-                                /* Digital business card template style (screenshot) – not website style */
-                                <div className="flex-1 overflow-y-auto flex flex-col bg-[#1A1A2E] text-left min-h-0 relative" data-single-page-template>
-                                  {/* Floating grid icon – top right */}
-                                  <button type="button" className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-[#38bdf8]/90 flex items-center justify-center shadow-lg">
-                                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
-                                  </button>
-                                  {/* Top banner – name, title, CTA (template header) */}
-                                  <header className="bg-black pt-4 pb-8 px-4 relative">
-                                    <div className="flex justify-end mb-2">
-                                      <button type="button" className="text-white/80 text-[9px] flex items-center gap-0.5 border border-white/30 rounded-full px-2 py-1">EN <span>▼</span></button>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                      <div className="w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center text-white font-bold text-xs shrink-0">
-                                        {(previewContent.name || "N").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase() || "N"}
-                                      </div>
-                                      <div>
-                                        <h1 className="text-white text-sm font-bold leading-tight truncate">{previewContent.name || "Your Name"}</h1>
-                                        <p className="text-white text-[9px] truncate">{previewContent.subtitle || "Title"}</p>
-                                      </div>
-                                    </div>
-                                    <p className="text-white/90 text-[9px] mt-2 line-clamp-2">{previewContent.description}</p>
-                                    {previewContent.extraLine && <p className="text-white/70 text-[8px] mt-0.5 truncate">{previewContent.extraLine}</p>}
-                                    <button type="button" className="mt-3 w-full rounded-lg border border-white text-white text-[9px] font-medium py-2">Let&apos;s Build Your Brand Online – DM To Connect</button>
-                                  </header>
-                                  {/* Profile picture – centered, overlapping */}
-                                  <div className="flex justify-center -mt-6 relative z-10 px-4">
-                                    <div className="w-16 h-16 rounded-full border-4 border-[#1A1A2E] bg-slate-600 overflow-hidden shrink-0" />
-                                  </div>
-                                  {/* Name + role + company */}
-                                  <div className="text-center pt-2 px-4">
-                                    <p className="text-white text-sm font-bold inline-flex items-center gap-1">{previewContent.name} <span className="text-[#38bdf8]">✓</span></p>
-                                    <p className="text-white/90 text-[10px] mt-0.5">{previewContent.subtitle}</p>
-                                    <p className="text-white/80 text-[9px]">Founder & CEO · Aayzen Digital</p>
-                                  </div>
-                                  {/* Description */}
-                                  <div className="px-4 pt-3 text-center">
-                                    <p className="text-white/90 text-[9px] leading-snug">Helping businesses grow their online presence through <strong className="text-white">digital marketing, social media marketing,</strong> and brand-focused growth strategies.</p>
-                                    <p className="text-white/90 text-[9px] leading-snug mt-1.5">Also building smart <strong className="text-white">digital business card solutions</strong> to help professionals showcase and share their identity online.</p>
-                                  </div>
-                                  {/* Add to contact – primary CTA */}
-                                  <div className="px-4 pt-4">
-                                    <button type="button" className="w-full rounded-xl bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white text-[10px] font-semibold py-2.5 flex items-center justify-center gap-2 shadow-lg">
-                                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
-                                      Add to contact
-                                    </button>
-                                  </div>
-                                  {/* Title banner – OpenMyProfile style */}
-                                  <div className="mt-4 mx-4 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#2563eb] py-2 px-3 text-center">
-                                    <p className="text-white text-[10px] font-bold">OpenMyProfile – Digital Business Card</p>
-                                  </div>
-                                  {/* Contact grid – 2x2 with icons in light blue circles */}
-                                  <div className="px-4 pt-4 grid grid-cols-2 gap-2">
-                                    <div className="flex items-start gap-2">
-                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">✉</div>
-                                      <div className="min-w-0">
-                                        <p className="text-white/60 text-[8px]">Email</p>
-                                        <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[0]?.trim() || previewContent.officialWebsite || "email@example.com"}</p>
-                                      </div>
-                                    </div>
-                                    <div className="flex items-start gap-2">
-                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📱</div>
-                                      <div className="min-w-0">
-                                        <p className="text-white/60 text-[8px]">Mobile Number</p>
-                                        <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[1]?.trim() || "+91 9977216140"}</p>
-                                      </div>
-                                    </div>
-                                    <div className="flex items-start gap-2">
-                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">🎂</div>
-                                      <div className="min-w-0">
-                                        <p className="text-white/60 text-[8px]">Date of Birth</p>
-                                        <p className="text-white text-[9px]">18/09/1996</p>
-                                      </div>
-                                    </div>
-                                    <div className="flex items-start gap-2">
-                                      <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📍</div>
-                                      <div className="min-w-0">
-                                        <p className="text-white/60 text-[8px]">Address</p>
-                                        <p className="text-white text-[9px] truncate">Madhya Pradesh, India</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  {/* QR Code section – white card, QR + profile */}
-                                  <div className="px-4 pt-4">
-                                    <p className="text-white text-xs font-bold mb-2 flex items-center justify-between">
-                                      QR Code
-                                      <span className="w-7 h-7 rounded-full bg-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
-                                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
-                                      </span>
-                                    </p>
-                                    <div className="bg-white rounded-2xl p-3 flex items-center gap-3">
-                                      <div className="w-14 h-14 rounded-lg bg-black flex-shrink-0 [background-size:6px_6px]" style={{ backgroundImage: "radial-gradient(circle, #000 40%, transparent 41%)" }} />
-                                      <div className="w-12 h-12 rounded-full bg-slate-300 flex-shrink-0" />
-                                    </div>
-                                  </div>
-                                  {/* Our Services – Dynamic from card data */}
-                                  <div className="px-4 pt-4">
-                                    <p className="text-white text-xs font-bold mb-3 text-center">Our Services</p>
-                                    <div className="grid grid-cols-2 gap-2">
-                                      {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
-                                        (((currentCard as any)?.services as any[]) ?? []).slice(0, 4).map((svc, idx) => (
-                                          <div key={svc.id || idx} className="rounded-xl border border-[#38bdf8]/30 bg-white/5 p-2">
-                                            <div className="w-full h-10 rounded-lg bg-white/10 mb-1.5 flex items-center justify-center overflow-hidden">
-                                              {svc.icon ? (
-                                                <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
-                                              ) : (
-                                                <span className="text-[#38bdf8] text-xs font-bold">{idx + 1}</span>
-                                              )}
-                                            </div>
-                                            <p className="text-white text-[10px] font-bold line-clamp-1">{svc.name}</p>
-                                            <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">{svc.description}</p>
-                                          </div>
-                                        ))
-                                      ) : (
-                                        <div className="col-span-2 text-center py-4 rounded-xl border border-dashed border-white/20">
-                                          <p className="text-white/40 text-[9px]">No services added yet.</p>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                  {/* Gallery – 2 images + carousel dots */}
-                                  <div className="px-4 pt-4">
-                                    <p className="text-white text-xs font-bold mb-2 text-center">Gallery</p>
-                                    <div className="flex gap-2">
-                                      <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
-                                      <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
-                                    </div>
-                                    <div className="flex items-center justify-center gap-2 mt-2">
-                                      <span className="text-white/50 text-xs">◀</span>
-                                      <span className="flex gap-1"><span className="w-1.5 h-1.5 rounded-full bg-white/40" /><span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" /><span className="w-1.5 h-1.5 rounded-full bg-white/40" /></span>
-                                      <span className="text-white/50 text-xs">▶</span>
-                                    </div>
-                                  </div>
-                                  {/* Products – one product card */}
-                                  <div className="px-4 pt-4 pb-4">
-                                    <p className="text-white text-xs font-bold mb-2 text-center">Products</p>
-                                    <div className="rounded-2xl border border-[#38bdf8]/40 bg-gradient-to-b from-[#38bdf8]/20 to-transparent overflow-hidden">
-                                      <div className="h-16 bg-white/10 flex items-center justify-center text-[#38bdf8] text-2xl">📱</div>
-                                      <div className="p-2">
-                                        <p className="text-white text-[10px] font-bold">Digital Business Card</p>
-                                        <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">A smart digital business card to share your details, services, and links instantly.</p>
-                                        <p className="text-white font-bold text-[10px] mt-1">₹2,999.00</p>
-                                      </div>
-                                    </div>
-                                    <p className="text-center text-[#38bdf8] text-[9px] underline mt-2">View More Products</p>
-                                  </div>
-                                  {/* Social icons row */}
-                                  <div className="flex items-center justify-center gap-4 py-3 px-4 border-t border-white/10">
-                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">🌐</span>
-                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">X</span>
-                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">f</span>
-                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">📷</span>
-                                    <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">▶</span>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="flex-1 flex flex-col bg-[#0f2630]">
-                                  <div className={`relative h-24 bg-gradient-to-b ${accent} rounded-t-[1.5rem] overflow-hidden`}>
-                                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
-                                    <button
-                                      type="button"
-                                      className="absolute top-8 right-3 flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-medium shadow"
-                                      style={{
-                                        backgroundColor: isLight ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.2)",
-                                        color: textOnPrimary,
-                                      }}
-                                    >
-                                      EN
-                                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                  <div className="relative -mt-6 px-4 pb-2">
-                                    <div className="absolute inset-0 top-0 h-20 bg-[#142633] rounded-t-2xl" />
-                                    <div className="relative flex items-center gap-3 pt-2">
-                                      <div
-                                        className="h-14 w-14 rounded-full border-2 overflow-hidden bg-gray-600 flex-shrink-0"
-                                        style={{ borderColor: primaryColor }}
-                                      />
-                                      <div className="flex-1 min-w-0">
-                                        <p
-                                          className="text-base font-semibold truncate"
-                                          style={{ color: primaryColor }}
-                                        >
-                                          {previewContent.name}
-                                        </p>
-                                        <p
-                                          className="text-xs opacity-90 truncate"
-                                          style={{ color: primaryColor }}
-                                        >
-                                          {previewContent.subtitle}
-                                        </p>
-                                      </div>
-                                      <button
-                                        type="button"
-                                        className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
-                                        style={{ backgroundColor: primaryColor, color: textOnPrimary }}
-                                      >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                                          />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <div className="flex-1 px-4 py-3 overflow-y-auto">
-                                    <p className="text-[11px] leading-relaxed text-gray-300">
-                                      {previewContent.description}
-                                    </p>
-                                    {previewContent.extraLine && (
-                                      <p className="text-[10px] text-gray-400 mt-2">{previewContent.extraLine}</p>
-                                    )}
-                                    {previewContent.officialWebsite && (
-                                      <p className="text-[10px] text-gray-400 mt-1.5 flex items-center gap-1">
-                                        <span className="text-gray-500">Official Website:</span>
-                                        <span className="text-brand-400 underline">{previewContent.officialWebsite}</span>
-                                      </p>
-                                    )}
-                                    {(previewContent.address || previewContent.company) && (
-                                      <p className="text-[10px] text-gray-400 mt-1">
-                                        {[previewContent.company, previewContent.address].filter(Boolean).join(" · ")}
-                                      </p>
-                                    )}
-                                    <div className="mt-6 space-y-3">
-                                      <button
-                                        type="button"
-                                        className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold"
-                                        style={{ backgroundColor: primaryColor, color: textOnPrimary }}
-                                      >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                                          />
-                                        </svg>
-                                        {previewContent.ctaLabel}
-                                      </button>
-                                      <div className="flex gap-2">
-                                        <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
-                                          fb
-                                        </div>
-                                        <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
-                                          in
-                                        </div>
-                                        <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
-                                          x
-                                        </div>
-                                      </div>
-                                    </div>
-                                    {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
-                                      <div className="mt-8 pt-4 border-t border-white/10">
-                                        <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
-                                          Testimonials
-                                        </p>
-                                        <div className="space-y-3">
-                                          {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
-                                            <div key={t.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3">
-                                              <div className="flex items-center gap-2 mb-2">
-                                                <div className="w-8 h-8 rounded-full bg-white/10 overflow-hidden shrink-0">
-                                                  {t.image ? (
-                                                    <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
-                                                  ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-white/40">
-                                                      {(t.name || "C")[0].toUpperCase()}
-                                                    </div>
-                                                  )}
-                                                </div>
-                                                <div className="min-w-0">
-                                                  <p className="text-[10px] font-semibold text-white truncate">{t.name}</p>
-                                                  <p className="text-[8px] text-white/40 truncate">{t.role}</p>
-                                                </div>
-                                              </div>
-                                              <p className="text-[9px] text-white/70 leading-relaxed line-clamp-3 italic">
-                                                &quot;{t.quote}&quot;
-                                              </p>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-                                    {(((currentCard as any)?.services as any[]) ?? []).length > 0 && (
-                                      <div className="mt-8 pt-4 border-t border-white/10">
-                                        <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
-                                          Services
-                                        </p>
-                                        <div className="grid grid-cols-1 gap-3">
-                                          {(((currentCard as any)?.services as any[]) ?? []).slice(0, 3).map((svc, idx) => (
-                                            <div key={svc.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3 flex items-start gap-3">
-                                              <div className="w-10 h-10 rounded-lg bg-white/10 overflow-hidden shrink-0 flex items-center justify-center text-white/60 text-xs">
-                                                {svc.icon ? (
-                                                  <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
-                                                ) : (
-                                                  <span>{idx + 1}</span>
-                                                )}
-                                              </div>
-                                              <div className="min-w-0">
-                                                <p className="text-[10px] font-semibold text-white truncate">{svc.name}</p>
-                                                <p className="text-[8px] text-white/60 leading-normal line-clamp-2">{svc.description}</p>
-                                              </div>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              )))}
+                            <div>
+                              <label className={labelClass}>Email:</label>
+                              <input
+                                type="email"
+                                className={inputClass}
+                                placeholder="Enter Email Address"
+                                value={pdEmail}
+                                onChange={(e) => setPdEmail(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Alternate Email:</label>
+                              <input
+                                type="email"
+                                className={inputClass}
+                                placeholder="Alternate Email"
+                                value={pdAltEmail}
+                                onChange={(e) => setPdAltEmail(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Location:</label>
+                              <textarea
+                                className={`${inputClass} h-24 resize-y min-h-[80px]`}
+                                placeholder="Enter Your Location"
+                                value={pdLocation}
+                                onChange={(e) => setPdLocation(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Location URL:</label>
+                              <input
+                                type="url"
+                                className={inputClass}
+                                placeholder="Enter Your Location URL"
+                                value={pdLocationUrl}
+                                onChange={(e) => setPdLocationUrl(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Company:</label>
+                              <input
+                                type="text"
+                                className={inputClass}
+                                placeholder="Enter Company Name"
+                                value={pdCompany}
+                                onChange={(e) => setPdCompany(e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          {/* Right column */}
+                          <div className="space-y-4">
+                            <div>
+                              <label className={labelClass}>
+                                Last Name <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className={inputClass}
+                                placeholder="Enter Last Name"
+                                value={pdLastName}
+                                onChange={(e) => setPdLastName(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Phone:</label>
+                              <input
+                                type="tel"
+                                className={inputClass}
+                                placeholder="Enter Phone Number"
+                                value={pdPhone}
+                                onChange={(e) => setPdPhone(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Alternate Phone / WhatsApp:</label>
+                              <input
+                                type="tel"
+                                className={inputClass}
+                                placeholder="Alternate Phone"
+                                value={pdAltPhone}
+                                onChange={(e) => setPdAltPhone(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Date Of Birth:</label>
+                              <input
+                                type="text"
+                                className={inputClass}
+                                placeholder="Enter Date of Birth"
+                                value={pdBirthDate}
+                                onChange={(e) => setPdBirthDate(e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Job Title / Occupation:</label>
+                              <input
+                                type="text"
+                                className={inputClass}
+                                placeholder="Enter Job Title"
+                                value={pdJobTitle}
+                                onChange={(e) => setPdJobTitle(e.target.value)}
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-                        {selectedTemplate ? `${selectedTemplate.name} on mobile` : "Template on mobile"}
-                      </p>
-                    </div>
-                  );
-                })()}
-              </div>
-            )}
-
-            {/* Dynamic vCard – advanced controls + preview */}
-            {activeSection === "dynamic" && (
-              <div className="flex flex-col lg:flex-row gap-8">
-                {/* Controls */}
-                <div className="flex-1 space-y-6 max-w-xl">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white tracking-tight">Dynamic vCard</h3>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                      Choose your brand colors and button style for the dynamic vCard layout.
-                    </p>
-                    {selectedTemplateId != null && (() => {
-                      const t = VCARD_TEMPLATES.find((x) => x.id === selectedTemplateId);
-                      return t ? (
-                        <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand-500/10 px-3 py-1.5 text-sm font-medium text-brand-700 dark:text-brand-300">
-                          <span className="inline-block h-2 w-2 rounded-full bg-brand-500" />
-                          Using template: {t.name}
-                        </p>
-                      ) : null;
-                    })()}
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Primary Color:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            value={dynamicPrimaryColor}
-                            onChange={(e) => setDynamicPrimaryColor(e.target.value)}
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Background Secondary color:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            value={dynamicBgSecondary}
-                            onChange={(e) => setDynamicBgSecondary(e.target.value)}
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Background color:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            value={dynamicBgColor}
-                            onChange={(e) => setDynamicBgColor(e.target.value)}
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Button Text Color:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            value={dynamicButtonTextColor}
-                            onChange={(e) => setDynamicButtonTextColor(e.target.value)}
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Label Text Color:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            value={dynamicLabelColor}
-                            onChange={(e) => setDynamicLabelColor(e.target.value)}
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Description Text Color:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            value={dynamicDescriptionColor}
-                            onChange={(e) => setDynamicDescriptionColor(e.target.value)}
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Cards Background:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            defaultValue="#ffffff"
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
-                        Social Icon Color:
-                      </label>
-                      <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
-                        <div className="h-6 rounded-md bg-gray-100 flex items-center">
-                          <input
-                            type="color"
-                            defaultValue="#ffffff"
-                            className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <p className="text-xs font-medium text-gray-700 dark:text-gray-200">Sticky Button:</p>
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setStickyButtonPosition("left")}
-                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium shadow-sm transition-colors ${stickyButtonPosition === "left"
-                          ? "bg-gray-800 text-white border-2 border-gray-800"
-                          : "bg-gray-300 text-gray-900 hover:bg-gray-400"
-                          }`}
-                      >
-                        Left
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setStickyButtonPosition("right")}
-                        className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium transition-colors ${stickyButtonPosition === "right"
-                          ? "bg-gray-800 text-white border-2 border-black"
-                          : "bg-gray-300 text-gray-900 hover:bg-gray-400"
-                          }`}
-                      >
-                        Right
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <p className="text-xs font-medium text-gray-700 dark:text-gray-200">Button Styles:</p>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { n: 1, className: "rounded-md border-2 border-black bg-white text-gray-900" },
-                        { n: 2, className: "rounded-md bg-gray-300 text-gray-800" },
-                        { n: 3, className: "rounded-full bg-gray-300 text-gray-800" },
-                        { n: 4, className: "rounded-md bg-gray-300 text-gray-800" },
-                        { n: 5, className: "rounded-full border-2 border-black bg-white text-gray-900" },
-                        { n: 6, className: "rounded-md border-2 border-dotted border-black bg-white text-gray-900" },
-                        { n: 7, className: "rounded-md border border-black bg-white text-gray-900" },
-                        { n: 8, className: "rounded-md bg-gray-300 text-gray-800" },
-                        { n: 9, className: "rounded-[999px] rounded-bl-[2rem] bg-gray-300 text-gray-800" },
-                        { n: 10, className: "rounded-md border border-gray-500 bg-white text-gray-800" },
-                      ].map(({ n, className }) => (
-                        <button
-                          key={n}
-                          type="button"
-                          onClick={() => setSelectedButtonStyle(n as typeof selectedButtonStyle)}
-                          className={`flex items-center justify-center px-4 py-2 text-xs font-semibold transition-all ${className} ${selectedButtonStyle === n ? "ring-2 ring-brand-500 ring-offset-2" : ""
-                            }`}
-                        >
-                          Style {n}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-2.5 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (!vcardId || !currentCard) return;
-                        const dynamicTheme = {
-                          primaryColor: dynamicPrimaryColor,
-                          bgSecondary: dynamicBgSecondary,
-                          bgColor: dynamicBgColor,
-                          buttonTextColor: dynamicButtonTextColor,
-                          labelColor: dynamicLabelColor,
-                          descriptionColor: dynamicDescriptionColor,
-                          stickyButtonPosition,
-                          selectedButtonStyle,
-                        };
-                        setVCards((prev) =>
-                          prev.map((c) => (c.id === vcardId ? { ...c, dynamicTheme } : c))
-                        );
-                        setDynamicThemeSaveSuccess(true);
-                      }}
-                      className="btn-primary-premium inline-flex items-center justify-center"
-                    >
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (currentCard?.dynamicTheme) {
-                          const t = currentCard.dynamicTheme;
-                          setDynamicPrimaryColor(t.primaryColor);
-                          setDynamicBgSecondary(t.bgSecondary);
-                          setDynamicBgColor(t.bgColor);
-                          setDynamicButtonTextColor(t.buttonTextColor);
-                          setDynamicLabelColor(t.labelColor);
-                          setDynamicDescriptionColor(t.descriptionColor);
-                          setStickyButtonPosition(t.stickyButtonPosition ?? "right");
-                          const bs = t.selectedButtonStyle;
-                          if (typeof bs === "number" && bs >= 1 && bs <= 10) {
-                            setSelectedButtonStyle(bs as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10);
-                          }
-                        } else if (selectedTemplateId != null) {
-                          const template = VCARD_TEMPLATES.find((x) => x.id === selectedTemplateId);
-                          if (template) {
-                            setDynamicPrimaryColor(getAccentPrimaryColor(template.accent));
-                            setDynamicButtonTextColor(isLightTemplate(template.accent) ? "#332b2b" : "#ffffff");
-                            setDynamicBgColor(getAccentBgColor(template.accent));
-                            setDynamicBgSecondary(getAccentBgSecondary(template.accent));
-                            setDynamicLabelColor(isLightTemplate(template.accent) ? "#1e293b" : "#f8fafc");
-                            setDynamicDescriptionColor(isLightTemplate(template.accent) ? "#64748b" : "#94a3b8");
-                          }
-                        }
-                      }}
-                      className="btn-secondary-premium inline-flex items-center justify-center"
-                    >
-                      Discard
-                    </button>
-                  </div>
-
-                </div>
-
-                {/* Phone preview – uses Dynamic vCard colors + sticky button position */}
-                <div className="flex-1 flex justify-center">
-                  <div className="relative w-[320px] h-[640px] rounded-[2.5rem] bg-black shadow-2xl overflow-hidden border-[10px] border-black/80">
-                    <div className="absolute inset-x-16 top-2 h-5 rounded-full bg-black/60" />
-                    <div className="absolute inset-0" style={{ backgroundColor: dynamicBgColor }} />
-                    <div className="absolute top-0 left-0 right-0 h-40 rounded-b-3xl" style={{ backgroundColor: dynamicPrimaryColor }} />
-                    <div className="absolute top-28 left-0 right-0 rounded-t-[3rem]" style={{ backgroundColor: dynamicBgSecondary }} />
-
-                    {/* Sticky button – position left/right based on control */}
-                    <div
-                      className="absolute top-20 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
-                      style={{
-                        backgroundColor: dynamicPrimaryColor,
-                        left: stickyButtonPosition === "left" ? 12 : undefined,
-                        right: stickyButtonPosition === "right" ? 12 : undefined,
-                      }}
-                    >
-                      <svg className="w-5 h-5" style={{ color: dynamicButtonTextColor }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                      </svg>
-                    </div>
-
-                    <div className="relative h-full w-full px-5 pt-24 pb-6 flex flex-col gap-4">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="h-16 w-16 rounded-full border-4 overflow-hidden bg-gray-500"
-                          style={{ borderColor: dynamicPrimaryColor }}
-                        />
-                        <div>
-                          <p className="text-base font-semibold" style={{ color: dynamicPrimaryColor }}>Pallavi Hegde</p>
-                          <p className="text-xs" style={{ color: dynamicLabelColor }}>UI / UX Designer</p>
-                        </div>
-                      </div>
-
-                      <p className="text-[11px] leading-relaxed" style={{ color: dynamicDescriptionColor }}>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                        industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book.
-                      </p>
-
-                      <div className="mt-auto space-y-3">
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
                           <button
                             type="button"
-                            className={`inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold shadow ${selectedButtonStyle === 9
-                              ? "rounded-[999px] rounded-bl-[2rem]"
-                              : selectedButtonStyle === 3 || selectedButtonStyle === 5
-                                ? "rounded-full"
-                                : "rounded-md"
-                              }`}
-                            style={
-                              [2, 3, 4, 8, 9].includes(selectedButtonStyle)
-                                ? { backgroundColor: dynamicPrimaryColor, color: dynamicButtonTextColor }
-                                : {
-                                  borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
-                                  borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
-                                  borderColor: dynamicPrimaryColor,
-                                  color: dynamicPrimaryColor,
-                                  backgroundColor: "transparent",
-                                }
-                            }
+                            onClick={() => {
+                              if (!currentCard) return;
+                              const parts = (currentCard.title ?? "").split(" ");
+                              setPdFirstName(parts[0] ?? "");
+                              setPdLastName(parts.slice(1).join(" ") ?? "");
+                              setPdEmail(currentCard.email ?? "");
+                              setPdPhone(currentCard.phone ?? "");
+                              setPdAltPhone(currentCard.whatsapp ?? "");
+                              setPdLocation(currentCard.address ?? "");
+                              setPdLocationUrl("");
+                              setPdCompany(currentCard.company ?? "");
+                              setPdJobTitle(currentCard.occupation ?? "");
+                              setPdBirthDate(currentCard.birthDate ?? "");
+                            }}
+                            className="btn-secondary-premium inline-flex items-center justify-center"
                           >
-                            <span className="mr-1.5">Add to contact</span>
+                            Discard
+                          </button>
+                          <button
+                            type="submit"
+                            className="btn-primary-premium inline-flex items-center justify-center"
+                          >
+                            Save &amp; Next
                           </button>
                         </div>
-                        <div className="flex items-center justify-between gap-3 text-xs">
-                          {(["fb", "in", "x"] as const).map((label) => (
-                            <div
-                              key={label}
-                              className={`flex-1 flex items-center justify-center h-9 ${selectedButtonStyle === 9
-                                ? "rounded-[999px] rounded-bl-[2rem]"
-                                : selectedButtonStyle === 3 || selectedButtonStyle === 5
-                                  ? "rounded-full"
-                                  : "rounded-md"
-                                }`}
-                              style={{
-                                borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
-                                borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
-                                borderColor: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicPrimaryColor : dynamicLabelColor,
-                                color: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicButtonTextColor : dynamicLabelColor,
-                                backgroundColor: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicPrimaryColor : "transparent",
-                              }}
-                            >
-                              {label}
-                            </div>
-                          ))}
+                      </form>
+                    )}
+
+                    {activeTab === "other" && (
+                      <div className="space-y-6">
+                        {/* 8 toggle cards in 2x4 grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                          {[
+                            { key: "languageLocalization" as const, label: "Display Language Localization:", help: false },
+                            { key: "inquiryForm" as const, label: "Display Inquiry Form:", help: false },
+                            { key: "downloadQrIcon" as const, label: "Display Download Qr Icon:", help: false },
+                            { key: "qrSection" as const, label: "Display Qr Section:", help: false },
+                            { key: "userAffiliation" as const, label: "Display User Affiliation:", help: true },
+                            { key: "addToContact" as const, label: "Display Add To Contact:", help: true },
+                            { key: "hideStickyBar" as const, label: "Hide vCard Sticky Bar:", help: true },
+                            { key: "whatsappShare" as const, label: "Display WhatsApp Share:", help: true },
+                          ].map((item) => {
+                            const on = otherToggles[item.key];
+                            return (
+                              <div
+                                key={item.key}
+                                className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-4 shadow-sm"
+                              >
+                                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-800 dark:text-gray-100 pr-2">
+                                  {item.label}
+                                  {item.help && (
+                                    <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                                      <HelpIcon />
+                                    </button>
+                                  )}
+                                </span>
+                                <button
+                                  type="button"
+                                  role="switch"
+                                  aria-checked={on}
+                                  onClick={() => setOtherToggle(item.key)}
+                                  className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${on ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
+                                    }`}
+                                >
+                                  <span
+                                    className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${on ? "translate-x-[1.375rem]" : "translate-x-0"
+                                      }`}
+                                  />
+                                </button>
+                              </div>
+                            );
+                          })}
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Business Hours – screenshot: Week Format, toggle per day, Closed button with moon icon */}
-            {activeSection === "hours" && (
-              <form
-                className="space-y-6 max-w-xl"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!vcardId || !currentCard) return;
-                  setVCards((prev) =>
-                    prev.map((c) => (c.id === vcardId ? { ...c, businessHours } : c))
-                  );
-                  setServicesSuccessMessage("Business hours saved successfully.");
-                  setShowServicesSuccessToast(true);
-                }}
-              >
-                <div>
-                  <label className={labelClass}>Week Format Type:</label>
-                  <div className="relative max-w-xs">
-                    <select
-                      value={businessHoursWeekFormat}
-                      onChange={(e) => setBusinessHoursWeekFormat(e.target.value as "monday-sunday" | "sunday-saturday")}
-                      className={`${inputClass} pr-10`}
-                    >
-                      <option value="monday-sunday">Monday To Sunday</option>
-                      <option value="sunday-saturday">Sunday To Saturday</option>
-                    </select>
-                    <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {(businessHoursWeekFormat === "sunday-saturday"
-                    ? ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-                    : [...BUSINESS_HOURS_DAYS]
-                  ).map((day) => {
-                    const d = day as BusinessHoursDay;
-                    const { enabled } = businessHours[d] ?? { enabled: false, start: "9:00 AM", end: "6:00 PM" };
-                    return (
-                      <div
-                        key={day}
-                        className="flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800/50 px-4 py-3"
-                      >
-                        <button
-                          type="button"
-                          role="switch"
-                          aria-checked={enabled}
-                          onClick={() => setBusinessHoursDay(d, { enabled: !enabled })}
-                          className={`relative h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${enabled ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
-                            }`}
-                        >
-                          <span
-                            className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition-transform ${enabled ? "translate-x-5" : "translate-x-0"
-                              }`}
-                          />
-                        </button>
-                        <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide min-w-[100px]">
-                          {day}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setBusinessHoursDay(d, { enabled: false })}
-                          className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                        >
-                          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                          </svg>
-                          Closed
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="flex justify-end gap-3 pt-2">
-                  <button
-                    type="button"
-                    className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-                    onClick={() => {
-                      if (currentCard?.businessHours) {
-                        setBusinessHours(
-                          currentCard.businessHours as Record<
-                            BusinessHoursDay,
-                            { enabled: boolean; start: string; end: string }
+                        {/* QR Code download size slider */}
+                        <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-4 shadow-sm">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <label className="text-sm font-medium text-gray-800 dark:text-gray-100">QR Code download size</label>
+                            <div className="flex items-center gap-3 min-w-[120px]">
+                              <input
+                                type="range"
+                                min={100}
+                                max={400}
+                                step={10}
+                                value={qrDownloadSize}
+                                onChange={(e) => setQrDownloadSize(Number(e.target.value))}
+                                className="h-2 w-32 sm:flex-1 max-w-[200px] rounded-full appearance-none bg-gray-200 dark:bg-gray-600 accent-brand-500"
+                              />
+                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 w-12 shrink-0">{qrDownloadSize}px</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex justify-end gap-3 pt-2">
+                          <button
+                            type="button"
+                            className="btn-secondary-premium inline-flex items-center justify-center"
                           >
-                        );
-                      } else {
-                        setBusinessHours(getInitialBusinessHours());
-                      }
-                    }}
-                  >
-                    Discard
-                  </button>
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            )}
-
-            {/* QR section — live preview updates with colors / styles; Save persists to vCard */}
-            {activeSection === "qr" && (
-              <div className="flex flex-col lg:flex-row lg:items-start justify-center gap-8 lg:gap-12 min-h-[320px] w-full max-w-5xl mx-auto">
-                <div className="flex flex-col items-center shrink-0 lg:sticky lg:top-24">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
-                    Live preview
-                  </p>
-                  <div
-                    className="rounded-2xl border border-gray-200 dark:border-gray-600 p-3 sm:p-4 shadow-lg bg-white dark:bg-gray-900"
-                    style={{
-                      backgroundColor: qrBgColor,
-                    }}
-                  >
-                    {qrEditorPreviewDataUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={qrEditorPreviewDataUrl}
-                        alt="QR code preview"
-                        className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] object-contain"
-                      />
-                    ) : (
-                      <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] flex items-center justify-center text-sm text-gray-400 dark:text-gray-500">
-                        Generating QR…
+                            Discard
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-primary-premium inline-flex items-center justify-center"
+                          >
+                            Save
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
-                  <p className="mt-3 text-center text-[11px] text-gray-500 dark:text-gray-400 max-w-[260px] leading-relaxed">
-                    Color, dot style, and eye style update instantly. Use <span className="font-medium">Save</span> to apply on your public vCard.
-                  </p>
-                </div>
+                )}
 
-                <div className="flex-1 w-full max-w-md mx-auto lg:mx-0">
-                  <div className="rounded-3xl border border-gray-200 bg-white dark:bg-gray-800/50 p-6 shadow-lg">
-                    <form
-                      className="space-y-5"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (!useQrConfiguration || !vcardId || !currentCard) return;
-                        setVCards((prev) =>
-                          prev.map((c) =>
-                            c.id === vcardId
-                              ? { ...c, qrCodeColor, qrBgColor, qrDotStyle, qrEyeStyle }
-                              : c
-                          )
-                        );
-                        setQrCreateSuccess(true);
-                      }}
-                    >
-                      <div className="space-y-4">
-                        <div>
-                          <label className={labelClass}>QR-Code Color:</label>
-                          <div className="w-full h-9 rounded-lg border border-gray-300 bg-white dark:bg-gray-800 overflow-hidden">
-                            <input
-                              type="color"
-                              value={qrCodeColor}
-                              onChange={(e) => setQrCodeColor(e.target.value)}
-                              className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[5px]"
-                            />
+                {/* Templates – template grid + mobile view preview in phone frame */}
+                {activeSection === "templates" && (
+                  <div className="flex flex-col xl:flex-row xl:items-stretch gap-6 xl:gap-8 2xl:gap-10">
+                    <div className="min-w-0 flex flex-col flex-1 overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_24px_80px_-28px_rgba(15,23,42,0.25)] ring-1 ring-slate-900/[0.04] dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-[0_28px_90px_-24px_rgba(0,0,0,0.85)] dark:ring-white/[0.06] xl:basis-0 xl:grow">
+                      <div className="relative border-b border-slate-200/80 bg-white/85 px-5 py-6 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/75 md:px-7 md:py-7">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+                          <div className="min-w-0 flex-1">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400">
+                              Template gallery
+                            </p>
+                            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white md:text-[1.65rem] md:leading-snug">
+                              Choose your layout
+                            </h3>
+                            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
+                              Curated, high-impact designs for your public vCard. Switch anytime—your content stays on the card.
+                            </p>
+                            <p className="mt-3 text-xs font-medium text-slate-500 dark:text-zinc-500">
+                              <span className="text-amber-600 dark:text-amber-400">*</span> One active layout required
+                            </p>
                           </div>
-                        </div>
-                        <div>
-                          <label className={labelClass}>Background Color:</label>
-                          <div className="w-full h-9 rounded-lg border border-gray-300 bg-white dark:bg-gray-800 overflow-hidden">
-                            <input
-                              type="color"
-                              value={qrBgColor}
-                              onChange={(e) => setQrBgColor(e.target.value)}
-                              className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[5px]"
-                            />
-                          </div>
+                          <span className="inline-flex shrink-0 items-center self-start rounded-full border border-amber-500/35 bg-amber-500/10 px-3.5 py-2 text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-300">
+                            {VCARD_TEMPLATES.length} curated
+                          </span>
                         </div>
                       </div>
-
-                      <div className="space-y-4">
-                        <div>
-                          <label className={labelClass}>Select Style</label>
-                          <select
-                            className={`${inputClass} h-11`}
-                            value={qrDotStyle}
-                            onChange={(e) => setQrDotStyle(e.target.value as "square" | "rounded")}
-                          >
-                            <option>square</option>
-                            <option>rounded</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className={labelClass}>Select Eye Style</label>
-                          <select
-                            className={`${inputClass} h-11`}
-                            value={qrEyeStyle}
-                            onChange={(e) => setQrEyeStyle(e.target.value as "square" | "rounded")}
-                          >
-                            <option>square</option>
-                            <option>rounded</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className={labelClass}>QR Link (auto-generated)</label>
-                        <input
-                          type="text"
-                          readOnly
-                          value={
-                            typeof window !== "undefined"
-                              ? `${window.location.origin}/${basicAlias || currentCard?.slug || ""}`.replace(/\/+$/, "").replace(/([^:]\/)\/+/g, "$1")
-                              : `/${basicAlias || currentCard?.slug || ""}`
-                          }
-                          className={`${inputClass} h-11 bg-gray-50 dark:bg-gray-900`}
+                      <div className="relative flex-1 flex flex-col min-h-0 bg-gradient-to-b from-slate-50 via-slate-50 to-slate-100 dark:from-zinc-950 dark:via-zinc-950 dark:to-black px-4 py-5 md:px-6 md:py-6">
+                        <div
+                          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-30%,rgba(251,191,36,0.11),transparent_55%)]"
+                          aria-hidden
                         />
+                        <div className="relative">
+                          <label
+                            htmlFor="template-picker-search"
+                            className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-500"
+                          >
+                            Search
+                          </label>
+                          <div className="relative max-w-xl rounded-2xl bg-slate-200/50 shadow-inner shadow-slate-300/40 ring-1 ring-slate-300/50 backdrop-blur-md transition-shadow focus-within:ring-2 focus-within:ring-amber-400/45 dark:bg-white/[0.06] dark:shadow-black/20 dark:ring-white/10">
+                            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-zinc-500">
+                              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                              </svg>
+                            </span>
+                            <input
+                              id="template-picker-search"
+                              type="search"
+                              value={templatePickerSearch}
+                              onChange={(e) => setTemplatePickerSearch(e.target.value)}
+                              placeholder="Name, style, or ID…"
+                              className="h-12 w-full rounded-2xl border-0 bg-transparent pl-12 pr-4 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-0 dark:text-zinc-100 dark:placeholder:text-zinc-500"
+                            />
+                          </div>
+                          <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Template categories">
+                            {VCARD_TEMPLATE_CATEGORY_CHIPS.map((chip) => {
+                              const active = templateCategoryFilter === chip.id;
+                              return (
+                                <button
+                                  key={chip.id}
+                                  type="button"
+                                  onClick={() => setTemplateCategoryFilter(chip.id)}
+                                  className={`rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 ${active
+                                    ? "bg-amber-400 text-zinc-950 shadow-[0_0_24px_-4px_rgba(251,191,36,0.55)]"
+                                    : "bg-slate-200/50 text-slate-600 ring-1 ring-slate-300 hover:bg-slate-200 hover:text-slate-900 dark:bg-white/[0.06] dark:text-zinc-400 dark:ring-white/[0.08] dark:hover:bg-white/[0.1] dark:hover:text-zinc-200"
+                                    }`}
+                                >
+                                  {chip.label}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <div className="mt-5 flex-1 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 overflow-y-auto pr-2 pb-2 min-h-0 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 dark:[&::-webkit-scrollbar-thumb]:bg-zinc-600/50 [&::-webkit-scrollbar-track]:bg-transparent">
+                            {(() => {
+                              const q = templatePickerSearch.trim().toLowerCase();
+                              const cat = templateCategoryFilter;
+                              const list = VCARD_TEMPLATES.filter((t) => {
+                                if (cat !== "all" && t.category !== cat) return false;
+                                if (!q) return true;
+                                return (
+                                  t.name.toLowerCase().includes(q) ||
+                                  t.description.toLowerCase().includes(q) ||
+                                  String(t.id).includes(q) ||
+                                  t.category.toLowerCase().includes(q)
+                                );
+                              });
+                              if (!list.length) {
+                                return (
+                                  <div className="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-100/50 py-16 text-center backdrop-blur-sm dark:border-white/15 dark:bg-white/[0.03]">
+                                    <p className="text-sm font-semibold text-slate-800 dark:text-zinc-200">No templates match</p>
+                                    <p className="mt-1.5 text-xs text-slate-500 dark:text-zinc-500">Adjust search or pick another category.</p>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setTemplatePickerSearch("");
+                                        setTemplateCategoryFilter("all");
+                                      }}
+                                      className="mt-5 rounded-full bg-amber-400 px-5 py-2.5 text-sm font-bold text-zinc-950 transition hover:bg-amber-300"
+                                    >
+                                      Reset filters
+                                    </button>
+                                  </div>
+                                );
+                              }
+                              return list.map((template) => {
+                                const isSelected = selectedTemplateId === template.id;
+                                return (
+                                  <button
+                                    key={template.id}
+                                    type="button"
+                                    onClick={() => setSelectedTemplateId(template.id)}
+                                    className={`group relative flex flex-col overflow-hidden rounded-2xl border p-0 text-left transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 ${isSelected
+                                      ? "-translate-y-0.5 border-amber-400/75 bg-white shadow-[0_0_0_1px_rgba(251,191,36,0.25),0_24px_50px_-12px_rgba(251,191,36,0.2)] ring-2 ring-amber-400/35 dark:bg-zinc-900/70"
+                                      : "border-slate-200 bg-white shadow-sm hover:-translate-y-1 hover:border-amber-400/30 hover:shadow-lg dark:border-white/[0.07] dark:bg-zinc-900/45 dark:shadow-[0_8px_32px_-12px_rgba(0,0,0,0.5)] dark:hover:shadow-[0_20px_50px_-14px_rgba(251,191,36,0.14)]"
+                                      }`}
+                                  >
+                                    {/* Preview area: gradient + placeholder content; selected ring on card */}
+                                    <div className="relative aspect-[9/16] w-full overflow-hidden rounded-t-2xl">
+                                      {template.previewImage ? (
+                                        <div className="absolute inset-0 z-0 transition-transform duration-500 ease-out group-hover:scale-110">
+                                          <Image
+                                            src={template.previewImage}
+                                            alt={template.name}
+                                            fill
+                                            className="object-cover"
+                                            sizes="(max-width: 640px) 100vw, 300px"
+                                          />
+                                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-70" />
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className={`absolute inset-0 bg-gradient-to-b ${template.accent} transition-transform duration-500 ease-out group-hover:translate-y-[-12%]`}
+                                        />
+                                      )}
+                                      {/* Template-specific preview content (screenshot-style) */}
+                                      {(() => {
+                                        // Special case for Corporate (2) - ID 14 to show its unique arcs
+                                        if (template.id === 14) {
+                                          return (
+                                            <div className="absolute inset-0 z-10 bg-white overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-3">
+                                              {/* Top Banner Dark */}
+                                              <div className="h-1/3 w-full bg-[#0A0C14]" />
+                                              {/* Decorative Arcs */}
+                                              <div className="absolute top-[25%] right-[-60px] w-48 h-48 pointer-events-none z-0">
+                                                <div className="absolute inset-0 rounded-full border-[25px] border-[#FF5E5E] scale-[1.2] translate-x-4 translate-y-4" />
+                                                <div className="absolute inset-0 rounded-full border-[25px] border-[#FFC15E] scale-[1.0] translate-x-10 translate-y-10" />
+                                                <div className="absolute inset-0 rounded-full bg-[#1A1E29] scale-[0.8] translate-x-16 translate-y-16" />
+                                              </div>
+                                              {/* Header Content Mockup */}
+                                              <div className="absolute top-[20%] left-4 z-10">
+                                                <div className="w-16 h-16 rounded-full border-2 border-white bg-slate-200 mb-2 shadow-md" />
+                                                <div className="h-3 w-20 bg-[#1A1E29] rounded-sm mb-1" />
+                                                <div className="h-2 w-16 bg-slate-300 rounded-sm" />
+                                              </div>
+                                              {/* Social row */}
+                                              <div className="absolute top-[45%] left-4 flex gap-1.5">
+                                                {[1, 2, 3, 4].map(i => <div key={i} className="w-4 h-4 rounded-full bg-[#1A1E29]" />)}
+                                              </div>
+                                              {/* Button */}
+                                              <div className="absolute bottom-4 left-4 right-4 h-6 rounded-lg bg-[#1A1E29]" />
+                                            </div>
+                                          );
+                                        }
+
+                                        const light = isLightTemplate(template.accent);
+                                        const bar = light ? "bg-gray-700/80" : "bg-white/70";
+                                        const circle = light ? "bg-gray-600/80" : "bg-white/80";
+                                        const icon = light ? "bg-gray-600/70" : "bg-white/50";
+                                        const text = light ? "text-gray-800/95" : "text-white/95";
+                                        const textSec = light ? "text-gray-700/90" : "text-white/80";
+                                        const pt = getPreviewType(template);
+                                        const base =
+                                          "absolute inset-0 z-10 flex flex-col pt-2 px-2 pointer-events-none overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-3";
+                                        if (pt === "flower") {
+                                          // Jenny Wilson / Flower Garden style preview (with contact + mini gallery) for flower-type templates (including Executive Pro)
+                                          return (
+                                            <div className={base}>
+                                              <div className="h-full flex items-start justify-center">
+                                                <div className="mt-1 mx-auto w-full max-w-[120px] rounded-2xl bg-white/95 shadow-sm overflow-hidden transition-transform duration-500 ease-out group-hover:-translate-y-2">
+                                                  {/* Top hero image */}
+                                                  <div
+                                                    className="h-14 w-full bg-cover bg-center"
+                                                    style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
+                                                  />
+                                                  {/* Bottom white content */}
+                                                  <div className="px-2 pb-2 pt-1">
+                                                    <div className="flex items-end gap-1 -mt-5">
+                                                      <div className="w-8 h-8 rounded-lg bg-gray-200 border-[2px] border-white shadow-sm shrink-0" />
+                                                      <div className="flex-1 min-w-0">
+                                                        <p className="text-[8px] font-semibold text-emerald-800 leading-none truncate">
+                                                          {template.name}
+                                                        </p>
+                                                        <p className="text-[7px] text-emerald-600 leading-none mt-0.5 truncate">
+                                                          Flower Garden
+                                                        </p>
+                                                      </div>
+                                                    </div>
+
+                                                    {/* Social icons row */}
+                                                    <div className="mt-2 flex justify-center gap-1.5">
+                                                      {[1, 2, 3, 4, 5].map((i) => (
+                                                        <div
+                                                          key={i}
+                                                          className="w-4 h-4 rounded-full bg-emerald-50 border border-emerald-100"
+                                                        />
+                                                      ))}
+                                                    </div>
+
+                                                    {/* Description line */}
+                                                    <p className="mt-2 text-[6px] leading-tight text-slate-600 text-center line-clamp-2">
+                                                      Lorem ipsum is simply dummy text of the printing and typesetting industry.
+                                                    </p>
+
+                                                    {/* Compact contact row */}
+                                                    <div className="mt-2 grid grid-cols-2 gap-1 text-[6px] text-slate-700">
+                                                      <div className="flex items-center gap-0.5">
+                                                        <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
+                                                          ✉
+                                                        </div>
+                                                        <p className="truncate">jenny@gmail.com</p>
+                                                      </div>
+                                                      <div className="flex items-center gap-0.5">
+                                                        <div className="h-3.5 w-3.5 rounded-lg bg-emerald-50 flex items-center justify-center text-[6px] text-emerald-700 shrink-0">
+                                                          ☎
+                                                        </div>
+                                                        <p className="truncate">+1 234567890</p>
+                                                      </div>
+                                                    </div>
+
+                                                    {/* Mini gallery strip */}
+                                                    <div className="mt-2">
+                                                      <p className="text-[6px] font-semibold text-emerald-800 text-center">Gallery</p>
+                                                      <div className="mt-1 grid grid-cols-3 gap-0.5">
+                                                        {[1, 2, 3].map((i) => (
+                                                          <div
+                                                            key={i}
+                                                            className="aspect-[4/5] rounded-md overflow-hidden bg-emerald-50"
+                                                          >
+                                                            <div
+                                                              className="w-full h-full bg-cover bg-center"
+                                                              style={{
+                                                                backgroundImage: `url('/images/product/product-0${i}.jpg')`,
+                                                              }}
+                                                            />
+                                                          </div>
+                                                        ))}
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          );
+                                        }
+                                        if (pt === "flower-shop") {
+                                          return (
+                                            <div className={base}>
+                                              <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
+                                                <span className={`text-[6px] font-bold ${text} text-center leading-tight`}>SHOP</span>
+                                              </div>
+                                              <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                              <p className={`text-[7px] ${textSec} text-center mb-1`}>Let Your Garden Bloom With Us</p>
+                                              <div className="flex justify-center gap-0.5 mb-1">
+                                                {[1, 2, 3, 4, 5].map((i) => (
+                                                  <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                                ))}
+                                              </div>
+                                              <p className={`text-[7px] ${textSec} text-center`}>flowergarden@gmail.com</p>
+                                              <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                              <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
+                                            </div>
+                                          );
+                                        }
+                                        if (pt === "flower-snap") {
+                                          return (
+                                            <div className={base}>
+                                              <div className={`rounded-full border-2 ${circle} w-10 h-10 mx-auto flex items-center justify-center mb-1`}>
+                                                <span className={`text-[5px] font-bold ${text} text-center leading-tight`}>FS</span>
+                                              </div>
+                                              <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                              <p className={`text-[7px] ${textSec} text-center mb-0.5`}>Creative Flower & Garden.</p>
+                                              <p className={`text-[6px] ${textSec} text-center mb-1`}>Best Plant Selling Company</p>
+                                              <p className={`text-[6px] ${textSec} text-center mb-1`}>Green Market Mumbai</p>
+                                              <div className="flex justify-center gap-0.5 mb-1">
+                                                {[1, 2, 3, 4, 5].map((i) => (
+                                                  <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                                ))}
+                                              </div>
+                                              <p className={`text-[7px] ${textSec} text-center`}>flowersnap@gmail.com</p>
+                                              <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                              <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Gallery</p>
+                                            </div>
+                                          );
+                                        }
+                                        if (pt === "travel") {
+                                          return (
+                                            <div className={base}>
+                                              <div className={`h-4 rounded ${bar} flex items-center justify-center mb-1`}>
+                                                <span className={`text-[8px] font-bold ${text}`}>TRAVEL</span>
+                                              </div>
+                                              <div className={`w-9 h-9 rounded-sm ${circle} shrink-0 mx-auto mb-1`} />
+                                              <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                              <p className={`text-[8px] ${textSec} text-center mb-1`}>Travel Agent</p>
+                                              <div className="flex justify-center gap-0.5 mb-1">
+                                                {[1, 2, 3, 4].map((i) => (
+                                                  <div key={i} className={`w-3.5 h-3.5 rounded-full ${icon}`} />
+                                                ))}
+                                              </div>
+                                              <p className={`text-[7px] ${textSec} text-center`}>michael@gmail.com · +49 95864 12484</p>
+                                              <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                              <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
+                                            </div>
+                                          );
+                                        }
+                                        if (pt === "travel-dark") {
+                                          return (
+                                            <div className={base}>
+                                              <div className={`w-8 h-6 rounded ${bar} flex items-center justify-center mx-auto mb-1`} />
+                                              <p className={`text-[9px] font-bold ${text} text-center`}>{template.name}</p>
+                                              <p className={`text-[8px] ${textSec} text-center`}>Tours & Travel Agency</p>
+                                              <p className={`text-[6px] ${textSec} text-center mt-0.5 leading-tight`}>Every Journey Begins With A Single Step</p>
+                                              <div className="flex justify-center gap-0.5 my-1">
+                                                {[1, 2, 3, 4, 5].map((i) => (
+                                                  <div key={i} className={`w-3 h-3 rounded-full ${icon}`} />
+                                                ))}
+                                              </div>
+                                              <p className={`text-[7px] ${textSec} text-center`}>advmur@gmail.com · +91888887700</p>
+                                              <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                              <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-0.5`}>Contact · Gallery</p>
+                                            </div>
+                                          );
+                                        }
+                                        if (pt === "personal") {
+                                          return (
+                                            <div className="absolute inset-0 flex flex-col pointer-events-none overflow-hidden">
+                                              {/* Cover Area */}
+                                              <div className="h-[28%] w-full bg-white/10 relative">
+                                                <div className={`absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-[2px] border-white/30 ${circle} shadow-lg flex items-center justify-center backdrop-blur-sm`}>
+                                                  <svg className={`w-6 h-6 ${text} opacity-80`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                  </svg>
+                                                </div>
+                                              </div>
+                                              {/* Content Area */}
+                                              <div className="flex-1 flex flex-col items-center pt-7 px-3">
+                                                <p className={`text-[11px] font-extrabold tracking-wide ${text} text-center mb-0.5 drop-shadow-sm`}>{template.name}</p>
+                                                <p className={`text-[7px] font-medium tracking-widest uppercase ${textSec} text-center mb-3 opacity-90`}>Executive Director</p>
+
+                                                <div className="w-full flex justify-center gap-2 mb-4">
+                                                  {[1, 2, 3, 4].map((i) => (
+                                                    <div key={i} className={`w-5 h-5 rounded-full ${icon} shadow-sm backdrop-blur-md flex items-center justify-center`}>
+                                                      <div className="w-2.5 h-2.5 rounded-[3px] bg-white/50" />
+                                                    </div>
+                                                  ))}
+                                                </div>
+
+                                                <div className="w-full space-y-1.5 px-1.5">
+                                                  <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                                    <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                                      <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                      <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Email</p>
+                                                      <p className={`text-[6px] font-medium ${text}`}>john.doe@example.com</p>
+                                                    </div>
+                                                  </div>
+                                                  <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                                    <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                                      <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                      <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Phone</p>
+                                                      <p className={`text-[6px] font-medium ${text}`}>+1 234 567 8900</p>
+                                                    </div>
+                                                  </div>
+                                                  <div className="flex items-center gap-2 rounded-md bg-white/10 backdrop-blur-sm px-2 py-[5px] shadow-sm border border-white/5">
+                                                    <div className={`w-3.5 h-3.5 rounded-full ${icon} shrink-0 flex items-center justify-center`}>
+                                                      <div className="w-1.5 h-1.5 rounded-sm bg-white/70" />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                      <p className={`text-[4.5px] uppercase tracking-wider ${textSec} opacity-80`}>Location</p>
+                                                      <p className={`text-[6px] font-medium ${text}`}>New York, NY</p>
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                                <div className="mt-auto mb-[2.5rem] w-full px-2">
+                                                  <div className={`w-full py-1.5 rounded-full ${icon} backdrop-blur-md shadow-md flex items-center justify-center border border-white/10`}>
+                                                    <p className={`text-[7.5px] font-bold uppercase tracking-widest ${text}`}>Save Contact</p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          );
+                                        }
+                                        if (pt === "corporate") {
+                                          return (
+                                            <div className={base}>
+                                              <div className={`w-10 h-10 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                              <p className={`text-[9px] font-semibold ${text} text-center`}>{template.name}</p>
+                                              <p className={`text-[8px] ${textSec} text-center mb-1`}>Leadership · Board</p>
+                                              <div className={`h-1.5 rounded ${bar} w-full max-w-[90%] mx-auto mb-1`} />
+                                              <div className={`h-1.5 rounded ${bar} w-[70%] mx-auto mb-1`} />
+                                              <p className={`text-[7px] ${textSec} text-center`}>contact@company.com</p>
+                                              <p className={`text-[6px] ${textSec} text-center mt-0.5 border-t border-white/20 pt-0.5`}>Official Website</p>
+                                            </div>
+                                          );
+                                        }
+                                        if (pt === "creative") {
+                                          return (
+                                            <div className={base}>
+                                              <p className={`text-[10px] font-bold ${text} text-center uppercase tracking-wider mt-2`}>{template.name}</p>
+                                              <p className={`text-[8px] ${textSec} text-center mb-2`}>Studio</p>
+                                              <div className={`h-2 rounded ${bar} w-full mb-0.5`} />
+                                              <div className={`h-2 rounded ${bar} w-[85%] mx-auto mb-0.5`} />
+                                              <div className={`h-2 rounded ${bar} w-[60%] mx-auto mb-1`} />
+                                              <div className="flex justify-center gap-1">
+                                                {[1, 2, 3].map((i) => (
+                                                  <div key={i} className={`w-6 h-6 rounded ${icon}`} />
+                                                ))}
+                                              </div>
+                                            </div>
+                                          );
+                                        }
+                                        // generic = same filled style as screenshot (Jenny Wilson style so no blank PREVIEW)
+                                        return (
+                                          <div className={base}>
+                                            <div className={`w-8 h-8 rounded-full ${circle} shrink-0 mx-auto mb-1`} />
+                                            <p className={`text-[9px] font-semibold ${text} text-center leading-tight`}>{template.name}</p>
+                                            <p className={`text-[8px] ${textSec} text-center mb-1`}>{template.name}</p>
+                                            <div className="flex justify-center gap-1 mb-1">
+                                              {[1, 2, 3, 4].map((i) => (
+                                                <div key={i} className={`w-4 h-4 rounded-full ${icon}`} />
+                                              ))}
+                                            </div>
+                                            <p className={`text-[7px] ${textSec} text-center leading-tight px-0.5`}>jenny@gmail.com · +1234567890</p>
+                                            <p className={`text-[7px] ${textSec} text-center mt-0.5`}>12th March, 1990 · Berlin, Germany</p>
+                                            <p className={`text-[6px] ${textSec} text-center mt-0.5`}>Official Website</p>
+                                            <p className={`text-[8px] font-medium ${text} text-center mt-1 border-t border-white/30 pt-1`}>Gallery</p>
+                                          </div>
+                                        );
+                                      })()}
+                                    </div>
+                                    <div
+                                      className={`border-t border-slate-100 px-3.5 py-3.5 text-left transition-colors duration-300 dark:border-white/[0.08] ${isSelected ? "bg-amber-50/50 dark:bg-zinc-800/90" : "bg-slate-50 group-hover:bg-amber-50/30 dark:bg-zinc-900/50 dark:group-hover:bg-zinc-800/60"}`}
+                                    >
+                                      <p className="pr-9 text-sm font-semibold leading-snug tracking-tight text-slate-900 dark:text-white">
+                                        {template.name}
+                                      </p>
+                                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-slate-500 dark:text-zinc-400">
+                                        {template.description}
+                                      </p>
+                                      <p className="mt-2 text-[10px] font-semibold capitalize tracking-wider text-amber-600 dark:text-amber-500/90">
+                                        {template.category}
+                                      </p>
+                                    </div>
+                                    {isSelected && (
+                                      <span className="absolute top-3 right-3 z-30 flex h-7 w-7 items-center justify-center rounded-full bg-amber-400 text-zinc-950 shadow-lg ring-2 ring-zinc-950">
+                                        <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                      </span>
+                                    )}
+                                  </button>
+                                );
+                              });
+                            })()}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="border-t border-slate-200 bg-white px-5 py-5 dark:border-white/10 dark:bg-zinc-900 md:px-6 md:py-6">
+                        <div className="mx-auto w-full max-w-md space-y-4">
+                          {templateSaveSuccess && (
+                            <p className="rounded-xl border border-emerald-500/30 bg-emerald-50/80 px-3 py-2.5 text-sm font-medium text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-200 relative overflow-hidden backdrop-blur-sm">
+                              <span className="absolute inset-y-0 left-0 w-1 bg-emerald-500"></span>
+                              Template layout saved successfully!
+                            </p>
+                          )}
+                          <div className="flex flex-col gap-3 sm:flex-row sm:gap-3">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (!vcardId || !currentCard || selectedTemplateId == null) return;
+                                const template = VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId);
+                                const primaryColor = template ? getAccentPrimaryColor(template.accent) : undefined;
+                                setVCards((prev) =>
+                                  prev.map((c) =>
+                                    c.id === vcardId
+                                      ? { ...c, selectedTemplateId, templateName: template?.name, templatePrimaryColor: primaryColor }
+                                      : c
+                                  )
+                                );
+                                setTemplateSaveSuccess(true);
+                                setTimeout(() => setTemplateSaveSuccess(false), 3000);
+                              }}
+                              disabled={selectedTemplateId == null}
+                              className="flex-1 inline-flex items-center justify-center rounded-full bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-md transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-amber-400 dark:text-zinc-950 dark:shadow-[0_0_28px_-6px_rgba(251,191,36,0.55)] dark:hover:bg-amber-300"
+                            >
+                              Save template
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => selectedTemplateId != null && setSelectedTemplateId(currentCard?.selectedTemplateId ?? null)}
+                              className="flex-1 inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 dark:border-white/15 dark:bg-white/[0.05] dark:text-zinc-200 dark:hover:bg-white/[0.1]"
+                            >
+                              Discard
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mobile view preview – selected template theme in phone frame */}
+                    <div className="xl:sticky xl:top-8 self-start">
+                    {(() => {
+                      const selectedTemplate =
+                        selectedTemplateId != null ? VCARD_TEMPLATES.find((t) => t.id === selectedTemplateId) : null;
+                      const accent = selectedTemplate?.accent ?? "from-lime-400 to-lime-500";
+                      const primaryColor = selectedTemplate ? getAccentPrimaryColor(selectedTemplate.accent) : "#B4FF3B";
+                      const isLight = selectedTemplate ? isLightTemplate(selectedTemplate.accent) : false;
+                      const textOnPrimary = isLight ? "#1f2937" : "#ffffff";
+                      const previewContent = selectedTemplate
+                        ? getMobilePreviewContent(selectedTemplate)
+                        : {
+                          name: "Your Name",
+                          subtitle: "Title / Profession",
+                          description:
+                            "Add your description and contact details. Choose a template to see its content here.",
+                          ctaLabel: "Add to contact",
+                        };
+                      const previewType = selectedTemplate ? getPreviewType(selectedTemplate) : "generic";
+
+                      return (
+                        <div className="w-full shrink-0 overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_24px_80px_-28px_rgba(15,23,42,0.22)] ring-1 ring-slate-900/[0.04] dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-[0_28px_90px_-24px_rgba(0,0,0,0.85)] dark:ring-white/[0.06] xl:w-[min(100%,304px)] xl:max-w-[304px] 2xl:w-[min(100%,328px)] 2xl:max-w-[328px]">
+                          <div className="border-b border-slate-200/80 bg-white/90 px-5 py-5 backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/80 md:px-6 md:py-6">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400">Preview</p>
+                            <h3 className="mt-2 text-lg font-semibold tracking-tight text-slate-900 dark:text-white">Live device view</h3>
+                            <p className="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
+                              How your chosen layout reads on a phone.
+                            </p>
+                          </div>
+                          <div className="flex flex-col items-center px-3 pb-6 pt-6 sm:px-4 sm:pb-7 sm:pt-7">
+                            <div className="w-full max-w-[300px] rounded-[1.75rem] bg-gradient-to-b from-slate-200/95 via-slate-100 to-slate-200/90 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] ring-1 ring-slate-900/[0.06] sm:p-5 dark:from-slate-800 dark:via-slate-800 dark:to-slate-900 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:ring-white/[0.08]">
+                              <div className="relative mx-auto aspect-[320/640] w-full max-w-[272px] shrink-0 overflow-hidden rounded-[2rem] border-[6px] border-slate-900 bg-gray-950 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.05)] ring-1 ring-black/25 sm:max-w-[300px] sm:rounded-[2.25rem] sm:border-[7px]">
+                                <div className="absolute left-1/2 top-0 -translate-x-1/2 w-24 h-5 rounded-b-2xl bg-black z-20" />
+                                <div className="absolute inset-0 flex flex-col overflow-hidden">
+                                  {selectedTemplate?.id === 14 ? (
+                                    <div className="flex-1 bg-white relative overflow-hidden">
+                                      {/* Full scale mimic of Corporate (2) arcs */}
+                                      <div className="h-[40%] w-full bg-[#0A0C14] relative">
+                                        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-blue-950/20 via-transparent to-red-950/30" />
+                                      </div>
+                                      <div className="absolute top-[25%] right-[-140px] w-80 h-80 pointer-events-none z-0">
+                                        <div className="absolute inset-0 rounded-full border-[40px] border-[#FF5E5E] scale-[1.2] translate-x-8 translate-y-8" />
+                                        <div className="absolute inset-0 rounded-full border-[40px] border-[#FFC15E] scale-[1.0] translate-x-24 translate-y-24" />
+                                        <div className="absolute inset-0 rounded-full bg-[#1A1E29] scale-[0.8] translate-x-36 translate-y-36" />
+                                      </div>
+                                      <div className="relative px-8 -mt-20 z-10 flex flex-col items-start">
+                                        <div className="w-32 h-32 rounded-full border-4 border-white bg-slate-100 shadow-xl mb-6 overflow-hidden relative">
+                                          <div className="w-full h-full flex items-center justify-center text-4xl font-black text-slate-300">N</div>
+                                        </div>
+                                        <div className="space-y-2 mb-8 items-start text-left">
+                                          <div className="h-10 w-48 bg-[#1A1E29] rounded-md" />
+                                          <div className="h-6 w-32 bg-slate-300 rounded-md" />
+                                        </div>
+                                        <div className="flex gap-4 mb-10">
+                                          {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-10 h-10 rounded-full bg-[#1A1E29]" />)}
+                                        </div>
+                                        <div className="w-full h-14 rounded-2xl bg-[#1A1E29] shadow-lg flex items-center justify-center text-white font-bold">Add to Contact</div>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    selectedTemplate?.previewImage ? (
+                                      <div className="flex-1 relative">
+                                        <Image
+                                          src={selectedTemplate.previewImage}
+                                          alt={selectedTemplate.name}
+                                          fill
+                                          className="object-cover"
+                                          sizes="320px"
+                                        />
+                                        <div className="absolute inset-0 bg-black/10" />
+                                        {/* Overlay text matching the user's need for a "real" feel */}
+                                        <div className="absolute bottom-10 left-0 right-0 p-6 text-white text-center pb-20">
+                                          <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md mx-auto mb-4 border border-white/30" />
+                                          <h3 className="text-xl font-bold mb-1">{previewContent.name}</h3>
+                                          <p className="text-sm opacity-80">{previewContent.subtitle}</p>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      // Original hardcoded mockups as fallback
+                                      previewType === "flower" ? (
+                                        // Jenny Wilson / Flower Garden style full template preview inside phone
+                                        <div className="flex-1 bg-[#f6faf7] flex items-center justify-center px-4 py-6">
+                                          <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-emerald-100 relative">
+                                            <div className="absolute inset-0 pointer-events-none">
+                                              <div className="absolute -left-4 top-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
+                                              <div className="absolute -right-4 bottom-8 w-10 h-10 rounded-full border border-emerald-100 bg-emerald-50/60" />
+                                            </div>
+                                            <div className="max-h-[520px] overflow-y-auto">
+                                              <section className="relative">
+                                                <div
+                                                  className="h-24 w-full bg-cover bg-center bg-no-repeat"
+                                                  style={{ backgroundImage: "url('/images/cards/card-01.jpg')" }}
+                                                />
+                                                <div className="px-4 pb-4 pt-3 bg-white relative">
+                                                  <div className="-mt-10 flex items-end gap-2">
+                                                    <div className="relative w-12 h-12 rounded-xl border-2 border-white shadow-md overflow-hidden flex-shrink-0 bg-emerald-100" />
+                                                    <div className="flex-1 min-w-0">
+                                                      <p className="text-sm font-semibold text-emerald-900 leading-tight truncate">
+                                                        {previewContent.name}
+                                                      </p>
+                                                      <p className="text-[11px] font-medium text-emerald-700 mt-0.5 truncate">
+                                                        Flower Garden
+                                                      </p>
+                                                    </div>
+                                                  </div>
+                                                  <div className="mt-3 flex justify-center gap-3">
+                                                    {[1, 2, 3, 4, 5].map((i) => (
+                                                      // eslint-disable-next-line react/no-array-index-key
+                                                      <div
+                                                        key={i}
+                                                        className="h-7 w-7 rounded-full bg-emerald-50 text-emerald-600 text-[11px] flex items-center justify-center shadow-sm"
+                                                      >
+                                                        ●
+                                                      </div>
+                                                    ))}
+                                                  </div>
+                                                  <p className="mt-3 text-[10px] text-slate-600 text-center leading-snug">
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                                    has been the industry&apos;s standard dummy text ever since the 1500s.
+                                                  </p>
+
+                                                  {/* Contact row (email, phone, birth date, location) */}
+                                                  <div className="mt-4 grid grid-cols-2 gap-2 text-[9px] text-slate-700">
+                                                    <div className="flex items-center gap-1.5">
+                                                      <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                        ✉
+                                                      </div>
+                                                      <div className="min-w-0">
+                                                        <p className="text-[8px] text-slate-500">Email</p>
+                                                        <p className="truncate">jenny@gmail.com</p>
+                                                      </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-1.5">
+                                                      <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                        ☎
+                                                      </div>
+                                                      <div className="min-w-0">
+                                                        <p className="text-[8px] text-slate-500">Phone</p>
+                                                        <p className="truncate">+1 234567890</p>
+                                                      </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-1.5">
+                                                      <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                        🎂
+                                                      </div>
+                                                      <div className="min-w-0">
+                                                        <p className="text-[8px] text-slate-500">Birth Date</p>
+                                                        <p className="truncate">12th March, 1990</p>
+                                                      </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-1.5">
+                                                      <div className="h-6 w-6 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-700 text-[10px] shrink-0">
+                                                        📍
+                                                      </div>
+                                                      <div className="min-w-0">
+                                                        <p className="text-[8px] text-slate-500">Location</p>
+                                                        <p className="truncate">Berlin, Germany</p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  {/* Gallery section */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Gallery
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 grid grid-cols-3 gap-2">
+                                                      {[1, 2, 3].map((i) => (
+                                                        // eslint-disable-next-line react/no-array-index-key
+                                                        <div
+                                                          key={i}
+                                                          className="aspect-[4/5] rounded-xl overflow-hidden bg-emerald-50"
+                                                        >
+                                                          <div
+                                                            className="w-full h-full bg-cover bg-center"
+                                                            style={{
+                                                              backgroundImage: `url('/images/product/product-0${i}.jpg')`,
+                                                            }}
+                                                          />
+                                                        </div>
+                                                      ))}
+                                                    </div>
+                                                  </div>
+
+                                                  {/* Our Service – Dynamic from card data */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Our Service
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
+                                                      <div className="mt-3 space-y-2">
+                                                        {(((currentCard as any)?.services as any[]) ?? []).slice(0, 2).map((svc, idx) => (
+                                                          <div key={svc.id || idx} className="rounded-2xl border border-emerald-100 bg-white shadow-sm overflow-hidden flex">
+                                                            <div className="w-16 h-16 bg-emerald-50 shrink-0 overflow-hidden flex items-center justify-center">
+                                                              {svc.icon ? (
+                                                                <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                                              ) : (
+                                                                <span className="text-emerald-300 font-bold text-lg">{idx + 1}</span>
+                                                              )}
+                                                            </div>
+                                                            <div className="px-2 py-1.5 flex-1 min-w-0">
+                                                              <p className="text-[9px] font-semibold text-slate-900 truncate">{svc.name}</p>
+                                                              <p className="mt-0.5 text-[8px] text-slate-600 leading-snug line-clamp-2">
+                                                                {svc.description}
+                                                              </p>
+                                                            </div>
+                                                          </div>
+                                                        ))}
+                                                      </div>
+                                                    ) : (
+                                                      <div className="mt-3 py-4 text-center rounded-2xl border border-dashed border-emerald-100">
+                                                        <p className="text-emerald-300 text-[8px]">No services added yet.</p>
+                                                      </div>
+                                                    )}
+                                                  </div>
+
+                                                  {/* Make an Appointment – compact preview */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Make an Appointment
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 space-y-2">
+                                                      <div>
+                                                        <p className="text-[8px] text-slate-600 mb-0.5">Date :</p>
+                                                        <div className="h-7 rounded-full border border-emerald-200 bg-white flex items-center justify-between px-2 text-[8px] text-slate-500">
+                                                          <span>Pick a date</span>
+                                                          <span>📅</span>
+                                                        </div>
+                                                      </div>
+                                                      <div>
+                                                        <p className="text-[8px] text-slate-600 mb-0.5">Hour:</p>
+                                                        <div className="flex gap-1 overflow-x-auto pb-0.5">
+                                                          {["8:10 - 20:00", "8:10 - 20:00", "8:10 - 20:00"].map((label, idx) => (
+                                                            <button
+                                                              key={`${label}-${idx}`}
+                                                              type="button"
+                                                              className="px-2 py-1 rounded-full bg-white/60 border border-emerald-100 text-[8px] text-slate-600 whitespace-nowrap"
+                                                            >
+                                                              {label}
+                                                            </button>
+                                                          ))}
+                                                        </div>
+                                                      </div>
+                                                      <button
+                                                        type="button"
+                                                        className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.5 shadow-md"
+                                                      >
+                                                        Make An Appointment
+                                                      </button>
+                                                    </div>
+                                                  </div>
+
+                                                  {/* Product – compact two-column layout */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Product
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 grid grid-cols-2 gap-2">
+                                                      {[1, 2].map((i) => (
+                                                        // eslint-disable-next-line react/no-array-index-key
+                                                        <div key={i} className="rounded-2xl bg-white border border-emerald-100 overflow-hidden">
+                                                          <div
+                                                            className="h-16 w-full bg-cover bg-center"
+                                                            style={{
+                                                              backgroundImage: `url('/images/product/product-0${i}.jpg')`,
+                                                            }}
+                                                          />
+                                                          <div className="px-3 py-2">
+                                                            <div className="flex items-center justify-between text-[9px] text-slate-900 font-semibold">
+                                                              <span>Flower Name</span>
+                                                              <span>$25.00</span>
+                                                            </div>
+                                                            <p className="mt-0.5 text-[8px] text-slate-600">Lorem Ipsum dummy text</p>
+                                                          </div>
+                                                        </div>
+                                                      ))}
+                                                    </div>
+                                                  </div>
+
+                                                  {/* Testimonials section */}
+                                                  {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
+                                                    <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                      <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                        <span className="flex-1 h-px bg-emerald-100" />
+                                                        Testimonials
+                                                        <span className="flex-1 h-px bg-emerald-100" />
+                                                      </h3>
+                                                      <div className="mt-3 space-y-3">
+                                                        {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
+                                                          <div key={t.id || idx} className="rounded-2xl bg-white border border-emerald-100 px-3 py-3 flex gap-2">
+                                                            <div className="w-10 h-10 rounded-full bg-emerald-50 overflow-hidden flex-shrink-0">
+                                                              {t.image ? (
+                                                                // eslint-disable-next-line @next/next/no-img-element
+                                                                <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
+                                                              ) : (
+                                                                <div className="w-full h-full flex items-center justify-center text-xs font-bold text-emerald-600 bg-emerald-100">
+                                                                  {(t.name || "C")[0].toUpperCase()}
+                                                                </div>
+                                                              )}
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                              <p className="text-[8px] text-slate-600 leading-snug line-clamp-3">
+                                                                &quot;{t.quote}&quot;
+                                                              </p>
+                                                              <p className="mt-1 text-[9px] font-semibold text-slate-900">{t.name}</p>
+                                                              <p className="text-[8px] text-emerald-600">- {t.role}</p>
+                                                            </div>
+                                                          </div>
+                                                        ))}
+                                                      </div>
+                                                    </div>
+                                                  )}
+
+                                                  {/* Blog – compact layout */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Blog
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 grid grid-cols-[1.1fr,1fr] gap-2 items-center">
+                                                      <div>
+                                                        <p className="text-[9px] font-semibold text-slate-900 mb-0.5">Lorem Ipsum</p>
+                                                        <p className="text-[8px] text-slate-600 leading-snug">
+                                                          Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has
+                                                          been the industry&apos;s standard.
+                                                        </p>
+                                                        <div className="mt-2 flex gap-1.5">
+                                                          <button
+                                                            type="button"
+                                                            className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
+                                                          >
+                                                            ←
+                                                          </button>
+                                                          <button
+                                                            type="button"
+                                                            className="h-5 w-5 rounded-full border border-emerald-300 text-emerald-700 flex items-center justify-center text-[8px]"
+                                                          >
+                                                            →
+                                                          </button>
+                                                        </div>
+                                                      </div>
+                                                      <div className="relative">
+                                                        <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg border border-emerald-200" />
+                                                        <div className="relative rounded-lg overflow-hidden border border-emerald-200">
+                                                          <div
+                                                            className="h-20 w-full bg-cover bg-center"
+                                                            style={{ backgroundImage: "url('/images/product/product-03.jpg')" }}
+                                                          />
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  {/* Business Hours – compact grid */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Business Hours
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 grid grid-cols-2 gap-y-1.5 text-[8px] text-slate-700">
+                                                      <p>Sunday : 08:10 - 20:00</p>
+                                                      <p>Monday : 08:10 - 20:00</p>
+                                                      <p>Tuesday : 08:10 - 20:00</p>
+                                                      <p>Wednesday : 08:10 - 10:00</p>
+                                                      <p>Thursday : 08:10 - 20:00</p>
+                                                      <p>Friday : 08:10 - 20:00</p>
+                                                      <p className="col-span-2 text-center">Saturday : Closed</p>
+                                                    </div>
+                                                  </div>
+
+                                                  {/* QR Code – compact preview */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      QR Code
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 flex flex-col items-center gap-3">
+                                                      <div className="relative w-20 h-20 rounded-lg bg-white border border-emerald-100 flex items-center justify-center shadow-sm">
+                                                        <div className="w-16 h-16 bg-[radial-gradient(circle,_#000_40%,_transparent_41%)] [background-size:8px_8px]" />
+                                                      </div>
+                                                      <button
+                                                        type="button"
+                                                        className="px-4 py-1.5 rounded-full bg-emerald-700 text-white text-[9px] font-semibold shadow-md"
+                                                      >
+                                                        Download My QR Code
+                                                      </button>
+                                                    </div>
+                                                  </div>
+
+                                                  {/* Contact Us – compact form preview */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Contact Us
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 space-y-1.5">
+                                                      <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                                        Full Name
+                                                      </div>
+                                                      <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                                        Email Address
+                                                      </div>
+                                                      <div className="h-6 rounded-full bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-center px-3">
+                                                        Phone Number
+                                                      </div>
+                                                      <div className="h-10 rounded-2xl bg-slate-100 border border-slate-200 text-[8px] text-slate-400 flex items-start px-3 py-1.5">
+                                                        Your Message
+                                                      </div>
+                                                      <button
+                                                        type="button"
+                                                        className="mt-1 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
+                                                      >
+                                                        Send Message
+                                                      </button>
+                                                    </div>
+                                                  </div>
+
+                                                  {/* Create Your vCard – link preview */}
+                                                  <div className="mt-4 pt-3 border-t border-emerald-50 mb-3">
+                                                    <h3 className="text-[10px] font-semibold text-emerald-800 text-center flex items-center justify-center gap-2">
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                      Create Your vCard
+                                                      <span className="flex-1 h-px bg-emerald-100" />
+                                                    </h3>
+                                                    <div className="mt-3 rounded-2xl overflow-hidden border border-emerald-100 bg-emerald-50/60">
+                                                      <div className="px-3 py-3 bg-[url('/images/cards/card-02.png')] bg-cover bg-center">
+                                                        <div className="rounded-full bg-white/95 border border-slate-200 px-3 py-1.5 flex items-center justify-between text-[8px] text-slate-700">
+                                                          <span className="truncate mr-2">
+                                                            https://vcards.infyom.com/marlonbrasil
+                                                          </span>
+                                                          <span className="shrink-0 text-[9px]">↗</span>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <button
+                                                      type="button"
+                                                      className="mt-3 w-full rounded-full bg-emerald-700 text-white text-[9px] font-semibold py-1.75 shadow-md"
+                                                    >
+                                                      Add to Contact
+                                                    </button>
+                                                  </div>
+                                                </div>
+                                              </section>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ) : previewType === "travel" ? (
+                                        <div className="flex-1 bg-sky-50 flex items-center justify-center px-4 py-6">
+                                          <div className="w-full max-w-[280px] rounded-[1.75rem] bg-white shadow-2xl overflow-hidden border border-sky-100 relative group/travel-p">
+                                            <div className="max-h-[520px] overflow-y-auto">
+                                              <div className="relative h-36 w-full overflow-hidden">
+                                                <div className="absolute inset-0 bg-sky-600">
+                                                  <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover opacity-60" alt="" />
+                                                </div>
+                                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                                  <p className="text-[40px] font-black text-slate-900/10 tracking-widest uppercase">TRAVEL</p>
+                                                </div>
+                                                <div className="absolute inset-0 pointer-events-none">
+                                                  <svg viewBox="0 0 280 144" className="w-full h-full">
+                                                    <path d="M 230 40 C 200 130, 50 120, 100 80 C 150 40, 250 100, 200 140" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" className="opacity-50" />
+                                                    <circle cx="200" cy="140" r="3" fill="#fbbf24" className="animate-pulse" />
+                                                  </svg>
+                                                </div>
+                                                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                                              </div>
+
+                                              <div className="px-4 -mt-10 relative z-10 space-y-4">
+                                                <div className="flex items-end gap-3">
+                                                  <div className="w-16 h-16 rounded-2xl border-4 border-white bg-sky-100 shadow-lg overflow-hidden shrink-0" />
+                                                  <div className="pb-1">
+                                                    <p className="text-slate-800 font-black text-xs">{previewContent.name}</p>
+                                                    <p className="text-amber-500 font-bold text-[9px]">Travel Agent</p>
+                                                  </div>
+                                                </div>
+
+                                                <div className="flex justify-start gap-2">
+                                                  {[1, 2, 3, 4, 5].map(i => (
+                                                    <div key={i} className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 text-[10px] border border-slate-100 italic font-bold">
+                                                      {i === 1 ? 'f' : i === 2 ? 'w' : i === 3 ? 'in' : i === 4 ? 'ig' : 'x'}
+                                                    </div>
+                                                  ))}
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                                    <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Email</p>
+                                                    <p className="text-slate-700 text-[10px] font-semibold truncate">travel@example.com</p>
+                                                  </div>
+                                                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                                    <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Mobile</p>
+                                                    <p className="text-slate-700 text-[10px] font-semibold truncate">+49 95864 12484</p>
+                                                  </div>
+                                                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                                    <p className="text-slate-400 text-[8px] uppercase tracking-wider font-bold">Official Website</p>
+                                                    <p className="text-slate-700 text-[10px] font-semibold truncate">www.travelexplorer.com</p>
+                                                  </div>
+                                                </div>
+
+                                                <div className="h-20 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center">
+                                                  <p className="text-sky-400 text-[10px]">Travel Gallery Preview</p>
+                                                </div>
+
+                                                <button className="w-full bg-amber-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-amber-200">
+                                                  Save Contact
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ) : previewType === "travel-dark" ? (
+                                        /* Digital business card template style (screenshot) – not website style */
+                                        <div className="flex-1 overflow-y-auto flex flex-col bg-[#1A1A2E] text-left min-h-0 relative" data-single-page-template>
+                                          {/* Floating grid icon – top right */}
+                                          <button type="button" className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-[#38bdf8]/90 flex items-center justify-center shadow-lg">
+                                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
+                                          </button>
+                                          {/* Top banner – name, title, CTA (template header) */}
+                                          <header className="bg-black pt-4 pb-8 px-4 relative">
+                                            <div className="flex justify-end mb-2">
+                                              <button type="button" className="text-white/80 text-[9px] flex items-center gap-0.5 border border-white/30 rounded-full px-2 py-1">EN <span>▼</span></button>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                              <div className="w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center text-white font-bold text-xs shrink-0">
+                                                {(previewContent.name || "N").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase() || "N"}
+                                              </div>
+                                              <div>
+                                                <h1 className="text-white text-sm font-bold leading-tight truncate">{previewContent.name || "Your Name"}</h1>
+                                                <p className="text-white text-[9px] truncate">{previewContent.subtitle || "Title"}</p>
+                                              </div>
+                                            </div>
+                                            <p className="text-white/90 text-[9px] mt-2 line-clamp-2">{previewContent.description}</p>
+                                            {previewContent.extraLine && <p className="text-white/70 text-[8px] mt-0.5 truncate">{previewContent.extraLine}</p>}
+                                            <button type="button" className="mt-3 w-full rounded-lg border border-white text-white text-[9px] font-medium py-2">Let&apos;s Build Your Brand Online – DM To Connect</button>
+                                          </header>
+                                          {/* Profile picture – centered, overlapping */}
+                                          <div className="flex justify-center -mt-6 relative z-10 px-4">
+                                            <div className="w-16 h-16 rounded-full border-4 border-[#1A1A2E] bg-slate-600 overflow-hidden shrink-0" />
+                                          </div>
+                                          {/* Name + role + company */}
+                                          <div className="text-center pt-2 px-4">
+                                            <p className="text-white text-sm font-bold inline-flex items-center gap-1">{previewContent.name} <span className="text-[#38bdf8]">✓</span></p>
+                                            <p className="text-white/90 text-[10px] mt-0.5">{previewContent.subtitle}</p>
+                                            <p className="text-white/80 text-[9px]">Founder & CEO · Aayzen Digital</p>
+                                          </div>
+                                          {/* Description */}
+                                          <div className="px-4 pt-3 text-center">
+                                            <p className="text-white/90 text-[9px] leading-snug">Helping businesses grow their online presence through <strong className="text-white">digital marketing, social media marketing,</strong> and brand-focused growth strategies.</p>
+                                            <p className="text-white/90 text-[9px] leading-snug mt-1.5">Also building smart <strong className="text-white">digital business card solutions</strong> to help professionals showcase and share their identity online.</p>
+                                          </div>
+                                          {/* Add to contact – primary CTA */}
+                                          <div className="px-4 pt-4">
+                                            <button type="button" className="w-full rounded-xl bg-gradient-to-r from-[#38bdf8] to-[#0ea5e9] text-white text-[10px] font-semibold py-2.5 flex items-center justify-center gap-2 shadow-lg">
+                                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                                              Add to contact
+                                            </button>
+                                          </div>
+                                          {/* Title banner – OpenMyProfile style */}
+                                          <div className="mt-4 mx-4 rounded-xl bg-gradient-to-r from-[#7c3aed] to-[#2563eb] py-2 px-3 text-center">
+                                            <p className="text-white text-[10px] font-bold">OpenMyProfile – Digital Business Card</p>
+                                          </div>
+                                          {/* Contact grid – 2x2 with icons in light blue circles */}
+                                          <div className="px-4 pt-4 grid grid-cols-2 gap-2">
+                                            <div className="flex items-start gap-2">
+                                              <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">✉</div>
+                                              <div className="min-w-0">
+                                                <p className="text-white/60 text-[8px]">Email</p>
+                                                <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[0]?.trim() || previewContent.officialWebsite || "email@example.com"}</p>
+                                              </div>
+                                            </div>
+                                            <div className="flex items-start gap-2">
+                                              <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📱</div>
+                                              <div className="min-w-0">
+                                                <p className="text-white/60 text-[8px]">Mobile Number</p>
+                                                <p className="text-white text-[9px] truncate">{previewContent.extraLine?.split("·")[1]?.trim() || "+91 9977216140"}</p>
+                                              </div>
+                                            </div>
+                                            <div className="flex items-start gap-2">
+                                              <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">🎂</div>
+                                              <div className="min-w-0">
+                                                <p className="text-white/60 text-[8px]">Date of Birth</p>
+                                                <p className="text-white text-[9px]">18/09/1996</p>
+                                              </div>
+                                            </div>
+                                            <div className="flex items-start gap-2">
+                                              <div className="w-8 h-8 rounded-full bg-[#38bdf8]/20 flex items-center justify-center shrink-0 text-[#38bdf8] text-xs">📍</div>
+                                              <div className="min-w-0">
+                                                <p className="text-white/60 text-[8px]">Address</p>
+                                                <p className="text-white text-[9px] truncate">Madhya Pradesh, India</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          {/* QR Code section – white card, QR + profile */}
+                                          <div className="px-4 pt-4">
+                                            <p className="text-white text-xs font-bold mb-2 flex items-center justify-between">
+                                              QR Code
+                                              <span className="w-7 h-7 rounded-full bg-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
+                                                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm8-8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 8a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" clipRule="evenodd" /></svg>
+                                              </span>
+                                            </p>
+                                            <div className="bg-white rounded-2xl p-3 flex items-center gap-3">
+                                              <div className="w-14 h-14 rounded-lg bg-black flex-shrink-0 [background-size:6px_6px]" style={{ backgroundImage: "radial-gradient(circle, #000 40%, transparent 41%)" }} />
+                                              <div className="w-12 h-12 rounded-full bg-slate-300 flex-shrink-0" />
+                                            </div>
+                                          </div>
+                                          {/* Our Services – Dynamic from card data */}
+                                          <div className="px-4 pt-4">
+                                            <p className="text-white text-xs font-bold mb-3 text-center">Our Services</p>
+                                            <div className="grid grid-cols-2 gap-2">
+                                              {(((currentCard as any)?.services as any[]) ?? []).length > 0 ? (
+                                                (((currentCard as any)?.services as any[]) ?? []).slice(0, 4).map((svc, idx) => (
+                                                  <div key={svc.id || idx} className="rounded-xl border border-[#38bdf8]/30 bg-white/5 p-2">
+                                                    <div className="w-full h-10 rounded-lg bg-white/10 mb-1.5 flex items-center justify-center overflow-hidden">
+                                                      {svc.icon ? (
+                                                        <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                                      ) : (
+                                                        <span className="text-[#38bdf8] text-xs font-bold">{idx + 1}</span>
+                                                      )}
+                                                    </div>
+                                                    <p className="text-white text-[10px] font-bold line-clamp-1">{svc.name}</p>
+                                                    <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">{svc.description}</p>
+                                                  </div>
+                                                ))
+                                              ) : (
+                                                <div className="col-span-2 text-center py-4 rounded-xl border border-dashed border-white/20">
+                                                  <p className="text-white/40 text-[9px]">No services added yet.</p>
+                                                </div>
+                                              )}
+                                            </div>
+                                          </div>
+                                          {/* Gallery – 2 images + carousel dots */}
+                                          <div className="px-4 pt-4">
+                                            <p className="text-white text-xs font-bold mb-2 text-center">Gallery</p>
+                                            <div className="flex gap-2">
+                                              <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
+                                              <div className="flex-1 aspect-[4/3] rounded-xl border border-[#38bdf8]/30 bg-slate-600" />
+                                            </div>
+                                            <div className="flex items-center justify-center gap-2 mt-2">
+                                              <span className="text-white/50 text-xs">◀</span>
+                                              <span className="flex gap-1"><span className="w-1.5 h-1.5 rounded-full bg-white/40" /><span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" /><span className="w-1.5 h-1.5 rounded-full bg-white/40" /></span>
+                                              <span className="text-white/50 text-xs">▶</span>
+                                            </div>
+                                          </div>
+                                          {/* Products – one product card */}
+                                          <div className="px-4 pt-4 pb-4">
+                                            <p className="text-white text-xs font-bold mb-2 text-center">Products</p>
+                                            <div className="rounded-2xl border border-[#38bdf8]/40 bg-gradient-to-b from-[#38bdf8]/20 to-transparent overflow-hidden">
+                                              <div className="h-16 bg-white/10 flex items-center justify-center text-[#38bdf8] text-2xl">📱</div>
+                                              <div className="p-2">
+                                                <p className="text-white text-[10px] font-bold">Digital Business Card</p>
+                                                <p className="text-white/70 text-[8px] mt-0.5 line-clamp-2">A smart digital business card to share your details, services, and links instantly.</p>
+                                                <p className="text-white font-bold text-[10px] mt-1">₹2,999.00</p>
+                                              </div>
+                                            </div>
+                                            <p className="text-center text-[#38bdf8] text-[9px] underline mt-2">View More Products</p>
+                                          </div>
+                                          {/* Social icons row */}
+                                          <div className="flex items-center justify-center gap-4 py-3 px-4 border-t border-white/10">
+                                            <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">🌐</span>
+                                            <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">X</span>
+                                            <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-[10px] font-bold">f</span>
+                                            <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">📷</span>
+                                            <span className="w-8 h-8 rounded-full border border-[#38bdf8]/40 flex items-center justify-center text-white text-xs">▶</span>
+                                          </div>
+                                        </div>
+                                      ) : (
+                                        <div className="flex-1 flex flex-col bg-[#0f2630]">
+                                          <div className={`relative h-24 bg-gradient-to-b ${accent} rounded-t-[1.5rem] overflow-hidden`}>
+                                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+                                            <button
+                                              type="button"
+                                              className="absolute top-8 right-3 flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-medium shadow"
+                                              style={{
+                                                backgroundColor: isLight ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.2)",
+                                                color: textOnPrimary,
+                                              }}
+                                            >
+                                              EN
+                                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                              </svg>
+                                            </button>
+                                          </div>
+                                          <div className="relative -mt-6 px-4 pb-2">
+                                            <div className="absolute inset-0 top-0 h-20 bg-[#142633] rounded-t-2xl" />
+                                            <div className="relative flex items-center gap-3 pt-2">
+                                              <div
+                                                className="h-14 w-14 rounded-full border-2 overflow-hidden bg-gray-600 flex-shrink-0"
+                                                style={{ borderColor: primaryColor }}
+                                              />
+                                              <div className="flex-1 min-w-0">
+                                                <p
+                                                  className="text-base font-semibold truncate"
+                                                  style={{ color: primaryColor }}
+                                                >
+                                                  {previewContent.name}
+                                                </p>
+                                                <p
+                                                  className="text-xs opacity-90 truncate"
+                                                  style={{ color: primaryColor }}
+                                                >
+                                                  {previewContent.subtitle}
+                                                </p>
+                                              </div>
+                                              <button
+                                                type="button"
+                                                className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+                                                style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                                              >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                  <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                                                  />
+                                                </svg>
+                                              </button>
+                                            </div>
+                                          </div>
+                                          <div className="flex-1 px-4 py-3 overflow-y-auto">
+                                            <p className="text-[11px] leading-relaxed text-gray-300">
+                                              {previewContent.description}
+                                            </p>
+                                            {previewContent.extraLine && (
+                                              <p className="text-[10px] text-gray-400 mt-2">{previewContent.extraLine}</p>
+                                            )}
+                                            {previewContent.officialWebsite && (
+                                              <p className="text-[10px] text-gray-400 mt-1.5 flex items-center gap-1">
+                                                <span className="text-gray-500">Official Website:</span>
+                                                <span className="text-brand-400 underline">{previewContent.officialWebsite}</span>
+                                              </p>
+                                            )}
+                                            {(previewContent.address || previewContent.company) && (
+                                              <p className="text-[10px] text-gray-400 mt-1">
+                                                {[previewContent.company, previewContent.address].filter(Boolean).join(" · ")}
+                                              </p>
+                                            )}
+                                            <div className="mt-6 space-y-3">
+                                              <button
+                                                type="button"
+                                                className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold"
+                                                style={{ backgroundColor: primaryColor, color: textOnPrimary }}
+                                              >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                  <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                                                  />
+                                                </svg>
+                                                {previewContent.ctaLabel}
+                                              </button>
+                                              <div className="flex gap-2">
+                                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                                  fb
+                                                </div>
+                                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                                  in
+                                                </div>
+                                                <div className="flex-1 flex items-center justify-center rounded-full border border-white/40 h-9 text-white text-xs font-medium">
+                                                  x
+                                                </div>
+                                              </div>
+                                            </div>
+                                            {(((currentCard as any)?.testimonials as any[]) ?? []).length > 0 && (
+                                              <div className="mt-8 pt-4 border-t border-white/10">
+                                                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
+                                                  Testimonials
+                                                </p>
+                                                <div className="space-y-3">
+                                                  {(((currentCard as any)?.testimonials as any[]) ?? []).slice(0, 2).map((t, idx) => (
+                                                    <div key={t.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3">
+                                                      <div className="flex items-center gap-2 mb-2">
+                                                        <div className="w-8 h-8 rounded-full bg-white/10 overflow-hidden shrink-0">
+                                                          {t.image ? (
+                                                            <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
+                                                          ) : (
+                                                            <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-white/40">
+                                                              {(t.name || "C")[0].toUpperCase()}
+                                                            </div>
+                                                          )}
+                                                        </div>
+                                                        <div className="min-w-0">
+                                                          <p className="text-[10px] font-semibold text-white truncate">{t.name}</p>
+                                                          <p className="text-[8px] text-white/40 truncate">{t.role}</p>
+                                                        </div>
+                                                      </div>
+                                                      <p className="text-[9px] text-white/70 leading-relaxed line-clamp-3 italic">
+                                                        &quot;{t.quote}&quot;
+                                                      </p>
+                                                    </div>
+                                                  ))}
+                                                </div>
+                                              </div>
+                                            )}
+                                            {(((currentCard as any)?.services as any[]) ?? []).length > 0 && (
+                                              <div className="mt-8 pt-4 border-t border-white/10">
+                                                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-widest text-center mb-4">
+                                                  Services
+                                                </p>
+                                                <div className="grid grid-cols-1 gap-3">
+                                                  {(((currentCard as any)?.services as any[]) ?? []).slice(0, 3).map((svc, idx) => (
+                                                    <div key={svc.id || idx} className="rounded-xl bg-white/5 border border-white/10 p-3 flex items-start gap-3">
+                                                      <div className="w-10 h-10 rounded-lg bg-white/10 overflow-hidden shrink-0 flex items-center justify-center text-white/60 text-xs">
+                                                        {svc.icon ? (
+                                                          <img src={svc.icon} alt={svc.name} className="h-full w-full object-cover" />
+                                                        ) : (
+                                                          <span>{idx + 1}</span>
+                                                        )}
+                                                      </div>
+                                                      <div className="min-w-0">
+                                                        <p className="text-[10px] font-semibold text-white truncate">{svc.name}</p>
+                                                        <p className="text-[8px] text-white/60 leading-normal line-clamp-2">{svc.description}</p>
+                                                      </div>
+                                                    </div>
+                                                  ))}
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      )))}
+                                </div>
+                              </div>
+                            </div>
+                            <p className="mt-5 max-w-[300px] text-center text-xs leading-relaxed text-slate-600 dark:text-zinc-500">
+                              {selectedTemplate ? (
+                                <>
+                                  <span className="font-semibold text-slate-900 dark:text-zinc-100">{selectedTemplate.name}</span>
+                                  <span className="text-slate-500 dark:text-zinc-500"> · mobile</span>
+                                </>
+                              ) : (
+                                "Pick a layout from the gallery to preview."
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Dynamic vCard – advanced controls + preview */}
+                {activeSection === "dynamic" && (
+                  <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Controls */}
+                    <div className="flex-1 space-y-6 max-w-xl">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white tracking-tight">Dynamic vCard</h3>
+                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                          Choose your brand colors and button style for the dynamic vCard layout.
+                        </p>
+                        {selectedTemplateId != null && (() => {
+                          const t = VCARD_TEMPLATES.find((x) => x.id === selectedTemplateId);
+                          return t ? (
+                            <p className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-brand-500/10 px-3 py-1.5 text-sm font-medium text-brand-700 dark:text-brand-300">
+                              <span className="inline-block h-2 w-2 rounded-full bg-brand-500" />
+                              Using template: {t.name}
+                            </p>
+                          ) : null;
+                        })()}
                       </div>
 
-                      <div className="flex items-center gap-3 pt-1">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Primary Color:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                value={dynamicPrimaryColor}
+                                onChange={(e) => setDynamicPrimaryColor(e.target.value)}
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Background Secondary color:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                value={dynamicBgSecondary}
+                                onChange={(e) => setDynamicBgSecondary(e.target.value)}
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Background color:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                value={dynamicBgColor}
+                                onChange={(e) => setDynamicBgColor(e.target.value)}
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Button Text Color:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                value={dynamicButtonTextColor}
+                                onChange={(e) => setDynamicButtonTextColor(e.target.value)}
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Label Text Color:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                value={dynamicLabelColor}
+                                onChange={(e) => setDynamicLabelColor(e.target.value)}
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Description Text Color:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                value={dynamicDescriptionColor}
+                                onChange={(e) => setDynamicDescriptionColor(e.target.value)}
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Cards Background:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                defaultValue="#ffffff"
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1.5">
+                            Social Icon Color:
+                          </label>
+                          <div className="rounded-md border border-gray-300 bg-white shadow-sm px-3 py-2">
+                            <div className="h-6 rounded-md bg-gray-100 flex items-center">
+                              <input
+                                type="color"
+                                defaultValue="#ffffff"
+                                className="h-5 w-full cursor-pointer rounded-md border-0 bg-transparent p-0 [appearance:none]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <p className="text-xs font-medium text-gray-700 dark:text-gray-200">Sticky Button:</p>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => setStickyButtonPosition("left")}
+                            className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium shadow-sm transition-colors ${stickyButtonPosition === "left"
+                              ? "bg-gray-800 text-white border-2 border-gray-800"
+                              : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                              }`}
+                          >
+                            Left
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setStickyButtonPosition("right")}
+                            className={`min-w-[96px] rounded-md px-5 py-2 text-xs font-medium transition-colors ${stickyButtonPosition === "right"
+                              ? "bg-gray-800 text-white border-2 border-black"
+                              : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                              }`}
+                          >
+                            Right
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <p className="text-xs font-medium text-gray-700 dark:text-gray-200">Button Styles:</p>
+                        <div className="grid grid-cols-2 gap-3">
+                          {[
+                            { n: 1, className: "rounded-md border-2 border-black bg-white text-gray-900" },
+                            { n: 2, className: "rounded-md bg-gray-300 text-gray-800" },
+                            { n: 3, className: "rounded-full bg-gray-300 text-gray-800" },
+                            { n: 4, className: "rounded-md bg-gray-300 text-gray-800" },
+                            { n: 5, className: "rounded-full border-2 border-black bg-white text-gray-900" },
+                            { n: 6, className: "rounded-md border-2 border-dotted border-black bg-white text-gray-900" },
+                            { n: 7, className: "rounded-md border border-black bg-white text-gray-900" },
+                            { n: 8, className: "rounded-md bg-gray-300 text-gray-800" },
+                            { n: 9, className: "rounded-[999px] rounded-bl-[2rem] bg-gray-300 text-gray-800" },
+                            { n: 10, className: "rounded-md border border-gray-500 bg-white text-gray-800" },
+                          ].map(({ n, className }) => (
+                            <button
+                              key={n}
+                              type="button"
+                              onClick={() => setSelectedButtonStyle(n as typeof selectedButtonStyle)}
+                              className={`flex items-center justify-center px-4 py-2 text-xs font-semibold transition-all ${className} ${selectedButtonStyle === n ? "ring-2 ring-brand-500 ring-offset-2" : ""
+                                }`}
+                            >
+                              Style {n}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap justify-start gap-2.5 pt-4 border-t border-gray-200 dark:border-gray-700">
                         <button
                           type="button"
-                          role="switch"
-                          aria-checked={useQrConfiguration}
-                          onClick={() => setUseQrConfiguration((prev) => !prev)}
-                          className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${useQrConfiguration ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
-                            }`}
-                        >
-                          <span
-                            className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${useQrConfiguration ? "translate-x-5" : "translate-x-0"
-                              }`}
-                          />
-                        </button>
-                        <span className="text-sm text-gray-700 dark:text-gray-300">Use This Configuration</span>
-                      </div>
-
-                      <div className="flex gap-3 pt-2">
-                        <button
-                          type="submit"
-                          disabled={!useQrConfiguration}
-                          className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-brand-500"
+                          onClick={() => {
+                            if (!vcardId || !currentCard) return;
+                            const dynamicTheme = {
+                              primaryColor: dynamicPrimaryColor,
+                              bgSecondary: dynamicBgSecondary,
+                              bgColor: dynamicBgColor,
+                              buttonTextColor: dynamicButtonTextColor,
+                              labelColor: dynamicLabelColor,
+                              descriptionColor: dynamicDescriptionColor,
+                              stickyButtonPosition,
+                              selectedButtonStyle,
+                            };
+                            setVCards((prev) =>
+                              prev.map((c) => (c.id === vcardId ? { ...c, dynamicTheme } : c))
+                            );
+                            setDynamicThemeSaveSuccess(true);
+                          }}
+                          className="btn-primary-premium inline-flex items-center justify-center"
                         >
                           Save
                         </button>
                         <button
                           type="button"
                           onClick={() => {
-                            setQrCodeColor(currentCard?.qrCodeColor ?? "#000000");
-                            setQrBgColor(currentCard?.qrBgColor ?? "#ffffff");
-                            setQrDotStyle(currentCard?.qrDotStyle ?? "square");
-                            setQrEyeStyle(currentCard?.qrEyeStyle ?? "square");
+                            if (currentCard?.dynamicTheme) {
+                              const t = currentCard.dynamicTheme;
+                              setDynamicPrimaryColor(t.primaryColor);
+                              setDynamicBgSecondary(t.bgSecondary);
+                              setDynamicBgColor(t.bgColor);
+                              setDynamicButtonTextColor(t.buttonTextColor);
+                              setDynamicLabelColor(t.labelColor);
+                              setDynamicDescriptionColor(t.descriptionColor);
+                              setStickyButtonPosition(t.stickyButtonPosition ?? "right");
+                              const bs = t.selectedButtonStyle;
+                              if (typeof bs === "number" && bs >= 1 && bs <= 10) {
+                                setSelectedButtonStyle(bs as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10);
+                              }
+                            } else if (selectedTemplateId != null) {
+                              const template = VCARD_TEMPLATES.find((x) => x.id === selectedTemplateId);
+                              if (template) {
+                                setDynamicPrimaryColor(getAccentPrimaryColor(template.accent));
+                                setDynamicButtonTextColor(isLightTemplate(template.accent) ? "#332b2b" : "#ffffff");
+                                setDynamicBgColor(getAccentBgColor(template.accent));
+                                setDynamicBgSecondary(getAccentBgSecondary(template.accent));
+                                setDynamicLabelColor(isLightTemplate(template.accent) ? "#1e293b" : "#f8fafc");
+                                setDynamicDescriptionColor(isLightTemplate(template.accent) ? "#64748b" : "#94a3b8");
+                              }
+                            }
                           }}
-                          className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          className="btn-secondary-premium inline-flex items-center justify-center"
                         >
                           Discard
                         </button>
                       </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            )}
 
-            {/* Services / Products / Insta / LinkedIn / Galleries / Blogs / Testimonials / Iframes */}
-            {activeSection === "services" && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className={labelClass}>Service Section Label (Small Title)</label>
-                    <input
-                      type="text"
-                      className={inputClass}
-                      value={currentCard?.serviceTitleSmall || "Our Services"}
-                      placeholder="e.g. Our Services"
-                      onChange={(e) => {
-                        if (!vcardId) return;
-                        const val = e.target.value;
-                        setVCards((prev) => prev.map((c) => (c.id === vcardId ? { ...c, serviceTitleSmall: val } : c)));
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label className={labelClass}>Service Section Title (Main Title)</label>
-                    <input
-                      type="text"
-                      className={inputClass}
-                      value={currentCard?.serviceTitle || "Explore Our Services"}
-                      placeholder="e.g. Explore Our Professional Treatments"
-                      onChange={(e) => {
-                        if (!vcardId) return;
-                        const val = e.target.value;
-                        setVCards((prev) => prev.map((c) => (c.id === vcardId ? { ...c, serviceTitle: val } : c)));
-                      }}
-                    />
-                  </div>
-                </div>
+                    </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={servicesSearch}
-                      onChange={(e) => setServicesSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
-                        Display Service Enquiry Button
-                      </span>
-                      <button
-                        type="button"
-                        role="switch"
-                        aria-checked={displayServiceEnquiryButton}
-                        onClick={() => {
-                          const next = !displayServiceEnquiryButton;
-                          setDisplayServiceEnquiryButton(next);
-                          if (vcardId) {
-                            setVCards((prev) =>
-                              prev.map((c) => (c.id === vcardId ? { ...c, displayServiceEnquiryButton: next } : c))
-                            );
-                          }
-                          setServicesSuccessMessage("Service Section Enquiry Button updated successfully.");
-                          setShowServicesSuccessToast(true);
-                        }}
-                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${displayServiceEnquiryButton ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
-                          }`}
-                      >
-                        <span
-                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${displayServiceEnquiryButton ? "translate-x-[1.375rem]" : "translate-x-0"
-                            }`}
-                        />
-                      </button>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
-                        Display Images with Slider
-                      </span>
-                      <button
-                        type="button"
-                        role="switch"
-                        aria-checked={displayImagesWithSlider}
-                        onClick={() => {
-                          const next = !displayImagesWithSlider;
-                          setDisplayImagesWithSlider(next);
-                          if (vcardId) {
-                            setVCards((prev) =>
-                              prev.map((c) => (c.id === vcardId ? { ...c, displayImagesWithSlider: next } : c))
-                            );
-                          }
-                          setServicesSuccessMessage("Display Images with Slider updated successfully.");
-                          setShowServicesSuccessToast(true);
-                        }}
-                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${displayImagesWithSlider ? "bg-blue-600" : "bg-gray-200 dark:bg-gray-600"
-                          }`}
-                      >
-                        <span
-                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${displayImagesWithSlider ? "translate-x-[1.375rem]" : "translate-x-0"
-                            }`}
-                        />
-                      </button>
-                    </label>
-                    <button
-                      type="button"
-                      onClick={() => setShowNewServiceModal(true)}
-                      className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                    >
-                      Add Service
-                    </button>
-                  </div>
-                </div>
-                {/* New Service modal */}
-                {showNewServiceModal && (
-                  <div
-                    className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="new-service-title"
-                  >
-                    <div className="relative w-full max-w-lg min-h-[520px] rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
-                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
-                        <h2 id="new-service-title" className="text-lg font-semibold text-gray-900 dark:text-white">
-                          New Service
-                        </h2>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setShowNewServiceModal(false);
-                            setNewServiceName("");
-                            setNewServiceUrl("");
-                            setNewServiceDescription("");
-                            setNewServiceIconPreview(null);
+                    {/* Phone preview – uses Dynamic vCard colors + sticky button position */}
+                    <div className="flex-1 flex justify-center">
+                      <div className="relative w-[320px] h-[640px] rounded-[2.5rem] bg-black shadow-2xl overflow-hidden border-[10px] border-black/80">
+                        <div className="absolute inset-x-16 top-2 h-5 rounded-full bg-black/60" />
+                        <div className="absolute inset-0" style={{ backgroundColor: dynamicBgColor }} />
+                        <div className="absolute top-0 left-0 right-0 h-40 rounded-b-3xl" style={{ backgroundColor: dynamicPrimaryColor }} />
+                        <div className="absolute top-28 left-0 right-0 rounded-t-[3rem]" style={{ backgroundColor: dynamicBgSecondary }} />
+
+                        {/* Sticky button – position left/right based on control */}
+                        <div
+                          className="absolute top-20 z-10 w-10 h-10 rounded-full flex items-center justify-center shadow-lg"
+                          style={{
+                            backgroundColor: dynamicPrimaryColor,
+                            left: stickyButtonPosition === "left" ? 12 : undefined,
+                            right: stickyButtonPosition === "right" ? 12 : undefined,
                           }}
-                          className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                          aria-label="Close"
                         >
-                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          <svg className="w-5 h-5" style={{ color: dynamicButtonTextColor }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                           </svg>
-                        </button>
-                      </div>
-                      <form
-                        className="p-6 pb-8 space-y-5"
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          if (!vcardId || !newServiceName.trim() || !newServiceDescription.trim() || !newServiceIconPreview) return;
+                        </div>
 
-                          if (editingServiceId) {
-                            // update existing service
-                            setVCards((prev) =>
-                              prev.map((c) =>
-                                c.id === vcardId
-                                  ? {
-                                    ...c,
-                                    services: ((c as any).services ?? []).map((s: any) =>
-                                      s.id === editingServiceId
-                                        ? {
-                                          ...s,
-                                          name: newServiceName.trim(),
-                                          url: newServiceUrl.trim() || undefined,
-                                          description: newServiceDescription.trim(),
-                                          icon: newServiceIconPreview,
-                                        }
-                                        : s,
-                                    ),
-                                  }
-                                  : c,
-                              ),
-                            );
-                            setServicesSuccessMessage("vCard service updated successfully.");
-                          } else {
-                            // create new service
-                            const newService = {
-                              id: `service-${Date.now()}`,
-                              name: newServiceName.trim(),
-                              url: newServiceUrl.trim() || undefined,
-                              description: newServiceDescription.trim(),
-                              icon: newServiceIconPreview,
-                            };
-                            setVCards((prev) =>
-                              prev.map((c) =>
-                                c.id === vcardId
-                                  ? {
-                                    ...c,
-                                    services: [...((c as any).services ?? []), newService],
-                                  }
-                                  : c,
-                              ),
-                            );
-                            setServicesSuccessMessage("vCard service created successfully.");
-                          }
-                          setShowServicesSuccessToast(true);
-                          setShowNewServiceModal(false);
-                          setNewServiceName("");
-                          setNewServiceUrl("");
-                          setNewServiceDescription("");
-                          setNewServiceIconPreview(null);
-                          setEditingServiceId(null);
-                        }}
-                      >
-                        <div>
-                          <label className={`${labelClass}`}>Name: <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            value={newServiceName}
-                            onChange={(e) => setNewServiceName(e.target.value)}
-                            placeholder="Enter Service Name"
-                            className={`${inputClass} mt-1`}
-                            required
-                          />
+                        <div className="relative h-full w-full px-5 pt-24 pb-6 flex flex-col gap-4">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className="h-16 w-16 rounded-full border-4 overflow-hidden bg-gray-500"
+                              style={{ borderColor: dynamicPrimaryColor }}
+                            />
+                            <div>
+                              <p className="text-base font-semibold" style={{ color: dynamicPrimaryColor }}>Pallavi Hegde</p>
+                              <p className="text-xs" style={{ color: dynamicLabelColor }}>UI / UX Designer</p>
+                            </div>
+                          </div>
+
+                          <p className="text-[11px] leading-relaxed" style={{ color: dynamicDescriptionColor }}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                            industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book.
+                          </p>
+
+                          <div className="mt-auto space-y-3">
+                            <div className="flex items-center justify-between gap-2">
+                              <button
+                                type="button"
+                                className={`inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold shadow ${selectedButtonStyle === 9
+                                  ? "rounded-[999px] rounded-bl-[2rem]"
+                                  : selectedButtonStyle === 3 || selectedButtonStyle === 5
+                                    ? "rounded-full"
+                                    : "rounded-md"
+                                  }`}
+                                style={
+                                  [2, 3, 4, 8, 9].includes(selectedButtonStyle)
+                                    ? { backgroundColor: dynamicPrimaryColor, color: dynamicButtonTextColor }
+                                    : {
+                                      borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
+                                      borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
+                                      borderColor: dynamicPrimaryColor,
+                                      color: dynamicPrimaryColor,
+                                      backgroundColor: "transparent",
+                                    }
+                                }
+                              >
+                                <span className="mr-1.5">Add to contact</span>
+                              </button>
+                            </div>
+                            <div className="flex items-center justify-between gap-3 text-xs">
+                              {(["fb", "in", "x"] as const).map((label) => (
+                                <div
+                                  key={label}
+                                  className={`flex-1 flex items-center justify-center h-9 ${selectedButtonStyle === 9
+                                    ? "rounded-[999px] rounded-bl-[2rem]"
+                                    : selectedButtonStyle === 3 || selectedButtonStyle === 5
+                                      ? "rounded-full"
+                                      : "rounded-md"
+                                    }`}
+                                  style={{
+                                    borderWidth: [1, 5, 6].includes(selectedButtonStyle) ? 2 : 1,
+                                    borderStyle: selectedButtonStyle === 6 ? "dotted" : "solid",
+                                    borderColor: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicPrimaryColor : dynamicLabelColor,
+                                    color: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicButtonTextColor : dynamicLabelColor,
+                                    backgroundColor: [2, 3, 4, 8, 9].includes(selectedButtonStyle) ? dynamicPrimaryColor : "transparent",
+                                  }}
+                                >
+                                  {label}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <label className={labelClass}>Service URL:</label>
-                          <input
-                            type="text"
-                            value={newServiceUrl}
-                            onChange={(e) => setNewServiceUrl(e.target.value)}
-                            placeholder="Service URL"
-                            className={`${inputClass} mt-1`}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Description: <span className="text-red-500">*</span></label>
-                          <textarea
-                            value={newServiceDescription}
-                            onChange={(e) => setNewServiceDescription(e.target.value)}
-                            placeholder="Enter Short Description"
-                            rows={6}
-                            className={`${inputClass} mt-1 resize-none min-h-[120px]`}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Service Icon: <span className="text-red-500">*</span></label>
-                          <input
-                            ref={newServiceIconInputRef}
-                            type="file"
-                            accept=".png,.jpg,.jpeg"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (!file) return;
-                              const reader = new FileReader();
-                              reader.onload = () => setNewServiceIconPreview(reader.result as string);
-                              reader.readAsDataURL(file);
-                            }}
-                          />
-                          <div className="relative mt-2 inline-block">
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Business Hours – screenshot: Week Format, toggle per day, Closed button with moon icon */}
+                {activeSection === "hours" && (
+                  <form
+                    className="space-y-6 max-w-xl"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (!vcardId || !currentCard) return;
+                      setVCards((prev) =>
+                        prev.map((c) => (c.id === vcardId ? { ...c, businessHours } : c))
+                      );
+                      setServicesSuccessMessage("Business hours saved successfully.");
+                      setShowServicesSuccessToast(true);
+                    }}
+                  >
+                    <div>
+                      <label className={labelClass}>Week Format Type:</label>
+                      <div className="relative max-w-xs">
+                        <select
+                          value={businessHoursWeekFormat}
+                          onChange={(e) => setBusinessHoursWeekFormat(e.target.value as "monday-sunday" | "sunday-saturday")}
+                          className={`${inputClass} pr-10`}
+                        >
+                          <option value="monday-sunday">Monday To Sunday</option>
+                          <option value="sunday-saturday">Sunday To Saturday</option>
+                        </select>
+                        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      {(businessHoursWeekFormat === "sunday-saturday"
+                        ? ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+                        : [...BUSINESS_HOURS_DAYS]
+                      ).map((day) => {
+                        const d = day as BusinessHoursDay;
+                        const { enabled } = businessHours[d] ?? { enabled: false, start: "9:00 AM", end: "6:00 PM" };
+                        return (
+                          <div
+                            key={day}
+                            className="flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800/50 px-4 py-3"
+                          >
                             <button
                               type="button"
-                              onClick={() => newServiceIconInputRef.current?.click()}
-                              className="relative flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 w-32 h-32 overflow-hidden"
+                              role="switch"
+                              aria-checked={enabled}
+                              onClick={() => setBusinessHoursDay(d, { enabled: !enabled })}
+                              className={`relative h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${enabled ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                                }`}
                             >
-                              {newServiceIconPreview ? (
-                                <Image src={newServiceIconPreview} alt="Service icon" fill className="object-cover" unoptimized sizes="128px" />
-                              ) : (
-                                <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
-                                  <svg className="w-10 h-10 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
-                                  </svg>
-                                  <span className="text-xs">Icon</span>
-                                </div>
-                              )}
+                              <span
+                                className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition-transform ${enabled ? "translate-x-5" : "translate-x-0"
+                                  }`}
+                              />
+                            </button>
+                            <span className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide min-w-[100px]">
+                              {day}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => setBusinessHoursDay(d, { enabled: false })}
+                              className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                            >
+                              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                              </svg>
+                              Closed
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex justify-end gap-3 pt-2">
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                        onClick={() => {
+                          if (currentCard?.businessHours) {
+                            setBusinessHours(
+                              currentCard.businessHours as Record<
+                                BusinessHoursDay,
+                                { enabled: boolean; start: string; end: string }
+                              >
+                            );
+                          } else {
+                            setBusinessHours(getInitialBusinessHours());
+                          }
+                        }}
+                      >
+                        Discard
+                      </button>
+                      <button
+                        type="submit"
+                        className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* QR section — live preview updates with colors / styles; Save persists to vCard */}
+                {activeSection === "qr" && (
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-center gap-8 lg:gap-12 min-h-[320px] w-full max-w-5xl mx-auto">
+                    <div className="flex flex-col items-center shrink-0 lg:sticky lg:top-24">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
+                        Live preview
+                      </p>
+                      <div
+                        className="rounded-2xl border border-gray-200 dark:border-gray-600 p-3 sm:p-4 shadow-lg bg-white dark:bg-gray-900"
+                        style={{
+                          backgroundColor: qrBgColor,
+                        }}
+                      >
+                        {qrEditorPreviewDataUrl ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={qrEditorPreviewDataUrl}
+                            alt="QR code preview"
+                            className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] object-contain"
+                          />
+                        ) : (
+                          <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] flex items-center justify-center text-sm text-gray-400 dark:text-gray-500">
+                            Generating QR…
+                          </div>
+                        )}
+                      </div>
+                      <p className="mt-3 text-center text-[11px] text-gray-500 dark:text-gray-400 max-w-[260px] leading-relaxed">
+                        Color, dot style, and eye style update instantly. Use <span className="font-medium">Save</span> to apply on your public vCard.
+                      </p>
+                    </div>
+
+                    <div className="flex-1 w-full max-w-md mx-auto lg:mx-0">
+                      <div className="rounded-3xl border border-gray-200 bg-white dark:bg-gray-800/50 p-6 shadow-lg">
+                        <form
+                          className="space-y-5"
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            if (!useQrConfiguration || !vcardId || !currentCard) return;
+                            setVCards((prev) =>
+                              prev.map((c) =>
+                                c.id === vcardId
+                                  ? { ...c, qrCodeColor, qrBgColor, qrDotStyle, qrEyeStyle }
+                                  : c
+                              )
+                            );
+                            setQrCreateSuccess(true);
+                          }}
+                        >
+                          <div className="space-y-4">
+                            <div>
+                              <label className={labelClass}>QR-Code Color:</label>
+                              <div className="w-full h-9 rounded-lg border border-gray-300 bg-white dark:bg-gray-800 overflow-hidden">
+                                <input
+                                  type="color"
+                                  value={qrCodeColor}
+                                  onChange={(e) => setQrCodeColor(e.target.value)}
+                                  className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[5px]"
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label className={labelClass}>Background Color:</label>
+                              <div className="w-full h-9 rounded-lg border border-gray-300 bg-white dark:bg-gray-800 overflow-hidden">
+                                <input
+                                  type="color"
+                                  value={qrBgColor}
+                                  onChange={(e) => setQrBgColor(e.target.value)}
+                                  className="h-full w-full cursor-pointer border-0 p-0 block [appearance:none] [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-0 [&::-webkit-color-swatch]:rounded-[5px]"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="space-y-4">
+                            <div>
+                              <label className={labelClass}>Select Style</label>
+                              <select
+                                className={`${inputClass} h-11`}
+                                value={qrDotStyle}
+                                onChange={(e) => setQrDotStyle(e.target.value as "square" | "rounded")}
+                              >
+                                <option>square</option>
+                                <option>rounded</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className={labelClass}>Select Eye Style</label>
+                              <select
+                                className={`${inputClass} h-11`}
+                                value={qrEyeStyle}
+                                onChange={(e) => setQrEyeStyle(e.target.value as "square" | "rounded")}
+                              >
+                                <option>square</option>
+                                <option>rounded</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className={labelClass}>QR Link (auto-generated)</label>
+                            <input
+                              type="text"
+                              readOnly
+                              value={
+                                typeof window !== "undefined"
+                                  ? `${window.location.origin}/${basicAlias || currentCard?.slug || ""}`.replace(/\/+$/, "").replace(/([^:]\/)\/+/g, "$1")
+                                  : `/${basicAlias || currentCard?.slug || ""}`
+                              }
+                              className={`${inputClass} h-11 bg-gray-50 dark:bg-gray-900`}
+                            />
+                          </div>
+
+                          <div className="flex items-center gap-3 pt-1">
+                            <button
+                              type="button"
+                              role="switch"
+                              aria-checked={useQrConfiguration}
+                              onClick={() => setUseQrConfiguration((prev) => !prev)}
+                              className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${useQrConfiguration ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                                }`}
+                            >
+                              <span
+                                className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${useQrConfiguration ? "translate-x-5" : "translate-x-0"
+                                  }`}
+                              />
+                            </button>
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Use This Configuration</span>
+                          </div>
+
+                          <div className="flex gap-3 pt-2">
+                            <button
+                              type="submit"
+                              disabled={!useQrConfiguration}
+                              className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-brand-500"
+                            >
+                              Save
                             </button>
                             <button
                               type="button"
-                              onClick={() => newServiceIconInputRef.current?.click()}
-                              className="absolute -top-1 -right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                              aria-label="Edit icon"
+                              onClick={() => {
+                                setQrCodeColor(currentCard?.qrCodeColor ?? "#000000");
+                                setQrBgColor(currentCard?.qrBgColor ?? "#ffffff");
+                                setQrDotStyle(currentCard?.qrDotStyle ?? "square");
+                                setQrEyeStyle(currentCard?.qrEyeStyle ?? "square");
+                              }}
+                              className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                             >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              Discard
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Services / Products / Insta / LinkedIn / Galleries / Blogs / Testimonials / Iframes */}
+                {activeSection === "services" && (
+                  <div className="space-y-5">
+                    {/* Section copy on public vCard */}
+                    <section className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/80 md:p-6">
+                      <div className="mb-5 border-b border-slate-100 pb-4 dark:border-slate-800">
+                        <h3 className="text-base font-semibold text-slate-900 dark:text-white">Public section headings</h3>
+                        <p className="mt-1 max-w-2xl text-sm text-slate-500 dark:text-slate-400">
+                          These labels appear on your live vCard wherever the services block is shown.
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        <div className="space-y-1.5">
+                          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                            Eyebrow / small title
+                          </label>
+                          <p className="text-xs text-slate-500 dark:text-slate-500">Short label above the main heading (e.g. “Our Services”).</p>
+                          <input
+                            type="text"
+                            className={inputClass}
+                            value={currentCard?.serviceTitleSmall || "Our Services"}
+                            placeholder="e.g. Our Services"
+                            onChange={(e) => {
+                              if (!vcardId) return;
+                              const val = e.target.value;
+                              setVCards((prev) => prev.map((c) => (c.id === vcardId ? { ...c, serviceTitleSmall: val } : c)));
+                            }}
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                            Main heading
+                          </label>
+                          <p className="text-xs text-slate-500 dark:text-slate-500">Primary title for the services area.</p>
+                          <input
+                            type="text"
+                            className={inputClass}
+                            value={currentCard?.serviceTitle || "Explore Our Services"}
+                            placeholder="e.g. Explore Our Professional Treatments"
+                            onChange={(e) => {
+                              if (!vcardId) return;
+                              const val = e.target.value;
+                              setVCards((prev) => prev.map((c) => (c.id === vcardId ? { ...c, serviceTitle: val } : c)));
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </section>
+
+                    {/* Toolbar: search, options, primary action */}
+                    <section className="rounded-2xl border border-slate-200/90 bg-slate-50/40 p-4 dark:border-slate-800 dark:bg-slate-900/40 md:p-5">
+                      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                        <div className="relative min-w-0 flex-1 lg:max-w-md">
+                          <label htmlFor="services-search" className="sr-only">
+                            Search services
+                          </label>
+                          <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+                            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                          </span>
+                          <input
+                            id="services-search"
+                            type="search"
+                            value={servicesSearch}
+                            onChange={(e) => setServicesSearch(e.target.value)}
+                            placeholder="Search by service name…"
+                            className={`${inputClass} border-slate-200 bg-white pl-10 shadow-sm dark:border-slate-600 dark:bg-slate-900`}
+                          />
+                        </div>
+                        <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:w-auto lg:justify-end">
+                          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-stretch">
+                            <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200/90 bg-white px-4 py-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:min-w-[220px]">
+                              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Service enquiry CTA</span>
+                              <button
+                                type="button"
+                                role="switch"
+                                aria-checked={displayServiceEnquiryButton}
+                                onClick={() => {
+                                  const next = !displayServiceEnquiryButton;
+                                  setDisplayServiceEnquiryButton(next);
+                                  if (vcardId) {
+                                    setVCards((prev) =>
+                                      prev.map((c) => (c.id === vcardId ? { ...c, displayServiceEnquiryButton: next } : c))
+                                    );
+                                  }
+                                  setServicesSuccessMessage("Service Section Enquiry Button updated successfully.");
+                                  setShowServicesSuccessToast(true);
+                                }}
+                                className={`relative inline-flex h-7 w-12 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900 ${displayServiceEnquiryButton ? "bg-slate-900 dark:bg-brand-600" : "bg-slate-200 dark:bg-slate-600"
+                                  }`}
+                              >
+                                <span
+                                  className={`pointer-events-none absolute left-1 top-1 inline-block h-5 w-5 rounded-full bg-white shadow transition-transform ${displayServiceEnquiryButton ? "translate-x-5" : "translate-x-0"
+                                    }`}
+                                />
+                              </button>
+                            </div>
+                            <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200/90 bg-white px-4 py-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:min-w-[220px]">
+                              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Image slider layout</span>
+                              <button
+                                type="button"
+                                role="switch"
+                                aria-checked={displayImagesWithSlider}
+                                onClick={() => {
+                                  const next = !displayImagesWithSlider;
+                                  setDisplayImagesWithSlider(next);
+                                  if (vcardId) {
+                                    setVCards((prev) =>
+                                      prev.map((c) => (c.id === vcardId ? { ...c, displayImagesWithSlider: next } : c))
+                                    );
+                                  }
+                                  setServicesSuccessMessage("Display Images with Slider updated successfully.");
+                                  setShowServicesSuccessToast(true);
+                                }}
+                                className={`relative inline-flex h-7 w-12 shrink-0 rounded-full border border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900 ${displayImagesWithSlider ? "bg-slate-900 dark:bg-brand-600" : "bg-slate-200 dark:bg-slate-600"
+                                  }`}
+                              >
+                                <span
+                                  className={`pointer-events-none absolute left-1 top-1 inline-block h-5 w-5 rounded-full bg-white shadow transition-transform ${displayImagesWithSlider ? "translate-x-5" : "translate-x-0"
+                                    }`}
+                                />
+                              </button>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowNewServiceModal(true)}
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-slate-800 dark:bg-brand-600 dark:hover:bg-brand-500 sm:w-auto"
+                          >
+                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add service
+                          </button>
+                        </div>
+                      </div>
+                    </section>
+                    {/* New Service modal */}
+                    {showNewServiceModal && (
+                      <div
+                        className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="new-service-title"
+                      >
+                        <div className="relative w-full max-w-lg min-h-[520px] rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800">
+                          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-5">
+                            <h2 id="new-service-title" className="text-lg font-semibold text-gray-900 dark:text-white">
+                              New Service
+                            </h2>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowNewServiceModal(false);
+                                setNewServiceName("");
+                                setNewServiceUrl("");
+                                setNewServiceDescription("");
+                                setNewServiceIconPreview(null);
+                              }}
+                              className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                              aria-label="Close"
+                            >
+                              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                               </svg>
                             </button>
                           </div>
-                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
-                        </div>
-                        <div className="flex items-center justify-end gap-3 pt-2">
-                          <button
-                            type="button"
-                            onClick={() => {
+                          <form
+                            className="p-6 pb-8 space-y-5"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              if (!vcardId || !newServiceName.trim() || !newServiceDescription.trim() || !newServiceIconPreview) return;
+
+                              if (editingServiceId) {
+                                // update existing service
+                                setVCards((prev) =>
+                                  prev.map((c) =>
+                                    c.id === vcardId
+                                      ? {
+                                        ...c,
+                                        services: ((c as any).services ?? []).map((s: any) =>
+                                          s.id === editingServiceId
+                                            ? {
+                                              ...s,
+                                              name: newServiceName.trim(),
+                                              url: newServiceUrl.trim() || undefined,
+                                              description: newServiceDescription.trim(),
+                                              icon: newServiceIconPreview,
+                                            }
+                                            : s,
+                                        ),
+                                      }
+                                      : c,
+                                  ),
+                                );
+                                setServicesSuccessMessage("vCard service updated successfully.");
+                              } else {
+                                // create new service
+                                const newService = {
+                                  id: `service-${Date.now()}`,
+                                  name: newServiceName.trim(),
+                                  url: newServiceUrl.trim() || undefined,
+                                  description: newServiceDescription.trim(),
+                                  icon: newServiceIconPreview,
+                                };
+                                setVCards((prev) =>
+                                  prev.map((c) =>
+                                    c.id === vcardId
+                                      ? {
+                                        ...c,
+                                        services: [...((c as any).services ?? []), newService],
+                                      }
+                                      : c,
+                                  ),
+                                );
+                                setServicesSuccessMessage("vCard service created successfully.");
+                              }
+                              setShowServicesSuccessToast(true);
                               setShowNewServiceModal(false);
                               setNewServiceName("");
                               setNewServiceUrl("");
                               setNewServiceDescription("");
                               setNewServiceIconPreview(null);
+                              setEditingServiceId(null);
                             }}
-                            className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                           >
-                            Discard
-                          </button>
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
-                          >
-                            Save
-                          </button>
+                            <div>
+                              <label className={`${labelClass}`}>Name: <span className="text-red-500">*</span></label>
+                              <input
+                                type="text"
+                                value={newServiceName}
+                                onChange={(e) => setNewServiceName(e.target.value)}
+                                placeholder="Enter Service Name"
+                                className={`${inputClass} mt-1`}
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Service URL:</label>
+                              <input
+                                type="text"
+                                value={newServiceUrl}
+                                onChange={(e) => setNewServiceUrl(e.target.value)}
+                                placeholder="Service URL"
+                                className={`${inputClass} mt-1`}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Description: <span className="text-red-500">*</span></label>
+                              <textarea
+                                value={newServiceDescription}
+                                onChange={(e) => setNewServiceDescription(e.target.value)}
+                                placeholder="Enter Short Description"
+                                rows={6}
+                                className={`${inputClass} mt-1 resize-none min-h-[120px]`}
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Service Icon: <span className="text-red-500">*</span></label>
+                              <input
+                                ref={newServiceIconInputRef}
+                                type="file"
+                                accept=".png,.jpg,.jpeg"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  const reader = new FileReader();
+                                  reader.onload = () => setNewServiceIconPreview(reader.result as string);
+                                  reader.readAsDataURL(file);
+                                }}
+                              />
+                              <div className="relative mt-2 inline-block">
+                                <button
+                                  type="button"
+                                  onClick={() => newServiceIconInputRef.current?.click()}
+                                  className="relative flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 w-32 h-32 overflow-hidden"
+                                >
+                                  {newServiceIconPreview ? (
+                                    <Image src={newServiceIconPreview} alt="Service icon" fill className="object-cover" unoptimized sizes="128px" />
+                                  ) : (
+                                    <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
+                                      <svg className="w-10 h-10 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
+                                      </svg>
+                                      <span className="text-xs">Icon</span>
+                                    </div>
+                                  )}
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => newServiceIconInputRef.current?.click()}
+                                  className="absolute -top-1 -right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                                  aria-label="Edit icon"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                  </svg>
+                                </button>
+                              </div>
+                              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
+                            </div>
+                            <div className="flex items-center justify-end gap-3 pt-2">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setShowNewServiceModal(false);
+                                  setNewServiceName("");
+                                  setNewServiceUrl("");
+                                  setNewServiceDescription("");
+                                  setNewServiceIconPreview(null);
+                                }}
+                                className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                              >
+                                Discard
+                              </button>
+                              <button
+                                type="submit"
+                                className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </form>
                         </div>
-                      </form>
-                    </div>
+                      </div>
+                    )}
+                    <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-none">
+                      <div className="flex flex-col gap-1 border-b border-slate-100 bg-slate-50/60 px-5 py-4 dark:border-slate-800 dark:bg-slate-900/60 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <h3 className="text-base font-semibold text-slate-900 dark:text-white">Service catalog</h3>
+                          <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+                            Manage icons, links, and how each item appears on your card.
+                          </p>
+                        </div>
+                        {(() => {
+                          const all = ((currentCard as any)?.services ?? []) as { name: string }[];
+                          const n = all.length;
+                          return (
+                            <span className="inline-flex w-fit items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold tabular-nums text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                              {n} {n === 1 ? "service" : "services"}
+                            </span>
+                          );
+                        })()}
+                      </div>
+                      <div className="overflow-x-auto">
+                        <table className="w-full min-w-[640px] text-left text-sm text-gray-700 dark:text-gray-300">
+                          <thead>
+                            <tr className="border-b border-slate-200 bg-slate-50/90 text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
+                              <th className="w-14 px-5 py-3.5">Icon</th>
+                              <th className="min-w-[140px] px-5 py-3.5">Name</th>
+                              <th className="min-w-[200px] max-w-[min(40vw,320px)] px-5 py-3.5">Service URL</th>
+                              <th className="w-[140px] px-5 py-3.5 text-right">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                            {(() => {
+                              const all = ((currentCard as any)?.services ?? []) as {
+                                id?: string;
+                                name: string;
+                                url?: string;
+                                description: string;
+                                icon: string;
+                              }[];
+                              const filtered = servicesSearch.trim()
+                                ? all.filter((s) =>
+                                  s.name.toLowerCase().includes(servicesSearch.toLowerCase()),
+                                )
+                                : all;
+                              if (!filtered.length) {
+                                return (
+                                  <tr>
+                                    <td
+                                      colSpan={4}
+                                      className="px-5 py-14 text-center text-sm text-gray-500 dark:text-gray-400"
+                                    >
+                                      {all.length === 0
+                                        ? "No services yet. Add one with the button above."
+                                        : "No services match your search."}
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              const rows = filtered.slice(0, servicesShowPerPage);
+                              return rows.map((s) => {
+                                const urlFull = (s.url ?? "").trim();
+                                const openHref = normalizeOpenableUrl(s.url);
+                                return (
+                                  <tr
+                                    key={s.id || s.name}
+                                    className="transition-colors hover:bg-slate-50/80 dark:hover:bg-gray-800/50"
+                                  >
+                                    <td className="px-5 py-4 align-middle">
+                                      <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200/90 bg-gradient-to-br from-slate-50 to-slate-100 ring-1 ring-black/[0.04] dark:border-gray-600 dark:from-gray-800 dark:to-gray-900 dark:ring-white/5">
+                                        {serviceIconIsRenderable(s.icon) ? (
+                                          // eslint-disable-next-line @next/next/no-img-element
+                                          <img
+                                            src={s.icon}
+                                            alt=""
+                                            className="h-full w-full object-cover"
+                                          />
+                                        ) : (
+                                          <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                                            {(s.name || "?").charAt(0).toUpperCase()}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </td>
+                                    <td className="px-5 py-4 align-middle">
+                                      <p className="font-semibold text-gray-900 dark:text-gray-100">{s.name}</p>
+                                    </td>
+                                    <td className="max-w-[min(40vw,320px)] px-5 py-4 align-middle">
+                                      <div className="flex min-w-0 items-center gap-2">
+                                        <p
+                                          className="min-w-0 flex-1 truncate font-mono text-xs text-slate-600 dark:text-slate-300"
+                                          title={urlFull || undefined}
+                                        >
+                                          {formatUrlDisplay(s.url)}
+                                        </p>
+                                        {openHref ? (
+                                          <button
+                                            type="button"
+                                            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-blue-200 bg-blue-50/80 px-2 py-1 text-[11px] font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-800/80 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/40"
+                                            aria-label="Open service URL in new tab"
+                                            title={urlFull}
+                                            onClick={() => window.open(openHref, "_blank", "noopener,noreferrer")}
+                                          >
+                                            <OpenInNewTabArrowIcon className="h-3.5 w-3.5" />
+                                            Open
+                                          </button>
+                                        ) : null}
+                                      </div>
+                                    </td>
+                                    <td className="px-5 py-4 align-middle">
+                                      <div className="flex items-center justify-end gap-1">
+                                        <AdminTableIconButton
+                                          aria-label="Preview service"
+                                          title="Preview"
+                                          onClick={() =>
+                                            setPreviewService({
+                                              name: s.name,
+                                              description: s.description,
+                                              url: s.url,
+                                              icon: s.icon,
+                                            })
+                                          }
+                                        >
+                                          <PreviewEyeIcon />
+                                        </AdminTableIconButton>
+                                        <AdminTableIconButton
+                                          aria-label="Edit service"
+                                          title="Edit"
+                                          onClick={() => {
+                                            setEditingServiceId(s.id ?? "");
+                                            setNewServiceName(s.name);
+                                            setNewServiceUrl(s.url || "");
+                                            setNewServiceDescription(s.description);
+                                            setNewServiceIconPreview(s.icon);
+                                            setShowNewServiceModal(true);
+                                          }}
+                                        >
+                                          <PencilIcon />
+                                        </AdminTableIconButton>
+                                        <AdminTableIconButton
+                                          className="hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900 dark:hover:bg-red-950/40 dark:hover:text-red-400"
+                                          aria-label="Delete service"
+                                          title="Delete"
+                                          onClick={() => {
+                                            if (!vcardId) return;
+                                            // eslint-disable-next-line no-alert
+                                            if (!confirm("Delete this service?")) return;
+                                            setVCards((prev) =>
+                                              prev.map((c) =>
+                                                c.id === vcardId
+                                                  ? {
+                                                    ...c,
+                                                    services: ((c as any).services ?? []).filter(
+                                                      (x: any) => x.id !== s.id,
+                                                    ),
+                                                  }
+                                                  : c,
+                                              ),
+                                            );
+                                          }}
+                                        >
+                                          <TrashIcon />
+                                        </AdminTableIconButton>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                );
+                              });
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/70 px-5 py-3.5 dark:border-slate-800 dark:bg-slate-900/50 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                          <span className="font-medium text-slate-700 dark:text-slate-200">Rows per page</span>
+                          <select
+                            value={servicesShowPerPage}
+                            onChange={(e) => setServicesShowPerPage(Number(e.target.value))}
+                            className={`${inputClass} h-9 w-[4.75rem] rounded-lg border border-slate-200 bg-white py-1 pr-8 text-sm font-medium shadow-sm dark:border-slate-600 dark:bg-slate-900`}
+                          >
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                        </div>
+                        {(() => {
+                          const all = ((currentCard as any)?.services ?? []) as { name: string }[];
+                          const filtered = servicesSearch.trim()
+                            ? all.filter((s) => s.name.toLowerCase().includes(servicesSearch.toLowerCase()))
+                            : all;
+                          const visible = Math.min(filtered.length, servicesShowPerPage);
+                          return (
+                            <p className="text-sm tabular-nums text-slate-600 dark:text-slate-400">
+                              Showing{" "}
+                              <span className="font-semibold text-slate-900 dark:text-white">{visible}</span>
+                              {" of "}
+                              <span className="font-semibold text-slate-900 dark:text-white">{filtered.length}</span>
+                              {" services"}
+                            </p>
+                          );
+                        })()}
+                      </div>
+                    </section>
                   </div>
                 )}
-                <div className="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm shadow-gray-200/40 dark:border-gray-700 dark:bg-gray-900 dark:shadow-none">
-                  <div className="overflow-x-auto">
-                    <table className="w-full min-w-[640px] text-left text-sm text-gray-700 dark:text-gray-300">
-                      <thead>
-                        <tr className="border-b border-gray-200 bg-slate-50/95 text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:border-gray-700 dark:bg-slate-900/60 dark:text-slate-400">
-                          <th className="w-14 px-5 py-3.5">Icon</th>
-                          <th className="min-w-[140px] px-5 py-3.5">Name</th>
-                          <th className="min-w-[200px] max-w-[min(40vw,320px)] px-5 py-3.5">Service URL</th>
-                          <th className="w-[140px] px-5 py-3.5 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                        {(() => {
-                          const all = ((currentCard as any)?.services ?? []) as {
-                            id?: string;
-                            name: string;
-                            url?: string;
-                            description: string;
-                            icon: string;
-                          }[];
-                          const filtered = servicesSearch.trim()
-                            ? all.filter((s) =>
-                              s.name.toLowerCase().includes(servicesSearch.toLowerCase()),
-                            )
-                            : all;
-                          if (!filtered.length) {
-                            return (
-                              <tr>
-                                <td
-                                  colSpan={4}
-                                  className="px-5 py-14 text-center text-sm text-gray-500 dark:text-gray-400"
-                                >
-                                  {all.length === 0
-                                    ? "No services yet. Add one with the button above."
-                                    : "No services match your search."}
-                                </td>
-                              </tr>
-                            );
-                          }
-                          const rows = filtered.slice(0, servicesShowPerPage);
-                          return rows.map((s) => {
-                            const urlFull = (s.url ?? "").trim();
-                            const openHref = normalizeOpenableUrl(s.url);
-                            return (
-                              <tr
-                                key={s.id || s.name}
-                                className="transition-colors hover:bg-slate-50/80 dark:hover:bg-gray-800/50"
-                              >
-                                <td className="px-5 py-4 align-middle">
-                                  <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200/90 bg-gradient-to-br from-slate-50 to-slate-100 ring-1 ring-black/[0.04] dark:border-gray-600 dark:from-gray-800 dark:to-gray-900 dark:ring-white/5">
-                                    {serviceIconIsRenderable(s.icon) ? (
-                                      // eslint-disable-next-line @next/next/no-img-element
-                                      <img
-                                        src={s.icon}
-                                        alt=""
-                                        className="h-full w-full object-cover"
-                                      />
-                                    ) : (
-                                      <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
-                                        {(s.name || "?").charAt(0).toUpperCase()}
-                                      </span>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="px-5 py-4 align-middle">
-                                  <p className="font-semibold text-gray-900 dark:text-gray-100">{s.name}</p>
-                                </td>
-                                <td className="max-w-[min(40vw,320px)] px-5 py-4 align-middle">
-                                  <div className="flex min-w-0 items-center gap-2">
-                                    <p
-                                      className="min-w-0 flex-1 truncate font-mono text-xs text-slate-600 dark:text-slate-300"
-                                      title={urlFull || undefined}
-                                    >
-                                      {formatUrlDisplay(s.url)}
-                                    </p>
-                                    {openHref ? (
-                                      <button
-                                        type="button"
-                                        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-blue-200 bg-blue-50/80 px-2 py-1 text-[11px] font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-800/80 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/40"
-                                        aria-label="Open service URL in new tab"
-                                        title={urlFull}
-                                        onClick={() => window.open(openHref, "_blank", "noopener,noreferrer")}
-                                      >
-                                        <OpenInNewTabArrowIcon className="h-3.5 w-3.5" />
-                                        Open
-                                      </button>
-                                    ) : null}
-                                  </div>
-                                </td>
-                                <td className="px-5 py-4 align-middle">
-                                  <div className="flex items-center justify-end gap-1">
-                                    <AdminTableIconButton
-                                      aria-label="Preview service"
-                                      title="Preview"
-                                      onClick={() =>
-                                        setPreviewService({
-                                          name: s.name,
-                                          description: s.description,
-                                          url: s.url,
-                                          icon: s.icon,
-                                        })
-                                      }
-                                    >
-                                      <PreviewEyeIcon />
-                                    </AdminTableIconButton>
-                                    <AdminTableIconButton
-                                      aria-label="Edit service"
-                                      title="Edit"
-                                      onClick={() => {
-                                        setEditingServiceId(s.id ?? "");
-                                        setNewServiceName(s.name);
-                                        setNewServiceUrl(s.url || "");
-                                        setNewServiceDescription(s.description);
-                                        setNewServiceIconPreview(s.icon);
-                                        setShowNewServiceModal(true);
-                                      }}
-                                    >
-                                      <PencilIcon />
-                                    </AdminTableIconButton>
-                                    <AdminTableIconButton
-                                      className="hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900 dark:hover:bg-red-950/40 dark:hover:text-red-400"
-                                      aria-label="Delete service"
-                                      title="Delete"
-                                      onClick={() => {
-                                        if (!vcardId) return;
-                                        // eslint-disable-next-line no-alert
-                                        if (!confirm("Delete this service?")) return;
-                                        setVCards((prev) =>
-                                          prev.map((c) =>
-                                            c.id === vcardId
-                                              ? {
-                                                ...c,
-                                                services: ((c as any).services ?? []).filter(
-                                                  (x: any) => x.id !== s.id,
-                                                ),
-                                              }
-                                              : c,
-                                          ),
-                                        );
-                                      }}
-                                    >
-                                      <TrashIcon />
-                                    </AdminTableIconButton>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          });
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-col gap-3 border-t border-gray-200 bg-slate-50/80 px-5 py-3.5 dark:border-gray-700 dark:bg-gray-800/40 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span className="font-medium">Rows per page</span>
-                      <select
-                        value={servicesShowPerPage}
-                        onChange={(e) => setServicesShowPerPage(Number(e.target.value))}
-                        className={`${inputClass} h-9 w-[4.75rem] rounded-lg border border-gray-200 bg-white py-1 pr-8 text-sm font-medium shadow-sm dark:border-gray-600 dark:bg-gray-900`}
-                      >
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                    </div>
-                    {(() => {
-                      const all = ((currentCard as any)?.services ?? []) as { name: string }[];
-                      const filtered = servicesSearch.trim()
-                        ? all.filter((s) => s.name.toLowerCase().includes(servicesSearch.toLowerCase()))
-                        : all;
-                      const visible = Math.min(filtered.length, servicesShowPerPage);
-                      return (
-                        <p className="text-sm tabular-nums text-gray-600 dark:text-gray-400">
-                          Showing{" "}
-                          <span className="font-semibold text-gray-900 dark:text-gray-100">{visible}</span>
-                          {" of "}
-                          <span className="font-semibold text-gray-900 dark:text-gray-100">{filtered.length}</span>
-                          {" services"}
-                        </p>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </div>
-            )}
 
-            {previewService && (
-              <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                  <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      Service preview
-                    </h2>
-                    <button
-                      type="button"
-                      onClick={() => setPreviewService(null)}
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                      aria-label="Close preview"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="px-6 py-5 space-y-4">
-                    <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                      {previewService.icon ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={previewService.icon}
-                          alt={previewService.name}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <span className="text-sm text-gray-400">
-                          No image set for this service.
-                        </span>
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                        {previewService.name}
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
-                        {previewService.description}
-                      </p>
-                      {normalizeOpenableUrl(previewService.url) ? (
-                        <a
-                          href={normalizeOpenableUrl(previewService.url)!}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
-                        >
-                          Open service link
-                          <OpenInNewTabArrowIcon className="w-4 h-4" />
-                        </a>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {previewProduct && (
-              <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                  <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      Product preview
-                    </h2>
-                    <button
-                      type="button"
-                      onClick={() => setPreviewProduct(null)}
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                      aria-label="Close preview"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="px-6 py-5 space-y-4">
-                    <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                      {previewProduct.icon ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={previewProduct.icon}
-                          alt={previewProduct.name}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <span className="text-sm text-gray-400">
-                          No image set for this product.
-                        </span>
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between gap-3">
-                        <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                          {previewProduct.name}
-                        </h3>
-                        {previewProduct.price && (
-                          <span className="text-sm font-semibold text-amber-600">
-                            {previewProduct.currency ? `${previewProduct.currency} ` : ""}
-                            {previewProduct.price}
-                          </span>
-                        )}
-                      </div>
-                      {previewProduct.description && (
-                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
-                          {previewProduct.description}
-                        </p>
-                      )}
-                      {normalizeOpenableUrl(previewProduct.url) ? (
-                        <a
-                          href={normalizeOpenableUrl(previewProduct.url)!}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
-                        >
-                          Open product link
-                          <OpenInNewTabArrowIcon className="w-4 h-4" />
-                        </a>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeSection === "products" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={productsSearch}
-                      onChange={(e) => setProductsSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10 rounded-lg border border-gray-200 dark:border-gray-600`}
-                    />
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setShowNewProductModal(true)}
-                      className="inline-flex items-center justify-center rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1d4ed8] shrink-0"
-                    >
-                      Add Product
-                    </button>
-                  </div>
-                </div>
-                {/* New Product modal */}
-                {showNewProductModal && (
-                  <div
-                    className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="new-product-title"
-                  >
-                    <div className="relative w-full max-w-2xl min-h-[640px] rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800 max-h-[90vh] overflow-y-auto">
-                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-8 py-5 sticky top-0 bg-white dark:bg-gray-800 z-10">
-                        <h2 id="new-product-title" className="text-xl font-semibold text-gray-900 dark:text-white">
-                          New Product
+                {previewService && (
+                  <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                    <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                          Service preview
                         </h2>
                         <button
                           type="button"
-                          onClick={() => {
-                            setShowNewProductModal(false);
-                            setNewProductName("");
-                            setNewProductCurrency("");
-                            setNewProductPrice("");
-                            setNewProductSort("");
-                            setNewProductUrl("");
-                            setNewProductDescription("");
-                            setNewProductIconPreview(null);
-                          }}
-                          className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                          aria-label="Close"
-                        >
-                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </div>
-                      <form
-                        className="p-8 pb-10 space-y-6"
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          if (!vcardId || !newProductName.trim() || !newProductIconPreview) return;
-
-                          if (editingProductId) {
-                            // Update existing product
-                            setVCards((prev) =>
-                              prev.map((c) =>
-                                c.id === vcardId
-                                  ? {
-                                    ...c,
-                                    products: (c.products ?? []).map((p) =>
-                                      p.id === editingProductId
-                                        ? {
-                                          ...p,
-                                          name: newProductName.trim(),
-                                          currency: newProductCurrency || undefined,
-                                          price: newProductPrice || undefined,
-                                          sort: newProductSort || undefined,
-                                          url: newProductUrl || undefined,
-                                          description: newProductDescription || undefined,
-                                          icon: newProductIconPreview,
-                                        }
-                                        : p,
-                                    ),
-                                  }
-                                  : c,
-                              ),
-                            );
-                            setServicesSuccessMessage("Product updated successfully.");
-                          } else {
-                            // Create new product
-                            const newProduct = {
-                              id: `product-${Date.now()}`,
-                              name: newProductName.trim(),
-                              currency: newProductCurrency || undefined,
-                              price: newProductPrice || undefined,
-                              sort: newProductSort || undefined,
-                              url: newProductUrl || undefined,
-                              description: newProductDescription || undefined,
-                              icon: newProductIconPreview,
-                            };
-                            setVCards((prev) =>
-                              prev.map((c) =>
-                                c.id === vcardId
-                                  ? {
-                                    ...c,
-                                    products: [...(c.products ?? []), newProduct],
-                                  }
-                                  : c,
-                              ),
-                            );
-                            setServicesSuccessMessage("Product added successfully.");
-                          }
-                          setShowServicesSuccessToast(true);
-                          setShowNewProductModal(false);
-                          setNewProductName("");
-                          setNewProductCurrency("");
-                          setNewProductPrice("");
-                          setNewProductSort("");
-                          setNewProductUrl("");
-                          setNewProductDescription("");
-                          setNewProductIconPreview(null);
-                          setEditingProductId(null);
-                        }}
-                      >
-                        <div>
-                          <label className={labelClass}>Name: <span className="text-red-500">*</span></label>
-                          <input
-                            type="text"
-                            value={newProductName}
-                            onChange={(e) => setNewProductName(e.target.value)}
-                            placeholder="Enter Product Name"
-                            className={`${inputClass} mt-1`}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Currency:</label>
-                          <select
-                            value={newProductCurrency}
-                            onChange={(e) => setNewProductCurrency(e.target.value)}
-                            className={`${inputClass} mt-1`}
-                          >
-                            <option value="">Select Currency</option>
-                            <option value="USD">USD</option>
-                            <option value="INR">INR</option>
-                            <option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                          </select>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <label className={labelClass}>Price:</label>
-                            <input
-                              type="text"
-                              value={newProductPrice}
-                              onChange={(e) => setNewProductPrice(e.target.value)}
-                              placeholder="Enter Price"
-                              className={`${inputClass} mt-1`}
-                            />
-                          </div>
-                          <div>
-                            <label className={labelClass}>Sort:</label>
-                            <input
-                              type="text"
-                              value={newProductSort}
-                              onChange={(e) => setNewProductSort(e.target.value)}
-                              placeholder="Sort"
-                              className={`${inputClass} mt-1`}
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <label className={labelClass}>Product URL:</label>
-                          <input
-                            type="text"
-                            value={newProductUrl}
-                            onChange={(e) => setNewProductUrl(e.target.value)}
-                            placeholder="Enter Product URL"
-                            className={`${inputClass} mt-1`}
-                          />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Description:</label>
-                          <textarea
-                            value={newProductDescription}
-                            onChange={(e) => setNewProductDescription(e.target.value)}
-                            placeholder="Enter Short Description"
-                            rows={6}
-                            className={`${inputClass} mt-1 resize-none min-h-[120px]`}
-                          />
-                        </div>
-                        <div>
-                          <label className={`${labelClass} inline-flex items-center gap-1`}>
-                            Product Icon: <span className="text-red-500">*</span>
-                            <span className="text-gray-400 cursor-help" title="Upload product icon">?</span>
-                          </label>
-                          <input
-                            ref={newProductIconInputRef}
-                            type="file"
-                            accept=".png,.jpg,.jpeg"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (!file) return;
-                              const reader = new FileReader();
-                              reader.onload = () => setNewProductIconPreview(reader.result as string);
-                              reader.readAsDataURL(file);
-                            }}
-                          />
-                          <div className="relative mt-2 inline-block">
-                            <button
-                              type="button"
-                              onClick={() => newProductIconInputRef.current?.click()}
-                              className="relative flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 w-40 h-40 overflow-hidden"
-                            >
-                              {newProductIconPreview ? (
-                                <Image src={newProductIconPreview} alt="Product icon" fill className="object-cover" unoptimized sizes="160px" />
-                              ) : (
-                                <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
-                                  <svg className="w-10 h-10 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
-                                  </svg>
-                                  <span className="text-xs">Icon</span>
-                                </div>
-                              )}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => newProductIconInputRef.current?.click()}
-                              className="absolute -top-1 -right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                              aria-label="Edit icon"
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                              </svg>
-                            </button>
-                          </div>
-                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
-                        </div>
-                        <div className="flex items-center justify-end gap-3 pt-2">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setShowNewProductModal(false);
-                              setNewProductName("");
-                              setNewProductCurrency("");
-                              setNewProductPrice("");
-                              setNewProductSort("");
-                              setNewProductUrl("");
-                              setNewProductDescription("");
-                              setNewProductIconPreview(null);
-                            }}
-                            className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
-                          >
-                            Discard
-                          </button>
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
-                          >
-                            Save
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                )}
-                <div className="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm shadow-gray-200/40 dark:border-gray-700 dark:bg-gray-900 dark:shadow-none">
-                  <div className="overflow-x-auto overflow-y-visible">
-                    <table className="w-full min-w-[720px] text-left text-sm text-gray-700 dark:text-gray-300">
-                      <thead>
-                        <tr className="border-b border-gray-200 bg-slate-50/95 text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:border-gray-700 dark:bg-slate-900/60 dark:text-slate-400">
-                          <th className="w-14 px-5 py-3.5">Icon</th>
-                          <th className="min-w-[140px] px-5 py-3.5">Name</th>
-                          <th className="min-w-[200px] max-w-[min(40vw,320px)] px-5 py-3.5">Product URL</th>
-                          <th className="min-w-[100px] px-5 py-3.5">Price</th>
-                          <th className="w-[140px] px-5 py-3.5 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                        {(() => {
-                          const all = (currentCard?.products ?? []) as {
-                            id: string;
-                            name: string;
-                            currency?: string;
-                            price?: string;
-                            url?: string;
-                            icon: string;
-                          }[];
-                          const filtered = productsSearch.trim()
-                            ? all.filter((p) =>
-                              p.name.toLowerCase().includes(productsSearch.toLowerCase()),
-                            )
-                            : all;
-                          const rows = filtered.slice(0, productsShowPerPage);
-                          if (!filtered.length) {
-                            return (
-                              <tr>
-                                <td
-                                  colSpan={5}
-                                  className="px-5 py-14 text-center text-sm text-gray-500 dark:text-gray-400"
-                                >
-                                  {all.length === 0
-                                    ? "No products yet. Add one with the button above."
-                                    : "No products match your search."}
-                                </td>
-                              </tr>
-                            );
-                          }
-                          return rows.map((p) => {
-                            const urlFull = (p.url ?? "").trim();
-                            const openHref = normalizeOpenableUrl(p.url);
-                            return (
-                              <tr
-                                key={p.id}
-                                className="transition-colors hover:bg-slate-50/80 dark:hover:bg-gray-800/50"
-                              >
-                                <td className="px-5 py-4 align-middle">
-                                  <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200/90 bg-gradient-to-br from-slate-50 to-slate-100 ring-1 ring-black/[0.04] dark:border-gray-600 dark:from-gray-800 dark:to-gray-900 dark:ring-white/5">
-                                    {serviceIconIsRenderable(p.icon) ? (
-                                      // eslint-disable-next-line @next/next/no-img-element
-                                      <img
-                                        src={p.icon}
-                                        alt=""
-                                        className="h-full w-full object-cover"
-                                      />
-                                    ) : (
-                                      <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
-                                        {(p.name || "?").charAt(0).toUpperCase()}
-                                      </span>
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="px-5 py-4 align-middle">
-                                  <p className="font-semibold text-gray-900 dark:text-gray-100">{p.name}</p>
-                                </td>
-                                <td className="max-w-[min(40vw,320px)] px-5 py-4 align-middle">
-                                  <div className="flex min-w-0 items-center gap-2">
-                                    <p
-                                      className="min-w-0 flex-1 truncate font-mono text-xs text-slate-600 dark:text-slate-300"
-                                      title={urlFull || undefined}
-                                    >
-                                      {formatUrlDisplay(p.url)}
-                                    </p>
-                                    {openHref ? (
-                                      <button
-                                        type="button"
-                                        className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-blue-200 bg-blue-50/80 px-2 py-1 text-[11px] font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-800/80 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/40"
-                                        aria-label="Open product URL in new tab"
-                                        title={urlFull}
-                                        onClick={() => window.open(openHref, "_blank", "noopener,noreferrer")}
-                                      >
-                                        <OpenInNewTabArrowIcon className="h-3.5 w-3.5" />
-                                        Open
-                                      </button>
-                                    ) : null}
-                                  </div>
-                                </td>
-                                <td className="px-5 py-4 align-middle">
-                                  <p className="text-sm font-medium tabular-nums text-gray-900 dark:text-gray-100">
-                                    {p.price ? `${p.currency ? `${p.currency} ` : ""}${p.price}` : "—"}
-                                  </p>
-                                </td>
-                                <td className="px-5 py-4 align-middle">
-                                  <div className="flex items-center justify-end gap-1">
-                                    <AdminTableIconButton
-                                      aria-label="Preview product"
-                                      title="Preview"
-                                      onClick={() =>
-                                        setPreviewProduct({
-                                          name: p.name,
-                                          description: (p as any).description,
-                                          price: p.price,
-                                          currency: p.currency,
-                                          url: p.url,
-                                          icon: p.icon,
-                                        })
-                                      }
-                                    >
-                                      <PreviewEyeIcon />
-                                    </AdminTableIconButton>
-                                    <AdminTableIconButton
-                                      aria-label="Edit product"
-                                      title="Edit"
-                                      onClick={() => {
-                                        setEditingProductId(p.id);
-                                        setNewProductName(p.name);
-                                        setNewProductCurrency(p.currency || "");
-                                        setNewProductPrice(p.price || "");
-                                        setNewProductSort((p as any).sort || "");
-                                        setNewProductUrl(p.url || "");
-                                        setNewProductDescription((p as any).description || "");
-                                        setNewProductIconPreview(p.icon);
-                                        setShowNewProductModal(true);
-                                      }}
-                                    >
-                                      <PencilIcon />
-                                    </AdminTableIconButton>
-                                    <AdminTableIconButton
-                                      className="hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900 dark:hover:bg-red-950/40 dark:hover:text-red-400"
-                                      aria-label="Delete product"
-                                      title="Delete"
-                                      onClick={() => {
-                                        if (!vcardId) return;
-                                        // eslint-disable-next-line no-alert
-                                        if (!confirm("Delete this product?")) return;
-                                        setVCards((prev) =>
-                                          prev.map((c) =>
-                                            c.id === vcardId
-                                              ? {
-                                                ...c,
-                                                products: (c.products ?? []).filter(
-                                                  (x) => x.id !== p.id,
-                                                ),
-                                              }
-                                              : c,
-                                          ),
-                                        );
-                                      }}
-                                    >
-                                      <TrashIcon />
-                                    </AdminTableIconButton>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          });
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-col gap-3 border-t border-gray-200 bg-slate-50/80 px-5 py-3.5 dark:border-gray-700 dark:bg-gray-800/40 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span className="font-medium">Rows per page</span>
-                      <select
-                        value={productsShowPerPage}
-                        onChange={(e) => setProductsShowPerPage(Number(e.target.value))}
-                        className={`${inputClass} h-9 w-[4.75rem] rounded-lg border border-gray-200 bg-white py-1 pr-8 text-sm font-medium shadow-sm dark:border-gray-600 dark:bg-gray-900`}
-                      >
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                    </div>
-                    {(() => {
-                      const all = (currentCard?.products ?? []) as { name: string }[];
-                      const filtered = productsSearch.trim()
-                        ? all.filter((p) => p.name.toLowerCase().includes(productsSearch.toLowerCase()))
-                        : all;
-                      const visible = Math.min(filtered.length, productsShowPerPage);
-                      return (
-                        <p className="text-sm tabular-nums text-gray-600 dark:text-gray-400">
-                          Showing{" "}
-                          <span className="font-semibold text-gray-900 dark:text-gray-100">{visible}</span>
-                          {" of "}
-                          <span className="font-semibold text-gray-900 dark:text-gray-100">{filtered.length}</span>
-                          {" products"}
-                        </p>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeSection === "insta" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={instaSearch}
-                      onChange={(e) => setInstaSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => { setEmbedGuideType("instagram"); setShowEmbedGuideModal(true); }}
-                      className="inline-flex items-center justify-center rounded-lg bg-amber-400 hover:bg-amber-500 px-4 py-2.5 text-sm font-semibold text-gray-900 shrink-0"
-                    >
-                      How It works?
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => { setEmbedTagTargetSection("insta"); setShowAddEmbedTagModal(true); }}
-                      className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                    >
-                      Add Embed-Tag
-                    </button>
-                  </div>
-                </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">TYPE</th>
-                          <th className="px-4 py-3">EMBED-TAG</th>
-                          <th className="px-4 py-3">ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(() => {
-                          const rows = getEmbedRowsForSection("insta");
-                          if (!rows.length) {
-                            return (
-                              <tr>
-                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                  No Data Available
-                                </td>
-                              </tr>
-                            );
-                          }
-                          return rows.map((row) => (
-                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
-                              <td className="px-4 py-3 capitalize">{row.type}</td>
-                              <td className="px-4 py-3">
-                                <div className="max-w-[520px] truncate">{row.value}</div>
-                              </td>
-                              <td className="px-4 py-3">
-                                <button
-                                  type="button"
-                                  className="text-red-500 hover:text-red-600 text-lg"
-                                  onClick={() => {
-                                    if (!vcardId) return;
-                                    setVCards((prev) =>
-                                      prev.map((c) =>
-                                        c.id === vcardId
-                                          ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
-                                          : c
-                                      )
-                                    );
-                                  }}
-                                  aria-label="Delete embed tag"
-                                >
-                                  🗑
-                                </button>
-                              </td>
-                            </tr>
-                          ));
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing{" "}
-                        <span className="font-semibold text-gray-900 dark:text-gray-100">{getEmbedRowsForSection("insta").length}</span>{" "}
-                        results
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeSection === "linkedin" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={linkedinSearch}
-                      onChange={(e) => setLinkedinSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => { setEmbedGuideType("linkedin"); setShowEmbedGuideModal(true); }}
-                      className="inline-flex items-center justify-center rounded-lg bg-orange-400 hover:bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shrink-0"
-                    >
-                      How It works?
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => { setEmbedTagTargetSection("linkedin"); setShowAddEmbedTagModal(true); }}
-                      className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                    >
-                      Add Embed-Tag
-                    </button>
-                  </div>
-                </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">TYPE</th>
-                          <th className="px-4 py-3">EMBED-TAG</th>
-                          <th className="px-4 py-3">ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(() => {
-                          const rows = getEmbedRowsForSection("linkedin");
-                          if (!rows.length) {
-                            return (
-                              <tr>
-                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                  No Data Available
-                                </td>
-                              </tr>
-                            );
-                          }
-                          return rows.map((row) => (
-                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
-                              <td className="px-4 py-3 capitalize">{row.type}</td>
-                              <td className="px-4 py-3"><div className="max-w-[520px] truncate">{row.value}</div></td>
-                              <td className="px-4 py-3">
-                                <button
-                                  type="button"
-                                  className="text-red-500 hover:text-red-600 text-lg"
-                                  onClick={() => {
-                                    if (!vcardId) return;
-                                    setVCards((prev) =>
-                                      prev.map((c) =>
-                                        c.id === vcardId
-                                          ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
-                                          : c
-                                      )
-                                    );
-                                  }}
-                                  aria-label="Delete embed tag"
-                                >
-                                  🗑
-                                </button>
-                              </td>
-                            </tr>
-                          ));
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing {getEmbedRowsForSection("linkedin").length} results</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeSection === "galleries" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={galleriesSearch}
-                      onChange={(e) => setGalleriesSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowNewGalleryModal(true)}
-                    className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                  >
-                    Add Gallery
-                  </button>
-                </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">TYPE</th>
-                          <th className="px-4 py-3">LINK</th>
-                          <th className="px-4 py-3">ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(() => {
-                          const allGalls = currentCard?.galleries ?? [];
-                          const filtered = (galleriesSearch ?? "").trim()
-                            ? allGalls.filter((g) =>
-                              g.type.toLowerCase().includes(galleriesSearch.toLowerCase())
-                            )
-                            : allGalls;
-
-                          if (!filtered.length) {
-                            return (
-                              <tr>
-                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                  No Data Available
-                                </td>
-                              </tr>
-                            );
-                          }
-
-                          return filtered.map((g) => (
-                            <tr key={g.id} className="border-t border-gray-100 dark:border-gray-800">
-                              <td className="px-4 py-3">
-                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${g.type === "image" ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"
-                                  } capitalize`}>
-                                  {g.type}
-                                </span>
-                              </td>
-                              <td className="px-4 py-3">
-                                <div className="h-10 w-10 rounded border border-gray-200 dark:border-gray-700 overflow-hidden bg-gray-50">
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img src={g.imageUrl} alt="Gallery" className="h-full w-full object-cover" />
-                                </div>
-                              </td>
-                              <td className="px-4 py-3">
-                                <button
-                                  type="button"
-                                  className="text-red-500 hover:text-red-600 text-lg"
-                                  aria-label="Delete gallery item"
-                                  onClick={() => {
-                                    if (!vcardId) return;
-                                    // eslint-disable-next-line no-alert
-                                    if (!confirm("Delete this gallery item?")) return;
-                                    setVCards((prev) =>
-                                      prev.map((c) =>
-                                        c.id === vcardId
-                                          ? {
-                                            ...c,
-                                            galleries: (c.galleries ?? []).filter((x) => x.id !== g.id),
-                                          }
-                                          : c
-                                      )
-                                    );
-                                  }}
-                                >
-                                  🗑
-                                </button>
-                              </td>
-                            </tr>
-                          ));
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeSection === "blogs" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={blogsSearch}
-                      onChange={(e) => setBlogsSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                    onClick={() => setShowNewBlogModal(true)}
-                  >
-                    Add Blog
-                  </button>
-                </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">ICON</th>
-                          <th className="px-4 py-3">TITLE</th>
-                          <th className="px-4 py-3">ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(() => {
-                          const allBlogs = currentCard?.blogs ?? [];
-                          const filtered = blogsSearch.trim()
-                            ? allBlogs.filter((b) =>
-                              b.title.toLowerCase().includes(blogsSearch.toLowerCase())
-                            )
-                            : allBlogs;
-                          if (!filtered.length) {
-                            return (
-                              <tr>
-                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                  No Data Available
-                                </td>
-                              </tr>
-                            );
-                          }
-                          return filtered.map((blog) => (
-                            <tr key={blog.id} className="border-t border-gray-100 dark:border-gray-800">
-                              <td className="px-4 py-3">
-                                <div className="h-12 w-12 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img src={blog.icon} alt={blog.title} className="h-full w-full object-cover" />
-                                </div>
-                              </td>
-                              <td className="px-4 py-3">
-                                <p className="font-medium text-gray-900 dark:text-gray-100">{blog.title}</p>
-                              </td>
-                              <td className="px-4 py-3">
-                                <div className="flex items-center gap-3 text-lg">
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="View blog"
-                                    onClick={() => {
-                                      setPreviewBlog({
-                                        title: blog.title,
-                                        description: blog.description,
-                                        icon: blog.icon,
-                                      });
-                                    }}
-                                  >
-                                    👁
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="Edit blog"
-                                    onClick={() => {
-                                      setEditingBlogId(blog.id);
-                                      setNewBlogTitle(blog.title);
-                                      setNewBlogDescription(blog.description);
-                                      setNewBlogIconPreview(blog.icon);
-                                      setShowNewBlogModal(true);
-                                    }}
-                                  >
-                                    ✏️
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="Delete blog"
-                                    onClick={() => {
-                                      if (!vcardId) return;
-                                      // eslint-disable-next-line no-alert
-                                      if (!confirm("Delete this blog?")) return;
-                                      setVCards((prev) =>
-                                        prev.map((c) =>
-                                          c.id === vcardId
-                                            ? {
-                                              ...c,
-                                              blogs: (c.blogs ?? []).filter((b) => b.id !== blog.id),
-                                            }
-                                            : c
-                                        )
-                                      );
-                                    }}
-                                  >
-                                    🗑
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ));
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`} defaultValue={10}>
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing {(currentCard?.blogs ?? []).length} results
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {previewBlog && (
-                  <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                    <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
-                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Blog preview</h2>
-                        <button
-                          type="button"
-                          onClick={() => setPreviewBlog(null)}
+                          onClick={() => setPreviewService(null)}
                           className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
                           aria-label="Close preview"
                         >
@@ -5695,707 +4914,1702 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                       </div>
                       <div className="px-6 py-5 space-y-4">
                         <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                          {previewBlog.icon ? (
+                          {previewService.icon ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
-                              src={previewBlog.icon}
-                              alt={previewBlog.title}
+                              src={previewService.icon}
+                              alt={previewService.name}
                               className="h-full w-full object-cover"
                             />
                           ) : (
-                            <span className="text-sm text-gray-400">No image set for this blog.</span>
+                            <span className="text-sm text-gray-400">
+                              No image set for this service.
+                            </span>
                           )}
                         </div>
-                        <div>
+                        <div className="space-y-1">
                           <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                            {previewBlog.title}
+                            {previewService.name}
                           </h3>
-                          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
-                            {previewBlog.description}
+                          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                            {previewService.description}
                           </p>
+                          {normalizeOpenableUrl(previewService.url) ? (
+                            <a
+                              href={normalizeOpenableUrl(previewService.url)!}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                            >
+                              Open service link
+                              <OpenInNewTabArrowIcon className="w-4 h-4" />
+                            </a>
+                          ) : null}
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
 
-                {showNewBlogModal && (
+                {previewProduct && (
                   <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                    <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
-                      <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">New Blog</h2>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setShowNewBlogModal(false);
-                            setBlogFormErrors({});
-                          }}
-                          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                          aria-label="Close"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </div>
-                      <form onSubmit={handleNewBlogSubmit} className="px-6 py-5 space-y-5">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                            Title: <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            value={newBlogTitle}
-                            onChange={(e) => setNewBlogTitle(e.target.value)}
-                            placeholder="Enter Blog Name"
-                            className={`${inputClass} ${blogFormErrors.title ? "border-red-500 focus:ring-red-500" : ""}`}
-                          />
-                          {blogFormErrors.title && (
-                            <p className="mt-1 text-xs text-red-500">{blogFormErrors.title}</p>
-                          )}
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                            Description: <span className="text-red-500">*</span>
-                          </label>
-                          <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                            <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
-                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Bold">
-                                <span className="font-bold text-sm">B</span>
-                              </button>
-                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic" title="Italic">
-                                <span className="text-sm">I</span>
-                              </button>
-                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline" title="Underline">
-                                <span className="text-sm">U</span>
-                              </button>
-                              <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 line-through" title="Strikethrough">
-                                <span className="text-sm">S</span>
-                              </button>
-                            </div>
-                            <textarea
-                              className={`w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400 ${blogFormErrors.description ? "ring-1 ring-red-500" : ""
-                                }`}
-                              placeholder="Description"
-                              value={newBlogDescription}
-                              onChange={(e) => setNewBlogDescription(e.target.value)}
-                            />
-                          </div>
-                          {blogFormErrors.description && (
-                            <p className="mt-1 text-xs text-red-500">{blogFormErrors.description}</p>
-                          )}
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                            Blog Icon: <span className="text-red-500">*</span>
-                          </label>
-                          <div className="flex flex-col items-start gap-2">
-                            <div className="relative inline-flex rounded-2xl border border-gray-200 bg-gray-50 p-1 shadow-sm">
-                              <div className="h-24 w-24 rounded-xl overflow-hidden bg-white">
-                                {newBlogIconPreview ? (
-                                  // eslint-disable-next-line @next/next/no-img-element
-                                  <img src={newBlogIconPreview} alt="Blog icon preview" className="h-full w-full object-cover" />
-                                ) : (
-                                  // eslint-disable-next-line @next/next/no-img-element
-                                  <img
-                                    src="/images/placeholder/blog-icon.png"
-                                    alt="Default blog icon"
-                                    className="h-full w-full object-cover"
-                                  />
-                                )}
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => newBlogIconInputRef.current?.click()}
-                                className="absolute right-2 top-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-500 shadow hover:bg-gray-50"
-                                aria-label="Change blog icon"
-                              >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                                  />
-                                </svg>
-                              </button>
-                              <input
-                                ref={newBlogIconInputRef}
-                                type="file"
-                                accept="image/png,image/jpeg,image/jpg"
-                                className="hidden"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (!file) return;
-                                  const reader = new FileReader();
-                                  reader.onload = () => {
-                                    setNewBlogIconPreview(reader.result as string);
-                                  };
-                                  reader.readAsDataURL(file);
-                                }}
-                              />
-                            </div>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                              Allowed file types: png, jpg, jpeg.
-                            </p>
-                          </div>
-                          {blogFormErrors.icon && (
-                            <p className="mt-1 text-xs text-red-500">{blogFormErrors.icon}</p>
-                          )}
-                        </div>
-
-                        <div className="flex justify-end gap-2 pt-2 pb-1">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setShowNewBlogModal(false);
-                              setBlogFormErrors({});
-                            }}
-                            className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
-                          >
-                            Discard
-                          </button>
-                          <button
-                            type="submit"
-                            className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
-                          >
-                            Save
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeSection === "testimonials" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={testimonialsSearch}
-                      onChange={(e) => setTestimonialsSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                    onClick={() => {
-                      setEditingTestimonialId(null);
-                      setNewTestimonialName("");
-                      setNewTestimonialRole("");
-                      setNewTestimonialQuote("");
-                      setNewTestimonialImagePreview(null);
-                      setTestimonialFormErrors({});
-                      setShowNewTestimonialModal(true);
-                    }}
-                  >
-                    Add Testimonial
-                  </button>
-                </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">IMAGE</th>
-                          <th className="px-4 py-3">NAME</th>
-                          <th className="px-4 py-3">ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(() => {
-                          const all = ((currentCard as any)?.testimonials as any[]) ?? [];
-                          const filtered = testimonialsSearch.trim()
-                            ? all.filter((t) =>
-                              (t.name || "").toLowerCase().includes(testimonialsSearch.toLowerCase())
-                            )
-                            : all;
-                          if (!filtered.length) {
-                            return (
-                              <tr>
-                                <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                  No Data Available
-                                </td>
-                              </tr>
-                            );
-                          }
-                          return filtered.map((t) => (
-                            <tr key={t.id} className="border-t border-gray-100 dark:border-gray-800">
-                              <td className="px-4 py-3">
-                                <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img
-                                    src={t.image}
-                                    alt={t.name}
-                                    className="h-full w-full object-cover"
-                                  />
-                                </div>
-                              </td>
-                              <td className="px-4 py-3">
-                                <p className="font-medium text-gray-900 dark:text-gray-100">{t.name}</p>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">{t.role}</p>
-                              </td>
-                              <td className="px-4 py-3">
-                                <div className="flex items-center gap-3 text-lg">
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="View testimonial"
-                                    onClick={() => {
-                                      alert(`${t.name} – ${t.role}\n\n${t.quote}`);
-                                    }}
-                                  >
-                                    👁
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-blue-500 hover:text-blue-600"
-                                    aria-label="Edit testimonial"
-                                    onClick={() => {
-                                      setEditingTestimonialId(t.id);
-                                      setNewTestimonialName(t.name);
-                                      setNewTestimonialRole(t.role);
-                                      setNewTestimonialQuote(t.quote);
-                                      setNewTestimonialImagePreview(t.image);
-                                      setTestimonialFormErrors({});
-                                      setShowNewTestimonialModal(true);
-                                    }}
-                                  >
-                                    ✏️
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="text-red-500 hover:text-red-600"
-                                    aria-label="Delete testimonial"
-                                    onClick={() => {
-                                      if (!vcardId) return;
-                                      // eslint-disable-next-line no-alert
-                                      if (!confirm("Delete this testimonial?")) return;
-                                      setVCards((prev) =>
-                                        prev.map((c) =>
-                                          c.id === vcardId
-                                            ? {
-                                              ...c,
-                                              testimonials: (((c as any).testimonials as any[]) ?? []).filter(
-                                                (x) => x.id !== t.id
-                                              ),
-                                            }
-                                            : c
-                                        )
-                                      );
-                                    }}
-                                  >
-                                    🗑
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ));
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing {(((currentCard as any)?.testimonials as any[]) ?? []).length} results
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {showNewTestimonialModal && (
-                  <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                    <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                    <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                       <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
                         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {editingTestimonialId ? "Edit Testimonial" : "New Testimonial"}
+                          Product preview
                         </h2>
                         <button
                           type="button"
-                          onClick={() => {
-                            setShowNewTestimonialModal(false);
-                            setEditingTestimonialId(null);
-                            setTestimonialFormErrors({});
-                          }}
+                          onClick={() => setPreviewProduct(null)}
                           className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-                          aria-label="Close"
+                          aria-label="Close preview"
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         </button>
                       </div>
-                      <form onSubmit={handleNewTestimonialSubmit} className="px-6 py-5 space-y-5">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                            Name: <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            value={newTestimonialName}
-                            onChange={(e) => setNewTestimonialName(e.target.value)}
-                            placeholder="Enter Testimonial Name"
-                            className={`${inputClass} ${testimonialFormErrors.name ? "border-red-500 focus:ring-red-500" : ""
-                              }`}
-                          />
-                          {testimonialFormErrors.name && (
-                            <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.name}</p>
+                      <div className="px-6 py-5 space-y-4">
+                        <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                          {previewProduct.icon ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={previewProduct.icon}
+                              alt={previewProduct.name}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <span className="text-sm text-gray-400">
+                              No image set for this product.
+                            </span>
                           )}
                         </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                            Description: <span className="text-red-500">*</span>
-                          </label>
-                          <textarea
-                            rows={3}
-                            value={newTestimonialQuote}
-                            onChange={(e) => setNewTestimonialQuote(e.target.value)}
-                            placeholder="Enter Short Description"
-                            className={`${inputClass} ${testimonialFormErrors.quote ? "border-red-500 focus:ring-red-500" : ""
-                              }`}
-                          />
-                          {testimonialFormErrors.quote && (
-                            <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.quote}</p>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                              {previewProduct.name}
+                            </h3>
+                            {previewProduct.price && (
+                              <span className="text-sm font-semibold text-amber-600">
+                                {previewProduct.currency ? `${previewProduct.currency} ` : ""}
+                                {previewProduct.price}
+                              </span>
+                            )}
+                          </div>
+                          {previewProduct.description && (
+                            <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                              {previewProduct.description}
+                            </p>
                           )}
+                          {normalizeOpenableUrl(previewProduct.url) ? (
+                            <a
+                              href={normalizeOpenableUrl(previewProduct.url)!}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                            >
+                              Open product link
+                              <OpenInNewTabArrowIcon className="w-4 h-4" />
+                            </a>
+                          ) : null}
                         </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                            Image: <span className="text-red-500">*</span>
-                          </label>
-                          <div className="flex items-center gap-4">
-                            <div className="h-16 w-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
-                              {newTestimonialImagePreview ? (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
-                                  src={newTestimonialImagePreview}
-                                  alt={newTestimonialName || "Preview"}
-                                  className="h-full w-full object-cover"
-                                />
-                              ) : (
-                                <span className="text-xs text-gray-400">No image</span>
-                              )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSection === "products" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={productsSearch}
+                          onChange={(e) => setProductsSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10 rounded-lg border border-gray-200 dark:border-gray-600`}
+                        />
+                      </div>
+                      <div className="flex flex-wrap items-center gap-4">
+                        <button
+                          type="button"
+                          onClick={() => setShowNewProductModal(true)}
+                          className="inline-flex items-center justify-center rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1d4ed8] shrink-0"
+                        >
+                          Add Product
+                        </button>
+                      </div>
+                    </div>
+                    {/* New Product modal */}
+                    {showNewProductModal && (
+                      <div
+                        className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="new-product-title"
+                      >
+                        <div className="relative w-full max-w-2xl min-h-[640px] rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800 max-h-[90vh] overflow-y-auto">
+                          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-8 py-5 sticky top-0 bg-white dark:bg-gray-800 z-10">
+                            <h2 id="new-product-title" className="text-xl font-semibold text-gray-900 dark:text-white">
+                              New Product
+                            </h2>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowNewProductModal(false);
+                                setNewProductName("");
+                                setNewProductCurrency("");
+                                setNewProductPrice("");
+                                setNewProductSort("");
+                                setNewProductUrl("");
+                                setNewProductDescription("");
+                                setNewProductIconPreview(null);
+                              }}
+                              className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                              aria-label="Close"
+                            >
+                              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                          <form
+                            className="p-8 pb-10 space-y-6"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              if (!vcardId || !newProductName.trim() || !newProductIconPreview) return;
+
+                              if (editingProductId) {
+                                // Update existing product
+                                setVCards((prev) =>
+                                  prev.map((c) =>
+                                    c.id === vcardId
+                                      ? {
+                                        ...c,
+                                        products: (c.products ?? []).map((p) =>
+                                          p.id === editingProductId
+                                            ? {
+                                              ...p,
+                                              name: newProductName.trim(),
+                                              currency: newProductCurrency || undefined,
+                                              price: newProductPrice || undefined,
+                                              sort: newProductSort || undefined,
+                                              url: newProductUrl || undefined,
+                                              description: newProductDescription || undefined,
+                                              icon: newProductIconPreview,
+                                            }
+                                            : p,
+                                        ),
+                                      }
+                                      : c,
+                                  ),
+                                );
+                                setServicesSuccessMessage("Product updated successfully.");
+                              } else {
+                                // Create new product
+                                const newProduct = {
+                                  id: `product-${Date.now()}`,
+                                  name: newProductName.trim(),
+                                  currency: newProductCurrency || undefined,
+                                  price: newProductPrice || undefined,
+                                  sort: newProductSort || undefined,
+                                  url: newProductUrl || undefined,
+                                  description: newProductDescription || undefined,
+                                  icon: newProductIconPreview,
+                                };
+                                setVCards((prev) =>
+                                  prev.map((c) =>
+                                    c.id === vcardId
+                                      ? {
+                                        ...c,
+                                        products: [...(c.products ?? []), newProduct],
+                                      }
+                                      : c,
+                                  ),
+                                );
+                                setServicesSuccessMessage("Product added successfully.");
+                              }
+                              setShowServicesSuccessToast(true);
+                              setShowNewProductModal(false);
+                              setNewProductName("");
+                              setNewProductCurrency("");
+                              setNewProductPrice("");
+                              setNewProductSort("");
+                              setNewProductUrl("");
+                              setNewProductDescription("");
+                              setNewProductIconPreview(null);
+                              setEditingProductId(null);
+                            }}
+                          >
+                            <div>
+                              <label className={labelClass}>Name: <span className="text-red-500">*</span></label>
+                              <input
+                                type="text"
+                                value={newProductName}
+                                onChange={(e) => setNewProductName(e.target.value)}
+                                placeholder="Enter Product Name"
+                                className={`${inputClass} mt-1`}
+                                required
+                              />
                             </div>
                             <div>
+                              <label className={labelClass}>Currency:</label>
+                              <select
+                                value={newProductCurrency}
+                                onChange={(e) => setNewProductCurrency(e.target.value)}
+                                className={`${inputClass} mt-1`}
+                              >
+                                <option value="">Select Currency</option>
+                                <option value="USD">USD</option>
+                                <option value="INR">INR</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                              </select>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <label className={labelClass}>Price:</label>
+                                <input
+                                  type="text"
+                                  value={newProductPrice}
+                                  onChange={(e) => setNewProductPrice(e.target.value)}
+                                  placeholder="Enter Price"
+                                  className={`${inputClass} mt-1`}
+                                />
+                              </div>
+                              <div>
+                                <label className={labelClass}>Sort:</label>
+                                <input
+                                  type="text"
+                                  value={newProductSort}
+                                  onChange={(e) => setNewProductSort(e.target.value)}
+                                  placeholder="Sort"
+                                  className={`${inputClass} mt-1`}
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label className={labelClass}>Product URL:</label>
                               <input
-                                ref={newTestimonialImageInputRef}
+                                type="text"
+                                value={newProductUrl}
+                                onChange={(e) => setNewProductUrl(e.target.value)}
+                                placeholder="Enter Product URL"
+                                className={`${inputClass} mt-1`}
+                              />
+                            </div>
+                            <div>
+                              <label className={labelClass}>Description:</label>
+                              <textarea
+                                value={newProductDescription}
+                                onChange={(e) => setNewProductDescription(e.target.value)}
+                                placeholder="Enter Short Description"
+                                rows={6}
+                                className={`${inputClass} mt-1 resize-none min-h-[120px]`}
+                              />
+                            </div>
+                            <div>
+                              <label className={`${labelClass} inline-flex items-center gap-1`}>
+                                Product Icon: <span className="text-red-500">*</span>
+                                <span className="text-gray-400 cursor-help" title="Upload product icon">?</span>
+                              </label>
+                              <input
+                                ref={newProductIconInputRef}
                                 type="file"
-                                accept="image/*"
+                                accept=".png,.jpg,.jpeg"
                                 className="hidden"
                                 onChange={(e) => {
                                   const file = e.target.files?.[0];
                                   if (!file) return;
                                   const reader = new FileReader();
-                                  reader.onload = () => {
-                                    setNewTestimonialImagePreview(reader.result as string);
-                                  };
+                                  reader.onload = () => setNewProductIconPreview(reader.result as string);
                                   reader.readAsDataURL(file);
                                 }}
                               />
+                              <div className="relative mt-2 inline-block">
+                                <button
+                                  type="button"
+                                  onClick={() => newProductIconInputRef.current?.click()}
+                                  className="relative flex items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 w-40 h-40 overflow-hidden"
+                                >
+                                  {newProductIconPreview ? (
+                                    <Image src={newProductIconPreview} alt="Product icon" fill className="object-cover" unoptimized sizes="160px" />
+                                  ) : (
+                                    <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
+                                      <svg className="w-10 h-10 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
+                                      </svg>
+                                      <span className="text-xs">Icon</span>
+                                    </div>
+                                  )}
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => newProductIconInputRef.current?.click()}
+                                  className="absolute -top-1 -right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                                  aria-label="Edit icon"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                  </svg>
+                                </button>
+                              </div>
+                              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Allowed file types: png, jpg, jpeg.</p>
+                            </div>
+                            <div className="flex items-center justify-end gap-3 pt-2">
                               <button
                                 type="button"
-                                className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-                                onClick={() => newTestimonialImageInputRef.current?.click()}
+                                onClick={() => {
+                                  setShowNewProductModal(false);
+                                  setNewProductName("");
+                                  setNewProductCurrency("");
+                                  setNewProductPrice("");
+                                  setNewProductSort("");
+                                  setNewProductUrl("");
+                                  setNewProductDescription("");
+                                  setNewProductIconPreview(null);
+                                }}
+                                className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
                               >
-                                Upload Image
+                                Discard
                               </button>
-                              {testimonialFormErrors.image && (
-                                <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.image}</p>
-                              )}
+                              <button
+                                type="submit"
+                                className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+                              >
+                                Save
+                              </button>
                             </div>
-                          </div>
+                          </form>
                         </div>
-                        <div className="flex items-center justify-end gap-3 pt-2">
-                          <button
-                            type="button"
-                            className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-                            onClick={() => {
-                              setShowNewTestimonialModal(false);
-                              setEditingTestimonialId(null);
-                              setTestimonialFormErrors({});
-                            }}
+                      </div>
+                    )}
+                    <div className="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-sm shadow-gray-200/40 dark:border-gray-700 dark:bg-gray-900 dark:shadow-none">
+                      <div className="overflow-x-auto overflow-y-visible">
+                        <table className="w-full min-w-[720px] text-left text-sm text-gray-700 dark:text-gray-300">
+                          <thead>
+                            <tr className="border-b border-gray-200 bg-slate-50/95 text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:border-gray-700 dark:bg-slate-900/60 dark:text-slate-400">
+                              <th className="w-14 px-5 py-3.5">Icon</th>
+                              <th className="min-w-[140px] px-5 py-3.5">Name</th>
+                              <th className="min-w-[200px] max-w-[min(40vw,320px)] px-5 py-3.5">Product URL</th>
+                              <th className="min-w-[100px] px-5 py-3.5">Price</th>
+                              <th className="w-[140px] px-5 py-3.5 text-right">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                            {(() => {
+                              const all = (currentCard?.products ?? []) as {
+                                id: string;
+                                name: string;
+                                currency?: string;
+                                price?: string;
+                                url?: string;
+                                icon: string;
+                              }[];
+                              const filtered = productsSearch.trim()
+                                ? all.filter((p) =>
+                                  p.name.toLowerCase().includes(productsSearch.toLowerCase()),
+                                )
+                                : all;
+                              const rows = filtered.slice(0, productsShowPerPage);
+                              if (!filtered.length) {
+                                return (
+                                  <tr>
+                                    <td
+                                      colSpan={5}
+                                      className="px-5 py-14 text-center text-sm text-gray-500 dark:text-gray-400"
+                                    >
+                                      {all.length === 0
+                                        ? "No products yet. Add one with the button above."
+                                        : "No products match your search."}
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              return rows.map((p) => {
+                                const urlFull = (p.url ?? "").trim();
+                                const openHref = normalizeOpenableUrl(p.url);
+                                return (
+                                  <tr
+                                    key={p.id}
+                                    className="transition-colors hover:bg-slate-50/80 dark:hover:bg-gray-800/50"
+                                  >
+                                    <td className="px-5 py-4 align-middle">
+                                      <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200/90 bg-gradient-to-br from-slate-50 to-slate-100 ring-1 ring-black/[0.04] dark:border-gray-600 dark:from-gray-800 dark:to-gray-900 dark:ring-white/5">
+                                        {serviceIconIsRenderable(p.icon) ? (
+                                          // eslint-disable-next-line @next/next/no-img-element
+                                          <img
+                                            src={p.icon}
+                                            alt=""
+                                            className="h-full w-full object-cover"
+                                          />
+                                        ) : (
+                                          <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                                            {(p.name || "?").charAt(0).toUpperCase()}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </td>
+                                    <td className="px-5 py-4 align-middle">
+                                      <p className="font-semibold text-gray-900 dark:text-gray-100">{p.name}</p>
+                                    </td>
+                                    <td className="max-w-[min(40vw,320px)] px-5 py-4 align-middle">
+                                      <div className="flex min-w-0 items-center gap-2">
+                                        <p
+                                          className="min-w-0 flex-1 truncate font-mono text-xs text-slate-600 dark:text-slate-300"
+                                          title={urlFull || undefined}
+                                        >
+                                          {formatUrlDisplay(p.url)}
+                                        </p>
+                                        {openHref ? (
+                                          <button
+                                            type="button"
+                                            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-blue-200 bg-blue-50/80 px-2 py-1 text-[11px] font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-800/80 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/40"
+                                            aria-label="Open product URL in new tab"
+                                            title={urlFull}
+                                            onClick={() => window.open(openHref, "_blank", "noopener,noreferrer")}
+                                          >
+                                            <OpenInNewTabArrowIcon className="h-3.5 w-3.5" />
+                                            Open
+                                          </button>
+                                        ) : null}
+                                      </div>
+                                    </td>
+                                    <td className="px-5 py-4 align-middle">
+                                      <p className="text-sm font-medium tabular-nums text-gray-900 dark:text-gray-100">
+                                        {p.price ? `${p.currency ? `${p.currency} ` : ""}${p.price}` : "—"}
+                                      </p>
+                                    </td>
+                                    <td className="px-5 py-4 align-middle">
+                                      <div className="flex items-center justify-end gap-1">
+                                        <AdminTableIconButton
+                                          aria-label="Preview product"
+                                          title="Preview"
+                                          onClick={() =>
+                                            setPreviewProduct({
+                                              name: p.name,
+                                              description: (p as any).description,
+                                              price: p.price,
+                                              currency: p.currency,
+                                              url: p.url,
+                                              icon: p.icon,
+                                            })
+                                          }
+                                        >
+                                          <PreviewEyeIcon />
+                                        </AdminTableIconButton>
+                                        <AdminTableIconButton
+                                          aria-label="Edit product"
+                                          title="Edit"
+                                          onClick={() => {
+                                            setEditingProductId(p.id);
+                                            setNewProductName(p.name);
+                                            setNewProductCurrency(p.currency || "");
+                                            setNewProductPrice(p.price || "");
+                                            setNewProductSort((p as any).sort || "");
+                                            setNewProductUrl(p.url || "");
+                                            setNewProductDescription((p as any).description || "");
+                                            setNewProductIconPreview(p.icon);
+                                            setShowNewProductModal(true);
+                                          }}
+                                        >
+                                          <PencilIcon />
+                                        </AdminTableIconButton>
+                                        <AdminTableIconButton
+                                          className="hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900 dark:hover:bg-red-950/40 dark:hover:text-red-400"
+                                          aria-label="Delete product"
+                                          title="Delete"
+                                          onClick={() => {
+                                            if (!vcardId) return;
+                                            // eslint-disable-next-line no-alert
+                                            if (!confirm("Delete this product?")) return;
+                                            setVCards((prev) =>
+                                              prev.map((c) =>
+                                                c.id === vcardId
+                                                  ? {
+                                                    ...c,
+                                                    products: (c.products ?? []).filter(
+                                                      (x) => x.id !== p.id,
+                                                    ),
+                                                  }
+                                                  : c,
+                                              ),
+                                            );
+                                          }}
+                                        >
+                                          <TrashIcon />
+                                        </AdminTableIconButton>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                );
+                              });
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-col gap-3 border-t border-gray-200 bg-slate-50/80 px-5 py-3.5 dark:border-gray-700 dark:bg-gray-800/40 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                          <span className="font-medium">Rows per page</span>
+                          <select
+                            value={productsShowPerPage}
+                            onChange={(e) => setProductsShowPerPage(Number(e.target.value))}
+                            className={`${inputClass} h-9 w-[4.75rem] rounded-lg border border-gray-200 bg-white py-1 pr-8 text-sm font-medium shadow-sm dark:border-gray-600 dark:bg-gray-900`}
                           >
-                            Cancel
-                          </button>
-                          <button
-                            type="submit"
-                            className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
-                          >
-                            {editingTestimonialId ? "Update" : "Save"}
-                          </button>
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
                         </div>
-                      </form>
+                        {(() => {
+                          const all = (currentCard?.products ?? []) as { name: string }[];
+                          const filtered = productsSearch.trim()
+                            ? all.filter((p) => p.name.toLowerCase().includes(productsSearch.toLowerCase()))
+                            : all;
+                          const visible = Math.min(filtered.length, productsShowPerPage);
+                          return (
+                            <p className="text-sm tabular-nums text-gray-600 dark:text-gray-400">
+                              Showing{" "}
+                              <span className="font-semibold text-gray-900 dark:text-gray-100">{visible}</span>
+                              {" of "}
+                              <span className="font-semibold text-gray-900 dark:text-gray-100">{filtered.length}</span>
+                              {" products"}
+                            </p>
+                          );
+                        })()}
+                      </div>
                     </div>
                   </div>
                 )}
-              </div>
-            )}
 
-            {activeSection === "iframes" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={iframesSearch}
-                      onChange={(e) => setIframesSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowNewIframeModal(true)}
-                    className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
-                  >
-                    Add Iframe
-                  </button>
-                </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">URL</th>
-                          <th className="px-4 py-3">ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(() => {
-                          const all = (currentCard?.embedTags ?? []).filter(
-                            (e) => (e.section ?? "") === "iframes"
-                          );
-                          const q = iframesSearch.trim().toLowerCase();
-                          const filtered = !q
-                            ? all
-                            : all.filter(
-                                (row) =>
-                                  (row.type ?? "").toLowerCase().includes(q) ||
-                                  (row.value ?? "").toLowerCase().includes(q)
-                              );
-                          const rows = filtered.slice(0, iframesShowPerPage);
-                          if (!rows.length) {
-                            return (
-                              <tr>
-                                <td colSpan={2} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                  No Data Available
-                                </td>
-                              </tr>
-                            );
-                          }
-                          return rows.map((row) => (
-                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
-                              <td className="px-4 py-3">
-                                <div className="max-w-[520px] truncate">{row.value}</div>
-                              </td>
-                              <td className="px-4 py-3">
-                                <button
-                                  type="button"
-                                  className="text-red-500 hover:text-red-600 text-lg"
-                                  onClick={() => {
-                                    if (!vcardId) return;
-                                    setVCards((prev) =>
-                                      prev.map((c) =>
-                                        c.id === vcardId
-                                          ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
-                                          : c
-                                      )
-                                    );
-                                  }}
-                                  aria-label="Delete iframe"
-                                >
-                                  🗑
-                                </button>
-                              </td>
-                            </tr>
-                          ));
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select
-                        value={iframesShowPerPage}
-                        onChange={(e) => setIframesShowPerPage(Number(e.target.value))}
-                        className={`${inputClass} h-9 py-1 pr-8 w-20`}
-                      >
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing{" "}
-                        {(() => {
-                          const all = (currentCard?.embedTags ?? []).filter((e) => (e.section ?? "") === "iframes");
-                          const q = iframesSearch.trim().toLowerCase();
-                          const count = !q
-                            ? all.length
-                            : all.filter(
-                                (row) =>
-                                  (row.type ?? "").toLowerCase().includes(q) ||
-                                  (row.value ?? "").toLowerCase().includes(q)
-                              ).length;
-                          return count;
-                        })()}{" "}
-                        results
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Appointments - simplified schedule */}
-            {activeSection === "appointments" && (
-              <div className="space-y-6">
-                {/* Appointment Type */}
-                <div>
-                  <p className={`${labelClass} font-bold text-gray-900 dark:text-gray-100`}>Appointment Type :</p>
-                  <div className="mt-2 flex gap-6">
-                    <label className="flex cursor-pointer items-center gap-2">
-                      <input
-                        type="radio"
-                        name="appointmentType"
-                        checked={appointmentType === "free"}
-                        onChange={() => setAppointmentType("free")}
-                        className="h-4 w-4 border-gray-300 text-[#4E38EE] focus:ring-[#4E38EE]"
-                      />
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Free</span>
-                    </label>
-                    <label className="flex cursor-pointer items-center gap-2">
-                      <input
-                        type="radio"
-                        name="appointmentType"
-                        checked={appointmentType === "paid"}
-                        onChange={() => setAppointmentType("paid")}
-                        className="h-4 w-4 border-gray-300 text-[#4E38EE] focus:ring-[#4E38EE]"
-                      />
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Paid</span>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Appointment By Services */}
-                <div>
-                  <div className="flex items-center justify-between gap-4">
-                    <p className={`${labelClass} font-bold text-gray-900 dark:text-gray-100`}>Appointment By Services :</p>
-                    <button
-                      type="button"
-                      onClick={addAppointmentService}
-                      className="inline-flex items-center gap-1.5 rounded-lg border-2 border-[#4E38EE] bg-transparent px-4 py-2 text-sm font-semibold text-[#4E38EE] hover:bg-[#4E38EE]/10"
-                    >
-                      <span className="text-lg leading-none">+</span> Add Service
-                    </button>
-                  </div>
-                  <div className="mt-3 space-y-3">
-                    {appointmentServices.map((svc) => (
-                      <div key={svc.id} className="flex flex-wrap items-end gap-4">
-                        <div className="min-w-[200px] flex-1">
-                          <label className={labelClass}>Service Name:</label>
-                          <select
-                            value={svc.serviceName}
-                            onChange={(e) => updateAppointmentService(svc.id, "serviceName", e.target.value)}
-                            className={`${inputClass} rounded-lg`}
-                          >
-                            <option value="">Select Service</option>
-                            <option value="Consultation">Consultation</option>
-                            <option value="Follow-up">Follow-up</option>
-                            <option value="Checkup">Checkup</option>
-                          </select>
-                        </div>
-                        <div className="w-32">
-                          <label className={labelClass}>Amount:</label>
-                          <input
-                            type="text"
-                            value={svc.amount}
-                            onChange={(e) => updateAppointmentService(svc.id, "amount", e.target.value)}
-                            placeholder="Amount"
-                            className={`${inputClass} rounded-lg`}
-                          />
-                        </div>
+                {activeSection === "insta" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={instaSearch}
+                          onChange={(e) => setInstaSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10`}
+                        />
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3">
                         <button
                           type="button"
-                          onClick={() => removeAppointmentService(svc.id)}
-                          className="mb-0.5 rounded p-1.5 text-[#EF4444] hover:bg-red-50 dark:hover:bg-red-900/20"
-                          aria-label="Remove service"
+                          onClick={() => { setEmbedGuideType("instagram"); setShowEmbedGuideModal(true); }}
+                          className="inline-flex items-center justify-center rounded-lg bg-amber-400 hover:bg-amber-500 px-4 py-2.5 text-sm font-semibold text-gray-900 shrink-0"
                         >
-                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
+                          How It works?
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setEmbedTagTargetSection("insta"); setShowAddEmbedTagModal(true); }}
+                          className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                        >
+                          Add Embed-Tag
                         </button>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Weekly schedule */}
-                <div className="space-y-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-                  {APPOINTMENT_DAYS.map((day) => (
-                    <div
-                      key={day}
-                      className="flex flex-wrap items-center gap-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 px-4 py-3 bg-white dark:bg-gray-900/50"
-                    >
-                      <div className="flex items-center gap-2 min-w-[120px]">
-                        <input
-                          type="checkbox"
-                          checked={appointmentSchedule[day]?.enabled ?? false}
-                          onChange={(e) => setDayEnabled(day, e.target.checked)}
-                          className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-[#4E38EE] focus:ring-[#4E38EE] dark:border-gray-600 dark:bg-gray-700"
-                        />
-                        <span className="text-sm font-bold uppercase text-gray-700 dark:text-gray-100">{day}</span>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                          <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                            <tr>
+                              <th className="px-4 py-3">TYPE</th>
+                              <th className="px-4 py-3">EMBED-TAG</th>
+                              <th className="px-4 py-3">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const rows = getEmbedRowsForSection("insta");
+                              if (!rows.length) {
+                                return (
+                                  <tr>
+                                    <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                      No Data Available
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              return rows.map((row) => (
+                                <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                                  <td className="px-4 py-3 capitalize">{row.type}</td>
+                                  <td className="px-4 py-3">
+                                    <div className="max-w-[520px] truncate">{row.value}</div>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <button
+                                      type="button"
+                                      className="text-red-500 hover:text-red-600 text-lg"
+                                      onClick={() => {
+                                        if (!vcardId) return;
+                                        setVCards((prev) =>
+                                          prev.map((c) =>
+                                            c.id === vcardId
+                                              ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
+                                              : c
+                                          )
+                                        );
+                                      }}
+                                      aria-label="Delete embed tag"
+                                    >
+                                      🗑
+                                    </button>
+                                  </td>
+                                </tr>
+                              ));
+                            })()}
+                          </tbody>
+                        </table>
                       </div>
-                      <div className="flex flex-1 flex-wrap items-center gap-2">
-                        {appointmentSchedule[day]?.slots.map((slot) => (
-                          <div key={slot.id} className="flex items-center gap-2">
-                            <select
-                              value={slot.start}
-                              onChange={(e) => updateSlot(day, slot.id, "start", e.target.value)}
-                              className={`${inputClass} h-9 py-1 pr-8 w-28 rounded-lg text-sm`}
-                            >
-                              {TIME_OPTIONS.map((t) => (
-                                <option key={t} value={t}>{t}</option>
-                              ))}
-                            </select>
-                            <span className="text-xs text-gray-500">To</span>
-                            <select
-                              value={slot.end}
-                              onChange={(e) => updateSlot(day, slot.id, "end", e.target.value)}
-                              className={`${inputClass} h-9 py-1 pr-8 w-28 rounded-lg text-sm`}
-                            >
-                              {TIME_OPTIONS.map((t) => (
-                                <option key={t} value={t}>{t}</option>
-                              ))}
-                            </select>
+                      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                          <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            Showing{" "}
+                            <span className="font-semibold text-gray-900 dark:text-gray-100">{getEmbedRowsForSection("insta").length}</span>{" "}
+                            results
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSection === "linkedin" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={linkedinSearch}
+                          onChange={(e) => setLinkedinSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10`}
+                        />
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => { setEmbedGuideType("linkedin"); setShowEmbedGuideModal(true); }}
+                          className="inline-flex items-center justify-center rounded-lg bg-orange-400 hover:bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shrink-0"
+                        >
+                          How It works?
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setEmbedTagTargetSection("linkedin"); setShowAddEmbedTagModal(true); }}
+                          className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                        >
+                          Add Embed-Tag
+                        </button>
+                      </div>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                          <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                            <tr>
+                              <th className="px-4 py-3">TYPE</th>
+                              <th className="px-4 py-3">EMBED-TAG</th>
+                              <th className="px-4 py-3">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const rows = getEmbedRowsForSection("linkedin");
+                              if (!rows.length) {
+                                return (
+                                  <tr>
+                                    <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                      No Data Available
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              return rows.map((row) => (
+                                <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                                  <td className="px-4 py-3 capitalize">{row.type}</td>
+                                  <td className="px-4 py-3"><div className="max-w-[520px] truncate">{row.value}</div></td>
+                                  <td className="px-4 py-3">
+                                    <button
+                                      type="button"
+                                      className="text-red-500 hover:text-red-600 text-lg"
+                                      onClick={() => {
+                                        if (!vcardId) return;
+                                        setVCards((prev) =>
+                                          prev.map((c) =>
+                                            c.id === vcardId
+                                              ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
+                                              : c
+                                          )
+                                        );
+                                      }}
+                                      aria-label="Delete embed tag"
+                                    >
+                                      🗑
+                                    </button>
+                                  </td>
+                                </tr>
+                              ));
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                          <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Showing {getEmbedRowsForSection("linkedin").length} results</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSection === "galleries" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={galleriesSearch}
+                          onChange={(e) => setGalleriesSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowNewGalleryModal(true)}
+                        className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                      >
+                        Add Gallery
+                      </button>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                          <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                            <tr>
+                              <th className="px-4 py-3">TYPE</th>
+                              <th className="px-4 py-3">LINK</th>
+                              <th className="px-4 py-3">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const allGalls = currentCard?.galleries ?? [];
+                              const filtered = (galleriesSearch ?? "").trim()
+                                ? allGalls.filter((g) =>
+                                  g.type.toLowerCase().includes(galleriesSearch.toLowerCase())
+                                )
+                                : allGalls;
+
+                              if (!filtered.length) {
+                                return (
+                                  <tr>
+                                    <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                      No Data Available
+                                    </td>
+                                  </tr>
+                                );
+                              }
+
+                              return filtered.map((g) => (
+                                <tr key={g.id} className="border-t border-gray-100 dark:border-gray-800">
+                                  <td className="px-4 py-3">
+                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${g.type === "image" ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"
+                                      } capitalize`}>
+                                      {g.type}
+                                    </span>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <div className="h-10 w-10 rounded border border-gray-200 dark:border-gray-700 overflow-hidden bg-gray-50">
+                                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                                      <img src={g.imageUrl} alt="Gallery" className="h-full w-full object-cover" />
+                                    </div>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <button
+                                      type="button"
+                                      className="text-red-500 hover:text-red-600 text-lg"
+                                      aria-label="Delete gallery item"
+                                      onClick={() => {
+                                        if (!vcardId) return;
+                                        // eslint-disable-next-line no-alert
+                                        if (!confirm("Delete this gallery item?")) return;
+                                        setVCards((prev) =>
+                                          prev.map((c) =>
+                                            c.id === vcardId
+                                              ? {
+                                                ...c,
+                                                galleries: (c.galleries ?? []).filter((x) => x.id !== g.id),
+                                              }
+                                              : c
+                                          )
+                                        );
+                                      }}
+                                    >
+                                      🗑
+                                    </button>
+                                  </td>
+                                </tr>
+                              ));
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                          <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Showing 0 results</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSection === "blogs" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={blogsSearch}
+                          onChange={(e) => setBlogsSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                        onClick={() => setShowNewBlogModal(true)}
+                      >
+                        Add Blog
+                      </button>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                          <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                            <tr>
+                              <th className="px-4 py-3">ICON</th>
+                              <th className="px-4 py-3">TITLE</th>
+                              <th className="px-4 py-3">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const allBlogs = currentCard?.blogs ?? [];
+                              const filtered = blogsSearch.trim()
+                                ? allBlogs.filter((b) =>
+                                  b.title.toLowerCase().includes(blogsSearch.toLowerCase())
+                                )
+                                : allBlogs;
+                              if (!filtered.length) {
+                                return (
+                                  <tr>
+                                    <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                      No Data Available
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              return filtered.map((blog) => (
+                                <tr key={blog.id} className="border-t border-gray-100 dark:border-gray-800">
+                                  <td className="px-4 py-3">
+                                    <div className="h-12 w-12 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                                      <img src={blog.icon} alt={blog.title} className="h-full w-full object-cover" />
+                                    </div>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <p className="font-medium text-gray-900 dark:text-gray-100">{blog.title}</p>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <div className="flex items-center gap-3 text-lg">
+                                      <button
+                                        type="button"
+                                        className="text-blue-500 hover:text-blue-600"
+                                        aria-label="View blog"
+                                        onClick={() => {
+                                          setPreviewBlog({
+                                            title: blog.title,
+                                            description: blog.description,
+                                            icon: blog.icon,
+                                          });
+                                        }}
+                                      >
+                                        👁
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="text-blue-500 hover:text-blue-600"
+                                        aria-label="Edit blog"
+                                        onClick={() => {
+                                          setEditingBlogId(blog.id);
+                                          setNewBlogTitle(blog.title);
+                                          setNewBlogDescription(blog.description);
+                                          setNewBlogIconPreview(blog.icon);
+                                          setShowNewBlogModal(true);
+                                        }}
+                                      >
+                                        ✏️
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="text-blue-500 hover:text-blue-600"
+                                        aria-label="Delete blog"
+                                        onClick={() => {
+                                          if (!vcardId) return;
+                                          // eslint-disable-next-line no-alert
+                                          if (!confirm("Delete this blog?")) return;
+                                          setVCards((prev) =>
+                                            prev.map((c) =>
+                                              c.id === vcardId
+                                                ? {
+                                                  ...c,
+                                                  blogs: (c.blogs ?? []).filter((b) => b.id !== blog.id),
+                                                }
+                                                : c
+                                            )
+                                          );
+                                        }}
+                                      >
+                                        🗑
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ));
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                          <select className={`${inputClass} h-9 py-1 pr-8 w-20`} defaultValue={10}>
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            Showing {(currentCard?.blogs ?? []).length} results
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {previewBlog && (
+                      <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                        <div className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Blog preview</h2>
                             <button
                               type="button"
-                              onClick={() => removeSlot(day, slot.id)}
-                              className="rounded p-1 text-[#EF4444] hover:bg-red-50 dark:hover:bg-red-900/20"
-                              aria-label="Delete time slot"
+                              onClick={() => setPreviewBlog(null)}
+                              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                              aria-label="Close preview"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                          <div className="px-6 py-5 space-y-4">
+                            <div className="h-40 w-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                              {previewBlog.icon ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={previewBlog.icon}
+                                  alt={previewBlog.title}
+                                  className="h-full w-full object-cover"
+                                />
+                              ) : (
+                                <span className="text-sm text-gray-400">No image set for this blog.</span>
+                              )}
+                            </div>
+                            <div>
+                              <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                                {previewBlog.title}
+                              </h3>
+                              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                                {previewBlog.description}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {showNewBlogModal && (
+                      <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                        <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">New Blog</h2>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowNewBlogModal(false);
+                                setBlogFormErrors({});
+                              }}
+                              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                              aria-label="Close"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                          <form onSubmit={handleNewBlogSubmit} className="px-6 py-5 space-y-5">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Title: <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                value={newBlogTitle}
+                                onChange={(e) => setNewBlogTitle(e.target.value)}
+                                placeholder="Enter Blog Name"
+                                className={`${inputClass} ${blogFormErrors.title ? "border-red-500 focus:ring-red-500" : ""}`}
+                              />
+                              {blogFormErrors.title && (
+                                <p className="mt-1 text-xs text-red-500">{blogFormErrors.title}</p>
+                              )}
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Description: <span className="text-red-500">*</span>
+                              </label>
+                              <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                                <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
+                                  <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300" title="Bold">
+                                    <span className="font-bold text-sm">B</span>
+                                  </button>
+                                  <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic" title="Italic">
+                                    <span className="text-sm">I</span>
+                                  </button>
+                                  <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline" title="Underline">
+                                    <span className="text-sm">U</span>
+                                  </button>
+                                  <button type="button" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 line-through" title="Strikethrough">
+                                    <span className="text-sm">S</span>
+                                  </button>
+                                </div>
+                                <textarea
+                                  className={`w-full min-h-[120px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-transparent border-0 focus:ring-0 resize-none placeholder-gray-400 ${blogFormErrors.description ? "ring-1 ring-red-500" : ""
+                                    }`}
+                                  placeholder="Description"
+                                  value={newBlogDescription}
+                                  onChange={(e) => setNewBlogDescription(e.target.value)}
+                                />
+                              </div>
+                              {blogFormErrors.description && (
+                                <p className="mt-1 text-xs text-red-500">{blogFormErrors.description}</p>
+                              )}
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Blog Icon: <span className="text-red-500">*</span>
+                              </label>
+                              <div className="flex flex-col items-start gap-2">
+                                <div className="relative inline-flex rounded-2xl border border-gray-200 bg-gray-50 p-1 shadow-sm">
+                                  <div className="h-24 w-24 rounded-xl overflow-hidden bg-white">
+                                    {newBlogIconPreview ? (
+                                      // eslint-disable-next-line @next/next/no-img-element
+                                      <img src={newBlogIconPreview} alt="Blog icon preview" className="h-full w-full object-cover" />
+                                    ) : (
+                                      // eslint-disable-next-line @next/next/no-img-element
+                                      <img
+                                        src="/images/placeholder/blog-icon.png"
+                                        alt="Default blog icon"
+                                        className="h-full w-full object-cover"
+                                      />
+                                    )}
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => newBlogIconInputRef.current?.click()}
+                                    className="absolute right-2 top-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-500 shadow hover:bg-gray-50"
+                                    aria-label="Change blog icon"
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                      />
+                                    </svg>
+                                  </button>
+                                  <input
+                                    ref={newBlogIconInputRef}
+                                    type="file"
+                                    accept="image/png,image/jpeg,image/jpg"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                      const file = e.target.files?.[0];
+                                      if (!file) return;
+                                      const reader = new FileReader();
+                                      reader.onload = () => {
+                                        setNewBlogIconPreview(reader.result as string);
+                                      };
+                                      reader.readAsDataURL(file);
+                                    }}
+                                  />
+                                </div>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  Allowed file types: png, jpg, jpeg.
+                                </p>
+                              </div>
+                              {blogFormErrors.icon && (
+                                <p className="mt-1 text-xs text-red-500">{blogFormErrors.icon}</p>
+                              )}
+                            </div>
+
+                            <div className="flex justify-end gap-2 pt-2 pb-1">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setShowNewBlogModal(false);
+                                  setBlogFormErrors({});
+                                }}
+                                className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                              >
+                                Discard
+                              </button>
+                              <button
+                                type="submit"
+                                className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {activeSection === "testimonials" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={testimonialsSearch}
+                          onChange={(e) => setTestimonialsSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                        onClick={() => {
+                          setEditingTestimonialId(null);
+                          setNewTestimonialName("");
+                          setNewTestimonialRole("");
+                          setNewTestimonialQuote("");
+                          setNewTestimonialImagePreview(null);
+                          setTestimonialFormErrors({});
+                          setShowNewTestimonialModal(true);
+                        }}
+                      >
+                        Add Testimonial
+                      </button>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                          <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                            <tr>
+                              <th className="px-4 py-3">IMAGE</th>
+                              <th className="px-4 py-3">NAME</th>
+                              <th className="px-4 py-3">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const all = ((currentCard as any)?.testimonials as any[]) ?? [];
+                              const filtered = testimonialsSearch.trim()
+                                ? all.filter((t) =>
+                                  (t.name || "").toLowerCase().includes(testimonialsSearch.toLowerCase())
+                                )
+                                : all;
+                              if (!filtered.length) {
+                                return (
+                                  <tr>
+                                    <td colSpan={3} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                      No Data Available
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              return filtered.map((t) => (
+                                <tr key={t.id} className="border-t border-gray-100 dark:border-gray-800">
+                                  <td className="px-4 py-3">
+                                    <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                                      <img
+                                        src={t.image}
+                                        alt={t.name}
+                                        className="h-full w-full object-cover"
+                                      />
+                                    </div>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <p className="font-medium text-gray-900 dark:text-gray-100">{t.name}</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">{t.role}</p>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <div className="flex items-center gap-3 text-lg">
+                                      <button
+                                        type="button"
+                                        className="text-blue-500 hover:text-blue-600"
+                                        aria-label="View testimonial"
+                                        onClick={() => {
+                                          alert(`${t.name} – ${t.role}\n\n${t.quote}`);
+                                        }}
+                                      >
+                                        👁
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="text-blue-500 hover:text-blue-600"
+                                        aria-label="Edit testimonial"
+                                        onClick={() => {
+                                          setEditingTestimonialId(t.id);
+                                          setNewTestimonialName(t.name);
+                                          setNewTestimonialRole(t.role);
+                                          setNewTestimonialQuote(t.quote);
+                                          setNewTestimonialImagePreview(t.image);
+                                          setTestimonialFormErrors({});
+                                          setShowNewTestimonialModal(true);
+                                        }}
+                                      >
+                                        ✏️
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="text-red-500 hover:text-red-600"
+                                        aria-label="Delete testimonial"
+                                        onClick={() => {
+                                          if (!vcardId) return;
+                                          // eslint-disable-next-line no-alert
+                                          if (!confirm("Delete this testimonial?")) return;
+                                          setVCards((prev) =>
+                                            prev.map((c) =>
+                                              c.id === vcardId
+                                                ? {
+                                                  ...c,
+                                                  testimonials: (((c as any).testimonials as any[]) ?? []).filter(
+                                                    (x) => x.id !== t.id
+                                                  ),
+                                                }
+                                                : c
+                                            )
+                                          );
+                                        }}
+                                      >
+                                        🗑
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ));
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                          <select className={`${inputClass} h-9 py-1 pr-8 w-20`}>
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            Showing {(((currentCard as any)?.testimonials as any[]) ?? []).length} results
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {showNewTestimonialModal && (
+                      <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                        <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700">
+                          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                              {editingTestimonialId ? "Edit Testimonial" : "New Testimonial"}
+                            </h2>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowNewTestimonialModal(false);
+                                setEditingTestimonialId(null);
+                                setTestimonialFormErrors({});
+                              }}
+                              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                              aria-label="Close"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                          <form onSubmit={handleNewTestimonialSubmit} className="px-6 py-5 space-y-5">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Name: <span className="text-red-500">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                value={newTestimonialName}
+                                onChange={(e) => setNewTestimonialName(e.target.value)}
+                                placeholder="Enter Testimonial Name"
+                                className={`${inputClass} ${testimonialFormErrors.name ? "border-red-500 focus:ring-red-500" : ""
+                                  }`}
+                              />
+                              {testimonialFormErrors.name && (
+                                <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.name}</p>
+                              )}
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Description: <span className="text-red-500">*</span>
+                              </label>
+                              <textarea
+                                rows={3}
+                                value={newTestimonialQuote}
+                                onChange={(e) => setNewTestimonialQuote(e.target.value)}
+                                placeholder="Enter Short Description"
+                                className={`${inputClass} ${testimonialFormErrors.quote ? "border-red-500 focus:ring-red-500" : ""
+                                  }`}
+                              />
+                              {testimonialFormErrors.quote && (
+                                <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.quote}</p>
+                              )}
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                Image: <span className="text-red-500">*</span>
+                              </label>
+                              <div className="flex items-center gap-4">
+                                <div className="h-16 w-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+                                  {newTestimonialImagePreview ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
+                                      src={newTestimonialImagePreview}
+                                      alt={newTestimonialName || "Preview"}
+                                      className="h-full w-full object-cover"
+                                    />
+                                  ) : (
+                                    <span className="text-xs text-gray-400">No image</span>
+                                  )}
+                                </div>
+                                <div>
+                                  <input
+                                    ref={newTestimonialImageInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                      const file = e.target.files?.[0];
+                                      if (!file) return;
+                                      const reader = new FileReader();
+                                      reader.onload = () => {
+                                        setNewTestimonialImagePreview(reader.result as string);
+                                      };
+                                      reader.readAsDataURL(file);
+                                    }}
+                                  />
+                                  <button
+                                    type="button"
+                                    className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                                    onClick={() => newTestimonialImageInputRef.current?.click()}
+                                  >
+                                    Upload Image
+                                  </button>
+                                  {testimonialFormErrors.image && (
+                                    <p className="mt-1 text-xs text-red-500">{testimonialFormErrors.image}</p>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-end gap-3 pt-2">
+                              <button
+                                type="button"
+                                className="inline-flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                                onClick={() => {
+                                  setShowNewTestimonialModal(false);
+                                  setEditingTestimonialId(null);
+                                  setTestimonialFormErrors({});
+                                }}
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                type="submit"
+                                className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
+                              >
+                                {editingTestimonialId ? "Update" : "Save"}
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {activeSection === "iframes" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={iframesSearch}
+                          onChange={(e) => setIframesSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowNewIframeModal(true)}
+                        className="inline-flex items-center justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 shrink-0"
+                      >
+                        Add Iframe
+                      </button>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                          <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                            <tr>
+                              <th className="px-4 py-3">URL</th>
+                              <th className="px-4 py-3">ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const all = (currentCard?.embedTags ?? []).filter(
+                                (e) => (e.section ?? "") === "iframes"
+                              );
+                              const q = iframesSearch.trim().toLowerCase();
+                              const filtered = !q
+                                ? all
+                                : all.filter(
+                                  (row) =>
+                                    (row.type ?? "").toLowerCase().includes(q) ||
+                                    (row.value ?? "").toLowerCase().includes(q)
+                                );
+                              const rows = filtered.slice(0, iframesShowPerPage);
+                              if (!rows.length) {
+                                return (
+                                  <tr>
+                                    <td colSpan={2} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                      No Data Available
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              return rows.map((row) => (
+                                <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                                  <td className="px-4 py-3">
+                                    <div className="max-w-[520px] truncate">{row.value}</div>
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <button
+                                      type="button"
+                                      className="text-red-500 hover:text-red-600 text-lg"
+                                      onClick={() => {
+                                        if (!vcardId) return;
+                                        setVCards((prev) =>
+                                          prev.map((c) =>
+                                            c.id === vcardId
+                                              ? { ...c, embedTags: (c.embedTags ?? []).filter((x) => x.id !== row.id) }
+                                              : c
+                                          )
+                                        );
+                                      }}
+                                      aria-label="Delete iframe"
+                                    >
+                                      🗑
+                                    </button>
+                                  </td>
+                                </tr>
+                              ));
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                          <select
+                            value={iframesShowPerPage}
+                            onChange={(e) => setIframesShowPerPage(Number(e.target.value))}
+                            className={`${inputClass} h-9 py-1 pr-8 w-20`}
+                          >
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            Showing{" "}
+                            {(() => {
+                              const all = (currentCard?.embedTags ?? []).filter((e) => (e.section ?? "") === "iframes");
+                              const q = iframesSearch.trim().toLowerCase();
+                              const count = !q
+                                ? all.length
+                                : all.filter(
+                                  (row) =>
+                                    (row.type ?? "").toLowerCase().includes(q) ||
+                                    (row.value ?? "").toLowerCase().includes(q)
+                                ).length;
+                              return count;
+                            })()}{" "}
+                            results
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Appointments - simplified schedule */}
+                {activeSection === "appointments" && (
+                  <div className="space-y-6">
+                    {/* Appointment Type */}
+                    <div>
+                      <p className={`${labelClass} font-bold text-gray-900 dark:text-gray-100`}>Appointment Type :</p>
+                      <div className="mt-2 flex gap-6">
+                        <label className="flex cursor-pointer items-center gap-2">
+                          <input
+                            type="radio"
+                            name="appointmentType"
+                            checked={appointmentType === "free"}
+                            onChange={() => setAppointmentType("free")}
+                            className="h-4 w-4 border-gray-300 text-[#4E38EE] focus:ring-[#4E38EE]"
+                          />
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Free</span>
+                        </label>
+                        <label className="flex cursor-pointer items-center gap-2">
+                          <input
+                            type="radio"
+                            name="appointmentType"
+                            checked={appointmentType === "paid"}
+                            onChange={() => setAppointmentType("paid")}
+                            className="h-4 w-4 border-gray-300 text-[#4E38EE] focus:ring-[#4E38EE]"
+                          />
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Paid</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Appointment By Services */}
+                    <div>
+                      <div className="flex items-center justify-between gap-4">
+                        <p className={`${labelClass} font-bold text-gray-900 dark:text-gray-100`}>Appointment By Services :</p>
+                        <button
+                          type="button"
+                          onClick={addAppointmentService}
+                          className="inline-flex items-center gap-1.5 rounded-lg border-2 border-[#4E38EE] bg-transparent px-4 py-2 text-sm font-semibold text-[#4E38EE] hover:bg-[#4E38EE]/10"
+                        >
+                          <span className="text-lg leading-none">+</span> Add Service
+                        </button>
+                      </div>
+                      <div className="mt-3 space-y-3">
+                        {appointmentServices.map((svc) => (
+                          <div key={svc.id} className="flex flex-wrap items-end gap-4">
+                            <div className="min-w-[200px] flex-1">
+                              <label className={labelClass}>Service Name:</label>
+                              <select
+                                value={svc.serviceName}
+                                onChange={(e) => updateAppointmentService(svc.id, "serviceName", e.target.value)}
+                                className={`${inputClass} rounded-lg`}
+                              >
+                                <option value="">Select Service</option>
+                                <option value="Consultation">Consultation</option>
+                                <option value="Follow-up">Follow-up</option>
+                                <option value="Checkup">Checkup</option>
+                              </select>
+                            </div>
+                            <div className="w-32">
+                              <label className={labelClass}>Amount:</label>
+                              <input
+                                type="text"
+                                value={svc.amount}
+                                onChange={(e) => updateAppointmentService(svc.id, "amount", e.target.value)}
+                                placeholder="Amount"
+                                className={`${inputClass} rounded-lg`}
+                              />
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => removeAppointmentService(svc.id)}
+                              className="mb-0.5 rounded p-1.5 text-[#EF4444] hover:bg-red-50 dark:hover:bg-red-900/20"
+                              aria-label="Remove service"
                             >
                               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -6404,853 +6618,908 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                           </div>
                         ))}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={() => addSlot(day)}
-                          className="rounded p-1.5 text-[#3B82F6] hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                          aria-label="Add time slot"
-                        >
-                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                          </svg>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => copyDayToOthers(day)}
-                          className="rounded p-1.5 text-[#3B82F6] hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                          aria-label="Copy to other days"
-                        >
-                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                          </svg>
-                        </button>
-                      </div>
                     </div>
-                  ))}
-                </div>
 
-                <div className="flex gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAppointmentSchedule(
-                        mapBusinessHoursToAppointmentSchedule(
-                          (currentCard?.businessHours as Record<string, { enabled: boolean; start: string; end: string }>) || undefined
-                        )
-                      );
-                      setAppointmentType(currentCard?.appointmentType ?? "free");
-                      setAppointmentServices(
-                        currentCard?.appointmentServices && currentCard.appointmentServices.length > 0
-                          ? currentCard.appointmentServices
-                          : [{ id: "svc-0", serviceName: "", amount: "" }]
-                      );
-                    }}
-                    className="btn-secondary-premium inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold"
-                  >
-                    Discard
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSaveAppointmentsToBusinessHours}
-                    className="btn-primary-premium inline-flex items-center justify-center rounded-lg bg-[#4E38EE] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#4330d4]"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Social links - Website: same to same design as screenshot */}
-            {activeSection === "social-links" && (
-              <div className="space-y-6 max-w-4xl">
-                <div className="space-y-3">
-                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">Note :</span>{" "}
-                    Uploaded icon name should be &quot;WeChat.png&quot; / &quot;Tumbler.png&quot; / &quot;XXX.png&quot;, while
-                    downloading .vcf file that name will be used as label.
-                  </p>
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      className="rounded-lg bg-[#2563eb] px-5 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-[#1d4ed8] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                      Add Social Link
-                    </button>
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    {SOCIAL_LINKS.slice(0, Math.ceil(SOCIAL_LINKS.length / 2)).map((item) => (
-                      <div key={item.id} className="flex items-center gap-3">
-                        <SocialIcon id={item.id} />
-                        <input
-                          type="text"
-                          placeholder={item.label}
-                          className={`${inputClass} flex-1`}
-                          value={socialLinksForm[item.id] ?? ""}
-                          onChange={(e) =>
-                            setSocialLinksForm((prev) => ({
-                              ...prev,
-                              [item.id]: e.target.value,
-                            }))
-                          }
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-4">
-                    {SOCIAL_LINKS.slice(Math.ceil(SOCIAL_LINKS.length / 2)).map((item) => (
-                      <div key={item.id} className="flex items-center gap-3">
-                        <SocialIcon id={item.id} />
-                        <input
-                          type="text"
-                          placeholder={item.label}
-                          className={`${inputClass} flex-1`}
-                          value={socialLinksForm[item.id] ?? ""}
-                          onChange={(e) =>
-                            setSocialLinksForm((prev) => ({
-                              ...prev,
-                              [item.id]: e.target.value,
-                            }))
-                          }
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex justify-start gap-3 pt-4">
-                  <button
-                    type="button"
-                    className="btn-primary-premium inline-flex items-center justify-center"
-                    onClick={() => {
-                      if (!vcardId) return;
-                      setVCards((prev) =>
-                        prev.map((c) =>
-                          c.id === vcardId
-                            ? {
-                              ...c,
-                              socialLinks: SOCIAL_LINKS.map((item) => ({
-                                platform: item.id,
-                                url: (socialLinksForm[item.id] ?? "").trim(),
-                              })).filter((link) => link.url !== ""),
-                            }
-                            : c,
-                        ),
-                      );
-                      setServicesSuccessMessage("Social links saved successfully.");
-                      setShowServicesSuccessToast(true);
-                    }}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary-premium inline-flex items-center justify-center"
-                    onClick={() => {
-                      if (!currentCard) return;
-                      const existingSocial = (currentCard.socialLinks ?? []) as { platform: string; url: string }[];
-                      const nextSocial: Record<string, string> = {};
-                      SOCIAL_LINKS.forEach((item) => {
-                        const match = existingSocial.find((l) => l.platform === item.id);
-                        nextSocial[item.id] = match?.url ?? "";
-                      });
-                      setSocialLinksForm(nextSocial);
-                    }}
-                  >
-                    Discard
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Manage Section – 15 checkboxes, spacing as per screenshot */}
-            {activeSection === "manage-section" && (
-              <div className="w-full min-h-0 flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-[var(--shadow-premium)] overflow-hidden">
-                {/* Card padding: significant & consistent on all sides */}
-                <div className="flex-1 px-10 py-8 sm:px-12 sm:py-10">
-                  {/* Columns: substantial equal gap; rows: consistent vertical gap */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-14 sm:gap-x-16 gap-y-4 mb-10">
-                    {[
-                      { key: "header" as const, label: "Header" },
-                      { key: "about" as const, label: "About" },
-                      { key: "contact" as const, label: "Contact" },
-                      { key: "services" as const, label: "Services" },
-                      { key: "galleries" as const, label: "Galleries" },
-                      { key: "products" as const, label: "Products" },
-                      { key: "testimonials" as const, label: "Testimonials" },
-                      { key: "blogs" as const, label: "Blogs" },
-                      { key: "businessHours" as const, label: "Business Hours" },
-                      { key: "appointments" as const, label: "Appointments" },
-                      { key: "map" as const, label: "Map" },
-                      { key: "instagramFeed" as const, label: "Instagram Feed" },
-                      { key: "linkedinFeed" as const, label: "LinkedIn Feed" },
-                      { key: "iframes" as const, label: "Iframes" },
-                      { key: "qrCode" as const, label: "QR Code" },
-                      { key: "inquiries" as const, label: "Inquiries" },
-                    ].map(({ key, label }) => (
-                      <label
-                        key={key}
-                        className="flex items-center gap-2.5 cursor-pointer group"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={!!manageSectionSections[key]}
-                          onChange={() =>
-                            setManageSectionSections((prev) => ({ ...prev, [key]: !prev[key] }))
-                          }
-                          className="h-5 w-5 shrink-0 rounded border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 cursor-pointer checked:bg-indigo-600 checked:border-indigo-600 dark:checked:bg-indigo-500 dark:checked:border-indigo-500"
-                        />
-                        <span className="text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-gray-100">
-                          {label}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                {/* Noticeable gap above buttons; small gap between buttons; buttons centered */}
-                <div className="flex justify-center gap-2.5 px-10 sm:px-12 pt-2 pb-8 sm:pb-10 border-t border-gray-200 dark:border-gray-700">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!vcardId || !currentCard) return;
-                      setVCards((prev) =>
-                        prev.map((card) =>
-                          card.id === vcardId
-                            ? {
-                                ...card,
-                                manageSection: manageSectionSections,
-                              }
-                            : card
-                        )
-                      );
-                      setManageSectionSaveSuccess(true);
-                      // Adding a clear confirmation message
-                      setShowCreatedSuccess(true);
-                      setTimeout(() => setShowCreatedSuccess(false), 3000);
-                    }}
-                    className="btn-primary-premium inline-flex items-center justify-center min-w-[100px]"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (currentCard?.manageSection) {
-                        setManageSectionSections(currentCard.manageSection);
-                      }
-                    }}
-                    className="btn-secondary-premium inline-flex items-center justify-center min-w-[100px]"
-                  >
-                    Discard
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Terms & Conditions – rich text editor */}
-            {activeSection === "terms" && (
-              <div className="space-y-4 max-w-4xl">
-                <label className={`${labelClass} text-base font-semibold text-gray-900 dark:text-white`}>
-                  Terms &amp; Conditions: <span className="text-red-500">*</span>
-                </label>
-                <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
-                    <select className="h-8 min-w-[90px] rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 px-2 mr-1">
-                      <option>Normal</option>
-                      <option>Heading 1</option>
-                      <option>Heading 2</option>
-                      <option>Paragraph</option>
-                    </select>
-                    <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
-                    <button
-                      type="button"
-                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
-                      title="Bold"
-                      onClick={() => handleRichTextCommand("bold")}
-                    >
-                      <span className="font-bold text-sm">B</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic"
-                      title="Italic"
-                      onClick={() => handleRichTextCommand("italic")}
-                    >
-                      <span className="text-sm">I</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline"
-                      title="Underline"
-                      onClick={() => handleRichTextCommand("underline")}
-                    >
-                      <span className="text-sm">U</span>
-                    </button>
-                  </div>
-                  <div
-                    ref={termsEditorRef}
-                    className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none outline-none"
-                    contentEditable
-                    aria-label="Terms & Conditions"
-                    onInput={() => handleRichTextInput("terms")}
-                    suppressContentEditableWarning
-                  />
-                </div>
-                <div className="flex justify-start gap-2.5 pt-2">
-                  <button
-                    type="button"
-                    className="btn-primary-premium inline-flex items-center justify-center"
-                    onClick={handleTermsSave}
-                  >
-                    Save
-                  </button>
-                  <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
-                    Discard
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Privacy Policy – rich text editor */}
-            {activeSection === "privacy" && (
-              <div className="space-y-4 max-w-4xl">
-                <label className={`${labelClass} text-base font-semibold text-gray-900 dark:text-white`}>
-                  Privacy Policy: <span className="text-red-500">*</span>
-                </label>
-                <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
-                    <select className="h-8 min-w-[90px] rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 px-2 mr-1">
-                      <option>Normal</option>
-                      <option>Heading 1</option>
-                      <option>Heading 2</option>
-                      <option>Paragraph</option>
-                    </select>
-                    <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
-                    <button
-                      type="button"
-                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
-                      title="Bold"
-                      onClick={() => handleRichTextCommand("bold")}
-                    >
-                      <span className="font-bold text-sm">B</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic"
-                      title="Italic"
-                      onClick={() => handleRichTextCommand("italic")}
-                    >
-                      <span className="text-sm">I</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline"
-                      title="Underline"
-                      onClick={() => handleRichTextCommand("underline")}
-                    >
-                      <span className="text-sm">U</span>
-                    </button>
-                  </div>
-                  <div
-                    ref={privacyEditorRef}
-                    className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none outline-none"
-                    contentEditable
-                    aria-label="Privacy Policy"
-                    onInput={() => handleRichTextInput("privacy")}
-                    suppressContentEditableWarning
-                  />
-                </div>
-                <div className="flex justify-start gap-2.5 pt-2">
-                  <button
-                    type="button"
-                    className="btn-primary-premium inline-flex items-center justify-center"
-                    onClick={handlePrivacySave}
-                  >
-                    Save
-                  </button>
-                  <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
-                    Discard
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Custom Links – search, table with sort icons, Show dropdown, same as screenshot */}
-            {activeSection === "custom-links" && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="relative flex-1 max-w-sm">
-                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </span>
-                    <input
-                      type="text"
-                      value={customLinksSearch}
-                      onChange={(e) => setCustomLinksSearch(e.target.value)}
-                      placeholder="Search"
-                      className={`${inputClass} pl-10`}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowNewCustomLinkModal(true)}
-                    className="btn-primary-premium inline-flex items-center justify-center shrink-0"
-                  >
-                    Add Custom Link
-                  </button>
-                </div>
-                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
-                      <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                        <tr>
-                          <th className="px-4 py-3">
-                            <span className="inline-flex items-center gap-1">LINK NAME
-                              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                              </svg>
-                            </span>
-                          </th>
-                          <th className="px-4 py-3">
-                            <span className="inline-flex items-center gap-1">LINK
-                              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                              </svg>
-                            </span>
-                          </th>
-                          <th className="px-4 py-3">
-                            <span className="inline-flex items-center gap-1">SHOW AS BUTTON
-                              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                              </svg>
-                            </span>
-                          </th>
-                          <th className="px-4 py-3">
-                            <span className="inline-flex items-center gap-1">OPEN IN NEW TAB
-                              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                              </svg>
-                            </span>
-                          </th>
-                          <th className="px-4 py-3">
-                            <span className="inline-flex items-center gap-1">ACTION
-                              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                              </svg>
-                            </span>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(() => {
-                          const all = currentCard?.customLinks ?? [];
-                          const q = customLinksSearch.trim().toLowerCase();
-                          const filtered = !q
-                            ? all
-                            : all.filter(
-                                (row) =>
-                                  (row.name ?? "").toLowerCase().includes(q) || (row.url ?? "").toLowerCase().includes(q)
-                              );
-                          const rows = filtered.slice(0, customLinksShowPerPage);
-                          if (!rows.length) {
-                            return (
-                              <tr>
-                                <td colSpan={5} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                  No Data Available
-                                </td>
-                              </tr>
-                            );
-                          }
-                          return rows.map((row) => (
-                            <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
-                              <td className="px-4 py-3">{row.name}</td>
-                              <td className="px-4 py-3">
-                                <a
-                                  href={normalizeCustomLinkUrl(row.url)}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="max-w-[360px] block truncate text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+                    {/* Weekly schedule */}
+                    <div className="space-y-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                      {APPOINTMENT_DAYS.map((day) => (
+                        <div
+                          key={day}
+                          className="flex flex-wrap items-center gap-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 px-4 py-3 bg-white dark:bg-gray-900/50"
+                        >
+                          <div className="flex items-center gap-2 min-w-[120px]">
+                            <input
+                              type="checkbox"
+                              checked={appointmentSchedule[day]?.enabled ?? false}
+                              onChange={(e) => setDayEnabled(day, e.target.checked)}
+                              className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-[#4E38EE] focus:ring-[#4E38EE] dark:border-gray-600 dark:bg-gray-700"
+                            />
+                            <span className="text-sm font-bold uppercase text-gray-700 dark:text-gray-100">{day}</span>
+                          </div>
+                          <div className="flex flex-1 flex-wrap items-center gap-2">
+                            {appointmentSchedule[day]?.slots.map((slot) => (
+                              <div key={slot.id} className="flex items-center gap-2">
+                                <select
+                                  value={slot.start}
+                                  onChange={(e) => updateSlot(day, slot.id, "start", e.target.value)}
+                                  className={`${inputClass} h-9 py-1 pr-8 w-28 rounded-lg text-sm`}
                                 >
-                                  {row.url}
-                                </a>
-                              </td>
-                              <td className="px-4 py-3">{row.showAsButton ? "Yes" : "No"}</td>
-                              <td className="px-4 py-3">{row.openInNewTab ? "Yes" : "No"}</td>
-                              <td className="px-4 py-3">
+                                  {TIME_OPTIONS.map((t) => (
+                                    <option key={t} value={t}>{t}</option>
+                                  ))}
+                                </select>
+                                <span className="text-xs text-gray-500">To</span>
+                                <select
+                                  value={slot.end}
+                                  onChange={(e) => updateSlot(day, slot.id, "end", e.target.value)}
+                                  className={`${inputClass} h-9 py-1 pr-8 w-28 rounded-lg text-sm`}
+                                >
+                                  {TIME_OPTIONS.map((t) => (
+                                    <option key={t} value={t}>{t}</option>
+                                  ))}
+                                </select>
                                 <button
                                   type="button"
-                                  className="text-red-500 hover:text-red-600 text-lg"
-                                  onClick={() => {
-                                    if (!vcardId) return;
-                                    setVCards((prev) =>
-                                      prev.map((c) =>
-                                        c.id === vcardId
-                                          ? { ...c, customLinks: (c.customLinks ?? []).filter((x) => x.id !== row.id) }
-                                          : c
-                                      )
-                                    );
-                                  }}
-                                  aria-label="Delete custom link"
+                                  onClick={() => removeSlot(day, slot.id)}
+                                  className="rounded p-1 text-[#EF4444] hover:bg-red-50 dark:hover:bg-red-900/20"
+                                  aria-label="Delete time slot"
                                 >
-                                  🗑
+                                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
                                 </button>
-                              </td>
-                            </tr>
-                          ));
-                        })()}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
-                      <select
-                        value={customLinksShowPerPage}
-                        onChange={(e) => setCustomLinksShowPerPage(Number(e.target.value))}
-                        className={`${inputClass} h-9 py-1 pr-8 w-20`}
+                              </div>
+                            ))}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <button
+                              type="button"
+                              onClick={() => addSlot(day)}
+                              className="rounded p-1.5 text-[#3B82F6] hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                              aria-label="Add time slot"
+                            >
+                              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => copyDayToOthers(day)}
+                              className="rounded p-1.5 text-[#3B82F6] hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                              aria-label="Copy to other days"
+                            >
+                              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-3 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAppointmentSchedule(
+                            mapBusinessHoursToAppointmentSchedule(
+                              (currentCard?.businessHours as Record<string, { enabled: boolean; start: string; end: string }>) || undefined
+                            )
+                          );
+                          setAppointmentType(currentCard?.appointmentType ?? "free");
+                          setAppointmentServices(
+                            currentCard?.appointmentServices && currentCard.appointmentServices.length > 0
+                              ? currentCard.appointmentServices
+                              : [{ id: "svc-0", serviceName: "", amount: "" }]
+                          );
+                        }}
+                        className="btn-secondary-premium inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold"
                       >
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                      </select>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Showing{" "}
-                        {(() => {
-                          const all = currentCard?.customLinks ?? [];
-                          const q = customLinksSearch.trim().toLowerCase();
-                          const filtered = !q
-                            ? all
-                            : all.filter(
-                                (row) =>
-                                  (row.name ?? "").toLowerCase().includes(q) || (row.url ?? "").toLowerCase().includes(q)
-                              );
-                          return filtered.length;
-                        })()}{" "}
-                        results
-                      </span>
+                        Discard
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleSaveAppointmentsToBusinessHours}
+                        className="btn-primary-premium inline-flex items-center justify-center rounded-lg bg-[#4E38EE] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#4330d4]"
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
+                )}
 
-            {/* Advanced – Password, Custom CSS, Custom JS, Remove branding */}
-            {activeSection === "advanced" && (
-              <div className="space-y-5 max-w-3xl">
-                <div>
-                  <label className={labelClass}>Password:</label>
-                  <div className="relative">
-                    <input
-                      type={showAdvancedPassword ? "text" : "password"}
-                      className={`${inputClass} pr-12`}
-                      placeholder="Password"
-                      value={advancedPassword}
-                      onChange={(e) => setAdvancedPassword(e.target.value)}
-                      autoComplete="off"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowAdvancedPassword(!showAdvancedPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                      aria-label={showAdvancedPassword ? "Hide password" : "Show password"}
-                    >
-                      {showAdvancedPassword ? (
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                        </svg>
-                      ) : (
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <label className={labelClass}>Custom CSS:</label>
-                  <textarea
-                    className={`${inputClass} min-h-[140px] resize-y`}
-                    placeholder="Enter Custom Css"
-                    value={customCssInput}
-                    onChange={(e) => setCustomCssInput(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className={labelClass}>Custom JS:</label>
-                  <textarea
-                    className={`${inputClass} min-h-[140px] resize-y`}
-                    placeholder="Enter Custom Js"
-                    value={customJsInput}
-                    onChange={(e) => setCustomJsInput(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-3">
-                  <span className="inline-flex items-center gap-2 text-sm font-medium text-gray-800 dark:text-gray-200">
-                    Remove branding?
-                    <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
-                      <HelpIcon />
-                    </button>
-                  </span>
-                  <button
-                    type="button"
-                    role="switch"
-                    aria-checked={removeBranding}
-                    onClick={() => setRemoveBranding(!removeBranding)}
-                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${removeBranding ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
-                      }`}
-                  >
-                    <span
-                      className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${removeBranding ? "translate-x-[1.375rem]" : "translate-x-0"
-                        }`}
-                    />
-                  </button>
-                </div>
-                <div className="flex justify-start gap-2.5 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!vcardId || !currentCard) return;
-                      const pwd = advancedPassword.trim();
-                      setVCards((prev) =>
-                        prev.map((c) =>
-                          c.id === vcardId
-                            ? {
-                                ...c,
-                                ...(pwd ? { password: pwd } : { password: undefined }),
-                                customCss: customCssInput,
-                                customJs: customJsInput,
-                                removeBranding,
+                {/* Social links - Website: same to same design as screenshot */}
+                {activeSection === "social-links" && (
+                  <div className="space-y-6 max-w-4xl">
+                    <div className="space-y-3">
+                      <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">Note :</span>{" "}
+                        Uploaded icon name should be &quot;WeChat.png&quot; / &quot;Tumbler.png&quot; / &quot;XXX.png&quot;, while
+                        downloading .vcf file that name will be used as label.
+                      </p>
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          className="rounded-lg bg-[#2563eb] px-5 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-[#1d4ed8] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                          Add Social Link
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        {SOCIAL_LINKS.slice(0, Math.ceil(SOCIAL_LINKS.length / 2)).map((item) => (
+                          <div key={item.id} className="flex items-center gap-3">
+                            <SocialIcon id={item.id} />
+                            <input
+                              type="text"
+                              placeholder={item.label}
+                              className={`${inputClass} flex-1`}
+                              value={socialLinksForm[item.id] ?? ""}
+                              onChange={(e) =>
+                                setSocialLinksForm((prev) => ({
+                                  ...prev,
+                                  [item.id]: e.target.value,
+                                }))
                               }
-                            : c
-                        )
-                      );
-                      setAdvancedSaveSuccess(true);
-                    }}
-                    className="btn-primary-premium inline-flex items-center justify-center"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!currentCard) return;
-                      setAdvancedPassword((currentCard as { password?: string }).password ?? "");
-                      setCustomCssInput(currentCard.customCss ?? "");
-                      setCustomJsInput(currentCard.customJs ?? "");
-                      setRemoveBranding(!!currentCard.removeBranding);
-                    }}
-                    className="btn-secondary-premium inline-flex items-center justify-center"
-                  >
-                    Discard
-                  </button>
-                </div>
-              </div>
-            )}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="space-y-4">
+                        {SOCIAL_LINKS.slice(Math.ceil(SOCIAL_LINKS.length / 2)).map((item) => (
+                          <div key={item.id} className="flex items-center gap-3">
+                            <SocialIcon id={item.id} />
+                            <input
+                              type="text"
+                              placeholder={item.label}
+                              className={`${inputClass} flex-1`}
+                              value={socialLinksForm[item.id] ?? ""}
+                              onChange={(e) =>
+                                setSocialLinksForm((prev) => ({
+                                  ...prev,
+                                  [item.id]: e.target.value,
+                                }))
+                              }
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-            {/* Fonts – Font Family & Font Size, same design as screenshot */}
-            {activeSection === "fonts" && (
-              <div className="space-y-5 max-w-3xl">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className={`${labelClass} font-semibold text-gray-800 dark:text-gray-200`}>
-                      Font Family:
-                    </label>
-                    <select
-                      className={inputClass}
-                      value={fontFamily}
-                      onChange={(e) =>
-                        setFontFamily(e.target.value as "default" | "outfit" | "inter" | "poppins" | "roboto")
-                      }
-                    >
-                      <option value="default">Default</option>
-                      <option value="outfit">Outfit</option>
-                      <option value="inter">Inter</option>
-                      <option value="poppins">Poppins</option>
-                      <option value="roboto">Roboto</option>
-                    </select>
+                    <div className="flex justify-start gap-3 pt-4">
+                      <button
+                        type="button"
+                        className="btn-primary-premium inline-flex items-center justify-center"
+                        onClick={() => {
+                          if (!vcardId) return;
+                          setVCards((prev) =>
+                            prev.map((c) =>
+                              c.id === vcardId
+                                ? {
+                                  ...c,
+                                  socialLinks: SOCIAL_LINKS.map((item) => ({
+                                    platform: item.id,
+                                    url: (socialLinksForm[item.id] ?? "").trim(),
+                                  })).filter((link) => link.url !== ""),
+                                }
+                                : c,
+                            ),
+                          );
+                          setServicesSuccessMessage("Social links saved successfully.");
+                          setShowServicesSuccessToast(true);
+                        }}
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-secondary-premium inline-flex items-center justify-center"
+                        onClick={() => {
+                          if (!currentCard) return;
+                          const existingSocial = (currentCard.socialLinks ?? []) as { platform: string; url: string }[];
+                          const nextSocial: Record<string, string> = {};
+                          SOCIAL_LINKS.forEach((item) => {
+                            const match = existingSocial.find((l) => l.platform === item.id);
+                            nextSocial[item.id] = match?.url ?? "";
+                          });
+                          setSocialLinksForm(nextSocial);
+                        }}
+                      >
+                        Discard
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <label className={`${labelClass} font-semibold text-gray-800 dark:text-gray-200`}>
-                      Font Size:
+                )}
+
+                {/* Manage Section – 15 checkboxes, spacing as per screenshot */}
+                {activeSection === "manage-section" && (
+                  <div className="w-full min-h-0 flex flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-[var(--shadow-premium)] overflow-hidden">
+                    {/* Card padding: significant & consistent on all sides */}
+                    <div className="flex-1 px-10 py-8 sm:px-12 sm:py-10">
+                      {/* Columns: substantial equal gap; rows: consistent vertical gap */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-14 sm:gap-x-16 gap-y-4 mb-10">
+                        {[
+                          { key: "header" as const, label: "Header" },
+                          { key: "about" as const, label: "About" },
+                          { key: "contact" as const, label: "Contact" },
+                          { key: "services" as const, label: "Services" },
+                          { key: "galleries" as const, label: "Galleries" },
+                          { key: "products" as const, label: "Products" },
+                          { key: "testimonials" as const, label: "Testimonials" },
+                          { key: "blogs" as const, label: "Blogs" },
+                          { key: "businessHours" as const, label: "Business Hours" },
+                          { key: "appointments" as const, label: "Appointments" },
+                          { key: "map" as const, label: "Map" },
+                          { key: "instagramFeed" as const, label: "Instagram Feed" },
+                          { key: "linkedinFeed" as const, label: "LinkedIn Feed" },
+                          { key: "iframes" as const, label: "Iframes" },
+                          { key: "qrCode" as const, label: "QR Code" },
+                          { key: "inquiries" as const, label: "Inquiries" },
+                        ].map(({ key, label }) => (
+                          <label
+                            key={key}
+                            className="flex items-center gap-2.5 cursor-pointer group"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={!!manageSectionSections[key]}
+                              onChange={() =>
+                                setManageSectionSections((prev) => ({ ...prev, [key]: !prev[key] }))
+                              }
+                              className="h-5 w-5 shrink-0 rounded border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 cursor-pointer checked:bg-indigo-600 checked:border-indigo-600 dark:checked:bg-indigo-500 dark:checked:border-indigo-500"
+                            />
+                            <span className="text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-gray-100">
+                              {label}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Noticeable gap above buttons; small gap between buttons; buttons centered */}
+                    <div className="flex justify-center gap-2.5 px-10 sm:px-12 pt-2 pb-8 sm:pb-10 border-t border-gray-200 dark:border-gray-700">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!vcardId || !currentCard) return;
+                          setVCards((prev) =>
+                            prev.map((card) =>
+                              card.id === vcardId
+                                ? {
+                                  ...card,
+                                  manageSection: manageSectionSections,
+                                }
+                                : card
+                            )
+                          );
+                          setManageSectionSaveSuccess(true);
+                          // Adding a clear confirmation message
+                          setShowCreatedSuccess(true);
+                          setTimeout(() => setShowCreatedSuccess(false), 3000);
+                        }}
+                        className="btn-primary-premium inline-flex items-center justify-center min-w-[100px]"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (currentCard?.manageSection) {
+                            setManageSectionSections(currentCard.manageSection);
+                          }
+                        }}
+                        className="btn-secondary-premium inline-flex items-center justify-center min-w-[100px]"
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Terms & Conditions – rich text editor */}
+                {activeSection === "terms" && (
+                  <div className="space-y-4 max-w-4xl">
+                    <label className={`${labelClass} text-base font-semibold text-gray-900 dark:text-white`}>
+                      Terms &amp; Conditions: <span className="text-red-500">*</span>
                     </label>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="range"
-                        min={1}
-                        max={40}
-                        value={fontSizePx}
-                        onChange={(e) => setFontSizePx(Number(e.target.value))}
-                        className="flex-1 accent-brand-500"
+                    <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
+                        <select className="h-8 min-w-[90px] rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 px-2 mr-1">
+                          <option>Normal</option>
+                          <option>Heading 1</option>
+                          <option>Heading 2</option>
+                          <option>Paragraph</option>
+                        </select>
+                        <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
+                        <button
+                          type="button"
+                          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+                          title="Bold"
+                          onClick={() => handleRichTextCommand("bold")}
+                        >
+                          <span className="font-bold text-sm">B</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic"
+                          title="Italic"
+                          onClick={() => handleRichTextCommand("italic")}
+                        >
+                          <span className="text-sm">I</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline"
+                          title="Underline"
+                          onClick={() => handleRichTextCommand("underline")}
+                        >
+                          <span className="text-sm">U</span>
+                        </button>
+                      </div>
+                      <div
+                        ref={termsEditorRef}
+                        className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none outline-none"
+                        contentEditable
+                        aria-label="Terms & Conditions"
+                        onInput={() => handleRichTextInput("terms")}
+                        suppressContentEditableWarning
                       />
-                      <span className="text-sm font-medium text-gray-800 dark:text-gray-200 w-10 text-right">
-                        {fontSizePx}px
-                      </span>
+                    </div>
+                    <div className="flex justify-start gap-2.5 pt-2">
+                      <button
+                        type="button"
+                        className="btn-primary-premium inline-flex items-center justify-center"
+                        onClick={handleTermsSave}
+                      >
+                        Save
+                      </button>
+                      <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
+                        Discard
+                      </button>
                     </div>
                   </div>
-                </div>
-                <div className="flex justify-start gap-2.5 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!vcardId || !currentCard) return;
-                      setVCards((prev) =>
-                        prev.map((card) =>
-                          card.id === vcardId
-                            ? {
-                              ...card,
-                              fontFamily,
-                              fontSizePx,
-                            }
-                            : card
-                        )
-                      );
-                      setSeoSaveSuccess(true);
-                    }}
-                    className="btn-primary-premium inline-flex items-center justify-center"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary-premium inline-flex items-center justify-center"
-                  >
-                    Discard
-                  </button>
-                </div>
-              </div>
-            )}
+                )}
 
-            {/* SEO – Site Title, Home Title, Meta Keyword, Meta Description, Google Analytics */}
-            {activeSection === "seo" && (
-              <div className="space-y-5 max-w-4xl">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className={labelClass}>Site Title:</label>
-                    <input
-                      type="text"
-                      className={inputClass}
-                      value={seoSiteTitle}
-                      onChange={(e) => setSeoSiteTitle(e.target.value)}
-                      placeholder="Enter Site Title"
-                    />
+                {/* Privacy Policy – rich text editor */}
+                {activeSection === "privacy" && (
+                  <div className="space-y-4 max-w-4xl">
+                    <label className={`${labelClass} text-base font-semibold text-gray-900 dark:text-white`}>
+                      Privacy Policy: <span className="text-red-500">*</span>
+                    </label>
+                    <div className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-2 py-1.5">
+                        <select className="h-8 min-w-[90px] rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm text-gray-700 dark:text-gray-300 px-2 mr-1">
+                          <option>Normal</option>
+                          <option>Heading 1</option>
+                          <option>Heading 2</option>
+                          <option>Paragraph</option>
+                        </select>
+                        <span className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-0.5" />
+                        <button
+                          type="button"
+                          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+                          title="Bold"
+                          onClick={() => handleRichTextCommand("bold")}
+                        >
+                          <span className="font-bold text-sm">B</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 italic"
+                          title="Italic"
+                          onClick={() => handleRichTextCommand("italic")}
+                        >
+                          <span className="text-sm">I</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 underline"
+                          title="Underline"
+                          onClick={() => handleRichTextCommand("underline")}
+                        >
+                          <span className="text-sm">U</span>
+                        </button>
+                      </div>
+                      <div
+                        ref={privacyEditorRef}
+                        className="w-full min-h-[280px] px-4 py-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-900 border-0 focus:ring-0 resize-none outline-none"
+                        contentEditable
+                        aria-label="Privacy Policy"
+                        onInput={() => handleRichTextInput("privacy")}
+                        suppressContentEditableWarning
+                      />
+                    </div>
+                    <div className="flex justify-start gap-2.5 pt-2">
+                      <button
+                        type="button"
+                        className="btn-primary-premium inline-flex items-center justify-center"
+                        onClick={handlePrivacySave}
+                      >
+                        Save
+                      </button>
+                      <button type="button" className="btn-secondary-premium inline-flex items-center justify-center">
+                        Discard
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <label className={labelClass}>Home Title:</label>
-                    <input
-                      type="text"
-                      className={inputClass}
-                      value={seoHomeTitle}
-                      onChange={(e) => setSeoHomeTitle(e.target.value)}
-                      placeholder="Enter Home Title"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className={labelClass}>Meta Keyword:</label>
-                    <input
-                      type="text"
-                      className={inputClass}
-                      value={seoMetaKeyword}
-                      onChange={(e) => setSeoMetaKeyword(e.target.value)}
-                      placeholder="Enter Meta Keyword"
-                    />
-                  </div>
-                  <div>
-                    <label className={labelClass}>Meta Description:</label>
-                    <input
-                      type="text"
-                      className={inputClass}
-                      value={seoMetaDescription}
-                      onChange={(e) => setSeoMetaDescription(e.target.value)}
-                      placeholder="Enter Meta Description"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className={labelClass}>Google Analytics:</label>
-                  <textarea
-                    value={seoGoogleAnalytics}
-                    onChange={(e) => setSeoGoogleAnalytics(e.target.value)}
-                    className={`${inputClass} min-h-[140px] resize-y`}
-                    placeholder="Google Analytics Code"
-                  />
-                </div>
-                <div className="flex justify-start gap-2.5 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!vcardId) return;
-                      if (!currentCard) return;
-                      setVCards((prev) =>
-                        prev.map((c) =>
-                          c.id === vcardId
-                            ? {
-                                ...c,
-                                metaTitle: seoSiteTitle.trim(),
-                                homeTitle: seoHomeTitle.trim(),
-                                metaKeywords: seoMetaKeyword.trim(),
-                                metaDescription: seoMetaDescription.trim(),
-                                googleAnalyticsCode: seoGoogleAnalytics.trim(),
+                )}
+
+                {/* Custom Links – search, table with sort icons, Show dropdown, same as screenshot */}
+                {activeSection === "custom-links" && (
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="relative flex-1 max-w-sm">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </span>
+                        <input
+                          type="text"
+                          value={customLinksSearch}
+                          onChange={(e) => setCustomLinksSearch(e.target.value)}
+                          placeholder="Search"
+                          className={`${inputClass} pl-10`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowNewCustomLinkModal(true)}
+                        className="btn-primary-premium inline-flex items-center justify-center shrink-0"
+                      >
+                        Add Custom Link
+                      </button>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                          <thead className="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                            <tr>
+                              <th className="px-4 py-3">
+                                <span className="inline-flex items-center gap-1">LINK NAME
+                                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                  </svg>
+                                </span>
+                              </th>
+                              <th className="px-4 py-3">
+                                <span className="inline-flex items-center gap-1">LINK
+                                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                  </svg>
+                                </span>
+                              </th>
+                              <th className="px-4 py-3">
+                                <span className="inline-flex items-center gap-1">SHOW AS BUTTON
+                                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                  </svg>
+                                </span>
+                              </th>
+                              <th className="px-4 py-3">
+                                <span className="inline-flex items-center gap-1">OPEN IN NEW TAB
+                                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                  </svg>
+                                </span>
+                              </th>
+                              <th className="px-4 py-3">
+                                <span className="inline-flex items-center gap-1">ACTION
+                                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                  </svg>
+                                </span>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const all = currentCard?.customLinks ?? [];
+                              const q = customLinksSearch.trim().toLowerCase();
+                              const filtered = !q
+                                ? all
+                                : all.filter(
+                                  (row) =>
+                                    (row.name ?? "").toLowerCase().includes(q) || (row.url ?? "").toLowerCase().includes(q)
+                                );
+                              const rows = filtered.slice(0, customLinksShowPerPage);
+                              if (!rows.length) {
+                                return (
+                                  <tr>
+                                    <td colSpan={5} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
+                                      No Data Available
+                                    </td>
+                                  </tr>
+                                );
                               }
-                            : c
-                        )
-                      );
-                      setSeoSaveSuccess(true);
-                    }}
-                    className="btn-primary-premium inline-flex items-center justify-center"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!currentCard) return;
-                      setSeoSiteTitle(currentCard.metaTitle ?? "");
-                      setSeoHomeTitle(currentCard.homeTitle ?? "");
-                      setSeoMetaKeyword(currentCard.metaKeywords ?? "");
-                      setSeoMetaDescription(currentCard.metaDescription ?? "");
-                      setSeoGoogleAnalytics(currentCard.googleAnalyticsCode ?? "");
-                    }}
-                    className="btn-secondary-premium inline-flex items-center justify-center"
-                  >
-                    Discard
-                  </button>
-                </div>
-              </div>
-            )}
+                              return rows.map((row) => (
+                                <tr key={row.id} className="border-t border-gray-100 dark:border-gray-800">
+                                  <td className="px-4 py-3">{row.name}</td>
+                                  <td className="px-4 py-3">
+                                    <a
+                                      href={normalizeCustomLinkUrl(row.url)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="max-w-[360px] block truncate text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
+                                    >
+                                      {row.url}
+                                    </a>
+                                  </td>
+                                  <td className="px-4 py-3">{row.showAsButton ? "Yes" : "No"}</td>
+                                  <td className="px-4 py-3">{row.openInNewTab ? "Yes" : "No"}</td>
+                                  <td className="px-4 py-3">
+                                    <button
+                                      type="button"
+                                      className="text-red-500 hover:text-red-600 text-lg"
+                                      onClick={() => {
+                                        if (!vcardId) return;
+                                        setVCards((prev) =>
+                                          prev.map((c) =>
+                                            c.id === vcardId
+                                              ? { ...c, customLinks: (c.customLinks ?? []).filter((x) => x.id !== row.id) }
+                                              : c
+                                          )
+                                        );
+                                      }}
+                                      aria-label="Delete custom link"
+                                    >
+                                      🗑
+                                    </button>
+                                  </td>
+                                </tr>
+                              ));
+                            })()}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">Show</span>
+                          <select
+                            value={customLinksShowPerPage}
+                            onChange={(e) => setCustomLinksShowPerPage(Number(e.target.value))}
+                            className={`${inputClass} h-9 py-1 pr-8 w-20`}
+                          >
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                          </select>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            Showing{" "}
+                            {(() => {
+                              const all = currentCard?.customLinks ?? [];
+                              const q = customLinksSearch.trim().toLowerCase();
+                              const filtered = !q
+                                ? all
+                                : all.filter(
+                                  (row) =>
+                                    (row.name ?? "").toLowerCase().includes(q) || (row.url ?? "").toLowerCase().includes(q)
+                                );
+                              return filtered.length;
+                            })()}{" "}
+                            results
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-            {/* Banner / Advanced */}
-            {activeSection !== "basic" &&
-              activeSection !== "templates" &&
-              activeSection !== "dynamic" &&
-              activeSection !== "hours" &&
-              activeSection !== "qr" &&
-              activeSection !== "services" &&
-              activeSection !== "products" &&
-              activeSection !== "insta" &&
-              activeSection !== "linkedin" &&
-              activeSection !== "galleries" &&
-              activeSection !== "blogs" &&
-              activeSection !== "testimonials" &&
-              activeSection !== "iframes" &&
-              activeSection !== "appointments" &&
-              activeSection !== "social-links" &&
-              activeSection !== "manage-section" &&
-              activeSection !== "terms" &&
-              activeSection !== "privacy" &&
-              activeSection !== "seo" &&
-              activeSection !== "fonts" &&
-              activeSection !== "advanced" &&
-              activeSection !== "custom-links" && (
-                <p className="text-sm text-gray-500 dark:text-gray-400 py-8">Coming soon.</p>
-              )}
+                {/* Advanced – Password, Custom CSS, Custom JS, Remove branding */}
+                {activeSection === "advanced" && (
+                  <div className="space-y-5 max-w-3xl">
+                    <div>
+                      <label className={labelClass}>Password:</label>
+                      <div className="relative">
+                        <input
+                          type={showAdvancedPassword ? "text" : "password"}
+                          className={`${inputClass} pr-12`}
+                          placeholder="Password"
+                          value={advancedPassword}
+                          onChange={(e) => setAdvancedPassword(e.target.value)}
+                          autoComplete="off"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowAdvancedPassword(!showAdvancedPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                          aria-label={showAdvancedPassword ? "Hide password" : "Show password"}
+                        >
+                          {showAdvancedPassword ? (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label className={labelClass}>Custom CSS:</label>
+                      <textarea
+                        className={`${inputClass} min-h-[140px] resize-y`}
+                        placeholder="Enter Custom Css"
+                        value={customCssInput}
+                        onChange={(e) => setCustomCssInput(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className={labelClass}>Custom JS:</label>
+                      <textarea
+                        className={`${inputClass} min-h-[140px] resize-y`}
+                        placeholder="Enter Custom Js"
+                        value={customJsInput}
+                        onChange={(e) => setCustomJsInput(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-3">
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-gray-800 dark:text-gray-200">
+                        Remove branding?
+                        <button type="button" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" aria-label="Help">
+                          <HelpIcon />
+                        </button>
+                      </span>
+                      <button
+                        type="button"
+                        role="switch"
+                        aria-checked={removeBranding}
+                        onClick={() => setRemoveBranding(!removeBranding)}
+                        className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${removeBranding ? "bg-brand-500" : "bg-gray-200 dark:bg-gray-600"
+                          }`}
+                      >
+                        <span
+                          className={`pointer-events-none absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white transition-transform ${removeBranding ? "translate-x-[1.375rem]" : "translate-x-0"
+                            }`}
+                        />
+                      </button>
+                    </div>
+                    <div className="flex justify-start gap-2.5 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!vcardId || !currentCard) return;
+                          const pwd = advancedPassword.trim();
+                          setVCards((prev) =>
+                            prev.map((c) =>
+                              c.id === vcardId
+                                ? {
+                                  ...c,
+                                  ...(pwd ? { password: pwd } : { password: undefined }),
+                                  customCss: customCssInput,
+                                  customJs: customJsInput,
+                                  removeBranding,
+                                }
+                                : c
+                            )
+                          );
+                          setAdvancedSaveSuccess(true);
+                        }}
+                        className="btn-primary-premium inline-flex items-center justify-center"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!currentCard) return;
+                          setAdvancedPassword((currentCard as { password?: string }).password ?? "");
+                          setCustomCssInput(currentCard.customCss ?? "");
+                          setCustomJsInput(currentCard.customJs ?? "");
+                          setRemoveBranding(!!currentCard.removeBranding);
+                        }}
+                        className="btn-secondary-premium inline-flex items-center justify-center"
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Fonts – Font Family & Font Size, same design as screenshot */}
+                {activeSection === "fonts" && (
+                  <div className="space-y-5 max-w-3xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className={`${labelClass} font-semibold text-gray-800 dark:text-gray-200`}>
+                          Font Family:
+                        </label>
+                        <select
+                          className={inputClass}
+                          value={fontFamily}
+                          onChange={(e) =>
+                            setFontFamily(e.target.value as "default" | "outfit" | "inter" | "poppins" | "roboto")
+                          }
+                        >
+                          <option value="default">Default</option>
+                          <option value="outfit">Outfit</option>
+                          <option value="inter">Inter</option>
+                          <option value="poppins">Poppins</option>
+                          <option value="roboto">Roboto</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className={`${labelClass} font-semibold text-gray-800 dark:text-gray-200`}>
+                          Font Size:
+                        </label>
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="range"
+                            min={1}
+                            max={40}
+                            value={fontSizePx}
+                            onChange={(e) => setFontSizePx(Number(e.target.value))}
+                            className="flex-1 accent-brand-500"
+                          />
+                          <span className="text-sm font-medium text-gray-800 dark:text-gray-200 w-10 text-right">
+                            {fontSizePx}px
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex justify-start gap-2.5 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!vcardId || !currentCard) return;
+                          setVCards((prev) =>
+                            prev.map((card) =>
+                              card.id === vcardId
+                                ? {
+                                  ...card,
+                                  fontFamily,
+                                  fontSizePx,
+                                }
+                                : card
+                            )
+                          );
+                          setSeoSaveSuccess(true);
+                        }}
+                        className="btn-primary-premium inline-flex items-center justify-center"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-secondary-premium inline-flex items-center justify-center"
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* SEO – Site Title, Home Title, Meta Keyword, Meta Description, Google Analytics */}
+                {activeSection === "seo" && (
+                  <div className="space-y-5 max-w-4xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className={labelClass}>Site Title:</label>
+                        <input
+                          type="text"
+                          className={inputClass}
+                          value={seoSiteTitle}
+                          onChange={(e) => setSeoSiteTitle(e.target.value)}
+                          placeholder="Enter Site Title"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>Home Title:</label>
+                        <input
+                          type="text"
+                          className={inputClass}
+                          value={seoHomeTitle}
+                          onChange={(e) => setSeoHomeTitle(e.target.value)}
+                          placeholder="Enter Home Title"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className={labelClass}>Meta Keyword:</label>
+                        <input
+                          type="text"
+                          className={inputClass}
+                          value={seoMetaKeyword}
+                          onChange={(e) => setSeoMetaKeyword(e.target.value)}
+                          placeholder="Enter Meta Keyword"
+                        />
+                      </div>
+                      <div>
+                        <label className={labelClass}>Meta Description:</label>
+                        <input
+                          type="text"
+                          className={inputClass}
+                          value={seoMetaDescription}
+                          onChange={(e) => setSeoMetaDescription(e.target.value)}
+                          placeholder="Enter Meta Description"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className={labelClass}>Google Analytics:</label>
+                      <textarea
+                        value={seoGoogleAnalytics}
+                        onChange={(e) => setSeoGoogleAnalytics(e.target.value)}
+                        className={`${inputClass} min-h-[140px] resize-y`}
+                        placeholder="Google Analytics Code"
+                      />
+                    </div>
+                    <div className="flex justify-start gap-2.5 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!vcardId) return;
+                          if (!currentCard) return;
+                          setVCards((prev) =>
+                            prev.map((c) =>
+                              c.id === vcardId
+                                ? {
+                                  ...c,
+                                  metaTitle: seoSiteTitle.trim(),
+                                  homeTitle: seoHomeTitle.trim(),
+                                  metaKeywords: seoMetaKeyword.trim(),
+                                  metaDescription: seoMetaDescription.trim(),
+                                  googleAnalyticsCode: seoGoogleAnalytics.trim(),
+                                }
+                                : c
+                            )
+                          );
+                          setSeoSaveSuccess(true);
+                        }}
+                        className="btn-primary-premium inline-flex items-center justify-center"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!currentCard) return;
+                          setSeoSiteTitle(currentCard.metaTitle ?? "");
+                          setSeoHomeTitle(currentCard.homeTitle ?? "");
+                          setSeoMetaKeyword(currentCard.metaKeywords ?? "");
+                          setSeoMetaDescription(currentCard.metaDescription ?? "");
+                          setSeoGoogleAnalytics(currentCard.googleAnalyticsCode ?? "");
+                        }}
+                        className="btn-secondary-premium inline-flex items-center justify-center"
+                      >
+                        Discard
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Banner / Advanced */}
+                {activeSection !== "basic" &&
+                  activeSection !== "templates" &&
+                  activeSection !== "dynamic" &&
+                  activeSection !== "hours" &&
+                  activeSection !== "qr" &&
+                  activeSection !== "services" &&
+                  activeSection !== "products" &&
+                  activeSection !== "insta" &&
+                  activeSection !== "linkedin" &&
+                  activeSection !== "galleries" &&
+                  activeSection !== "blogs" &&
+                  activeSection !== "testimonials" &&
+                  activeSection !== "iframes" &&
+                  activeSection !== "appointments" &&
+                  activeSection !== "social-links" &&
+                  activeSection !== "manage-section" &&
+                  activeSection !== "terms" &&
+                  activeSection !== "privacy" &&
+                  activeSection !== "seo" &&
+                  activeSection !== "fonts" &&
+                  activeSection !== "advanced" &&
+                  activeSection !== "custom-links" && (
+                    <p className="text-sm text-gray-500 dark:text-gray-400 py-8">Coming soon.</p>
+                  )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -7660,14 +7929,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     role="switch"
                     aria-checked={newCustomLinkShowAsButton}
                     onClick={() => setNewCustomLinkShowAsButton((prev) => !prev)}
-                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
-                      newCustomLinkShowAsButton ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
-                    }`}
+                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${newCustomLinkShowAsButton ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                      }`}
                   >
                     <span
-                      className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
-                        newCustomLinkShowAsButton ? "translate-x-5" : "translate-x-0"
-                      }`}
+                      className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${newCustomLinkShowAsButton ? "translate-x-5" : "translate-x-0"
+                        }`}
                     />
                   </button>
                 </label>
@@ -7679,14 +7946,12 @@ export function EditVCardContent({ vcardId }: EditVCardContentProps) {
                     role="switch"
                     aria-checked={newCustomLinkOpenInNewTab}
                     onClick={() => setNewCustomLinkOpenInNewTab((prev) => !prev)}
-                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${
-                      newCustomLinkOpenInNewTab ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
-                    }`}
+                    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 ${newCustomLinkOpenInNewTab ? "bg-brand-500" : "bg-gray-200 dark:bg-white/10"
+                      }`}
                   >
                     <span
-                      className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${
-                        newCustomLinkOpenInNewTab ? "translate-x-5" : "translate-x-0"
-                      }`}
+                      className={`absolute left-1 top-1 inline-block h-4 w-4 rounded-full bg-white shadow transition-transform ${newCustomLinkOpenInNewTab ? "translate-x-5" : "translate-x-0"
+                        }`}
                     />
                   </button>
                 </label>

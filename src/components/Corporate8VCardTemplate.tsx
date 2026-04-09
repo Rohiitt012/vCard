@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { VCardItem } from "@/context/VCardsContextTypes";
-import { VCardDynamicSections, buildManageSectionDynamicExclude } from "@/components/VCardDynamicSections";
 import { Mail, Phone, MapPin, Cake, Calendar, ExternalLink, Facebook, Instagram, Linkedin, Twitter, MessageCircle, ChevronDown, LayoutGrid, User, Sparkles, Globe, Maximize, ArrowRight, Quote, Clock, Upload } from "lucide-react";
 import { generateQrDataUrl } from "@/lib/qr";
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
@@ -505,12 +504,6 @@ export function Corporate8VCardTemplate({ card, slug, baseUrl, onDownloadVCard }
                 </div>
             </section>
         )}
-
-
-        <div className="px-0 pb-16">
-            <VCardDynamicSections card={card} exclude={buildManageSectionDynamicExclude(card)} />
-        </div>
-
 
 
         {/* CUSTOM BLOG SECTION - Matching Image 19 */}

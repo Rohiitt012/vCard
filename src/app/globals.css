@@ -393,11 +393,11 @@
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
 @utility btn-primary-premium {
-  @apply rounded-[14px] px-5 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-[3px] focus:ring-brand-500/30 focus:ring-offset-0 transition-all duration-300 bg-gradient-to-r from-brand-600 to-brand-500;
-  box-shadow: 0 4px 14px rgba(70, 95, 255, 0.25);
+  @apply rounded-[14px] px-5 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-[3px] focus:ring-violet-500/30 focus:ring-offset-0 transition-all duration-300 bg-gradient-to-r from-violet-600 to-indigo-600;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.25);
   &:hover {
-    @apply shadow-brand-500/40 -translate-y-0.5;
-    box-shadow: 0 6px 20px rgba(70, 95, 255, 0.4);
+    @apply -translate-y-0.5;
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
   }
   &:active {
     @apply translate-y-0 scale-[0.98];

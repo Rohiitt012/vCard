@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React from "react";
 import Image from "next/image";
 import { 
@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 
 import { VCardSocialLinks } from "@/components/VCardSocialLinks";
-import { VCardDynamicSections } from "@/components/VCardDynamicSections";
 import type { VCardItem } from "@/context/VCardsContextTypes";
 import { getSocialIcon } from "@/lib/social-icons";
 
